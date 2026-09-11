@@ -84,8 +84,8 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
           <div className="w-full h-80 sm:h-[450px] rounded-3xl overflow-hidden relative border border-[#e7e2d8] shadow-xs">
             <img
               className="w-full h-full object-cover"
-              alt="Gathering in a Nigerian rural community"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ7w8cRAa5Cz6-OlJkWBhqvWPoNzq5hWz_IkkVN9KsBBy7YVQt96MmRiLbFiv0xS5s1d-guFIU3QMWDhgmKqAiipwKuQqm-2g4a1Q8hd2HzGbeVOorSAOO5SoSkJLKq1-7S4MbJS58prndFEizAy8Rm3xtqcNWnL5py9pgEFAEXzFO7RxipzxkBJgsa6C_8W036kIhz2BsLQBljemMMIBPS-yT-l6igz1t3N2YQn7qe1HBmqtTGvg"
+              alt="Community outreach gathering in Nigeria"
+              src="/images/IMG_0294.JPG"
             />
           </div>
         </div>
@@ -98,12 +98,12 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
             <div className="rounded-2xl overflow-hidden border border-[#e7e2d8] p-2 bg-sand">
               <img
                 className="w-full h-80 rounded-xl object-cover"
-                alt="Portraits of co-founders"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQQGWfP843jg9B--X28bH3kY7kmY2rM-RwyKYSDm-bsUnfQbvDXkDy8BMxHUWccg_XEQmcecnxZfOwJoRao8BK1ub_XDpcFmNTpg8zQYcpr-IWNCe7L128bKJ0pd0-uu4bvavOIIp57fytZ9oQHeMYiS12cECI8NhMPdyi6OM2yfgRmIIqt8RjX_s82ReYq5NqXWizUZd2PzTiXcrUt4KWYMR7-goq6Su7eOMdrrXjzbsnQ5jHuh4a"
+                alt="Ten Kind Hands Leadership & Outreach Team"
+                src="/images/IMG_0300.JPG"
               />
               <div className="pt-2 px-1 text-center">
-                <span className="text-xs font-bold text-ink block font-heading">Tunde &amp; Dr. Zainab</span>
-                <span className="text-[11px] text-ink-muted">Founding Trustees, Ten Kind Hands</span>
+                <span className="text-xs font-bold text-ink block font-heading">Ten Kind Hands Leadership</span>
+                <span className="text-[11px] text-ink-muted">Empowering African Women &amp; Children</span>
               </div>
             </div>
           </div>

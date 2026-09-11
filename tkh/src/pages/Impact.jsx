@@ -147,7 +147,7 @@ export default function Impact({ onOpenDonate }) {
               <div
                 className="w-full h-full rounded-2xl bg-cover bg-center"
                 style={{
-                  backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuC-1rpLxlm1obAePTSxJyaS6Ah86_U-UfW_flTtz9B6wqKSJx9MBYqGNkygy1ShkVhL0zuBP4GrJIxYoBr-i2tZV1Bgx9wXTgKbZY6QA0C_V6anKNI1VmOWKiwbuMBEV6xd5gSC8FcouNmTCOusckHKlpuegl8VjIkrCOK4MK4GMjUrSi3wq2mz19CI1j2STGL9cnYoIczDsPODO-nrtzegMnSdcp16C8GrzDcSZ5_xG-l9vIeYmgb1')`
+                  backgroundImage: `url('/images/IMG_0994.JPG')`
                 }}
               />
             </div>

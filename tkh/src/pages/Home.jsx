@@ -8,16 +8,16 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
   const heroSlides = [
     {
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDBD47dBTKUN-hSEFSaQDu29FKAW8EszhzB3bekiJa_TiddII_PzNGDo-TqEVpHXSP24gytsxNHSiEhRi9YMHDtotncoZJEVLV4FbBJ-JHDQFb--fmf7R-eTa9haWV_OcebR4Qyk7huQhFgeA_Be27P-vIUKIzzHib7KJpLJbU02XZCKGN_ZJ1s8k413CcVXJSm6xUywnTZJszILEtQj6s5BD3V9XBFKN1dcFRekfoF1qXKkZukTLBm",
-      caption: "Gidan Community Primary School • Solar Classroom, Kaduna State"
+      img: "/images/IMG_0294.JPG",
+      caption: "Primary School Uniform & Book Distribution Drive • Rivers State"
     },
     {
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuC-1rpLxlm1obAePTSxJyaS6Ah86_U-UfW_flTtz9B6wqKSJx9MBYqGNkygy1ShkVhL0zuBP4GrJIxYoBr-i2tZV1Bgx9wXTgKbZY6QA0C_V6anKNI1VmOWKiwbuMBEV6xd5gSC8FcouNmTCOusckHKlpuegl8VjIkrCOK4MK4GMjUrSi3wq2mz19CI1j2STGL9cnYoIczDsPODO-nrtzegMnSdcp16C8GrzDcSZ5_xG-l9vIeYmgb1",
-      caption: "Mobile Health Outreach • Free Clinic & Malaria Triage, Enugu State"
+      img: "/images/IMG_0303.JPG",
+      caption: "Gidan Community Primary School • Solar Classroom & Desks"
     },
     {
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQ7w8cRAa5Cz6-OlJkWBhqvWPoNzq5hWz_IkkVN9KsBBy7YVQt96MmRiLbFiv0xS5s1d-guFIU3QMWDhgmKqAiipwKuQqm-2g4a1Q8hd2HzGbeVOorSAOO5SoSkJLKq1-7S4MbJS58prndFEizAy8Rm3xtqcNWnL5py9pgEFAEXzFO7RxipzxkBJgsa6C_8W036kIhz2BsLQBljemMMIBPS-yT-l6igz1t3N2YQn7qe1HBmqtTGvg",
-      caption: "Community Empowerment & Solar Water Commissioning, Ogun State"
+      img: "/images/IMG_0995.JPG",
+      caption: "Women & Community Empowerment • Clean Energy & Household Support"
     }
   ];
 
@@ -280,8 +280,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           <div className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between">
             <div className="h-64 overflow-hidden relative">
               <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBD47dBTKUN-hSEFSaQDu29FKAW8EszhzB3bekiJa_TiddII_PzNGDo-TqEVpHXSP24gytsxNHSiEhRi9YMHDtotncoZJEVLV4FbBJ-JHDQFb--fmf7R-eTa9haWV_OcebR4Qyk7huQhFgeA_Be27P-vIUKIzzHib7KJpLJbU02XZCKGN_ZJ1s8k413CcVXJSm6xUywnTZJszILEtQj6s5BD3V9XBFKN1dcFRekfoF1qXKkZukTLBm"
-                alt="Classroom education in Nigeria"
+                src="/images/IMG_0296.JPG"
+                alt="Pupils receiving school supplies in Nigeria"
                 className="w-full h-full object-cover hover:scale-102 transition-transform duration-700"
               />
               <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-heading font-bold text-primary shadow-xs">
@@ -314,12 +314,12 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           <div className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between">
             <div className="h-64 overflow-hidden relative">
               <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-1rpLxlm1obAePTSxJyaS6Ah86_U-UfW_flTtz9B6wqKSJx9MBYqGNkygy1ShkVhL0zuBP4GrJIxYoBr-i2tZV1Bgx9wXTgKbZY6QA0C_V6anKNI1VmOWKiwbuMBEV6xd5gSC8FcouNmTCOusckHKlpuegl8VjIkrCOK4MK4GMjUrSi3wq2mz19CI1j2STGL9cnYoIczDsPODO-nrtzegMnSdcp16C8GrzDcSZ5_xG-l9vIeYmgb1"
-                alt="Mobile healthcare clinic in rural Nigeria"
+                src="/images/food-distribution.jpg"
+                alt="Community and family relief outreach in Nigeria"
                 className="w-full h-full object-cover hover:scale-102 transition-transform duration-700"
               />
               <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-heading font-bold text-forest shadow-xs">
-                Pillar 02 • Healthcare
+                Pillar 02 • Community &amp; Care
               </div>
             </div>
 

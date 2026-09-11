@@ -118,7 +118,7 @@ export default function Admin({ setCurrentPage }) {
     author: 'Field Operations Desk',
     date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
     excerpt: '',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDBD47dBTKUN-hSEFSaQDu29FKAW8EszhzB3bekiJa_TiddII_PzNGDo-TqEVpHXSP24gytsxNHSiEhRi9YMHDtotncoZJEVLV4FbBJ-JHDQFb--fmf7R-eTa9haWV_OcebR4Qyk7huQhFgeA_Be27P-vIUKIzzHib7KJpLJbU02XZCKGN_ZJ1s8k413CcVXJSm6xUywnTZJszILEtQj6s5BD3V9XBFKN1dcFRekfoF1qXKkZukTLBm',
+    image: '/images/IMG_0303.JPG',
     body: ''
   });
 
@@ -133,7 +133,7 @@ export default function Admin({ setCurrentPage }) {
     beneficiariesTarget: '',
     description: '',
     needs: '',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC-1rpLxlm1obAePTSxJyaS6Ah86_U-UfW_flTtz9B6wqKSJx9MBYqGNkygy1ShkVhL0zuBP4GrJIxYoBr-i2tZV1Bgx9wXTgKbZY6QA0C_V6anKNI1VmOWKiwbuMBEV6xd5gSC8FcouNmTCOusckHKlpuegl8VjIkrCOK4MK4GMjUrSi3wq2mz19CI1j2STGL9cnYoIczDsPODO-nrtzegMnSdcp16C8GrzDcSZ5_xG-l9vIeYmgb1'
+    image: '/images/IMG_0294.JPG'
   });
 
   const [metricModalOpen, setMetricModalOpen] = useState(false);
@@ -257,19 +257,19 @@ export default function Admin({ setCurrentPage }) {
   const imagePresets = [
     {
       label: 'Solar Classroom (Kaduna)',
-      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDBD47dBTKUN-hSEFSaQDu29FKAW8EszhzB3bekiJa_TiddII_PzNGDo-TqEVpHXSP24gytsxNHSiEhRi9YMHDtotncoZJEVLV4FbBJ-JHDQFb--fmf7R-eTa9haWV_OcebR4Qyk7huQhFgeA_Be27P-vIUKIzzHib7KJpLJbU02XZCKGN_ZJ1s8k413CcVXJSm6xUywnTZJszILEtQj6s5BD3V9XBFKN1dcFRekfoF1qXKkZukTLBm'
+      url: '/images/IMG_0303.JPG'
     },
     {
-      label: 'Mobile Health Clinic (Enugu)',
-      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC-1rpLxlm1obAePTSxJyaS6Ah86_U-UfW_flTtz9B6wqKSJx9MBYqGNkygy1ShkVhL0zuBP4GrJIxYoBr-i2tZV1Bgx9wXTgKbZY6QA0C_V6anKNI1VmOWKiwbuMBEV6xd5gSC8FcouNmTCOusckHKlpuegl8VjIkrCOK4MK4GMjUrSi3wq2mz19CI1j2STGL9cnYoIczDsPODO-nrtzegMnSdcp16C8GrzDcSZ5_xG-l9vIeYmgb1'
+      label: 'School Supply & Uniform Outreach',
+      url: '/images/IMG_0294.JPG'
     },
     {
-      label: 'Solar Borehole (Ogun)',
-      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQ7w8cRAa5Cz6-OlJkWBhqvWPoNzq5hWz_IkkVN9KsBBy7YVQt96MmRiLbFiv0xS5s1d-guFIU3QMWDhgmKqAiipwKuQqm-2g4a1Q8hd2HzGbeVOorSAOO5SoSkJLKq1-7S4MbJS58prndFEizAy8Rm3xtqcNWnL5py9pgEFAEXzFO7RxipzxkBJgsa6C_8W036kIhz2BsLQBljemMMIBPS-yT-l6igz1t3N2YQn7qe1HBmqtTGvg'
+      label: 'Food Distribution & Relief Mission',
+      url: '/images/food-distribution.jpg'
     },
     {
-      label: 'Field Outreach Volunteers',
-      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAQQGWfP843jg9B--X28bH3kY7kmY2rM-RwyKYSDm-bsUnfQbvDXkDy8BMxHUWccg_XEQmcecnxZfOwJoRao8BK1ub_XDpcFmNTpg8zQYcpr-IWNCe7L128bKJ0pd0-uu4bvavOIIp57fytZ9oQHeMYiS12cECI8NhMPdyi6OM2yfgRmIIqt8RjX_s82ReYq5NqXWizUZd2PzTiXcrUt4KWYMR7-goq6Su7eOMdrrXjzbsnQ5jHuh4a'
+      label: 'Women & Community Empowerment',
+      url: '/images/IMG_0995.JPG'
     }
   ];
 

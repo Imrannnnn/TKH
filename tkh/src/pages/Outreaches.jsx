@@ -18,7 +18,7 @@ export default function Outreaches({ onOpenDonate }) {
       beneficiariesTarget: '1,200 Primary Pupils',
       description: 'Delivering full uniform sets, branded exercise books, mathematics geometry sets, and 30 dual-seater desks across four rural community schools.',
       needs: 'Volunteer teachers, logistics drivers, packing assistants.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDBD47dBTKUN-hSEFSaQDu29FKAW8EszhzB3bekiJa_TiddII_PzNGDo-TqEVpHXSP24gytsxNHSiEhRi9YMHDtotncoZJEVLV4FbBJ-JHDQFb--fmf7R-eTa9haWV_OcebR4Qyk7huQhFgeA_Be27P-vIUKIzzHib7KJpLJbU02XZCKGN_ZJ1s8k413CcVXJSm6xUywnTZJszILEtQj6s5BD3V9XBFKN1dcFRekfoF1qXKkZukTLBm'
+      image: '/images/IMG_0294.JPG'
     },
     {
       id: 'outreach-2',
@@ -30,7 +30,7 @@ export default function Outreaches({ onOpenDonate }) {
       beneficiariesTarget: '800+ Mothers & Infants',
       description: 'Free rapid malaria testing, antenatal checks, distribution of 300 Mama Kits (sterile birth packs), and pediatric deworming treatments.',
       needs: 'Volunteer doctors, registered nurses, pharmacist assistants.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC-1rpLxlm1obAePTSxJyaS6Ah86_U-UfW_flTtz9B6wqKSJx9MBYqGNkygy1ShkVhL0zuBP4GrJIxYoBr-i2tZV1Bgx9wXTgKbZY6QA0C_V6anKNI1VmOWKiwbuMBEV6xd5gSC8FcouNmTCOusckHKlpuegl8VjIkrCOK4MK4GMjUrSi3wq2mz19CI1j2STGL9cnYoIczDsPODO-nrtzegMnSdcp16C8GrzDcSZ5_xG-l9vIeYmgb1'
+      image: '/images/IMG_0995.JPG'
     },
     {
       id: 'outreach-3',
@@ -42,7 +42,7 @@ export default function Outreaches({ onOpenDonate }) {
       beneficiariesTarget: '2,500 Community Residents',
       description: 'Completed drilling of a 95-meter deep solar-powered borehole with an 8-spigot distribution station and local water management committee training.',
       needs: 'Project fully delivered and handed over to village council.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQ7w8cRAa5Cz6-OlJkWBhqvWPoNzq5hWz_IkkVN9KsBBy7YVQt96MmRiLbFiv0xS5s1d-guFIU3QMWDhgmKqAiipwKuQqm-2g4a1Q8hd2HzGbeVOorSAOO5SoSkJLKq1-7S4MbJS58prndFEizAy8Rm3xtqcNWnL5py9pgEFAEXzFO7RxipzxkBJgsa6C_8W036kIhz2BsLQBljemMMIBPS-yT-l6igz1t3N2YQn7qe1HBmqtTGvg'
+      image: '/images/food-distribution.jpg'
     },
     {
       id: 'outreach-4',
@@ -54,7 +54,7 @@ export default function Outreaches({ onOpenDonate }) {
       beneficiariesTarget: '654 Patients Treated',
       description: 'Conducted comprehensive outpatient clinic, malaria diagnostics, and dispensed 1,200+ prescription medications at zero cost to patients.',
       needs: 'Project fully delivered.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAQQGWfP843jg9B--X28bH3kY7kmY2rM-RwyKYSDm-bsUnfQbvDXkDy8BMxHUWccg_XEQmcecnxZfOwJoRao8BK1ub_XDpcFmNTpg8zQYcpr-IWNCe7L128bKJ0pd0-uu4bvavOIIp57fytZ9oQHeMYiS12cECI8NhMPdyi6OM2yfgRmIIqt8RjX_s82ReYq5NqXWizUZd2PzTiXcrUt4KWYMR7-goq6Su7eOMdrrXjzbsnQ5jHuh4a'
+      image: '/images/IMG_0300.JPG'
     }
   ];
 

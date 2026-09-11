@@ -12,7 +12,7 @@ export default function Testimonials({ onOpenDonate }) {
       author: "Mrs. Amina Danjuma",
       role: "Headmistress",
       institution: "Gidan Community Primary School, Kaduna State",
-      avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuAQQGWfP843jg9B--X28bH3kY7kmY2rM-RwyKYSDm-bsUnfQbvDXkDy8BMxHUWccg_XEQmcecnxZfOwJoRao8BK1ub_XDpcFmNTpg8zQYcpr-IWNCe7L128bKJ0pd0-uu4bvavOIIp57fytZ9oQHeMYiS12cECI8NhMPdyi6OM2yfgRmIIqt8RjX_s82ReYq5NqXWizUZd2PzTiXcrUt4KWYMR7-goq6Su7eOMdrrXjzbsnQ5jHuh4a"
+      avatar: "/images/IMG_0300.JPG"
     },
     {
       category: 'beneficiaries',
@@ -20,7 +20,7 @@ export default function Testimonials({ onOpenDonate }) {
       author: "Grace Adebayo",
       role: "Mother of 3 & Community Health Advocate",
       institution: "Rural Women's Forum, Ogun State",
-      avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuC-1rpLxlm1obAePTSxJyaS6Ah86_U-UfW_flTtz9B6wqKSJx9MBYqGNkygy1ShkVhL0zuBP4GrJIxYoBr-i2tZV1Bgx9wXTgKbZY6QA0C_V6anKNI1VmOWKiwbuMBEV6xd5gSC8FcouNmTCOusckHKlpuegl8VjIkrCOK4MK4GMjUrSi3wq2mz19CI1j2STGL9cnYoIczDsPODO-nrtzegMnSdcp16C8GrzDcSZ5_xG-l9vIeYmgb1"
+      avatar: "/images/IMG_0995.JPG"
     },
     {
       category: 'beneficiaries',
@@ -28,7 +28,7 @@ export default function Testimonials({ onOpenDonate }) {
       author: "Chief Emeka Okafor",
       role: "Community Elder & Development Secretary",
       institution: "Oji River Council, Enugu State",
-      avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQ7w8cRAa5Cz6-OlJkWBhqvWPoNzq5hWz_IkkVN9KsBBy7YVQt96MmRiLbFiv0xS5s1d-guFIU3QMWDhgmKqAiipwKuQqm-2g4a1Q8hd2HzGbeVOorSAOO5SoSkJLKq1-7S4MbJS58prndFEizAy8Rm3xtqcNWnL5py9pgEFAEXzFO7RxipzxkBJgsa6C_8W036kIhz2BsLQBljemMMIBPS-yT-l6igz1t3N2YQn7qe1HBmqtTGvg"
+      avatar: "/images/IMG_0994.JPG"
     },
     {
       category: 'volunteers',
@@ -36,7 +36,7 @@ export default function Testimonials({ onOpenDonate }) {
       author: "Dr. Chinedu Eze",
       role: "Volunteer Pediatrician",
       institution: "Lagos University Teaching Hospital",
-      avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuDBD47dBTKUN-hSEFSaQDu29FKAW8EszhzB3bekiJa_TiddII_PzNGDo-TqEVpHXSP24gytsxNHSiEhRi9YMHDtotncoZJEVLV4FbBJ-JHDQFb--fmf7R-eTa9haWV_OcebR4Qyk7huQhFgeA_Be27P-vIUKIzzHib7KJpLJbU02XZCKGN_ZJ1s8k413CcVXJSm6xUywnTZJszILEtQj6s5BD3V9XBFKN1dcFRekfoF1qXKkZukTLBm"
+      avatar: "/images/IMG_0294.JPG"
     },
     {
       category: 'donors',
@@ -44,7 +44,7 @@ export default function Testimonials({ onOpenDonate }) {
       author: "Farida Mohammed",
       role: "Monthly Impact Sustainer",
       institution: "Abuja, Nigeria",
-      avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuC-1rpLxlm1obAePTSxJyaS6Ah86_U-UfW_flTtz9B6wqKSJx9MBYqGNkygy1ShkVhL0zuBP4GrJIxYoBr-i2tZV1Bgx9wXTgKbZY6QA0C_V6anKNI1VmOWKiwbuMBEV6xd5gSC8FcouNmTCOusckHKlpuegl8VjIkrCOK4MK4GMjUrSi3wq2mz19CI1j2STGL9cnYoIczDsPODO-nrtzegMnSdcp16C8GrzDcSZ5_xG-l9vIeYmgb1"
+      avatar: "/images/IMG_0300.JPG"
     },
     {
       category: 'partners',
@@ -52,7 +52,7 @@ export default function Testimonials({ onOpenDonate }) {
       author: "Dr. Anthony Nwankwo",
       role: "Director of International Giving",
       institution: "UK-Nigeria Diaspora Health Trust",
-      avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuAQQGWfP843jg9B--X28bH3kY7kmY2rM-RwyKYSDm-bsUnfQbvDXkDy8BMxHUWccg_XEQmcecnxZfOwJoRao8BK1ub_XDpcFmNTpg8zQYcpr-IWNCe7L128bKJ0pd0-uu4bvavOIIp57fytZ9oQHeMYiS12cECI8NhMPdyi6OM2yfgRmIIqt8RjX_s82ReYq5NqXWizUZd2PzTiXcrUt4KWYMR7-goq6Su7eOMdrrXjzbsnQ5jHuh4a"
+      avatar: "/images/IMG_0994.JPG"
     }
   ];
 
