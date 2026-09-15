@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { School, Stethoscope, Droplets, BookOpen, TrendingUp, Download, FileText, ShieldCheck, Globe, Heart, MapPin, ArrowRight, HandHeart } from '../components/Icons';
+import { School, Stethoscope, Droplets, BookOpen, TrendingUp, Download, FileText, ShieldCheck, Globe, Heart, MapPin, HandHeart } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 const iconMap = {

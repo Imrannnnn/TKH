@@ -1,12 +1,94 @@
-import React, { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useData } from '../context/DataContext';
-import { Heart, Menu, X, ShieldCheck, ArrowRight, ChevronDown, Lock } from './Icons';
+import { Heart, Menu, X, ArrowRight, ChevronDown, Lock } from './Icons';
 
 export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSelectProgram, onSelectGetInvolvedTab }) {
   const { announcement } = useData();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [programsDropdownOpen, setProgramsDropdownOpen] = useState(false);
   const [getInvolvedDropdownOpen, setGetInvolvedDropdownOpen] = useState(false);
+  const [marqueeCycles, setMarqueeCycles] = useState(0);
+  const [marqueeDismissed, setMarqueeDismissed] = useState(false);
+  const [marqueeFading, setMarqueeFading] = useState(false);
+  const leaveTimeoutRef = useRef({});
+
+  // Reset marquee ticker state whenever announcement text changes (e.g. edited in Super Admin)
+  const [prevAnnouncement, setPrevAnnouncement] = useState(announcement);
+  if (prevAnnouncement !== announcement) {
+    setPrevAnnouncement(announcement);
+    if (announcement) {
+      setMarqueeCycles(0);
+      setMarqueeFading(false);
+      setMarqueeDismissed(false);
+    }
+  }
+
+  const handleDismissMarquee = () => {
+    setMarqueeFading(true);
+    setTimeout(() => {
+      setMarqueeDismissed(true);
+    }, 700);
+  };
+
+  const handleMarqueeIteration = () => {
+    setMarqueeCycles((prev) => {
+      const next = prev + 1;
+      if (next >= 5) {
+        handleDismissMarquee();
+      }
+      return next;
+    });
+  };
+
+  // Clean up timeouts on unmount and handle outside clicks to close dropdowns
+  useEffect(() => {
+    const timeouts = leaveTimeoutRef.current;
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('.nav-dropdown-container')) {
+        setProgramsDropdownOpen(false);
+        setGetInvolvedDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+      Object.values(timeouts).forEach(clearTimeout);
+    };
+  }, []);
+
+  const handleMouseEnter = (itemId) => {
+    if (leaveTimeoutRef.current[itemId]) {
+      clearTimeout(leaveTimeoutRef.current[itemId]);
+      delete leaveTimeoutRef.current[itemId];
+    }
+    if (itemId === 'programs') {
+      setProgramsDropdownOpen(true);
+      setGetInvolvedDropdownOpen(false);
+    } else if (itemId === 'get-involved') {
+      setGetInvolvedDropdownOpen(true);
+      setProgramsDropdownOpen(false);
+    }
+  };
+
+  const handleMouseLeave = (itemId) => {
+    leaveTimeoutRef.current[itemId] = setTimeout(() => {
+      if (itemId === 'programs') setProgramsDropdownOpen(false);
+      if (itemId === 'get-involved') setGetInvolvedDropdownOpen(false);
+    }, 220); // Smooth grace period ensures mouse transition is never cut off
+  };
+
+
+  const handleDropdownTriggerClick = (e, itemId) => {
+    e.stopPropagation();
+    if (itemId === 'programs') {
+      setProgramsDropdownOpen((prev) => !prev);
+      setGetInvolvedDropdownOpen(false);
+    } else if (itemId === 'get-involved') {
+      setGetInvolvedDropdownOpen((prev) => !prev);
+      setProgramsDropdownOpen(false);
+    }
+  };
 
   const navItems = [
     { id: 'home', label: 'Home' },
@@ -61,8 +143,61 @@ export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSe
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const showMarquee = currentPage === 'home' && announcement && !marqueeDismissed;
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#e7e2d8] transition-all">
+      {/* Global Live Marquee Broadcast Ticker (Shows on Home page for 5 cycles before going off) */}
+      {showMarquee && (
+        <aside
+          aria-label="Live Announcement Ribbon"
+          className={`w-full bg-[#142722] text-white border-b border-[#1f3b34] overflow-hidden transition-all duration-700 ease-in-out flex items-center shadow-inner ${
+            marqueeFading
+              ? 'max-h-0 opacity-0 py-0 border-transparent -translate-y-2 pointer-events-none'
+              : 'max-h-12 opacity-100 py-1.5'
+          }`}
+        >
+          {/* Live Ticker Anchor Badge */}
+          <div className="shrink-0 flex items-center gap-2 pl-3 sm:pl-6 pr-3 py-0.5 bg-[#142722] z-10 border-r border-[#1f3b34]">
+            <span className="w-2 h-2 rounded-full bg-[#f7c899] animate-pulse"></span>
+            <span className="text-[10px] sm:text-[11px] font-heading font-extrabold text-[#f7c899] tracking-wider uppercase whitespace-nowrap">
+              LIVE TICKER
+            </span>
+          </div>
+
+          {/* Marquee Continuous Scrolling Content */}
+          <div className="flex-1 overflow-hidden relative flex items-center mx-2 group">
+            <div
+              className="animate-marquee flex items-center gap-8 sm:gap-12 whitespace-nowrap will-change-transform cursor-pointer"
+              onAnimationIteration={handleMarqueeIteration}
+              title="Hover to pause announcement"
+            >
+              {[...Array(4)].map((_, idx) => (
+                <div key={idx} className="flex items-center gap-8 sm:gap-12 text-xs sm:text-[13px] text-white/95 font-medium">
+                  <span>{announcement}</span>
+                  <span className="text-[#f7c899]/60 text-xs select-none">✦</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Controls: Loop Count & Dismiss Button */}
+          <div className="shrink-0 flex items-center gap-2 sm:gap-3 pl-2 sm:pl-3 pr-3 sm:pr-6 py-0.5 bg-[#142722] z-10 border-l border-[#1f3b34]">
+            <span className="text-[10px] font-mono font-medium text-[#f7c899]/85 px-2 py-0.5 rounded-full bg-white/5 border border-white/10 hidden sm:inline-block">
+              Loop {Math.min(marqueeCycles + 1, 5)}/5
+            </span>
+            <button
+              onClick={handleDismissMarquee}
+              className="text-white/60 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+              title="Dismiss announcement"
+              aria-label="Dismiss live ticker"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </aside>
+      )}
+
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3.5">
         <div className="flex justify-between items-center">
@@ -95,46 +230,65 @@ export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSe
 
               if (item.hasDropdown) {
                 const isDropdownOpen = item.id === 'programs' ? programsDropdownOpen : getInvolvedDropdownOpen;
-                const setDropdown = item.id === 'programs' ? setProgramsDropdownOpen : setGetInvolvedDropdownOpen;
 
                 return (
                   <div
                     key={item.id}
-                    className="relative"
-                    onMouseEnter={() => setDropdown(true)}
-                    onMouseLeave={() => setDropdown(false)}
+                    className="relative nav-dropdown-container py-1"
+                    onMouseEnter={() => handleMouseEnter(item.id)}
+                    onMouseLeave={() => handleMouseLeave(item.id)}
                   >
                     <button
-                      onClick={() => handleNavClick(item.id)}
-                      className={`text-xs font-semibold tracking-wide transition-colors py-1 cursor-pointer flex items-center gap-1 ${
-                        isActive
+                      type="button"
+                      onClick={(e) => handleDropdownTriggerClick(e, item.id)}
+                      className={`text-xs font-semibold tracking-wide transition-colors py-1 px-1 cursor-pointer flex items-center gap-1 ${isActive || isDropdownOpen
                           ? 'text-primary'
                           : 'text-ink-light hover:text-ink'
-                      }`}
+                        }`}
+                      aria-expanded={isDropdownOpen}
+                      aria-haspopup="true"
                     >
                       <span>{item.label}</span>
-                      <ChevronDown className="w-3 h-3 opacity-60" />
+                      <ChevronDown
+                        className={`w-3 h-3 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-primary opacity-100' : 'opacity-60'
+                          }`}
+                      />
                     </button>
 
-                    {/* Submenu Dropdown */}
+                    {/* Submenu Dropdown with interactive padding bridge and zero gap */}
                     {isDropdownOpen && (
-                      <div className="absolute top-full left-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-[#e7e2d8] p-2 flex flex-col gap-1 animate-fade-in z-50">
-                        <button
-                          onClick={() => handleNavClick(item.id)}
-                          className="text-left text-xs font-bold text-primary p-2.5 rounded-xl hover:bg-sand transition-colors cursor-pointer"
-                        >
-                          All {item.label} Overview
-                        </button>
-                        <div className="h-px bg-[#f2eee8] my-0.5"></div>
-                        {item.subItems.map((sub) => (
+                      <div
+                        className="absolute top-full left-0 pt-2 z-50"
+                        onMouseEnter={() => handleMouseEnter(item.id)}
+                        onMouseLeave={() => handleMouseLeave(item.id)}
+                      >
+                        <div className="w-64 bg-white rounded-2xl shadow-xl border border-[#e7e2d8] p-2 flex flex-col gap-1 animate-fade-in relative before:absolute before:-top-3 before:left-0 before:right-0 before:h-3 before:content-['']">
                           <button
-                            key={sub.id}
-                            onClick={() => handleNavClick(item.id, sub.id)}
-                            className="text-left text-xs font-medium text-ink-light hover:text-ink p-2.5 rounded-xl hover:bg-sand transition-colors cursor-pointer"
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleNavClick(item.id);
+                            }}
+                            className="text-left text-xs font-bold text-primary p-2.5 rounded-xl hover:bg-sand transition-colors cursor-pointer flex items-center justify-between group"
                           >
-                            {sub.label}
+                            <span>All {item.label} Overview</span>
+                            <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 transition-transform" />
                           </button>
-                        ))}
+                          <div className="h-px bg-[#f2eee8] my-0.5"></div>
+                          {item.subItems.map((sub) => (
+                            <button
+                              key={sub.id}
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleNavClick(item.id, sub.id);
+                              }}
+                              className="text-left text-xs font-medium text-ink-light hover:text-ink hover:font-semibold p-2.5 rounded-xl hover:bg-sand transition-all cursor-pointer"
+                            >
+                              {sub.label}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -145,11 +299,10 @@ export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSe
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`text-xs font-semibold tracking-wide transition-colors py-1 cursor-pointer ${
-                    isActive
+                  className={`text-xs font-semibold tracking-wide transition-colors py-1 cursor-pointer ${isActive
                       ? 'text-primary'
                       : 'text-ink-light hover:text-ink'
-                  }`}
+                    }`}
                 >
                   {item.label}
                 </button>
@@ -196,11 +349,10 @@ export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSe
                 <div key={item.id} className="flex flex-col">
                   <button
                     onClick={() => handleNavClick(item.id)}
-                    className={`text-left font-medium text-sm py-2.5 px-3 rounded-xl transition-all cursor-pointer flex items-center justify-between ${
-                      isActive
+                    className={`text-left font-medium text-sm py-2.5 px-3 rounded-xl transition-all cursor-pointer flex items-center justify-between ${isActive
                         ? 'bg-sand text-primary font-bold'
                         : 'text-ink hover:bg-sand/60'
-                    }`}
+                      }`}
                   >
                     <span>{item.label}</span>
                     <ArrowRight className="w-4 h-4 opacity-40" />

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { CreditCard, Landmark, CheckCircle2, Heart, HandHeart, Copy, X, ArrowRight, ShieldCheck, Check } from './Icons';
+import { useState } from 'react';
+import { CreditCard, Landmark, CheckCircle2, Copy, X, ArrowRight, Check } from './Icons';
 
 export default function DonateModal({ isOpen, onClose }) {
   const [currency, setCurrency] = useState('NGN');

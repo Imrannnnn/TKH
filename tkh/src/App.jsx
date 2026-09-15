@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { DataProvider } from './context/DataContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -47,6 +47,9 @@ export default function App() {
         setCurrentPage('legal');
         setSelectedLegalTab(tab);
       } else {
+        if (hash === 'programs') {
+          setSelectedProgramId(null);
+        }
         setCurrentPage(hash);
       }
     };

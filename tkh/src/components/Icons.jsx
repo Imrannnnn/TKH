@@ -1,4 +1,3 @@
-import React from 'react';
 
 export function Heart({ className = "w-5 h-5", ...props }) {
   return (

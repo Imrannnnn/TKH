@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { School, Stethoscope, Droplets, BookOpen, Users, CheckCircle2, MapPin, Laptop, HandHeart, ArrowRight, ArrowLeft, Heart, Sun, Award, Quote } from '../components/Icons';
+import { useState, useEffect } from 'react';
+import { School, Stethoscope, BookOpen, Users, Laptop, HandHeart, ArrowRight, ArrowLeft, Heart, Quote } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
-export const programsData = [
+const programsData = [
   {
     id: 'scholarships',
     pillar: 'Education',
@@ -245,13 +245,18 @@ export const programsData = [
   }
 ];
 
-export default function Programs({ onOpenDonate, setCurrentPage, initialProgramId = null }) {
+export default function Programs({ onOpenDonate, initialProgramId = null }) {
   const [selectedProgramId, setSelectedProgramId] = useState(initialProgramId);
+  const [prevProgramId, setPrevProgramId] = useState(initialProgramId);
   const [pillarFilter, setPillarFilter] = useState('all');
+
+  if (prevProgramId !== initialProgramId) {
+    setPrevProgramId(initialProgramId);
+    setSelectedProgramId(initialProgramId);
+  }
 
   useEffect(() => {
     if (initialProgramId) {
-      setSelectedProgramId(initialProgramId);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [initialProgramId]);
@@ -264,7 +269,6 @@ export default function Programs({ onOpenDonate, setCurrentPage, initialProgramI
 
   // Render Program Detail Page
   if (activeProgram) {
-    const IconComponent = activeProgram.icon;
     return (
       <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
         <div className="relative max-w-4xl mx-auto px-4 md:px-8 py-6 overflow-hidden">
@@ -492,7 +496,6 @@ export default function Programs({ onOpenDonate, setCurrentPage, initialProgramI
 
         <div className="relative z-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPrograms.map((prog) => {
-            const IconComponent = prog.icon;
             return (
               <div
                 key={prog.id}

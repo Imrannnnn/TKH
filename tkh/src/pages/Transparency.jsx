@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { ShieldCheck, FileText, Download, CheckCircle2, Award, Heart, TrendingUp } from '../components/Icons';
+import { ShieldCheck, FileText, Download, CheckCircle2, Heart } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Transparency({ onOpenDonate }) {

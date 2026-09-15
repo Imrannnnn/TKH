@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { Calendar, MapPin, Users, Stethoscope, School, Heart, CheckCircle2, Clock, ArrowRight } from '../components/Icons';
+import { Calendar, MapPin, Heart } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Outreaches({ onOpenDonate }) {

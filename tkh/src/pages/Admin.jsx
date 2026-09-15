@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useData } from '../context/DataContext';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 import {
@@ -9,7 +9,6 @@ import {
   Edit3,
   LogOut,
   RefreshCw,
-  Sliders,
   Layers,
   Search,
   AlertTriangle,
@@ -18,9 +17,6 @@ import {
   Calendar,
   MapPin,
   Users,
-  School,
-  Stethoscope,
-  Droplets,
   BookOpen,
   ArrowRight,
   ArrowLeft,
@@ -30,21 +26,11 @@ import {
   Globe,
   Mail,
   Eye,
-  Building2,
-  HandHeart,
-  HelpCircle,
-  Tag,
-  Clock,
   X,
   Menu,
   Database,
-  Activity,
   ChevronRight,
   ExternalLink,
-  Shield,
-  Filter,
-  UserCheck,
-  Sparkles,
   Download,
   Check
 } from '../components/Icons';
@@ -158,15 +144,19 @@ export default function Admin({ setCurrentPage }) {
 
   // Temporary announcement editor
   const [tempAnnouncement, setTempAnnouncement] = useState(announcement);
-  useEffect(() => {
+  const [prevAnnouncement, setPrevAnnouncement] = useState(announcement);
+  if (prevAnnouncement !== announcement) {
+    setPrevAnnouncement(announcement);
     setTempAnnouncement(announcement);
-  }, [announcement]);
+  }
 
   // Financial allocations local state for interactive slider tweaking
   const [localAllocations, setLocalAllocations] = useState(allocations);
-  useEffect(() => {
+  const [prevAllocations, setPrevAllocations] = useState(allocations);
+  if (prevAllocations !== allocations) {
+    setPrevAllocations(allocations);
     setLocalAllocations(allocations);
-  }, [allocations]);
+  }
 
   const showToast = (msg) => {
     setToastMessage(msg);
@@ -228,20 +218,6 @@ export default function Admin({ setCurrentPage }) {
       setLoginError('Invalid email or password.');
     }
     setIsLoggingIn(false);
-  };
-
-  const handleDemoLogin = () => {
-    const demoUser = {
-      name: 'Ten Kind Hands Super Admin',
-      email: 'admin@tenkindhands.org',
-      role: 'superadmin'
-    };
-    setIsAuthenticated(true);
-    setAdminUser(demoUser);
-    sessionStorage.setItem('tkh_admin_auth', 'true');
-    sessionStorage.setItem('tkh_admin_user', JSON.stringify(demoUser));
-    setLoginError('');
-    showToast('Signed in with Super Admin credentials');
   };
 
   const handleLogout = () => {

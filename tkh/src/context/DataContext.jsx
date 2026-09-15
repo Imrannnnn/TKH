@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'tkh_platform_data_v2';
 
-export const initialNewsArticles = [
+const initialNewsArticles = [
   {
     id: 'gidan-solar-commissioned',
     title: 'Commissioning of the 45th Solar Classroom in Gidan Community',
@@ -35,7 +35,7 @@ export const initialNewsArticles = [
   }
 ];
 
-export const initialOutreaches = [
+const initialOutreaches = [
   {
     id: 'outreach-1',
     status: 'upcoming',
@@ -86,39 +86,50 @@ export const initialOutreaches = [
   }
 ];
 
-export const initialMetrics = [
+const initialMetrics = [
   {
     id: 'students',
     category: 'education',
     iconName: 'School',
-    label: 'Education Impact',
-    stat: '12,500',
-    description: 'Students Enrolled & Supplied',
+    label: 'Students Supplied',
+    stat: '12,500+',
+    description: 'Students Supplied',
     growth: '+32% YoY',
     color: 'text-primary',
-    detail: 'Provided free uniforms, textbooks, solar classroom seating, and daily sanitary supplies across 45 schools.'
+    detail: 'Full uniforms, textbooks, and tuition scholarships across 24 partner schools.'
   },
   {
     id: 'schools',
     category: 'education',
     iconName: 'BookOpen',
-    label: 'Infrastructure',
+    label: 'Solar Classrooms',
     stat: '45',
-    description: 'Solar Classrooms Built',
+    description: 'Solar Classrooms',
     growth: '+14 New in 2024',
-    color: 'text-tertiary',
-    detail: 'Equipped with solar power generation, weatherproof roofing, ventilated windows, and modern desks.'
+    color: 'text-ink',
+    detail: 'Weather-proof, solar-lit learning blocks built in Kaduna, Niger & Ogun.'
   },
   {
     id: 'patients',
     category: 'healthcare',
     iconName: 'Stethoscope',
-    label: 'Clinical Outreach',
-    stat: '8,200',
-    description: 'Free Medical Consultations',
+    label: 'Patients Treated',
+    stat: '8,200+',
+    description: 'Patients Treated',
     growth: '+45% YoY',
     color: 'text-forest',
-    detail: 'Malaria screening, antibiotic courses, hypertension monitoring, and routine infant vaccinations.'
+    detail: 'Free mobile clinical triage, malaria testing, and prescription drugs.'
+  },
+  {
+    id: 'giving-model',
+    category: 'transparency',
+    iconName: 'ShieldCheck',
+    label: 'Direct Giving Model',
+    stat: '100%',
+    description: 'Direct Giving Model',
+    growth: '100% Direct',
+    color: 'text-emerald-800',
+    detail: 'Zero cuts from public gifts; admin is funded privately by trustee endowment.'
   },
   {
     id: 'clinics',
@@ -144,7 +155,7 @@ export const initialMetrics = [
   }
 ];
 
-export const initialAllocations = [
+const initialAllocations = [
   {
     id: 'frontline',
     label: 'Frontline Programs & Field Deliverables',
@@ -168,7 +179,7 @@ export const initialAllocations = [
   }
 ];
 
-export const initialDocuments = [
+const initialDocuments = [
   {
     id: 'doc-1',
     title: '2025 Audited Financial Statement (PDF)',
@@ -206,9 +217,9 @@ export const initialDocuments = [
   }
 ];
 
-export const initialAnnouncement = 'Commissioning new solar classrooms in Kaduna & mobile health clinic in Enugu';
+const initialAnnouncement = 'Commissioning new solar classrooms in Kaduna & mobile health clinic in Enugu';
 
-export const initialInquiries = [
+const initialInquiries = [
   {
     id: 'inq-1',
     name: 'Dr. Kelechi Nnamani',
@@ -250,10 +261,17 @@ export function DataProvider({ children }) {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
+        let loadedMetrics = parsed.metrics || defaultData.metrics;
+        initialMetrics.forEach((initM) => {
+          if (!loadedMetrics.some((m) => m.id === initM.id)) {
+            loadedMetrics = [...loadedMetrics, initM];
+          }
+        });
+
         return {
           news: parsed.news || defaultData.news,
           outreaches: parsed.outreaches || defaultData.outreaches,
-          metrics: parsed.metrics || defaultData.metrics,
+          metrics: loadedMetrics,
           allocations: parsed.allocations || defaultData.allocations,
           documents: parsed.documents || defaultData.documents,
           announcement: parsed.announcement ?? defaultData.announcement,
@@ -276,8 +294,15 @@ export function DataProvider({ children }) {
       })
       .then((remoteData) => {
         if (isMounted && remoteData && Array.isArray(remoteData.news)) {
-          setData(remoteData);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteData));
+          let remoteMetrics = remoteData.metrics || defaultData.metrics;
+          initialMetrics.forEach((initM) => {
+            if (!remoteMetrics.some((m) => m.id === initM.id)) {
+              remoteMetrics = [...remoteMetrics, initM];
+            }
+          });
+          const mergedRemote = { ...remoteData, metrics: remoteMetrics };
+          setData(mergedRemote);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedRemote));
         }
       })
       .catch((err) => {

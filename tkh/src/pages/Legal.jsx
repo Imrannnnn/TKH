@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
-import { ShieldCheck, FileText, CheckCircle2 } from '../components/Icons';
+import { useState } from 'react';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
-export default function Legal({ initialSection = 'privacy' }) {
-  const [activeTab, setActiveTab] = useState(initialSection);
+export default function Legal({ initialSection = 'privacy', initialTab }) {
+  const [activeTab, setActiveTab] = useState(initialTab || initialSection);
+  const [prevInitialTab, setPrevInitialTab] = useState(initialTab);
+
+  if (prevInitialTab !== initialTab) {
+    setPrevInitialTab(initialTab);
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }
 
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { Mail, Phone, MapPin, Send, CheckCircle2, MessageCircle, Clock } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';

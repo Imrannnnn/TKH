@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MessageSquare, X, ArrowRight, ShieldCheck, Clock } from './Icons';
+import { useState } from 'react';
+import { MessageSquare, X, ArrowRight, Clock } from './Icons';
 
 export default function WhatsAppWidget({ currentPage, selectedProgram }) {
   const [isOpen, setIsOpen] = useState(false);

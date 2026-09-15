@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { Calendar, Tag, ArrowRight, ArrowLeft, Heart, Mail, CheckCircle2 } from '../components/Icons';
+import { Calendar, ArrowRight, ArrowLeft, Mail, CheckCircle2 } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
-export const newsArticles = [
+const newsArticles = [
   {
     id: 'gidan-solar-commissioned',
     title: 'Commissioning of the 45th Solar Classroom in Gidan Community',

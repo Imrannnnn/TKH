@@ -163,3 +163,24 @@ h1, h2, h3, h4, h5, h6, .editorial-title, .font-heading {
 .animate-fade-in {
   animation: fadeInSoft 0.25s ease-out forwards;
 }
+
+/* Global Live Marquee Ticker Animation */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 12s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+

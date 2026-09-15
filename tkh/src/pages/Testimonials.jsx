@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Quote, Heart, Star, CheckCircle2 } from '../components/Icons';
+import { useState } from 'react';
+import { Quote, Heart } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Testimonials({ onOpenDonate }) {

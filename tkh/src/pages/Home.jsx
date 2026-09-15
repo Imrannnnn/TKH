@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { School, Stethoscope, Droplets, BookOpen, Heart, HandHeart, ArrowRight, TrendingUp, Sun, Quote, Users, ShieldCheck, MapPin, CheckCircle2, Award } from '../components/Icons';
+import { useState, useEffect } from 'react';
+import { useData } from '../context/DataContext';
+import { Heart, ArrowRight, Quote, MapPin } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Home({ onOpenDonate, setCurrentPage }) {
+  const { metrics } = useData();
   const [calcAmount, setCalcAmount] = useState(15000);
   const [heroImageIdx, setHeroImageIdx] = useState(0);
 
   const heroSlides = [
     {
       img: "/images/IMG_0294.JPG",
-      caption: "Primary School Uniform & Book Distribution Drive • Rivers State"
+      caption: "Child empowerment Program • Makurdi"
     },
     {
-      img: "/images/IMG_0303.JPG",
+      img: "/images/11222.jpeg",
       caption: "Gidan Community Primary School • Solar Classroom & Desks"
     },
     {
       img: "/images/IMG_0995.JPG",
-      caption: "Women & Community Empowerment • Clean Energy & Household Support"
+      caption: "Women Empowerment Outreach • Dafara"
     }
   ];
 
@@ -41,25 +43,25 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
   const testimonials = [
     {
-      quote: "Before Ten Kind Hands brought solar power and desks, our pupils learned on bare floors and had to go home whenever rain clouds gathered. Today, attendance has soared to over 98%.",
-      author: "Mrs. Amina Danjuma",
-      role: "Headmistress",
-      institution: "Gidan Community Primary School",
-      location: "Kaduna State"
+      quote: "I sincerely appreciate Ten Kind Hands Foundation for their incredible support. After promising us computer systems during our Speech and Prize-Giving Ceremony in July, they returned and surprised us by setting up a well-equipped computer laboratory with nine computers, cubicles, seating, and an air conditioner.  This means so much to us because our children can now gain the digital skills they need to compete in today’s world.  Thank you, Ten Kind Hands Foundation. God bless you!   ",
+      author: "Mrs. Becky Omagbogu",
+      role: "Proprietor",
+      institution: "Beckwin International School",
+      location: "Plateau State"
     },
     {
-      quote: "The mobile health clinic detected my child's severe pneumonia in time and provided all treatments free of charge. Having caring medical staff reach our remote hamlet is a blessing.",
-      author: "Grace Adebayo",
-      role: "Mother of 3 & Community Health Advocate",
-      institution: "Rural Women's Forum",
-      location: "Ogun State"
+      quote: "We are so grateful to Ten Kind Hands Foundation for remembering and supporting our children with the donation of free notebooks.  Some of our pupils did not have writing materials and were struggling to manage with what they had. But today, things are better, and these children now have something to begin with as they prepare for the new school year.  We are truly grateful. May God richly bless Ten Kind Hands Foundation. May they never lack, and may this act of kindness reach many more places.  Thank you, Ten Kind Hands Foundation. We love you and appreciate you!  .",
+      author: ".",
+      role: "Proprietor",
+      institution: " , Karvron Montessori School, Abuja",
+      location: "Abuja"
     },
     {
-      quote: "Ten Kind Hands does not dictate to us; they sit with village elders and ask what our youth need most. This is genuine dignity and true partnership.",
-      author: "Chief Emeka Okafor",
-      role: "Community Elder & Development Secretary",
-      institution: "Oji River Council",
-      location: "Enugu State"
+      quote: "Thank you, Ten Kind Hands Foundation. We truly appreciate and love you for coming to our community to educate us about malaria, how to prevent it, and how to take better care of ourselves.  The mosquito nets, insecticides, supplements, and other medical supplies donated in large quantities have provided meaningful support to our community in the fight against malaria.  May God bless you richly for all you are doing.  .",
+      author: "",
+      role: " Widows/Nursing Mothers",
+      institution: "Abata Community, Lagos",
+      location: "Lagos"
     }
   ];
 
@@ -75,16 +77,14 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           return (
             <div
               key={index}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-[1800ms] ease-in-out ${
-                isActive ? 'opacity-100 z-0' : 'opacity-0 z-0 pointer-events-none'
-              }`}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-[1800ms] ease-in-out ${isActive ? 'opacity-100 z-0' : 'opacity-0 z-0 pointer-events-none'
+                }`}
             >
               <img
                 src={slide.img}
                 alt={slide.caption}
-                className={`w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${
-                  isActive ? 'scale-105' : 'scale-100'
-                }`}
+                className={`w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${isActive ? 'scale-105' : 'scale-100'
+                  }`}
               />
             </div>
           );
@@ -102,14 +102,14 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           </div>
 
           {/* Clean & Proportional Poppins Headline */}
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[46px] font-heading font-extrabold text-white max-w-3xl tracking-tight leading-[1.2]">
-            Restoring dignity through equal access to{' '}
-            <span className="text-[#f7c899]">education &amp; healthcare.</span>
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[35px] font-heading font-extrabold text-white max-w-3xl tracking-tight leading-[1.2]">
+            Empowering the lives of African Women and Children through {' '}
+            <span className="text-[#f7c899]">Healthcare &amp; Educational initiatives.</span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl leading-relaxed font-normal">
-            We construct solar-powered rural classrooms, train local educators, and deploy mobile medical clinics directly into underserved communities across Nigeria.
+            Every act of kindness shapes a brighter future.
           </p>
 
           {/* Action CTAs */}
@@ -148,9 +148,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                   key={i}
                   onClick={() => setHeroImageIdx(i)}
                   aria-label={`Go to slide ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                    i === heroImageIdx ? 'w-6 bg-white shadow-xs' : 'w-2 bg-white/40 hover:bg-white/70'
-                  }`}
+                  className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${i === heroImageIdx ? 'w-6 bg-white shadow-xs' : 'w-2 bg-white/40 hover:bg-white/70'
+                    }`}
                 />
               ))}
             </div>
@@ -183,10 +182,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
             <div className="md:col-span-8 space-y-3">
               <p className="text-base sm:text-lg text-ink-light leading-relaxed">
-                When poverty forces a family to choose between meal security and school levies, education is the first thing sacrificed. When malaria strikes, remote villages are hours from the nearest dispensary.
+                When poverty forces families to choose between putting food on the table and paying school expenses, a child’s education is often the first sacrifice.* Without books, learning materials, scholarships, and the support needed to stay in school, many children risk falling behind or abandoning their education altogether. At the same time, vulnerable communities continue to face preventable health challenges, while women and widows struggle to access the skills and opportunities needed to achieve financial independence.
               </p>
               <p className="text-base sm:text-lg text-ink font-semibold leading-relaxed">
-                Ten Kind Hands bridges this divide by delivering permanent solar learning hubs and mobile medical clinics with 100% community ownership.
+                Ten Kind Hands Foundation bridges these gaps by investing in children’s education through scholarships, educational materials, school donations, learning support, and youth development initiatives, while also extending healthcare interventions and women’s empowerment programmes to vulnerable communities.* By meeting immediate needs and creating pathways to opportunity, we help children learn, women thrive, and communities build a stronger and more hopeful future.
               </p>
             </div>
           </div>
@@ -215,47 +214,84 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
-              <span className="font-mono text-3xl sm:text-4xl font-bold text-primary block mb-1">
-                12,500+
-              </span>
-              <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">Students Supplied</h3>
-              <p className="text-xs text-ink-muted leading-relaxed">
-                Full uniforms, textbooks, and tuition scholarships across 24 partner schools.
-              </p>
-            </div>
+          {(() => {
+            const studentMetric = metrics?.find((m) => m.id === 'students') || {
+              stat: '12,500+',
+              label: 'Students Supplied',
+              description: 'Students Supplied',
+              detail: 'Full uniforms, textbooks, and tuition scholarships across 24 partner schools.'
+            };
+            const schoolMetric = metrics?.find((m) => m.id === 'schools') || {
+              stat: '45',
+              label: 'Solar Classrooms',
+              description: 'Solar Classrooms',
+              detail: 'Weather-proof, solar-lit learning blocks built in Kaduna, Niger & Ogun.'
+            };
+            const patientMetric = metrics?.find((m) => m.id === 'patients') || {
+              stat: '8,200+',
+              label: 'Patients Treated',
+              description: 'Patients Treated',
+              detail: 'Free mobile clinical triage, malaria testing, and prescription drugs.'
+            };
+            const givingMetric = metrics?.find((m) => m.id === 'giving-model' || m.id === 'direct-giving') || {
+              stat: '100%',
+              label: 'Direct Giving Model',
+              description: 'Direct Giving Model',
+              detail: 'Zero cuts from public gifts; admin is funded privately by trustee endowment.'
+            };
 
-            <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
-              <span className="font-mono text-3xl sm:text-4xl font-bold text-ink block mb-1">
-                45
-              </span>
-              <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">Solar Classrooms</h3>
-              <p className="text-xs text-ink-muted leading-relaxed">
-                Weather-proof, solar-lit learning blocks built in Kaduna, Niger &amp; Ogun.
-              </p>
-            </div>
+            return (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
+                  <span className="font-mono text-3xl sm:text-4xl font-bold text-primary block mb-1">
+                    {studentMetric.stat}
+                  </span>
+                  <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">
+                    {studentMetric.description || studentMetric.label}
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed">
+                    {studentMetric.detail}
+                  </p>
+                </div>
 
-            <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
-              <span className="font-mono text-3xl sm:text-4xl font-bold text-forest block mb-1">
-                8,200+
-              </span>
-              <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">Patients Treated</h3>
-              <p className="text-xs text-ink-muted leading-relaxed">
-                Free mobile clinical triage, malaria testing, and prescription drugs.
-              </p>
-            </div>
+                <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
+                  <span className="font-mono text-3xl sm:text-4xl font-bold text-ink block mb-1">
+                    {schoolMetric.stat}
+                  </span>
+                  <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">
+                    {schoolMetric.description || schoolMetric.label}
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed">
+                    {schoolMetric.detail}
+                  </p>
+                </div>
 
-            <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
-              <span className="font-mono text-3xl sm:text-4xl font-bold text-emerald-800 block mb-1">
-                100%
-              </span>
-              <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">Direct Giving Model</h3>
-              <p className="text-xs text-ink-muted leading-relaxed">
-                Zero cuts from public gifts; admin is funded privately by trustee endowment.
-              </p>
-            </div>
-          </div>
+                <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
+                  <span className="font-mono text-3xl sm:text-4xl font-bold text-forest block mb-1">
+                    {patientMetric.stat}
+                  </span>
+                  <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">
+                    {patientMetric.description || patientMetric.label}
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed">
+                    {patientMetric.detail}
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
+                  <span className="font-mono text-3xl sm:text-4xl font-bold text-emerald-800 block mb-1">
+                    {givingMetric.stat}
+                  </span>
+                  <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">
+                    {givingMetric.description || givingMetric.label}
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed">
+                    {givingMetric.detail}
+                  </p>
+                </div>
+              </div>
+            );
+          })()}
         </section>
       </div>
 

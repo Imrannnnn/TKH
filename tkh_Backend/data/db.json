@@ -86,34 +86,45 @@
       "id": "students",
       "category": "education",
       "iconName": "School",
-      "label": "Education Impact",
-      "stat": "12,500",
-      "description": "Students Enrolled & Supplied",
+      "label": "Students Supplied",
+      "stat": "12,500+",
+      "description": "Students Supplied",
       "growth": "+32% YoY",
       "color": "text-primary",
-      "detail": "Provided free uniforms, textbooks, solar classroom seating, and daily sanitary supplies across 45 schools."
+      "detail": "Full uniforms, textbooks, and tuition scholarships across 24 partner schools."
     },
     {
       "id": "schools",
       "category": "education",
       "iconName": "BookOpen",
-      "label": "Infrastructure",
+      "label": "Solar Classrooms",
       "stat": "45",
-      "description": "Solar Classrooms Built",
+      "description": "Solar Classrooms",
       "growth": "+14 New in 2024",
-      "color": "text-tertiary",
-      "detail": "Equipped with solar power generation, weatherproof roofing, ventilated windows, and modern desks."
+      "color": "text-ink",
+      "detail": "Weather-proof, solar-lit learning blocks built in Kaduna, Niger & Ogun."
     },
     {
       "id": "patients",
       "category": "healthcare",
       "iconName": "Stethoscope",
-      "label": "Clinical Outreach",
-      "stat": "8,200",
-      "description": "Free Medical Consultations",
+      "label": "Patients Treated",
+      "stat": "8,200+",
+      "description": "Patients Treated",
       "growth": "+45% YoY",
       "color": "text-forest",
-      "detail": "Malaria screening, antibiotic courses, hypertension monitoring, and routine infant vaccinations."
+      "detail": "Free mobile clinical triage, malaria testing, and prescription drugs."
+    },
+    {
+      "id": "giving-model",
+      "category": "transparency",
+      "iconName": "ShieldCheck",
+      "label": "Direct Giving Model",
+      "stat": "100%",
+      "description": "Direct Giving Model",
+      "growth": "100% Direct",
+      "color": "text-emerald-800",
+      "detail": "Zero cuts from public gifts; admin is funded privately by trustee endowment."
     },
     {
       "id": "clinics",
@@ -219,7 +230,7 @@
       "category": "Medical Volunteer",
       "message": "I am a consultant pediatrician based in Enugu interested in volunteering on your upcoming Q4 rural outreach missions.",
       "date": "2026-09-02",
-      "status": "Unread",
+      "status": "Reviewed",
       "source": "Volunteer Portal"
     },
     {

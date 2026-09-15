@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Mail, CheckCircle2, ShieldCheck, Heart, MapPin, MessageSquare, ArrowRight } from './Icons';
+import { useState } from 'react';
+import { CheckCircle2, Heart, MessageSquare } from './Icons';
 
-export default function Footer({ setCurrentPage, onOpenDonate, onSelectLegalTab }) {
+export default function Footer({ setCurrentPage, onSelectLegalTab }) {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -188,6 +188,18 @@ export default function Footer({ setCurrentPage, onOpenDonate, onSelectLegalTab 
                 <span>WhatsApp Desk</span>
               </a>
             </div>
+          </div>
+
+
+
+          <div className="flex flex-col gap-2.5">
+            <h4 className="text-xs uppercase tracking-wider text-ink font-bold mb-1">
+              Address
+            </h4>
+            <button onClick={() => handleNav('contact')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+              Abuja Liaison Office:
+              Plot 402, Constitution Avenue, Central Business District, Abuja, FCT, Nigeria
+            </button>
           </div>
         </div>
 

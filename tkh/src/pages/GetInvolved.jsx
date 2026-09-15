@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { HandHeart, Heart, Users, Briefcase, CheckCircle2, ArrowRight, ShieldCheck, Mail, Phone, Copy, Check, Clock } from '../components/Icons';
+import { HandHeart, Heart, Users, Briefcase, CheckCircle2, ArrowRight, Copy, Check, Clock } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
   const { addInquiry } = useData();
   const [activeTab, setActiveTab] = useState(initialTab);
+  const [prevInitialTab, setPrevInitialTab] = useState(initialTab);
+
+  if (prevInitialTab !== initialTab) {
+    setPrevInitialTab(initialTab);
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }
 
   // Volunteer form state
   const [volForm, setVolForm] = useState({
