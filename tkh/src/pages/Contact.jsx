@@ -40,7 +40,7 @@ export default function Contact() {
             Direct Communication
           </span>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
             We are here to listen, <br />
             <span className="text-primary">answer &amp; collaborate.</span>
           </h1>
@@ -58,7 +58,7 @@ export default function Contact() {
         <div className="relative z-10 grid md:grid-cols-12 gap-8 items-start">
           {/* Contact Information Column */}
           <div className="md:col-span-5 space-y-6">
-            <div className="bg-white/95 backdrop-blur-xs p-8 rounded-3xl border border-[#e7e2d8] shadow-xs">
+            <div className="bg-white/95 backdrop-blur-xs p-5 sm:p-8 rounded-3xl border border-[#e7e2d8] shadow-xs">
               <h3 className="text-2xl font-heading font-bold text-ink mb-6">
                 National Secretariat
               </h3>
@@ -84,9 +84,9 @@ export default function Contact() {
                   <Mail className="w-5 h-5 text-clay shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-ink block font-heading">Email Desks:</strong>
-                    <span className="block">General: <a href="mailto:info@tenkindhands.org" className="text-primary hover:underline">info@tenkindhands.org</a></span>
-                    <span className="block">Partnerships: <a href="mailto:partnerships@tenkindhands.org" className="text-primary hover:underline">partnerships@tenkindhands.org</a></span>
-                    <span className="block">Volunteers: <a href="mailto:volunteer@tenkindhands.org" className="text-primary hover:underline">volunteer@tenkindhands.org</a></span>
+                    <span className="block break-all sm:break-normal">General: <a href="mailto:info@tenkindhands.org" className="text-primary hover:underline">info@tenkindhands.org</a></span>
+                    <span className="block break-all sm:break-normal">Partnerships: <a href="mailto:partnerships@tenkindhands.org" className="text-primary hover:underline">partnerships@tenkindhands.org</a></span>
+                    <span className="block break-all sm:break-normal">Volunteers: <a href="mailto:volunteer@tenkindhands.org" className="text-primary hover:underline">volunteer@tenkindhands.org</a></span>
                   </div>
                 </div>
 
@@ -101,9 +101,9 @@ export default function Contact() {
             </div>
 
             {/* Instant WhatsApp Card */}
-            <div className="bg-sand/90 p-6 rounded-3xl border border-[#e7e2d8] flex items-center justify-between">
+            <div className="bg-sand/90 p-5 sm:p-6 rounded-3xl border border-[#e7e2d8] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white">
+                <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0">
                   <MessageCircle className="w-5 h-5" />
                 </div>
                 <div>
@@ -115,7 +115,7 @@ export default function Contact() {
                 href="https://wa.me/2348030001234?text=Hello%20Ten%20Kind%20Hands,%20I%20would%20like%20to%20inquire%20about..."
                 target="_blank"
                 rel="noreferrer"
-                className="px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors font-heading"
+                className="w-full sm:w-auto text-center px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors font-heading"
               >
                 Chat Now
               </a>
@@ -123,7 +123,7 @@ export default function Contact() {
           </div>
 
           {/* Contact Message Form */}
-          <div className="md:col-span-7 bg-white/95 backdrop-blur-xs p-8 sm:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
+          <div className="md:col-span-7 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
             {submitted ? (
               <div className="py-12 text-center animate-fade-in">
                 <CheckCircle2 className="w-12 h-12 text-emerald-700 mx-auto mb-4" />

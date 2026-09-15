@@ -294,11 +294,11 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
                 {activeProgram.badge} • {activeProgram.locations}
               </span>
 
-              <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-ink mb-3 tracking-tight">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl font-heading font-extrabold text-ink mb-3 tracking-tight">
                 {activeProgram.title}
               </h1>
 
-              <p className="text-base sm:text-lg text-primary font-semibold mb-4">
+              <p className="text-sm sm:text-lg text-primary font-semibold mb-4">
                 {activeProgram.subtitle}
               </p>
 
@@ -307,7 +307,7 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
               </p>
 
               {/* Program Milestone Bar */}
-              <div className="mt-8 p-6 rounded-2xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
+              <div className="mt-8 p-4 sm:p-6 rounded-2xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
                 <div className="flex justify-between text-xs font-bold mb-2 font-heading">
                   <span className="text-ink">2025–2026 Initiative Deployment</span>
                   <span className="text-primary">{activeProgram.fundedPercent}% Goal Reached</span>
@@ -318,7 +318,7 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
                     style={{ width: `${activeProgram.fundedPercent}%` }}
                   />
                 </div>
-                <div className="flex justify-between text-[11px] text-ink-muted">
+                <div className="flex flex-col sm:flex-row justify-between text-[11px] text-ink-muted gap-1">
                   <span>Benchmark: {activeProgram.budgetGoal}</span>
                   <span className="text-forest font-semibold">Active Field Deployment</span>
                 </div>
@@ -326,16 +326,16 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
             </div>
 
             {/* Two-Column Overview */}
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <div className="p-8 rounded-2xl bg-white border border-[#e7e2d8] shadow-xs">
-                <h3 className="text-2xl font-heading font-bold text-ink mb-3">What this initiative accomplishes</h3>
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8 mb-12">
+              <div className="p-5 sm:p-8 rounded-2xl bg-white border border-[#e7e2d8] shadow-xs">
+                <h3 className="text-xl sm:text-2xl font-heading font-bold text-ink mb-3">What this initiative accomplishes</h3>
                 <p className="text-xs sm:text-sm text-ink-light leading-relaxed">
                   {activeProgram.whatItDoes}
                 </p>
               </div>
 
-              <div className="p-8 rounded-2xl bg-white border border-[#e7e2d8] shadow-xs">
-                <h3 className="text-2xl font-heading font-bold text-ink mb-3">Who is reached &amp; empowered</h3>
+              <div className="p-5 sm:p-8 rounded-2xl bg-white border border-[#e7e2d8] shadow-xs">
+                <h3 className="text-xl sm:text-2xl font-heading font-bold text-ink mb-3">Who is reached &amp; empowered</h3>
                 <p className="text-xs sm:text-sm text-ink-light leading-relaxed">
                   {activeProgram.whoItServes}
                 </p>
@@ -363,12 +363,12 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
             </div>
 
             {/* Real Consented Story & Key Metrics */}
-            <div className="grid md:grid-cols-12 gap-8 mb-12 items-start">
-              <div className="md:col-span-7 p-8 rounded-2xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8]">
+            <div className="grid md:grid-cols-12 gap-6 sm:gap-8 mb-12 items-start">
+              <div className="md:col-span-7 p-5 sm:p-8 rounded-2xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8]">
                 <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
                   Field Case Study
                 </span>
-                <h4 className="text-2xl font-heading font-bold text-ink mb-1">
+                <h4 className="text-xl sm:text-2xl font-heading font-bold text-ink mb-1">
                   {activeProgram.realStory.name}
                 </h4>
                 <span className="text-xs text-ink-muted block mb-3">
@@ -379,7 +379,7 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
                 </p>
               </div>
 
-              <div className="md:col-span-5 p-8 rounded-2xl bg-white border border-[#e7e2d8] shadow-xs">
+              <div className="md:col-span-5 p-5 sm:p-8 rounded-2xl bg-white border border-[#e7e2d8] shadow-xs">
                 <span className="text-xs uppercase tracking-widest text-ink font-bold block mb-4 font-heading">
                   Key Stats
                 </span>
@@ -410,8 +410,8 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
             )}
 
             {/* Dedicated CTA */}
-            <div className="p-10 rounded-3xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8] text-center">
-              <h3 className="text-3xl font-heading font-bold text-ink mb-2">
+            <div className="p-6 sm:p-10 rounded-3xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8] text-center">
+              <h3 className="text-2xl sm:text-3xl font-heading font-bold text-ink mb-2">
                 Support the {activeProgram.title} Initiative
               </h3>
               <p className="text-xs sm:text-sm text-ink-light max-w-md mx-auto mb-6 leading-relaxed">
@@ -419,7 +419,7 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
               </p>
               <button
                 onClick={onOpenDonate}
-                className="btn-primary text-sm px-8 py-3.5 inline-flex items-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
+                className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-6 sm:px-8 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
               >
                 <span>{activeProgram.ctaText}</span>
                 <Heart className="w-4 h-4" />
@@ -445,7 +445,7 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
             Grassroots Programs
           </span>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
             Programs designed for agency, <br />
             <span className="text-primary">built for generational impact.</span>
           </h1>
@@ -455,10 +455,10 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
           </p>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
             <button
               onClick={() => setPillarFilter('all')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 pillarFilter === 'all'
                   ? 'bg-ink text-white'
                   : 'bg-sand text-ink-light hover:text-ink'
@@ -494,12 +494,12 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
       <section className="relative px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
         <CurvedWaveBackground side="left" />
 
-        <div className="relative z-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="relative z-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filteredPrograms.map((prog) => {
             return (
               <div
                 key={prog.id}
-                className="paper-card rounded-3xl p-8 flex flex-col justify-between bg-white/95 backdrop-blur-xs shadow-xs"
+                className="paper-card rounded-3xl p-5 sm:p-8 flex flex-col justify-between bg-white/95 backdrop-blur-xs shadow-xs"
               >
                 <div>
                   <div className="flex justify-between items-start mb-4">

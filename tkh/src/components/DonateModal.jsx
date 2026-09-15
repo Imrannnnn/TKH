@@ -45,12 +45,12 @@ export default function DonateModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 animate-fade-in overflow-y-auto">
-      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-6 md:p-8 border border-[#e7e2d8] my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 animate-fade-in overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-5 sm:p-6 md:p-8 border border-[#e7e2d8] my-6 sm:my-8">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 text-ink-muted hover:text-ink p-2 rounded-full bg-sand cursor-pointer transition-colors"
+          className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 text-ink-muted hover:text-ink p-2 rounded-full bg-sand cursor-pointer transition-colors"
           aria-label="Close modal"
         >
           <X className="w-4 h-4" />
@@ -74,11 +74,11 @@ export default function DonateModal({ isOpen, onClose }) {
         ) : (
           <div>
             {/* Modal Header */}
-            <div className="mb-6">
+            <div className="mb-5 sm:mb-6 pr-8">
               <span className="text-[10px] uppercase tracking-widest text-primary font-bold block mb-1">
                 Direct Dignity Fund
               </span>
-              <h2 className="editorial-title text-3xl text-ink">
+              <h2 className="editorial-title text-2xl sm:text-3xl text-ink">
                 Make a direct contribution.
               </h2>
               <p className="text-xs text-ink-light mt-1">
@@ -148,7 +148,7 @@ export default function DonateModal({ isOpen, onClose }) {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Currency & Frequency Toggle */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                   <div className="flex p-1 rounded-xl bg-sand border border-[#e7e2d8]">
                     <button
                       type="button"
@@ -270,7 +270,7 @@ export default function DonateModal({ isOpen, onClose }) {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="btn-primary w-full py-3.5 text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md mt-2"
+                  className="btn-primary w-full py-3.5 text-xs font-heading font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-md mt-2"
                 >
                   <span>
                     Proceed with {currency === 'NGN' ? '₦' : '$'}{customAmount ? customAmount : selectedAmount} {frequency === 'monthly' ? '/ Month' : ''}

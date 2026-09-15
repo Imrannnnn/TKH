@@ -12,8 +12,12 @@
   padding: 0;
 }
 
-html {
+html, body {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -24,14 +28,17 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* Headings: Poppins */
+/* Headings: Poppins with auto text wrapping to prevent any overflow on phones */
 h1, h2, h3, h4, h5, h6, .editorial-title, .font-heading {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .editorial-italic {

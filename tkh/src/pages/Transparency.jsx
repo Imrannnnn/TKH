@@ -44,7 +44,7 @@ export default function Transparency({ onOpenDonate }) {
             <span>Radical Accountability</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
             Open Books. Pure Trust. <br />
             <span className="text-primary">100% Direct Giving.</span>
           </h1>
@@ -59,7 +59,7 @@ export default function Transparency({ onOpenDonate }) {
       <section className="relative py-12 px-4 md:px-8 max-w-5xl mx-auto overflow-hidden">
         <CurvedWaveBackground side="left" />
 
-        <div className="relative z-10 bg-white/95 backdrop-blur-xs p-8 sm:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs mb-12">
+        <div className="relative z-10 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs mb-12">
           <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
             Fund Allocation Breakdown
           </span>
@@ -104,7 +104,7 @@ export default function Transparency({ onOpenDonate }) {
         </div>
 
         {/* Public Audit Repository */}
-        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
+        <div className="bg-white p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
           <div className="mb-8">
             <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
               Official Document Repository
@@ -118,7 +118,7 @@ export default function Transparency({ onOpenDonate }) {
             {activeDocuments.map((doc, idx) => (
               <div
                 key={idx}
-                className="p-5 rounded-2xl bg-sand/90 hover:bg-sand transition-colors border border-[#e7e2d8] flex flex-col sm:flex-row justify-between sm:items-center gap-4"
+                className="p-4 sm:p-5 rounded-2xl bg-sand/90 hover:bg-sand transition-colors border border-[#e7e2d8] flex flex-col sm:flex-row justify-between sm:items-center gap-4"
               >
                 <div className="flex items-center gap-3.5">
                   <div className="w-10 h-10 rounded-xl bg-white border border-[#e7e2d8] flex items-center justify-center shrink-0">
@@ -132,7 +132,7 @@ export default function Transparency({ onOpenDonate }) {
 
                 <button
                   onClick={() => handleDownload(doc.title)}
-                  className="btn-secondary text-xs px-5 py-2 flex items-center gap-2 cursor-pointer self-start sm:self-auto font-heading font-semibold"
+                  className="btn-secondary w-full sm:w-auto text-xs px-5 py-2 flex items-center justify-center gap-2 cursor-pointer font-heading font-semibold"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>{downloadingDoc === doc.title ? 'Downloading...' : 'Download File'}</span>
@@ -145,7 +145,7 @@ export default function Transparency({ onOpenDonate }) {
         <div className="text-center pt-16">
           <button
             onClick={onOpenDonate}
-            className="btn-primary text-sm px-8 py-3.5 inline-flex items-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
+            className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-6 sm:px-8 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
           >
             <span>Back Our Direct Giving Mission</span>
             <Heart className="w-4 h-4" />

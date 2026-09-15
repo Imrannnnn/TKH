@@ -75,7 +75,7 @@ export default function Outreaches({ onOpenDonate }) {
             Field Operations
           </span>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
             Upcoming &amp; Completed <br />
             <span className="text-primary">Community Missions.</span>
           </h1>
@@ -85,10 +85,10 @@ export default function Outreaches({ onOpenDonate }) {
           </p>
 
           {/* Filter Pills */}
-          <div className="flex justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
             <button
               onClick={() => setFilter('all')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 filter === 'all'
                   ? 'bg-ink text-white'
                   : 'bg-sand text-ink-light hover:text-ink'
@@ -98,7 +98,7 @@ export default function Outreaches({ onOpenDonate }) {
             </button>
             <button
               onClick={() => setFilter('upcoming')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 filter === 'upcoming'
                   ? 'bg-primary text-white'
                   : 'bg-sand text-ink-light hover:text-ink'
@@ -108,7 +108,7 @@ export default function Outreaches({ onOpenDonate }) {
             </button>
             <button
               onClick={() => setFilter('completed')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 filter === 'completed'
                   ? 'bg-forest text-white'
                   : 'bg-sand text-ink-light hover:text-ink'
@@ -137,7 +137,7 @@ export default function Outreaches({ onOpenDonate }) {
                     alt={outreach.title}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute top-4 left-4 flex gap-2">
+                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 flex flex-wrap gap-1.5 sm:gap-2">
                     <span className={`px-3 py-1 rounded-full text-[11px] font-heading font-bold shadow-xs ${
                       outreach.status === 'upcoming'
                         ? 'bg-primary text-white'
@@ -151,8 +151,8 @@ export default function Outreaches({ onOpenDonate }) {
                   </div>
                 </div>
 
-                <div className="p-8">
-                  <div className="flex flex-wrap items-center gap-4 text-xs text-ink-muted mb-3 font-heading">
+                <div className="p-5 sm:p-8">
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs text-ink-muted mb-3 font-heading">
                     <div className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5 text-primary" />
                       <span>{outreach.date}</span>
@@ -163,7 +163,7 @@ export default function Outreaches({ onOpenDonate }) {
                     </div>
                   </div>
 
-                  <h3 className="text-2xl font-heading font-bold text-ink mb-3 leading-snug">
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-ink mb-3 leading-snug">
                     {outreach.title}
                   </h3>
 
@@ -183,10 +183,10 @@ export default function Outreaches({ onOpenDonate }) {
                 </div>
               </div>
 
-              <div className="px-8 pb-8 pt-2 flex items-center justify-between border-t border-[#f0ece8]">
+              <div className="px-5 sm:px-8 pb-5 sm:pb-8 pt-4 flex items-center justify-between border-t border-[#f0ece8]">
                 <button
                   onClick={onOpenDonate}
-                  className="btn-primary text-xs px-6 py-2.5 flex items-center gap-2 cursor-pointer shadow-xs font-heading font-semibold"
+                  className="btn-primary w-full sm:w-auto text-xs px-6 py-2.5 flex items-center justify-center gap-2 cursor-pointer shadow-xs font-heading font-semibold"
                 >
                   <span>Support This Mission</span>
                   <Heart className="w-3.5 h-3.5" />

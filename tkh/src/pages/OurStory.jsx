@@ -179,7 +179,7 @@ export default function OurStory({ onOpenDonate }) {
             Mission • Vision • Values
           </span>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
             A seed planted in hope. <br />
             <span className="text-primary">A forest grown in dignity.</span>
           </h1>
@@ -189,7 +189,7 @@ export default function OurStory({ onOpenDonate }) {
           <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-10 leading-relaxed font-normal">A world where every child has access to quality education, and every woman and child has access to comprehensive healthcare. We strive to break the cycle of poverty and increase the overall well-being of communities by empowering children through education and promoting the health and well-being of women and children.
           </p>
 
-          <div className="w-full h-80 sm:h-[450px] rounded-3xl overflow-hidden relative border border-[#e7e2d8] shadow-xs">
+          <div className="w-full h-64 sm:h-80 md:h-[450px] rounded-3xl overflow-hidden relative border border-[#e7e2d8] shadow-xs">
             <img
               className="w-full h-full object-cover"
               alt="Community outreach gathering in Nigeria"
@@ -221,7 +221,7 @@ export default function OurStory({ onOpenDonate }) {
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
               Mission
             </h2>
-            <p className="text-2xl text-ink-light leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-ink-light leading-relaxed">
               To improve the lives of women and children by providing educational opportunities and healthcare services that promote better health outcomes and a brighter future.
             </p>
 
@@ -284,7 +284,7 @@ export default function OurStory({ onOpenDonate }) {
           {managementTeam.map((member) => (
             <div
               key={member.name}
-              className="bg-sand/60 rounded-3xl border border-[#e7e2d8] p-6 sm:p-8 flex flex-col items-center text-center shadow-xs hover:border-primary/40 hover:shadow-md transition-all group"
+              className="bg-sand/60 rounded-3xl border border-[#e7e2d8] p-5 sm:p-8 flex flex-col items-center text-center shadow-xs hover:border-primary/40 hover:shadow-md transition-all group"
             >
               {member.image ? (
                 <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden border-2 border-[#e7e2d8] group-hover:border-primary/40 shadow-xs mb-5 bg-white shrink-0">
@@ -343,7 +343,7 @@ export default function OurStory({ onOpenDonate }) {
           {stateCoordinators.map((coordinator) => (
             <div
               key={coordinator.name}
-              className="bg-sand/60 rounded-3xl border border-[#e7e2d8] p-6 sm:p-8 flex flex-col items-center text-center shadow-xs hover:border-primary/40 hover:shadow-md transition-all group"
+              className="bg-sand/60 rounded-3xl border border-[#e7e2d8] p-5 sm:p-8 flex flex-col items-center text-center shadow-xs hover:border-primary/40 hover:shadow-md transition-all group"
             >
               <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden border-2 border-[#e7e2d8] group-hover:border-primary/40 shadow-xs mb-5 bg-white shrink-0">
                 <img
@@ -414,7 +414,7 @@ export default function OurStory({ onOpenDonate }) {
           <div className="text-center pt-16">
             <button
               onClick={onOpenDonate}
-              className="btn-primary text-sm px-8 py-3.5 inline-flex items-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
+              className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-6 sm:px-8 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
             >
               <span>Partner With Our Mission</span>
               <Heart className="w-4 h-4" />

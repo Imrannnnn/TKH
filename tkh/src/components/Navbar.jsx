@@ -214,7 +214,7 @@ export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSe
               />
             </div>
             <div>
-              <span className="text-xl md:text-2xl font-serif text-ink tracking-tight block leading-none">
+              <span className="text-lg sm:text-xl md:text-2xl font-serif text-ink tracking-tight block leading-none">
                 Ten Kind Hands
               </span>
               <span className="text-[10px] uppercase tracking-widest text-ink-muted font-medium mt-0.5 block">
@@ -323,7 +323,7 @@ export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSe
 
             <button
               onClick={() => onOpenDonate()}
-              className="btn-primary text-xs md:text-sm px-6 py-2.5 flex items-center gap-2 cursor-pointer"
+              className="btn-primary text-xs md:text-sm px-3.5 sm:px-6 py-2 sm:py-2.5 flex items-center gap-1.5 sm:gap-2 cursor-pointer shrink-0 font-heading font-semibold"
             >
               <span>Donate</span>
               <Heart className="w-3.5 h-3.5" />

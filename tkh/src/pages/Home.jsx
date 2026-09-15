@@ -96,27 +96,27 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
         {/* Text Layer (Poppins + Open Sans) with Generous Top Breathing Room */}
         <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-6 my-auto">
           {/* High-Visibility Verified NGO Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/75 backdrop-blur-md text-white text-xs font-semibold tracking-wide border border-white/35 shadow-lg">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-            <span className="leading-none">Registered Non-Profit NGO in Nigeria • CAC/IT/NO: 148920</span>
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/75 backdrop-blur-md text-white text-[11px] sm:text-xs font-semibold tracking-wide border border-white/35 shadow-lg max-w-full text-center">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            <span className="leading-snug">Registered Non-Profit NGO in Nigeria • CAC/IT/NO: 148920</span>
           </div>
 
           {/* Clean & Proportional Poppins Headline */}
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[35px] font-heading font-extrabold text-white max-w-3xl tracking-tight leading-[1.2]">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-white max-w-3xl tracking-tight leading-snug sm:leading-[1.2]">
             Empowering the lives of African Women and Children through {' '}
             <span className="text-[#f7c899]">Healthcare &amp; Educational initiatives.</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl leading-relaxed font-normal">
+          <p className="text-xs sm:text-base md:text-lg text-white/90 max-w-2xl leading-relaxed font-normal px-2">
             Every act of kindness shapes a brighter future.
           </p>
 
           {/* Action CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto pt-2">
             <button
               onClick={onOpenDonate}
-              className="btn-primary text-xs sm:text-sm px-7 py-3 sm:px-8 sm:py-3.5 flex items-center gap-2 cursor-pointer shadow-lg active:scale-95 font-heading font-semibold"
+              className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-7 py-3 sm:px-8 sm:py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-95 font-heading font-semibold"
             >
               <span>Donate to Direct Impact</span>
               <Heart className="w-4 h-4" />
@@ -127,7 +127,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 setCurrentPage('our-story');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="btn-secondary text-xs sm:text-sm px-7 py-3 sm:px-8 sm:py-3.5 flex items-center gap-2 cursor-pointer shadow-md active:scale-95 font-heading font-semibold"
+              className="btn-secondary w-full sm:w-auto text-xs sm:text-sm px-7 py-3 sm:px-8 sm:py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95 font-heading font-semibold"
             >
               <span>Read Our Story</span>
               <ArrowRight className="w-4 h-4" />
@@ -241,8 +241,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             };
 
             return (
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <div className="p-5 sm:p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
                   <span className="font-mono text-3xl sm:text-4xl font-bold text-primary block mb-1">
                     {studentMetric.stat}
                   </span>
@@ -254,7 +254,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                   </p>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
+                <div className="p-5 sm:p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
                   <span className="font-mono text-3xl sm:text-4xl font-bold text-ink block mb-1">
                     {schoolMetric.stat}
                   </span>
@@ -266,7 +266,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                   </p>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
+                <div className="p-5 sm:p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
                   <span className="font-mono text-3xl sm:text-4xl font-bold text-forest block mb-1">
                     {patientMetric.stat}
                   </span>
@@ -278,7 +278,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                   </p>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
+                <div className="p-5 sm:p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
                   <span className="font-mono text-3xl sm:text-4xl font-bold text-emerald-800 block mb-1">
                     {givingMetric.stat}
                   </span>
@@ -422,13 +422,13 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
         </section>
 
         {/* SECTION 5: DIRECT GIVING SIMULATOR */}
-        <section className="relative z-10 py-24 px-4 md:px-8 max-w-4xl mx-auto">
-          <div className="paper-card rounded-3xl p-8 sm:p-12 bg-white/95 backdrop-blur-xs">
+        <section className="relative z-10 py-14 sm:py-24 px-4 md:px-8 max-w-4xl mx-auto">
+          <div className="paper-card rounded-3xl p-5 sm:p-8 md:p-12 bg-white/95 backdrop-blur-xs">
             <div className="text-center max-w-xl mx-auto mb-8">
               <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
                 Direct Impact Simulator
               </span>
-              <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-ink">
                 See what your contribution creates.
               </h2>
               <p className="text-xs text-ink-muted mt-1">
@@ -436,10 +436,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               </p>
             </div>
 
-            <div className="bg-sand p-6 rounded-2xl border border-[#e7e2d8] mb-8">
+            <div className="bg-sand p-4 sm:p-6 rounded-2xl border border-[#e7e2d8] mb-8">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-xs font-bold text-ink uppercase tracking-wide font-heading">Donation Amount:</span>
-                <span className="font-mono text-2xl sm:text-3xl font-bold text-primary">
+                <span className="font-mono text-xl sm:text-3xl font-bold text-primary">
                   ₦{calcAmount.toLocaleString()}
                 </span>
               </div>
@@ -454,50 +454,50 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 className="w-full h-2 bg-[#ded8cc] rounded-lg appearance-none cursor-pointer accent-primary"
               />
 
-              <div className="flex justify-between text-[11px] text-ink-muted font-medium mt-2">
+              <div className="flex justify-between text-[10px] sm:text-[11px] text-ink-muted font-medium mt-2">
                 <span>₦5,000</span>
-                <span>₦25,000</span>
+                <span className="hidden sm:inline">₦25,000</span>
                 <span>₦50,000</span>
-                <span>₦75,000</span>
+                <span className="hidden sm:inline">₦75,000</span>
                 <span>₦100,000</span>
               </div>
             </div>
 
             {/* Generated Deliverables */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-              <div className="p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
-                <span className="font-mono text-2xl font-bold text-primary block mb-0.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
+                <span className="font-mono text-xl sm:text-2xl font-bold text-primary block mb-0.5">
                   {currentImpact.students}
                 </span>
-                <span className="text-xs text-ink-muted">Students Funded</span>
+                <span className="text-[11px] sm:text-xs text-ink-muted">Students Funded</span>
               </div>
 
-              <div className="p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
-                <span className="font-mono text-2xl font-bold text-forest block mb-0.5">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
+                <span className="font-mono text-xl sm:text-2xl font-bold text-forest block mb-0.5">
                   {currentImpact.clinicVisits}
                 </span>
-                <span className="text-xs text-ink-muted">Clinic Consults</span>
+                <span className="text-[11px] sm:text-xs text-ink-muted">Clinic Consults</span>
               </div>
 
-              <div className="p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
-                <span className="font-mono text-2xl font-bold text-clay block mb-0.5">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
+                <span className="font-mono text-xl sm:text-2xl font-bold text-clay block mb-0.5">
                   {currentImpact.booksSupplied}
                 </span>
-                <span className="text-xs text-ink-muted">Textbook Sets</span>
+                <span className="text-[11px] sm:text-xs text-ink-muted">Textbook Sets</span>
               </div>
 
-              <div className="p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
-                <span className="font-mono text-2xl font-bold text-emerald-800 block mb-0.5">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
+                <span className="font-mono text-xl sm:text-2xl font-bold text-emerald-800 block mb-0.5">
                   {currentImpact.safeWaterDays}
                 </span>
-                <span className="text-xs text-ink-muted">Days Clean Water</span>
+                <span className="text-[11px] sm:text-xs text-ink-muted">Days Clean Water</span>
               </div>
             </div>
 
             <div className="text-center">
               <button
                 onClick={onOpenDonate}
-                className="btn-primary text-sm px-8 py-3.5 inline-flex items-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
+                className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-6 sm:px-8 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
               >
                 <span>Donate ₦{calcAmount.toLocaleString()} to Direct Impact</span>
                 <Heart className="w-4 h-4" />

@@ -22,7 +22,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
             Governance &amp; Compliance
           </span>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
             Legal, Privacy &amp; <br />
             <span className="text-primary">Safeguarding Policies.</span>
           </h1>
@@ -31,10 +31,10 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
             Operating with strict adherence to Nigerian Non-Profit laws (CAC/IT/NO: 148920), NDPR data privacy, and UNICEF child safeguarding protocols.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-2 p-1.5 rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto">
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto">
             <button
               onClick={() => setActiveTab('privacy')}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 activeTab === 'privacy' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
               }`}
             >
@@ -42,7 +42,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
             </button>
             <button
               onClick={() => setActiveTab('terms')}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 activeTab === 'terms' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
               }`}
             >
@@ -50,7 +50,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
             </button>
             <button
               onClick={() => setActiveTab('safeguarding')}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 activeTab === 'safeguarding' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
               }`}
             >
@@ -64,7 +64,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
       <section className="relative max-w-4xl mx-auto px-4 md:px-8 overflow-hidden">
         <CurvedWaveBackground side="left" />
 
-        <div className="relative z-10 bg-white/95 backdrop-blur-xs p-8 sm:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
+        <div className="relative z-10 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
           {activeTab === 'privacy' && (
             <div className="prose text-xs sm:text-sm text-ink-light leading-relaxed space-y-6">
               <h2 className="text-2xl font-heading font-bold text-ink">Privacy Policy &amp; Data Protection (NDPR Compliance)</h2>

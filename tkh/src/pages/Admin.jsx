@@ -523,40 +523,40 @@ export default function Admin({ setCurrentPage }) {
         <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-clay/15 rounded-full blur-3xl pointer-events-none"></div>
 
         {/* Top Minimal Return Header */}
-        <div className="w-full px-6 py-5 flex items-center justify-between z-10">
+        <div className="w-full px-4 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-3 z-10">
           <button
             onClick={() => {
               if (setCurrentPage) setCurrentPage('home');
               window.location.hash = 'home';
             }}
-            className="flex items-center gap-2 text-xs font-heading font-semibold text-ink-light hover:text-primary transition-colors cursor-pointer bg-white hover:bg-sand px-4 py-2 rounded-xl border border-[#e7e2d8] shadow-xs"
+            className="flex items-center gap-2 text-xs font-heading font-semibold text-ink-light hover:text-primary transition-colors cursor-pointer bg-white hover:bg-sand px-4 py-2 rounded-xl border border-[#e7e2d8] shadow-xs w-full sm:w-auto justify-center"
           >
-            <ArrowLeft className="w-4 h-4 text-primary" />
+            <ArrowLeft className="w-4 h-4 text-primary shrink-0" />
             <span>Return to Public Website</span>
           </button>
 
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#e7e2d8] text-[11px] text-ink-light font-medium shadow-xs">
-            <span className="w-2 h-2 rounded-full bg-forest animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full bg-forest animate-pulse shrink-0"></span>
             <span>CAC/IT/NO: 148920 • Secure Console</span>
           </div>
         </div>
 
         {/* Centered Login Card */}
-        <div className="flex-1 flex items-center justify-center px-4 py-8 z-10">
-          <div className="w-full max-w-md bg-white/95 backdrop-blur-xl border border-[#e7e2d8] rounded-3xl p-8 sm:p-10 shadow-xl shadow-ink/5">
+        <div className="flex-1 flex items-center justify-center px-4 py-6 sm:py-8 z-10">
+          <div className="w-full max-w-md bg-white/95 backdrop-blur-xl border border-[#e7e2d8] rounded-2xl sm:rounded-3xl p-5 sm:p-10 shadow-xl shadow-ink/5">
             {/* Header Lockup */}
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 rounded-2xl bg-sand border border-[#e7e2d8] p-2 mx-auto mb-4 shadow-sm flex items-center justify-center">
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-sand border border-[#e7e2d8] p-2 mx-auto mb-3 sm:mb-4 shadow-sm flex items-center justify-center">
                 <img
                   alt="Ten Kind Hands Logo"
                   className="w-full h-full object-contain"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmbaMRmoVzqGDmSGEoX0XoPFIdN6UYrwile-1Gt1d37VzrQ2PeaP9G7MITiOYlV5Mlma8OlajwkWA3r7O1u4I69Sez16xvET1fYSAP8dl7zhMj1M0gMuXfZYOCWyuePctpR97q8v72-LHjIYFUf8CgqilRAMMM-D-G-S-sJToMqi-nhfADpBN1MUQEsECDNokFRkKAoeuKy8OqR7LAReSeIGPvsSwv08HUP9RVs-2uxRF2z55chm270O5kDJRiqFAmMg"
                 />
               </div>
-              <span className="inline-block text-[11px] uppercase tracking-widest text-primary font-bold bg-primary/10 px-3 py-1 rounded-full border border-primary/20 mb-2 font-heading">
+              <span className="inline-block text-[10px] sm:text-[11px] uppercase tracking-widest text-primary font-bold bg-primary/10 px-3 py-1 rounded-full border border-primary/20 mb-2 font-heading">
                 Executive Portal
               </span>
-              <h1 className="text-2xl font-heading font-bold text-ink tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-heading font-bold text-ink tracking-tight">
                 Ten Kind Hands Portal
               </h1>
               <p className="text-xs text-ink-light mt-1.5">

@@ -26,10 +26,10 @@ export default function WhatsAppWidget({ currentPage, selectedProgram }) {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end">
+    <div className="fixed bottom-3 right-3 sm:bottom-5 sm:right-5 z-40 flex flex-col items-end">
       {/* Popover Bubble */}
       {isOpen && (
-        <div className="mb-3 w-80 bg-white rounded-3xl shadow-xl border border-[#ebdcd9] p-5 animate-fade-in text-left">
+        <div className="mb-3 w-[calc(100vw-1.5rem)] max-w-xs sm:w-80 bg-white rounded-3xl shadow-xl border border-[#ebdcd9] p-4 sm:p-5 animate-fade-in text-left">
           <div className="flex items-center justify-between pb-3 border-b border-[#ebdcd9] mb-3">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs">
@@ -74,7 +74,7 @@ export default function WhatsAppWidget({ currentPage, selectedProgram }) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Open WhatsApp direct chat"
-        className="px-4 py-2.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-xs font-bold active:scale-95 cursor-pointer border border-emerald-600"
+        className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-xs font-bold active:scale-95 cursor-pointer border border-emerald-600"
       >
         <MessageSquare className="w-4 h-4" />
         <span className="hidden sm:inline">Chat on WhatsApp</span>

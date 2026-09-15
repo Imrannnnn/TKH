@@ -103,11 +103,11 @@ export default function News({ initialArticleId = null }) {
               <span>By {activeArticle.author}</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-ink mb-6 tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-heading font-bold text-ink mb-6 tracking-tight leading-tight">
               {activeArticle.title}
             </h1>
 
-            <div className="w-full h-72 sm:h-96 rounded-3xl overflow-hidden mb-8 border border-[#e7e2d8]">
+            <div className="w-full h-56 sm:h-72 md:h-96 rounded-3xl overflow-hidden mb-8 border border-[#e7e2d8]">
               <img
                 src={activeArticle.image}
                 alt={activeArticle.title}
@@ -144,7 +144,7 @@ export default function News({ initialArticleId = null }) {
             Field Dispatches
           </span>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
             Stories of progress, <br />
             <span className="text-primary">direct from the frontline.</span>
           </h1>
@@ -159,14 +159,14 @@ export default function News({ initialArticleId = null }) {
       <section className="relative px-4 md:px-8 max-w-7xl mx-auto mb-20 overflow-hidden">
         <CurvedWaveBackground side="left" />
 
-        <div className="relative z-10 grid md:grid-cols-3 gap-8">
+        <div className="relative z-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {currentArticles.map((art) => (
             <div
               key={art.id}
               className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between bg-white/95 backdrop-blur-xs shadow-xs"
             >
               <div>
-                <div className="h-52 overflow-hidden relative">
+                <div className="h-48 sm:h-52 overflow-hidden relative">
                   <img
                     src={art.image}
                     alt={art.title}
@@ -177,7 +177,7 @@ export default function News({ initialArticleId = null }) {
                   </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-5 sm:p-6">
                   <div className="flex items-center gap-2 text-[11px] text-ink-muted mb-2 font-heading">
                     <Calendar className="w-3.5 h-3.5" />
                     <span>{art.date}</span>
@@ -212,7 +212,7 @@ export default function News({ initialArticleId = null }) {
 
       {/* Newsletter Signup */}
       <section className="px-4 md:px-8 max-w-4xl mx-auto">
-        <div className="bg-sand p-8 sm:p-12 rounded-3xl border border-[#e7e2d8] text-center">
+        <div className="bg-sand p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] text-center">
           <Mail className="w-8 h-8 text-primary mx-auto mb-3" />
           <h3 className="text-2xl sm:text-3xl font-heading font-bold text-ink mb-2">
             Stay Connected with Field Updates
@@ -227,7 +227,7 @@ export default function News({ initialArticleId = null }) {
               <span>Thank you for subscribing to our quarterly dispatches.</span>
             </div>
           ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 max-w-md mx-auto">
               <input
                 type="email"
                 required
@@ -238,7 +238,7 @@ export default function News({ initialArticleId = null }) {
               />
               <button
                 type="submit"
-                className="btn-primary text-xs px-6 py-3 rounded-full cursor-pointer shadow-xs font-heading font-semibold"
+                className="btn-primary w-full sm:w-auto text-xs px-6 py-3 rounded-full cursor-pointer shadow-xs font-heading font-semibold"
               >
                 Subscribe
               </button>

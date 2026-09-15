@@ -87,7 +87,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             <span>Take Action Today</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-heading font-extrabold text-ink leading-[1.15] max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-ink leading-[1.15] max-w-3xl mx-auto mb-6 tracking-tight">
             Every Hand Moves <br />
             <span className="text-primary">A Community Forward.</span>
           </h1>
@@ -97,10 +97,10 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
           </p>
 
           {/* 3 Main Action Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 p-1.5 rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto">
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto">
             <button
               onClick={() => setActiveTab('donate')}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 font-heading ${
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 font-heading ${
                 activeTab === 'donate' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
               }`}
             >
@@ -109,7 +109,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             </button>
             <button
               onClick={() => setActiveTab('volunteer')}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 font-heading ${
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 font-heading ${
                 activeTab === 'volunteer' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
               }`}
             >
@@ -118,7 +118,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             </button>
             <button
               onClick={() => setActiveTab('partnership')}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 font-heading ${
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 font-heading ${
                 activeTab === 'partnership' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
               }`}
             >
@@ -134,7 +134,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
         <section className="relative max-w-4xl mx-auto px-4 md:px-8 overflow-hidden">
           <CurvedWaveBackground side="left" />
 
-          <div className="relative z-10 bg-white/95 backdrop-blur-xs p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs mb-8">
+          <div className="relative z-10 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs mb-8">
             <div className="max-w-2xl mx-auto text-center mb-8">
               <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
                 Tangible Giving
@@ -218,7 +218,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             <div className="text-center pt-2">
               <button
                 onClick={onOpenDonate}
-                className="btn-primary text-xs md:text-sm px-10 py-4 flex items-center gap-2 cursor-pointer shadow-md font-heading font-semibold mx-auto"
+                className="btn-primary w-full sm:w-auto text-xs md:text-sm px-6 sm:px-10 py-3.5 sm:py-4 flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold mx-auto"
               >
                 <span>Open Instant Secure Donation Flow</span>
                 <Heart className="w-4 h-4" />
@@ -227,7 +227,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
           </div>
 
           {/* Nigerian Bank Transfer Card */}
-          <div className="relative z-10 bg-white p-7 md:p-8 rounded-3xl border border-[#e7e2d8] shadow-xs">
+          <div className="relative z-10 bg-white p-5 sm:p-8 rounded-3xl border border-[#e7e2d8] shadow-xs">
             <h3 className="text-lg font-heading font-bold text-ink mb-3">
               Direct Nigerian Bank Account Details (GTBank)
             </h3>
@@ -267,7 +267,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
         <section className="relative max-w-4xl mx-auto px-4 md:px-8 animate-fade-in overflow-hidden">
           <CurvedWaveBackground side="left" />
 
-          <div className="relative z-10 bg-white/95 backdrop-blur-xs p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs mb-8">
+          <div className="relative z-10 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs mb-8">
             <div className="max-w-2xl mx-auto text-center mb-10">
               <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
                 Concrete Opportunities
@@ -420,7 +420,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
         <section className="relative max-w-4xl mx-auto px-4 md:px-8 animate-fade-in overflow-hidden">
           <CurvedWaveBackground side="left" />
 
-          <div className="relative z-10 bg-white/95 backdrop-blur-xs p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs mb-8">
+          <div className="relative z-10 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs mb-8">
             <div className="max-w-2xl mx-auto text-center mb-10">
               <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
                 Institutional Collaboration

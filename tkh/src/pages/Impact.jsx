@@ -122,7 +122,7 @@ export default function Impact({ onOpenDonate }) {
               <span>Radical Accountability</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-heading font-extrabold text-ink leading-[1.15] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-ink leading-[1.15] tracking-tight">
               Transparency in Action. <br />
               <span className="text-primary">Measurable Flourishing.</span>
             </h1>
@@ -134,7 +134,7 @@ export default function Impact({ onOpenDonate }) {
             <div className="flex items-center gap-4 pt-2">
               <button
                 onClick={onOpenDonate}
-                className="btn-primary text-xs md:text-sm px-8 py-3.5 flex items-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
+                className="btn-primary w-full sm:w-auto text-xs md:text-sm px-6 sm:px-8 py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
               >
                 <span>Back Our Next Milestone</span>
                 <Heart className="w-4 h-4" />
@@ -169,10 +169,10 @@ export default function Impact({ onOpenDonate }) {
             </h2>
 
             {/* Filter Pills */}
-            <div className="flex flex-wrap justify-center gap-2 p-1.5 rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto mt-6">
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto mt-6">
               <button
                 onClick={() => setActiveTab('all')}
-                className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                   activeTab === 'all' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
                 }`}
               >
@@ -180,7 +180,7 @@ export default function Impact({ onOpenDonate }) {
               </button>
               <button
                 onClick={() => setActiveTab('education')}
-                className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                   activeTab === 'education' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
                 }`}
               >
@@ -188,7 +188,7 @@ export default function Impact({ onOpenDonate }) {
               </button>
               <button
                 onClick={() => setActiveTab('healthcare')}
-                className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                   activeTab === 'healthcare' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
                 }`}
               >
@@ -196,7 +196,7 @@ export default function Impact({ onOpenDonate }) {
               </button>
               <button
                 onClick={() => setActiveTab('infrastructure')}
-                className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                   activeTab === 'infrastructure' ? 'bg-clay text-white shadow-xs' : 'text-ink-light hover:text-ink'
                 }`}
               >
@@ -218,7 +218,7 @@ export default function Impact({ onOpenDonate }) {
               return (
                 <div
                   key={item.id}
-                  className="p-7 rounded-3xl bg-white/95 backdrop-blur-xs border border-[#e7e2d8] shadow-xs flex flex-col justify-between group hover:border-primary/40 transition-colors"
+                  className="p-5 sm:p-7 rounded-3xl bg-white/95 backdrop-blur-xs border border-[#e7e2d8] shadow-xs flex flex-col justify-between group hover:border-primary/40 transition-colors"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
@@ -256,7 +256,7 @@ export default function Impact({ onOpenDonate }) {
 
       {/* Regional Reach Distribution Table */}
       <section className="py-10 px-4 md:px-8 max-w-7xl mx-auto">
-        <div className="bg-white p-8 md:p-10 rounded-3xl border border-[#e7e2d8] shadow-xs">
+        <div className="bg-white p-5 sm:p-8 md:p-10 rounded-3xl border border-[#e7e2d8] shadow-xs">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
             <div>
               <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
@@ -272,8 +272,8 @@ export default function Impact({ onOpenDonate }) {
             </span>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+          <div className="overflow-x-auto -mx-1 px-1">
+            <table className="w-full text-left text-sm min-w-[520px]">
               <thead>
                 <tr className="border-b border-[#e7e2d8] text-xs font-heading text-ink-muted uppercase">
                   <th className="pb-3 px-3">State &amp; Region</th>
@@ -304,7 +304,7 @@ export default function Impact({ onOpenDonate }) {
 
       {/* Downloadable Annual Audit Reports */}
       <section className="py-14 px-4 md:px-8 max-w-7xl mx-auto mb-12">
-        <div className="bg-white p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs text-center max-w-3xl mx-auto">
+        <div className="bg-white p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs text-center max-w-3xl mx-auto">
           <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
             Public Audits &amp; Financials
           </span>
@@ -315,12 +315,12 @@ export default function Impact({ onOpenDonate }) {
             Review detailed balance sheets, expenditure breakdowns, vendor receipts, and photographic third-party project audits.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-3.5">
+          <div className="flex flex-wrap justify-center gap-3">
             {['2024 Audit Report (PDF)', '2023 Audit Report (PDF)', '2022 Financials (PDF)'].map((report, idx) => (
               <button
                 key={idx}
                 onClick={() => handleDownloadReport(report)}
-                className="px-6 py-3 rounded-full bg-sand hover:bg-white border border-[#e7e2d8] text-xs font-bold text-ink hover:text-primary transition-all flex items-center gap-2 cursor-pointer active:scale-95 shadow-xs font-heading"
+                className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-full bg-sand hover:bg-white border border-[#e7e2d8] text-xs font-bold text-ink hover:text-primary transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 shadow-xs font-heading"
               >
                 <FileText className="w-4 h-4" />
                 <span>{downloadingReport === report ? 'Opening PDF...' : report}</span>

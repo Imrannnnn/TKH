@@ -29,12 +29,12 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
     <footer className="bg-sand w-full pt-16 pb-12 border-t border-[#e7e2d8]">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Top Newsletter Card */}
-        <div className="bg-white p-8 md:p-10 rounded-3xl mb-14 flex flex-col lg:flex-row items-center justify-between gap-6 border border-[#e7e2d8]">
+        <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl mb-10 sm:mb-14 flex flex-col lg:flex-row items-center justify-between gap-6 border border-[#e7e2d8]">
           <div className="max-w-xl text-center lg:text-left">
             <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1">
               Field Dispatch &amp; Transparency
             </span>
-            <h3 className="editorial-title text-2xl sm:text-3xl text-ink">
+            <h3 className="editorial-title text-xl sm:text-2xl md:text-3xl text-ink">
               Receive quarterly audited reports &amp; field stories.
             </h3>
             <p className="text-xs sm:text-sm text-ink-light mt-2 leading-relaxed">
@@ -44,23 +44,23 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
 
           <div className="w-full lg:w-auto">
             {subscribed ? (
-              <div className="px-6 py-3 rounded-2xl bg-sand text-ink text-xs font-semibold flex items-center gap-2 border border-[#e7e2d8]">
-                <CheckCircle2 className="w-4 h-4 text-forest" />
+              <div className="px-5 sm:px-6 py-3 rounded-2xl bg-sand text-ink text-xs font-semibold flex items-center gap-2 border border-[#e7e2d8]">
+                <CheckCircle2 className="w-4 h-4 text-forest shrink-0" />
                 <span>Thank you. You are subscribed to our quarterly field audit.</span>
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 w-full max-w-md">
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2.5 sm:gap-2 w-full max-w-md">
                 <input
                   type="email"
                   required
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="px-4 py-3 rounded-full bg-sand text-xs border border-[#e7e2d8] text-ink focus:outline-none focus:border-primary flex-grow"
+                  className="px-4 py-3 rounded-full bg-sand text-xs border border-[#e7e2d8] text-ink focus:outline-none focus:border-primary flex-grow w-full"
                 />
                 <button
                   type="submit"
-                  className="btn-primary text-xs px-6 py-3 cursor-pointer whitespace-nowrap"
+                  className="btn-primary text-xs px-6 py-3 cursor-pointer whitespace-nowrap w-full sm:w-auto justify-center"
                 >
                   Join Dispatch
                 </button>

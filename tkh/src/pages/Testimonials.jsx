@@ -71,7 +71,7 @@ export default function Testimonials({ onOpenDonate }) {
             Authentic Voices
           </span>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
             Letters &amp; Stories from <br />
             <span className="text-primary">Those Who Live the Impact.</span>
           </h1>
@@ -81,10 +81,10 @@ export default function Testimonials({ onOpenDonate }) {
           </p>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
             <button
               onClick={() => setFilter('all')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 filter === 'all'
                   ? 'bg-ink text-white'
                   : 'bg-sand text-ink-light hover:text-ink'
@@ -94,7 +94,7 @@ export default function Testimonials({ onOpenDonate }) {
             </button>
             <button
               onClick={() => setFilter('beneficiaries')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 filter === 'beneficiaries'
                   ? 'bg-primary text-white'
                   : 'bg-sand text-ink-light hover:text-ink'
@@ -104,7 +104,7 @@ export default function Testimonials({ onOpenDonate }) {
             </button>
             <button
               onClick={() => setFilter('volunteers')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 filter === 'volunteers'
                   ? 'bg-forest text-white'
                   : 'bg-sand text-ink-light hover:text-ink'
@@ -114,7 +114,7 @@ export default function Testimonials({ onOpenDonate }) {
             </button>
             <button
               onClick={() => setFilter('donors')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
                 filter === 'donors'
                   ? 'bg-clay text-white'
                   : 'bg-sand text-ink-light hover:text-ink'
@@ -130,11 +130,11 @@ export default function Testimonials({ onOpenDonate }) {
       <section className="relative px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
         <CurvedWaveBackground side="left" />
 
-        <div className="relative z-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="relative z-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filtered.map((t, idx) => (
             <div
               key={idx}
-              className="p-8 rounded-3xl bg-white/95 backdrop-blur-xs border border-[#e7e2d8] flex flex-col justify-between shadow-xs hover:border-primary/40 transition-colors"
+              className="p-5 sm:p-8 rounded-3xl bg-white/95 backdrop-blur-xs border border-[#e7e2d8] flex flex-col justify-between shadow-xs hover:border-primary/40 transition-colors"
             >
               <div>
                 <Quote className="w-8 h-8 text-primary/30 mb-4" />
@@ -162,7 +162,7 @@ export default function Testimonials({ onOpenDonate }) {
         <div className="text-center pt-16">
           <button
             onClick={onOpenDonate}
-            className="btn-primary text-sm px-8 py-3.5 inline-flex items-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
+            className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-6 sm:px-8 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
           >
             <span>Create a New Story of Dignity</span>
             <Heart className="w-4 h-4" />
