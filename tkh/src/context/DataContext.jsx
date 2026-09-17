@@ -242,6 +242,197 @@ const initialInquiries = [
   }
 ];
 
+const initialHomeContent = {
+  heroHeadline: 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.',
+  heroSubtitle: 'Every act of kindness shapes a brighter future.',
+  registeredBadge: 'Registered Non-Profit NGO in Nigeria • CAC/IT/NO: 148920',
+  heroSlides: [
+    {
+      img: "/images/IMG_0294.JPG",
+      caption: "Child empowerment Program • Makurdi"
+    },
+    {
+      img: "/images/11222.jpeg",
+      caption: " Medical outreach to children at Abuja Teaching Hospital"
+    },
+    {
+      img: "/images/IMG_0995.JPG",
+      caption: "Women Empowerment Outreach • Dafara"
+    }
+  ],
+  fieldReality: {
+    stat: 'Over 10M',
+    label: 'Children currently out of primary school in Nigeria (UNESCO)',
+    paragraph1: 'When poverty forces families to choose between putting food on the table and paying school expenses, a child’s education is often the first sacrifice. Without books, learning materials, scholarships, and the support needed to stay in school, many children risk falling behind or abandoning their education altogether. At the same time, vulnerable communities continue to face preventable health challenges, while women and widows struggle to access the skills and opportunities needed to achieve financial independence.',
+    paragraph2: 'Ten Kind Hands Foundation bridges these gaps by investing in children’s education through scholarships, educational materials, school donations, learning support, and youth development initiatives, while also extending healthcare interventions and women’s empowerment programmes to vulnerable communities. By meeting immediate needs and creating pathways to opportunity, we help children learn, women thrive, and communities build a stronger and more hopeful future.'
+  }
+};
+
+const initialStoryContent = {
+  visionTitle: 'Mission • Vision • Values',
+  visionHeadline: 'A seed planted in hope. A forest grown in dignity.',
+  visionStatement: 'A world where every child has access to quality education, and every woman and child has access to comprehensive healthcare. We strive to break the cycle of poverty and increase the overall well-being of communities by empowering children through education and promoting the health and well-being of women and children.',
+  leadership: [
+    {
+      name: 'John Iyalla',
+      role: 'Founder',
+      badge: 'Founder',
+      initials: 'JI',
+      image: null,
+      description: 'Visionary behind Ten Kind Hands, championing a radical 100% direct-giving model to bring transformative education and healthcare to vulnerable communities.'
+    },
+    {
+      name: 'Suotonye Augustine Arthur',
+      role: 'Country Head',
+      badge: 'Country Leadership',
+      initials: 'SA',
+      image: '/images/Suotonye Augustine Arthur - Country Head.jpeg',
+      description: 'Oversees country-wide program execution, institutional donor relations, and high-impact partnerships across state governments and communities.'
+    },
+    {
+      name: 'Ibrahim Favour Adoba',
+      role: 'Project Manager',
+      badge: 'Field Operations',
+      initials: 'IF',
+      image: '/images/Ibrahim Favour Adoba - Project Manager.jpeg',
+      description: 'Leads frontline project deployment, monitoring school solar renovations, clean water drilling, and rural clinic logistics on the ground.'
+    },
+    {
+      name: 'Ahange Kumawuese Keziah',
+      role: 'Finance Manager',
+      badge: 'Finance & Accounts',
+      initials: 'AK',
+      image: '/images/Ahange Kumawuese Keziah  Finance Manager..jpeg',
+      description: 'Drives financial stewardship, strict accounting controls, and transparent reporting ensuring 100% of donor funding goes directly to field impact.'
+    },
+    {
+      name: 'Anedo Deborah',
+      role: 'Human Resource',
+      badge: 'People & Culture',
+      initials: 'AD',
+      image: '/images/Anedo Deborah Human resource.jpeg',
+      description: 'Spearheads talent development, medical volunteer mobilization, and workforce operations supporting our teams across rural missions.'
+    },
+    {
+      name: 'Abubakar Muhammed',
+      role: 'Accountant',
+      badge: 'Financial Audit',
+      initials: 'AM',
+      image: '/images/Abubakar Muhammed Accountant.jpeg',
+      description: 'Ensures ledger accuracy, audit-readiness, and meticulous disbursement records for all classroom, medical, and community relief initiatives.'
+    }
+  ],
+  stateCoordinators: [
+    {
+      name: 'Job Orokpo Agada',
+      role: 'Benue State Coordinator',
+      badge: 'Benue State',
+      initials: 'JA',
+      image: '/images/Job orokpo Agada Benue state coordinator.jpeg',
+      description: 'Coordinates community engagement, education scholarships, and frontline healthcare mission delivery across Benue State communities.'
+    },
+    {
+      name: 'Talabi Oluwaseyi Hannah',
+      role: 'Oyo State Project Coordinator',
+      badge: 'Oyo State',
+      initials: 'TH',
+      image: '/images/Talabi Oluwaseyi Hannah Oyo State Project Coordinator.jpeg',
+      description: 'Spearheads grassroots school renovations, solar infrastructure projects, and local stakeholder partnerships in Oyo State.'
+    },
+    {
+      name: 'Hassan Habeeb Adebayo',
+      role: 'Lagos State Project Coordinator',
+      badge: 'Lagos State',
+      initials: 'HA',
+      image: '/images/lagos State Project Cordinator Hassan Habeeb Adebayo.jpeg',
+      description: 'Leads urban outreach missions, student sponsorship distribution, and volunteer logistics across underserved Lagos communities.'
+    },
+    {
+      name: 'Ibrahim Nzoyu Vivian',
+      role: 'FCT Coordinator',
+      badge: 'FCT Abuja',
+      initials: 'IV',
+      image: '/images/FCT coordinator IBRAHIM NZOYU VIVIAN.jpeg',
+      description: 'Directs community outreach, educational support programs, and healthcare mission delivery across the Federal Capital Territory.'
+    },
+    {
+      name: 'Oluwadiya Tobi Elijah',
+      role: 'Plateau State Coordinator',
+      badge: 'Plateau State',
+      initials: 'OE',
+      image: '/images/Oluwadiya Tobi Elijah Plateau State Coordinator.jpeg',
+      description: 'Coordinates grassroots educational initiatives, youth engagement, and community welfare projects throughout Plateau State.'
+    }
+  ]
+};
+
+const initialTestimonialsList = [
+  {
+    id: 't-1',
+    category: 'beneficiaries',
+    quote: "Before Ten Kind Hands brought solar power and desks, our pupils learned on bare floors and had to go home whenever rain clouds gathered. Today, attendance has soared to over 98% and our children read aloud with pride.",
+    author: "Mrs. Amina Danjuma",
+    role: "Headmistress",
+    institution: "Gidan Community Primary School, Kaduna State",
+    avatar: "/images/IMG_0300.JPG"
+  },
+  {
+    id: 't-2',
+    category: 'beneficiaries',
+    quote: "The mobile health clinic detected my child's severe pneumonia in time and provided all treatments free of charge. Having caring medical staff reach our remote hamlet is a blessing I will never forget.",
+    author: "Grace Adebayo",
+    role: "Mother of 3 & Community Health Advocate",
+    institution: "Rural Women's Forum, Ogun State",
+    avatar: "/images/IMG_0995.JPG"
+  },
+  {
+    id: 't-3',
+    category: 'beneficiaries',
+    quote: "Ten Kind Hands does not dictate to us; they sit with village elders and ask what our youth need most. This is genuine dignity, respect for our culture, and true partnership.",
+    author: "Chief Emeka Okafor",
+    role: "Community Elder & Development Secretary",
+    institution: "Oji River Council, Enugu State",
+    avatar: "/images/IMG_0994.JPG"
+  },
+  {
+    id: 't-4',
+    category: 'volunteers',
+    quote: "Serving as a volunteer doctor on the Kaduna medical mission was the most grounding experience of my clinical career. Seeing 100% of donated drugs reach patients directly restored my faith in grassroots charity.",
+    author: "Dr. Chinedu Eze",
+    role: "Volunteer Pediatrician",
+    institution: "Lagos University Teaching Hospital",
+    avatar: "/images/IMG_0294.JPG"
+  },
+  {
+    id: 't-5',
+    category: 'donors',
+    quote: "What sets TKH apart is their radical financial honesty. Getting an email with GPS coordinates and photos of the exact classroom block my monthly contribution helped build was deeply moving.",
+    author: "Farida Mohammed",
+    role: "Monthly Impact Sustainer",
+    institution: "Abuja, Nigeria",
+    avatar: "/images/IMG_0300.JPG"
+  },
+  {
+    id: 't-6',
+    category: 'partners',
+    quote: "Our diaspora foundation has partnered with Ten Kind Hands across three Nigerian states. Their operational discipline and flawless accounting make them our most trusted on-ground implementation partner.",
+    author: "Dr. Anthony Nwankwo",
+    role: "Director of International Giving",
+    institution: "UK-Nigeria Diaspora Health Trust",
+    avatar: "/images/IMG_0994.JPG"
+  }
+];
+
+const initialContactInfo = {
+  headquarters: 'Abuja, Federal Capital Territory, Nigeria',
+  email: 'contact@tenkindhands.org',
+  partnershipsEmail: 'partners@tenkindhands.org',
+  phone: '+234 818 099 4301',
+  whatsapp: '+234 818 099 4301',
+  emergencyDesk: '+234 818 099 4301',
+  visitingHours: 'Monday – Friday: 9:00 AM – 5:00 PM WAT'
+};
+
 const defaultData = {
   news: initialNewsArticles,
   outreaches: initialOutreaches,
@@ -249,7 +440,11 @@ const defaultData = {
   allocations: initialAllocations,
   documents: initialDocuments,
   announcement: initialAnnouncement,
-  inquiries: initialInquiries
+  inquiries: initialInquiries,
+  homeContent: initialHomeContent,
+  storyContent: initialStoryContent,
+  testimonialsList: initialTestimonialsList,
+  contactInfo: initialContactInfo
 };
 
 const API_BASE = 'http://localhost:5000/api';
@@ -275,7 +470,11 @@ export function DataProvider({ children }) {
           allocations: parsed.allocations || defaultData.allocations,
           documents: parsed.documents || defaultData.documents,
           announcement: parsed.announcement ?? defaultData.announcement,
-          inquiries: parsed.inquiries || defaultData.inquiries
+          inquiries: parsed.inquiries || defaultData.inquiries,
+          homeContent: parsed.homeContent || defaultData.homeContent,
+          storyContent: parsed.storyContent || defaultData.storyContent,
+          testimonialsList: parsed.testimonialsList || defaultData.testimonialsList,
+          contactInfo: parsed.contactInfo || defaultData.contactInfo
         };
       }
     } catch (err) {
@@ -538,6 +737,65 @@ export function DataProvider({ children }) {
     }).catch((err) => console.warn('Sync deleteInquiry to backend:', err.message));
   };
 
+  // Page Content Updaters
+  const updateHomeContent = (updatedFields) => {
+    setData((prev) => ({
+      ...prev,
+      homeContent: { ...prev.homeContent, ...updatedFields }
+    }));
+  };
+
+  const updateStoryContent = (updatedFields) => {
+    setData((prev) => ({
+      ...prev,
+      storyContent: { ...prev.storyContent, ...updatedFields }
+    }));
+  };
+
+  const updateStoryCoordinators = (coordinators) => {
+    setData((prev) => ({
+      ...prev,
+      storyContent: { ...prev.storyContent, stateCoordinators: coordinators }
+    }));
+  };
+
+  const updateStoryLeadership = (leadership) => {
+    setData((prev) => ({
+      ...prev,
+      storyContent: { ...prev.storyContent, leadership }
+    }));
+  };
+
+  const updateTestimonials = (testimonials) => {
+    setData((prev) => ({
+      ...prev,
+      testimonialsList: testimonials
+    }));
+  };
+
+  const addTestimonial = (item) => {
+    const newItem = { ...item, id: item.id || `t-${Date.now()}` };
+    setData((prev) => ({
+      ...prev,
+      testimonialsList: [newItem, ...prev.testimonialsList]
+    }));
+    return newItem;
+  };
+
+  const deleteTestimonial = (id) => {
+    setData((prev) => ({
+      ...prev,
+      testimonialsList: prev.testimonialsList.filter((t) => t.id !== id)
+    }));
+  };
+
+  const updateContactInfo = (updatedFields) => {
+    setData((prev) => ({
+      ...prev,
+      contactInfo: { ...prev.contactInfo, ...updatedFields }
+    }));
+  };
+
   // Platform Reset & Backup
   const resetToDefaults = () => {
     setData(defaultData);
@@ -577,7 +835,11 @@ export function DataProvider({ children }) {
         allocations: parsed.allocations || defaultData.allocations,
         documents: parsed.documents || defaultData.documents,
         announcement: parsed.announcement ?? defaultData.announcement,
-        inquiries: parsed.inquiries || defaultData.inquiries
+        inquiries: parsed.inquiries || defaultData.inquiries,
+        homeContent: parsed.homeContent || defaultData.homeContent,
+        storyContent: parsed.storyContent || defaultData.storyContent,
+        testimonialsList: parsed.testimonialsList || defaultData.testimonialsList,
+        contactInfo: parsed.contactInfo || defaultData.contactInfo
       };
       setData(newDataset);
 
@@ -614,6 +876,14 @@ export function DataProvider({ children }) {
         addInquiry,
         updateInquiryStatus,
         deleteInquiry,
+        updateHomeContent,
+        updateStoryContent,
+        updateStoryCoordinators,
+        updateStoryLeadership,
+        updateTestimonials,
+        addTestimonial,
+        deleteTestimonial,
+        updateContactInfo,
         resetToDefaults,
         exportDataBackup,
         importDataBackup

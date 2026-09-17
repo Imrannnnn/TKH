@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useData } from '../context/DataContext';
 import { Quote, Heart } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Testimonials({ onOpenDonate }) {
+  const { testimonialsList } = useData();
   const [filter, setFilter] = useState('all');
 
-  const testimonials = [
+  const defaultTestimonials = [
     {
       category: 'beneficiaries',
       quote: "Before Ten Kind Hands brought solar power and desks, our pupils learned on bare floors and had to go home whenever rain clouds gathered. Today, attendance has soared to over 98% and our children read aloud with pride.",
@@ -56,9 +58,11 @@ export default function Testimonials({ onOpenDonate }) {
     }
   ];
 
+  const activeTestimonials = testimonialsList?.length > 0 ? testimonialsList : defaultTestimonials;
+
   const filtered = filter === 'all'
-    ? testimonials
-    : testimonials.filter((t) => t.category === filter);
+    ? activeTestimonials
+    : activeTestimonials.filter((t) => t.category === filter);
 
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">

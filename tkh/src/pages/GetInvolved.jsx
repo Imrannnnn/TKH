@@ -40,7 +40,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
   const [copiedBank, setCopiedBank] = useState(false);
 
   const handleCopyAccount = () => {
-    navigator.clipboard.writeText('0123456789');
+    navigator.clipboard.writeText('1309157309');
     setCopiedBank(true);
     setTimeout(() => setCopiedBank(false), 2000);
   };
@@ -88,39 +88,36 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-ink leading-[1.15] max-w-3xl mx-auto mb-6 tracking-tight">
-            Every Hand Moves <br />
-            <span className="text-primary">A Community Forward.</span>
+            Every Act of Kindness <br />
+            <span className="text-primary">Shapes a Brighter Future.</span>
           </h1>
 
           <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
-            Whether through financial giving, professional field volunteering, or institutional partnership, your contribution creates tangible human flourishing.
+            Whether through financial giving, in-kind donations, or building an institutional partnership, your contribution creates meaningful opportunities and lasting impact for children, women, and vulnerable communities.
           </p>
 
           {/* 3 Main Action Tabs */}
           <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto">
             <button
               onClick={() => setActiveTab('donate')}
-              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 font-heading ${
-                activeTab === 'donate' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
-              }`}
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 font-heading ${activeTab === 'donate' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                }`}
             >
               <Heart className="w-3.5 h-3.5" />
               <span>1. Donate</span>
             </button>
             <button
               onClick={() => setActiveTab('volunteer')}
-              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 font-heading ${
-                activeTab === 'volunteer' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
-              }`}
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 font-heading ${activeTab === 'volunteer' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                }`}
             >
               <Users className="w-3.5 h-3.5" />
               <span>2. Volunteer</span>
             </button>
             <button
               onClick={() => setActiveTab('partnership')}
-              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 font-heading ${
-                activeTab === 'partnership' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
-              }`}
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 sm:gap-2 font-heading ${activeTab === 'partnership' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                }`}
             >
               <Briefcase className="w-3.5 h-3.5" />
               <span>3. Partner</span>
@@ -151,26 +148,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
               <div className="bg-sand/90 p-6 rounded-2xl border border-[#e7e2d8] flex flex-col justify-between">
                 <div>
-                  <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Tuition &amp; Books</span>
-                  <span className="font-mono text-2xl font-bold text-primary block">₦15,000 / $25</span>
+                  <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">School Fees</span>
+                  <span className="font-mono text-2xl font-bold text-primary block">₦50,000 / $35</span>
                   <p className="text-xs text-ink-light mt-2 leading-relaxed">
-                    Provides one vulnerable student with full term tuition, custom tailored uniform, and complete textbook pack.
-                  </p>
-                </div>
-                <button
-                  onClick={onOpenDonate}
-                  className="mt-4 w-full py-2.5 rounded-xl bg-white border border-[#e7e2d8] hover:border-primary text-xs font-bold text-ink hover:text-primary transition-colors cursor-pointer font-heading"
-                >
-                  Select ₦15,000 Tier
-                </button>
-              </div>
+                    Supports a vulnerable child with school fees for a term at a low-cost school, helping them remain enrolled and continue their education.
 
-              <div className="bg-sand/90 p-6 rounded-2xl border border-[#e7e2d8] flex flex-col justify-between">
-                <div>
-                  <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Mobile Medical Kit</span>
-                  <span className="font-mono text-2xl font-bold text-forest block">₦50,000 / $65</span>
-                  <p className="text-xs text-ink-light mt-2 leading-relaxed">
-                    Equips a rural mobile clinic with malaria rapid diagnostics, pediatric antibiotics, and deworming for 40 patients.
                   </p>
                 </div>
                 <button
@@ -183,33 +165,49 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
               <div className="bg-sand/90 p-6 rounded-2xl border border-[#e7e2d8] flex flex-col justify-between">
                 <div>
-                  <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Full Scholarship Year</span>
-                  <span className="font-mono text-2xl font-bold text-primary block">₦100,000 / $130</span>
+                  <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Health Donations</span>
+                  <span className="font-mono text-2xl font-bold text-forest block">₦150,000 / $100</span>
                   <p className="text-xs text-ink-light mt-2 leading-relaxed">
-                    Sponsors an entire academic year of schooling, term exam registrations, daily nutrition, and health checks for one child.
+                    Supports community healthcare outreaches with essential medicines, health supplies, screenings, treatment support, and preventive health education for vulnerable families.
                   </p>
                 </div>
                 <button
                   onClick={onOpenDonate}
                   className="mt-4 w-full py-2.5 rounded-xl bg-white border border-[#e7e2d8] hover:border-primary text-xs font-bold text-ink hover:text-primary transition-colors cursor-pointer font-heading"
                 >
-                  Select ₦100,000 Tier
+                  Select ₦150,000 Tier
                 </button>
               </div>
 
               <div className="bg-sand/90 p-6 rounded-2xl border border-[#e7e2d8] flex flex-col justify-between">
                 <div>
-                  <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Solar Classroom Desk Block</span>
-                  <span className="font-mono text-2xl font-bold text-clay block">₦250,000 / $320</span>
+                  <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Women Empowerment Donations</span>
+                  <span className="font-mono text-2xl font-bold text-primary block">₦300,000 / $200</span>
                   <p className="text-xs text-ink-light mt-2 leading-relaxed">
-                    Handcrafts 10 durable dual-seater wooden student desks and installs solar roof lighting for a rural classroom block.
+                    Supports a woman or widow with practical skills training, essential tools, business materials, or startup assistance to promote sustainable income and financial independence.
                   </p>
                 </div>
                 <button
                   onClick={onOpenDonate}
                   className="mt-4 w-full py-2.5 rounded-xl bg-white border border-[#e7e2d8] hover:border-primary text-xs font-bold text-ink hover:text-primary transition-colors cursor-pointer font-heading"
                 >
-                  Select ₦250,000 Tier
+                  Select ₦300,000 Tier
+                </button>
+              </div>
+
+              <div className="bg-sand/90 p-6 rounded-2xl border border-[#e7e2d8] flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">School Materials</span>
+                  <span className="font-mono text-2xl font-bold text-clay block">₦75,000 / $50</span>
+                  <p className="text-xs text-ink-light mt-2 leading-relaxed">
+                    Provides vulnerable children with school bags, sandals, writing packs, exercise books, learning materials, and other essential school supplies.
+                  </p>
+                </div>
+                <button
+                  onClick={onOpenDonate}
+                  className="mt-4 w-full py-2.5 rounded-xl bg-white border border-[#e7e2d8] hover:border-primary text-xs font-bold text-ink hover:text-primary transition-colors cursor-pointer font-heading"
+                >
+                  Select ₦75,000 Tier
                 </button>
               </div>
             </div>
@@ -229,21 +227,21 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
           {/* Nigerian Bank Transfer Card */}
           <div className="relative z-10 bg-white p-5 sm:p-8 rounded-3xl border border-[#e7e2d8] shadow-xs">
             <h3 className="text-lg font-heading font-bold text-ink mb-3">
-              Direct Nigerian Bank Account Details (GTBank)
+              Direct Nigerian Bank Account Details (Providus Bank)
             </h3>
             <div className="grid sm:grid-cols-3 gap-4 text-xs bg-sand p-4 rounded-2xl border border-[#e7e2d8] mb-3">
               <div>
                 <span className="text-ink-muted block">Bank Name:</span>
-                <span className="font-bold text-ink">Guaranty Trust Bank (GTBank)</span>
+                <span className="font-bold text-ink">Providus Bank</span>
               </div>
               <div>
                 <span className="text-ink-muted block">Account Name:</span>
-                <span className="font-bold text-ink">Ten Kind Hands Initiative</span>
+                <span className="font-bold text-ink">Ten Kind Hands Foundation</span>
               </div>
               <div>
                 <span className="text-ink-muted block">Naira Account:</span>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span className="font-mono text-base font-bold text-primary">0123456789</span>
+                  <span className="font-mono text-base font-bold text-primary">1309157309</span>
                   <button
                     onClick={handleCopyAccount}
                     className="p-1 rounded bg-white border border-[#e7e2d8] text-[10px] font-bold text-primary cursor-pointer flex items-center gap-1"
@@ -276,46 +274,47 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                 Join Our Volunteer Field &amp; Remote Corps
               </h2>
               <p className="text-xs md:text-sm text-ink-light mt-1.5 leading-relaxed">
-                We believe in structured roles, clear time commitments, and thorough onboarding so your energy creates maximal community value.
+                We believe in clear roles, time commitments, and onboarding so your energy creates community value.
               </p>
             </div>
 
             {/* 4 Concrete Roles */}
             <div className="grid sm:grid-cols-2 gap-4 mb-10">
               <div className="p-5 rounded-2xl bg-sand/90 border border-[#e7e2d8]">
-                <span className="text-xs font-bold text-primary uppercase tracking-wider block mb-1 font-heading">Field Role</span>
-                <h4 className="text-base font-heading font-bold text-ink mb-1">Outreach Logistics &amp; Distribution</h4>
+                <span className="text-xs font-bold text-primary uppercase tracking-wider block mb-1 font-heading">State Role</span>
+                <h4 className="text-base font-heading font-bold text-ink mb-1">State Volunteers</h4>
                 <p className="text-xs text-ink-light leading-relaxed mb-2">
-                  Packing textbook consignments, coordinating community hall setups, and managing crowd flow during village outreach days.
+                  Supporting State Coordinators with outreach preparation, beneficiary coordination, setup, distribution, and on-ground activities during monthly outreaches.
                 </p>
-                <span className="text-[11px] text-forest font-semibold block">Commitment: 1 Saturday / Month (On-Site)</span>
+                <span className="text-[11px] text-forest font-semibold block">Commitment: 1 Outreach / Month (Per State)</span>
               </div>
 
               <div className="p-5 rounded-2xl bg-sand/90 border border-[#e7e2d8]">
-                <span className="text-xs font-bold text-primary uppercase tracking-wider block mb-1 font-heading">Education Role</span>
-                <h4 className="text-base font-heading font-bold text-ink mb-1">Teaching &amp; Literacy Tutoring</h4>
+                <span className="text-xs font-bold text-primary uppercase tracking-wider block mb-1 font-heading">Media Role</span>
+                <h4 className="text-base font-heading font-bold text-ink mb-1">Media & Videography</h4>
                 <p className="text-xs text-ink-light leading-relaxed mb-2">
-                  Assisting primary school teachers with remedial reading circles, basic mathematics tutoring, and student mentorship.
+                  Capturing photos and videos, documenting activities, stories, and impact moments for reporting, storytelling, and social media.
                 </p>
-                <span className="text-[11px] text-forest font-semibold block">Commitment: 3–4 Hours / Week</span>
+                <span className="text-[11px] text-forest font-semibold block">Commitment: 1 Outreach / Month (Per State)</span>
               </div>
 
               <div className="p-5 rounded-2xl bg-sand/90 border border-[#e7e2d8]">
-                <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Clinical Role</span>
-                <h4 className="text-base font-heading font-bold text-ink mb-1">Medical Outreach Support</h4>
+                <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Skills Role</span>
+                <h4 className="text-base font-heading font-bold text-ink mb-1"> Skill Acquisition Tutorst</h4>
                 <p className="text-xs text-ink-light leading-relaxed mb-2">
-                  Open to certified doctors, nurses, and pharmacy technicians to administer tests and triage patients during mobile missions.
+                  Facilitating practical training, mentoring beneficiaries, and supporting hands-on learning during monthly empowerment outreaches.
                 </p>
-                <span className="text-[11px] text-forest font-semibold block">Commitment: Per Scheduled Mission</span>
+                <span className="text-[11px] text-forest font-semibold block">Commitment: 1 Outreach / Month (Per State)</span>
               </div>
 
               <div className="p-5 rounded-2xl bg-sand/90 border border-[#e7e2d8]">
-                <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Remote Role</span>
-                <h4 className="text-base font-heading font-bold text-ink mb-1">Digital &amp; Design Skills Support</h4>
+                <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Partnership Role</span>
+                <h4 className="text-base font-heading font-bold text-ink mb-1">Partner Identification & Storytelling</h4>
                 <p className="text-xs text-ink-light leading-relaxed mb-2">
-                  Supporting our reporting team with photo editing, grant research, quarterly report layouts, and social documentation.
+
+                  Identifying partners, capturing community stories, and documenting needs and impact to strengthe
                 </p>
-                <span className="text-[11px] text-forest font-semibold block">Commitment: Fully Remote • Flexible</span>
+                <span className="text-[11px] text-forest font-semibold block">Commitment: 1 Outreach / Month (Per State)</span>
               </div>
             </div>
 
@@ -438,28 +437,28 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
               <div className="p-5 rounded-2xl bg-sand/90 border border-[#e7e2d8]">
                 <h4 className="text-sm font-heading font-bold text-primary mb-1">1. CSR &amp; Corporate Sponsorship</h4>
                 <p className="text-xs text-ink-light leading-relaxed">
-                  Sponsor full classroom construction blocks, solar power kits, or regional mobile clinics with dedicated auditable milestone reporting.
+                  Sponsor educational, healthcare, or women empowerment initiatives with dedicated impact tracking and transparent reporting from implementation through completion.
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl bg-sand/90 border border-[#e7e2d8]">
                 <h4 className="text-sm font-heading font-bold text-primary mb-1">2. In-Kind Material Consignments</h4>
                 <p className="text-xs text-ink-light leading-relaxed">
-                  Bulk donations of certified pharmaceuticals, textbooks, refurbished laptops, or building materials directly delivered to verified sites.
+                  Provide textbooks, educational supplies, medical essentials, skill-acquisition materials, or other resources directly to verified beneficiaries and communities.
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl bg-sand/90 border border-[#e7e2d8]">
                 <h4 className="text-sm font-heading font-bold text-primary mb-1">3. Co-Hosted Community Outreaches</h4>
                 <p className="text-xs text-ink-light leading-relaxed">
-                  Collaborate with our logistical team to co-host comprehensive health screening and book donation drives under joint co-branding.
+                  Collaborate with our team to co-host impactful educational, healthcare, and empowerment outreaches through strategic planning, shared resources, and joint visibility.
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl bg-sand/90 border border-[#e7e2d8]">
                 <h4 className="text-sm font-heading font-bold text-primary mb-1">4. Institutional Grants &amp; Research</h4>
                 <p className="text-xs text-ink-light leading-relaxed">
-                  Partner on baseline needs assessments, educational retention tracking, and maternal health pilot studies in rural Nigeria.
+                  Support community needs assessments, educational programmes, healthcare interventions, and impact research that strengthen evidence-based solutions for vulnerable communities.
                 </p>
               </div>
             </div>
@@ -475,7 +474,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                   Thank you, {partForm.contactName} representing {partForm.orgName}. Our Executive &amp; Partnerships Desk will review your proposal and reply within <strong>2 business days</strong>.
                 </p>
                 <span className="text-xs font-semibold text-emerald-800 font-heading">
-                  Direct Desk: partnerships@tenkindhands.org
+                  Direct Desk: favour@tenkindhands.org
                 </span>
               </div>
             ) : (

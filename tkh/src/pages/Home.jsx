@@ -4,24 +4,34 @@ import { Heart, ArrowRight, Quote, MapPin } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Home({ onOpenDonate, setCurrentPage }) {
-  const { metrics } = useData();
+  const { metrics, homeContent } = useData();
   const [calcAmount, setCalcAmount] = useState(15000);
   const [heroImageIdx, setHeroImageIdx] = useState(0);
 
-  const heroSlides = [
+  const heroSlides = homeContent?.heroSlides?.length > 0 ? homeContent.heroSlides : [
     {
       img: "/images/IMG_0294.JPG",
       caption: "Child empowerment Program • Makurdi"
     },
     {
       img: "/images/11222.jpeg",
-      caption: "Gidan Community Primary School • Solar Classroom & Desks"
+      caption: " Medical outreach to children at Abuja Teaching Hospital"
     },
     {
       img: "/images/IMG_0995.JPG",
       caption: "Women Empowerment Outreach • Dafara"
     }
   ];
+
+  const heroHeadline = homeContent?.heroHeadline || 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.';
+  const heroSubtitle = homeContent?.heroSubtitle || 'Every act of kindness shapes a brighter future.';
+  const registeredBadge = homeContent?.registeredBadge || 'Registered Non-Profit NGO in Nigeria • CAC/IT/NO: 148920';
+  const fieldReality = homeContent?.fieldReality || {
+    stat: 'Over 10M',
+    label: 'Children currently out of primary school in Nigeria (UNESCO)',
+    paragraph1: 'When poverty forces families to choose between putting food on the table and paying school expenses, a child’s education is often the first sacrifice. Without books, learning materials, scholarships, and the support needed to stay in school, many children risk falling behind or abandoning their education altogether. At the same time, vulnerable communities continue to face preventable health challenges, while women and widows struggle to access the skills and opportunities needed to achieve financial independence.',
+    paragraph2: 'Ten Kind Hands Foundation bridges these gaps by investing in children’s education through scholarships, educational materials, school donations, learning support, and youth development initiatives, while also extending healthcare interventions and women’s empowerment programmes to vulnerable communities. By meeting immediate needs and creating pathways to opportunity, we help children learn, women thrive, and communities build a stronger and more hopeful future.'
+  };
 
   // Auto-cycle background images smoothly every 6 seconds
   useEffect(() => {
@@ -98,18 +108,17 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           {/* High-Visibility Verified NGO Badge */}
           <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/75 backdrop-blur-md text-white text-[11px] sm:text-xs font-semibold tracking-wide border border-white/35 shadow-lg max-w-full text-center">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-            <span className="leading-snug">Registered Non-Profit NGO in Nigeria • CAC/IT/NO: 148920</span>
+            <span className="leading-snug">{registeredBadge}</span>
           </div>
 
           {/* Clean & Proportional Poppins Headline */}
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-white max-w-3xl tracking-tight leading-snug sm:leading-[1.2]">
-            Empowering the lives of African Women and Children through {' '}
-            <span className="text-[#f7c899]">Healthcare &amp; Educational initiatives.</span>
+            {heroHeadline}
           </h1>
 
           {/* Subtitle */}
           <p className="text-xs sm:text-base md:text-lg text-white/90 max-w-2xl leading-relaxed font-normal px-2">
-            Every act of kindness shapes a brighter future.
+            {heroSubtitle}
           </p>
 
           {/* Action CTAs */}
@@ -173,19 +182,19 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 The Reality in the Field
               </span>
               <span className="text-4xl sm:text-5xl font-heading font-bold text-ink block leading-none">
-                Over 10M
+                {fieldReality.stat}
               </span>
               <span className="text-xs text-ink-muted mt-1.5 block">
-                Children currently out of primary school in Nigeria (UNESCO)
+                {fieldReality.label}
               </span>
             </div>
 
             <div className="md:col-span-8 space-y-3">
               <p className="text-base sm:text-lg text-ink-light leading-relaxed">
-                When poverty forces families to choose between putting food on the table and paying school expenses, a child’s education is often the first sacrifice.* Without books, learning materials, scholarships, and the support needed to stay in school, many children risk falling behind or abandoning their education altogether. At the same time, vulnerable communities continue to face preventable health challenges, while women and widows struggle to access the skills and opportunities needed to achieve financial independence.
+                {fieldReality.paragraph1}
               </p>
               <p className="text-base sm:text-lg text-ink font-semibold leading-relaxed">
-                Ten Kind Hands Foundation bridges these gaps by investing in children’s education through scholarships, educational materials, school donations, learning support, and youth development initiatives, while also extending healthcare interventions and women’s empowerment programmes to vulnerable communities.* By meeting immediate needs and creating pathways to opportunity, we help children learn, women thrive, and communities build a stronger and more hopeful future.
+                {fieldReality.paragraph2}
               </p>
             </div>
           </div>
@@ -304,10 +313,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             Two Interconnected Pillars
           </span>
           <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
-            Education fosters agency. Healthcare protects life.
+            Education builds futures. Healthcare protects potential.
           </h2>
           <p className="text-sm text-ink-light mt-2 leading-relaxed">
-            We do not treat symptoms in isolation. A sick child cannot learn, and an uneducated youth cannot build economic resilience.
+            We invest in scholarships, books, and learning opportunities, while advancing healthcare and women’s empowerment to strengthen families and communities across.
           </p>
         </div>
 

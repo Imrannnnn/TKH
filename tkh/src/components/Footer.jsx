@@ -35,10 +35,10 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
               Field Dispatch &amp; Transparency
             </span>
             <h3 className="editorial-title text-xl sm:text-2xl md:text-3xl text-ink">
-              Receive quarterly audited reports &amp; field stories.
+              Receive monthly audited reports &amp; field stories.
             </h3>
             <p className="text-xs sm:text-sm text-ink-light mt-2 leading-relaxed">
-              Every 3 months, we send transparent project receipts, photographic updates, and community testimonies directly to our supporters.
+              Every month, we send transparent project reports, photographic updates, and community testimonies directly to our partners.
             </p>
           </div>
 
@@ -46,7 +46,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
             {subscribed ? (
               <div className="px-5 sm:px-6 py-3 rounded-2xl bg-sand text-ink text-xs font-semibold flex items-center gap-2 border border-[#e7e2d8]">
                 <CheckCircle2 className="w-4 h-4 text-forest shrink-0" />
-                <span>Thank you. You are subscribed to our quarterly field audit.</span>
+                <span>Thank you. You are subscribed to our monthly field audit.</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2.5 sm:gap-2 w-full max-w-md">
@@ -89,7 +89,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
                   Ten Kind Hands
                 </span>
                 <span className="text-[10px] uppercase tracking-widest text-ink-muted mt-0.5 block">
-                  Registered Non-Profit NGO 148920
+                  Initiative • Africa
                 </span>
               </div>
             </button>
@@ -179,13 +179,13 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
 
             <div className="pt-2">
               <a
-                href="https://wa.me/2348000000000"
+                href="https://wa.me/2348180994301"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-800 hover:bg-emerald-900 text-white text-[11px] font-semibold transition-all"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>WhatsApp Desk</span>
+                <span>WhatsApp Live (+234 818 099 4301)</span>
               </a>
             </div>
           </div>
@@ -205,7 +205,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-muted">
-          <p>© {new Date().getFullYear()} Ten Kind Hands Initiative. CAC/IT/NO: 148920.</p>
+          <p>© {new Date().getFullYear()} Ten Kind Hands Initiative • Africa. CAC/IT/NO: 148920.</p>
           <div className="flex items-center gap-5 flex-wrap justify-center">
             <button onClick={() => handleNav('legal', 'privacy')} className="hover:text-ink transition-colors cursor-pointer">
               Privacy Policy

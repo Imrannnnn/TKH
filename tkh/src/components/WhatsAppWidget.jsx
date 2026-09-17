@@ -20,7 +20,7 @@ export default function WhatsAppWidget({ currentPage, selectedProgram }) {
   };
 
   const handleOpenWhatsApp = () => {
-    const phone = "2348000000000"; // Official TKH WhatsApp line
+    const phone = "2348180994301"; // Official TKH WhatsApp line (+234 818 099 4301)
     const text = encodeURIComponent(getStarterMessage());
     window.open(`https://wa.me/${phone}?text=${text}`, '_blank', 'noopener,noreferrer');
   };
@@ -39,7 +39,7 @@ export default function WhatsAppWidget({ currentPage, selectedProgram }) {
                 <h4 className="text-xs font-bold text-[#2a1f1f]">TKH Direct Desk</h4>
                 <span className="text-[10px] text-emerald-700 font-semibold flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                  Verified WhatsApp Channel
+                  +234 818 099 4301
                 </span>
               </div>
             </div>

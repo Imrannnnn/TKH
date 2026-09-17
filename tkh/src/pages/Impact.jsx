@@ -119,16 +119,16 @@ export default function Impact({ onOpenDonate }) {
           <div className="lg:col-span-6 flex flex-col gap-5">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sand text-primary font-bold text-xs uppercase tracking-widest w-fit border border-[#e7e2d8] font-heading">
               <ShieldCheck className="w-4 h-4" />
-              <span>Radical Accountability</span>
+              <span>Accountability in Action</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-ink leading-[1.15] tracking-tight">
-              Transparency in Action. <br />
-              <span className="text-primary">Measurable Flourishing.</span>
+              Transparency in Practice. <br />
+              <span className="text-primary">Measurable Impact.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-ink-light leading-relaxed font-normal">
-              Every naira donated and every volunteer hour is tied to audited, verifiable human outcomes. Explore our audited performance metrics across Nigeria below.
+              Every naira donated and every volunteer hour supports measurable, verifiable outcomes for children, women, and vulnerable communities. Explore our impact metrics across Nigeria below.
             </p>
 
             <div className="flex items-center gap-4 pt-2">
@@ -172,33 +172,29 @@ export default function Impact({ onOpenDonate }) {
             <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto mt-6">
               <button
                 onClick={() => setActiveTab('all')}
-                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
-                  activeTab === 'all' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
-                }`}
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${activeTab === 'all' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                  }`}
               >
                 All Metrics
               </button>
               <button
                 onClick={() => setActiveTab('education')}
-                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
-                  activeTab === 'education' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
-                }`}
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${activeTab === 'education' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                  }`}
               >
                 Education
               </button>
               <button
                 onClick={() => setActiveTab('healthcare')}
-                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
-                  activeTab === 'healthcare' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
-                }`}
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${activeTab === 'healthcare' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                  }`}
               >
                 Healthcare
               </button>
               <button
                 onClick={() => setActiveTab('infrastructure')}
-                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
-                  activeTab === 'infrastructure' ? 'bg-clay text-white shadow-xs' : 'text-ink-light hover:text-ink'
-                }`}
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${activeTab === 'infrastructure' ? 'bg-clay text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                  }`}
               >
                 Water &amp; Solar
               </button>
@@ -211,10 +207,10 @@ export default function Impact({ onOpenDonate }) {
               const IconComponent = typeof item.icon === 'function'
                 ? item.icon
                 : (item.iconName && iconMap[item.iconName]
-                    ? iconMap[item.iconName]
-                    : (item.category === 'healthcare'
-                        ? Stethoscope
-                        : (item.category === 'infrastructure' ? Droplets : School)));
+                  ? iconMap[item.iconName]
+                  : (item.category === 'healthcare'
+                    ? Stethoscope
+                    : (item.category === 'infrastructure' ? Droplets : School)));
               return (
                 <div
                   key={item.id}

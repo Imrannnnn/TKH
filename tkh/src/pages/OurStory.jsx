@@ -1,7 +1,9 @@
+import { useData } from '../context/DataContext';
 import { BookOpen, Heart, HandHeart, School, Sun, Stethoscope, ShieldCheck, Users, TrendingUp } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function OurStory({ onOpenDonate }) {
+  const { storyContent } = useData();
   const milestones = [
     {
       year: '2015',
@@ -107,14 +109,7 @@ export default function OurStory({ onOpenDonate }) {
       image: '/images/Suotonye Augustine Arthur - Country Head.jpeg',
       description: 'Oversees country-wide program execution, institutional donor relations, and high-impact partnerships across state governments and communities.'
     },
-    {
-      name: 'Ibrahim Favour Adoba',
-      role: 'Project Manager',
-      badge: 'Field Operations',
-      initials: 'IF',
-      image: '/images/Ibrahim Favour Adoba - Project Manager.jpeg',
-      description: 'Leads frontline project deployment, monitoring school solar renovations, clean water drilling, and rural clinic logistics on the ground.'
-    },
+
     {
       name: 'Ahange Kumawuese Keziah',
       role: 'Finance Manager',
@@ -138,7 +133,16 @@ export default function OurStory({ onOpenDonate }) {
       initials: 'AM',
       image: '/images/Abubakar Muhammed Accountant.jpeg',
       description: 'Ensures ledger accuracy, audit-readiness, and meticulous disbursement records for all classroom, medical, and community relief initiatives.'
-    }
+    },
+
+    {
+      name: 'Ibrahim Favour Adoba',
+      role: 'Project Manager',
+      badge: 'Field Operations',
+      initials: 'IF',
+      image: '/images/Ibrahim Favour Adoba - Project Manager.jpeg',
+      description: 'Leads frontline project deployment, monitoring school solar renovations, clean water drilling, and rural clinic logistics on the ground.'
+    },
   ];
 
   const stateCoordinators = [
@@ -165,8 +169,28 @@ export default function OurStory({ onOpenDonate }) {
       initials: 'HA',
       image: '/images/lagos State Project Cordinator Hassan Habeeb Adebayo.jpeg',
       description: 'Leads urban outreach missions, student sponsorship distribution, and volunteer logistics across underserved Lagos communities.'
+    },
+    {
+      name: 'Ibrahim Nzoyu Vivian',
+      role: 'FCT Coordinator',
+      badge: 'FCT Abuja',
+      initials: 'IV',
+      image: '/images/FCT coordinator IBRAHIM NZOYU VIVIAN.jpeg',
+      description: 'Directs community outreach, educational support programs, and healthcare mission delivery across the Federal Capital Territory.'
+    },
+    {
+      name: 'Oluwadiya Tobi Elijah',
+      role: 'Plateau State Coordinator',
+      badge: 'Plateau State',
+      initials: 'OE',
+      image: '/images/Oluwadiya Tobi Elijah Plateau State Coordinator.jpeg',
+      description: 'Coordinates grassroots educational initiatives, youth engagement, and community welfare projects throughout Plateau State.'
     }
   ];
+
+  const displayManagementTeam = storyContent?.leadership?.length > 0 ? storyContent.leadership : managementTeam;
+  const displayStateCoordinators = storyContent?.stateCoordinators?.length > 0 ? storyContent.stateCoordinators : stateCoordinators;
+  const displayVision = storyContent?.visionStatement || 'A world where every child has access to quality education, and every woman and child has access to comprehensive healthcare. We strive to break the cycle of poverty and increase the overall well-being of communities by empowering children through education and promoting the health and well-being of women and children.';
 
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
@@ -186,7 +210,7 @@ export default function OurStory({ onOpenDonate }) {
           <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-10 leading-relaxed font-normal"> vision </p>
 
 
-          <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-10 leading-relaxed font-normal">A world where every child has access to quality education, and every woman and child has access to comprehensive healthcare. We strive to break the cycle of poverty and increase the overall well-being of communities by empowering children through education and promoting the health and well-being of women and children.
+          <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-10 leading-relaxed font-normal">{displayVision}
           </p>
 
           <div className="w-full h-64 sm:h-80 md:h-[450px] rounded-3xl overflow-hidden relative border border-[#e7e2d8] shadow-xs">
@@ -281,7 +305,7 @@ export default function OurStory({ onOpenDonate }) {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {managementTeam.map((member) => (
+          {displayManagementTeam.map((member) => (
             <div
               key={member.name}
               className="bg-sand/60 rounded-3xl border border-[#e7e2d8] p-5 sm:p-8 flex flex-col items-center text-center shadow-xs hover:border-primary/40 hover:shadow-md transition-all group"
@@ -340,7 +364,7 @@ export default function OurStory({ onOpenDonate }) {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {stateCoordinators.map((coordinator) => (
+          {displayStateCoordinators.map((coordinator) => (
             <div
               key={coordinator.name}
               className="bg-sand/60 rounded-3xl border border-[#e7e2d8] p-5 sm:p-8 flex flex-col items-center text-center shadow-xs hover:border-primary/40 hover:shadow-md transition-all group"

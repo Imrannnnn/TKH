@@ -1,6 +1,10 @@
 import { useState, useMemo } from 'react';
 import { useData } from '../context/DataContext';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
+import HomePageEditor from './admin/HomePageEditor';
+import StoryPageEditor from './admin/StoryPageEditor';
+import TestimonialsPageEditor from './admin/TestimonialsPageEditor';
+import ContactPageEditor from './admin/ContactPageEditor';
 import {
   Lock,
   Unlock,
@@ -32,7 +36,8 @@ import {
   ChevronRight,
   ExternalLink,
   Download,
-  Check
+  Check,
+  Quote
 } from '../components/Icons';
 
 export default function Admin({ setCurrentPage }) {
@@ -59,6 +64,18 @@ export default function Admin({ setCurrentPage }) {
     inquiries,
     updateInquiryStatus,
     deleteInquiry,
+    homeContent,
+    updateHomeContent,
+    storyContent,
+    updateStoryContent,
+    updateStoryCoordinators,
+    updateStoryLeadership,
+    testimonialsList,
+    updateTestimonials,
+    addTestimonial,
+    deleteTestimonial,
+    contactInfo,
+    updateContactInfo,
     resetToDefaults,
     exportDataBackup
   } = useData();
@@ -80,17 +97,16 @@ export default function Admin({ setCurrentPage }) {
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  // Active admin tab & UI layout
+  // Active admin tab (Organized by Website Page)
   const [activeTab, setActiveTab] = useState('overview');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
-  // Search & Filter queries
+  // Sub-section filters for pages with list data
   const [newsSearch, setNewsSearch] = useState('');
   const [newsCategoryFilter, setNewsCategoryFilter] = useState('All');
   const [outreachSearch, setOutreachSearch] = useState('');
   const [outreachStatusFilter, setOutreachStatusFilter] = useState('All');
-  const [inquirySearch, setInquirySearch] = useState('');
-  const [inquiryFilter, setInquiryFilter] = useState('All');
+  const [transparencySubTab, setTransparencySubTab] = useState('allocations');
 
   // Toast notification state
   const [toastMessage, setToastMessage] = useState(null);
@@ -142,19 +158,11 @@ export default function Admin({ setCurrentPage }) {
     auditor: 'Independent Certified Public Auditor'
   });
 
-  // Temporary announcement editor
-  const [tempAnnouncement, setTempAnnouncement] = useState(announcement);
-  const [prevAnnouncement, setPrevAnnouncement] = useState(announcement);
-  if (prevAnnouncement !== announcement) {
-    setPrevAnnouncement(announcement);
-    setTempAnnouncement(announcement);
-  }
-
-  // Financial allocations local state for interactive slider tweaking
+  // Local allocations state for sliders
   const [localAllocations, setLocalAllocations] = useState(allocations);
-  const [prevAllocations, setPrevAllocations] = useState(allocations);
-  if (prevAllocations !== allocations) {
-    setPrevAllocations(allocations);
+  const [prevAlloc, setPrevAlloc] = useState(allocations);
+  if (prevAlloc !== allocations) {
+    setPrevAlloc(allocations);
     setLocalAllocations(allocations);
   }
 
@@ -168,15 +176,18 @@ export default function Admin({ setCurrentPage }) {
   // Login handler
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoginError('');
     setIsLoggingIn(true);
+
     try {
       const res = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginEmail, password: loginPass })
       });
-      const data = await res.json();
-      if (res.ok && data.success) {
+
+      if (res.ok) {
+        const data = await res.json();
         setIsAuthenticated(true);
         sessionStorage.setItem('tkh_admin_auth', 'true');
         if (data.user) {
@@ -186,17 +197,12 @@ export default function Admin({ setCurrentPage }) {
         if (data.token) {
           sessionStorage.setItem('tkh_admin_token', data.token);
         }
-        setLoginError('');
+        setIsLoggingIn(false);
         showToast(`Welcome back, ${data.user?.name || 'Super Admin'}`);
-        setIsLoggingIn(false);
-        return;
-      } else if (data.message) {
-        setLoginError(data.message);
-        setIsLoggingIn(false);
         return;
       }
-    } catch (err) {
-      console.info('Backend auth fallback:', err.message);
+    } catch {
+      // Defer to offline local credentials
     }
 
     if (
@@ -212,12 +218,12 @@ export default function Admin({ setCurrentPage }) {
       setAdminUser(fallbackUser);
       sessionStorage.setItem('tkh_admin_auth', 'true');
       sessionStorage.setItem('tkh_admin_user', JSON.stringify(fallbackUser));
-      setLoginError('');
+      setIsLoggingIn(false);
       showToast('Welcome back, Super Admin (Local Mode)');
     } else {
-      setLoginError('Invalid email or password.');
+      setIsLoggingIn(false);
+      setLoginError('Invalid Administrator credentials. Please verify your email and password.');
     }
-    setIsLoggingIn(false);
   };
 
   const handleLogout = () => {
@@ -226,28 +232,8 @@ export default function Admin({ setCurrentPage }) {
     sessionStorage.removeItem('tkh_admin_auth');
     sessionStorage.removeItem('tkh_admin_user');
     sessionStorage.removeItem('tkh_admin_token');
-    showToast('Successfully signed out');
+    showToast('Securely signed out of Super Admin Console');
   };
-
-  // Image gallery preset helper
-  const imagePresets = [
-    {
-      label: 'Solar Classroom (Kaduna)',
-      url: '/images/IMG_0303.JPG'
-    },
-    {
-      label: 'School Supply & Uniform Outreach',
-      url: '/images/IMG_0294.JPG'
-    },
-    {
-      label: 'Food Distribution & Relief Mission',
-      url: '/images/food-distribution.jpg'
-    },
-    {
-      label: 'Women & Community Empowerment',
-      url: '/images/IMG_0995.JPG'
-    }
-  ];
 
   // News Handlers
   const handleOpenNewNews = () => {
@@ -255,10 +241,10 @@ export default function Admin({ setCurrentPage }) {
     setNewsFormData({
       title: '',
       category: 'Field Milestone',
-      author: 'Field Operations Desk',
+      author: adminUser?.name || 'Field Operations Desk',
       date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
       excerpt: '',
-      image: imagePresets[0].url,
+      image: '/images/IMG_0303.JPG',
       body: ''
     });
     setNewsModalOpen(true);
@@ -280,25 +266,20 @@ export default function Admin({ setCurrentPage }) {
 
   const handleSaveNews = (e) => {
     e.preventDefault();
-    if (!newsFormData.title.trim()) return;
-
     if (editingNews) {
       updateNews(editingNews.id, newsFormData);
-      showToast(`Updated "${newsFormData.title.slice(0, 25)}..."`);
+      showToast(`Updated dispatch: "${newsFormData.title.slice(0, 30)}..."`);
     } else {
-      addNews({
-        ...newsFormData,
-        id: `news-${Date.now()}`
-      });
-      showToast('Field dispatch published live!');
+      addNews(newsFormData);
+      showToast(`Published dispatch: "${newsFormData.title.slice(0, 30)}..."`);
     }
     setNewsModalOpen(false);
   };
 
   const handleDeleteNews = (item) => {
-    if (window.confirm(`Delete field dispatch: "${item.title}"?`)) {
+    if (window.confirm(`Are you sure you want to delete dispatch "${item.title}"?`)) {
       deleteNews(item.id);
-      showToast('Dispatch removed from field log');
+      showToast('Dispatch deleted permanently');
     }
   };
 
@@ -314,7 +295,7 @@ export default function Admin({ setCurrentPage }) {
       beneficiariesTarget: '',
       description: '',
       needs: '',
-      image: imagePresets[1].url
+      image: '/images/IMG_0294.JPG'
     });
     setOutreachModalOpen(true);
   };
@@ -337,49 +318,30 @@ export default function Admin({ setCurrentPage }) {
 
   const handleSaveOutreach = (e) => {
     e.preventDefault();
-    if (!outreachFormData.title.trim()) return;
-
     if (editingOutreach) {
       updateOutreach(editingOutreach.id, outreachFormData);
-      showToast(`Updated outreach: "${outreachFormData.title.slice(0, 25)}..."`);
+      showToast(`Updated mission: "${outreachFormData.title.slice(0, 30)}..."`);
     } else {
-      addOutreach({
-        ...outreachFormData,
-        id: `outreach-${Date.now()}`
-      });
-      showToast('New outreach scheduled in public registry');
+      addOutreach(outreachFormData);
+      showToast(`Scheduled mission: "${outreachFormData.title.slice(0, 30)}..."`);
     }
     setOutreachModalOpen(false);
   };
 
+  const handleToggleOutreachStatus = (item) => {
+    const newStatus = item.status === 'upcoming' ? 'completed' : 'upcoming';
+    updateOutreach(item.id, { status: newStatus });
+    showToast(`Mission marked as ${newStatus}`);
+  };
+
   const handleDeleteOutreach = (item) => {
-    if (window.confirm(`Delete outreach mission: "${item.title}"?`)) {
+    if (window.confirm(`Delete outreach mission "${item.title}"?`)) {
       deleteOutreach(item.id);
-      showToast('Outreach deleted');
+      showToast('Mission deleted permanently');
     }
   };
 
-  const handleToggleOutreachStatus = (item) => {
-    const nextStatus = item.status === 'upcoming' ? 'completed' : 'upcoming';
-    updateOutreach(item.id, { status: nextStatus });
-    showToast(`Mission status set to ${nextStatus.toUpperCase()}`);
-  };
-
-  // Impact Metric Handlers
-  const handleOpenEditMetric = (m) => {
-    setEditingMetric(m);
-    setMetricFormData({
-      id: m.id,
-      label: m.label,
-      stat: m.stat,
-      description: m.description,
-      growth: m.growth,
-      detail: m.detail,
-      category: m.category || 'education'
-    });
-    setMetricModalOpen(true);
-  };
-
+  // Metric Handlers
   const handleOpenNewMetric = () => {
     setEditingMetric(null);
     setMetricFormData({
@@ -394,27 +356,40 @@ export default function Admin({ setCurrentPage }) {
     setMetricModalOpen(true);
   };
 
+  const handleOpenEditMetric = (m) => {
+    setEditingMetric(m);
+    setMetricFormData({
+      id: m.id,
+      label: m.label,
+      stat: m.stat,
+      description: m.description,
+      growth: m.growth,
+      detail: m.detail,
+      category: m.category || 'education'
+    });
+    setMetricModalOpen(true);
+  };
+
   const handleSaveMetric = (e) => {
     e.preventDefault();
-    if (!metricFormData.label.trim()) return;
     if (editingMetric) {
       updateMetric(editingMetric.id, metricFormData);
-      showToast(`Updated ${metricFormData.label}`);
+      showToast(`Updated impact metric: ${metricFormData.label}`);
     } else {
       addMetric(metricFormData);
-      showToast(`Added new impact metric indicator`);
+      showToast(`Added impact counter: ${metricFormData.label}`);
     }
     setMetricModalOpen(false);
   };
 
-  const handleDeleteMetric = (item) => {
-    if (window.confirm(`Delete metric indicator "${item.label}"?`)) {
-      deleteMetric(item.id);
-      showToast('Metric indicator removed');
+  const handleDeleteMetric = (m) => {
+    if (window.confirm(`Delete impact counter "${m.label}"?`)) {
+      deleteMetric(m.id);
+      showToast('Impact figure deleted');
     }
   };
 
-  // Transparency Allocation Handlers
+  // Allocations Handlers
   const handleAllocationPctChange = (index, value) => {
     const num = parseFloat(value) || 0;
     const updated = [...localAllocations];
@@ -422,188 +397,124 @@ export default function Admin({ setCurrentPage }) {
     setLocalAllocations(updated);
   };
 
+  const totalAllocPct = useMemo(() => {
+    return localAllocations.reduce((acc, curr) => acc + (curr.pct || 0), 0);
+  }, [localAllocations]);
+
+  const isTotalAlloc100 = Math.abs(totalAllocPct - 100) < 0.05;
+
   const handleSaveAllocations = () => {
     updateAllocations(localAllocations);
-    showToast('Financial breakdown percentages updated');
+    showToast('Direct giving allocations updated successfully');
   };
 
   // Document Handlers
   const handleSaveDoc = (e) => {
     e.preventDefault();
-    if (!docFormData.title.trim()) return;
     addDocument(docFormData);
-    showToast(`Added audit document: ${docFormData.title}`);
     setDocModalOpen(false);
-    setDocFormData({
-      title: '',
-      size: '1.5 MB',
-      date: `Published ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`,
-      auditor: 'Independent Certified Public Auditor'
-    });
+    showToast(`Added audit record: "${docFormData.title}"`);
   };
 
   const handleDeleteDoc = (doc) => {
-    if (window.confirm(`Remove official record "${doc.title}"?`)) {
+    if (window.confirm(`Delete document record "${doc.title}"?`)) {
       deleteDocument(doc.id || doc.title);
-      showToast('Document record removed');
+      showToast('Document record deleted');
     }
   };
 
-  // Announcement Handlers
-  const handleSaveAnnouncement = (e) => {
-    e.preventDefault();
-    updateAnnouncement(tempAnnouncement);
-    showToast('Global announcement ticker published live!');
-  };
+  // Filtered news
+  const filteredNews = news.filter((item) => {
+    const matchesSearch =
+      item.title.toLowerCase().includes(newsSearch.toLowerCase()) ||
+      item.excerpt.toLowerCase().includes(newsSearch.toLowerCase()) ||
+      item.author.toLowerCase().includes(newsSearch.toLowerCase());
+    const matchesCat = newsCategoryFilter === 'All' || item.category === newsCategoryFilter;
+    return matchesSearch && matchesCat;
+  });
 
-  // Calculation for Total Allocations
-  const totalAllocPct = localAllocations.reduce((sum, item) => sum + (parseFloat(item.pct) || 0), 0);
-  const isTotalAlloc100 = Math.abs(totalAllocPct - 100) < 0.01;
-
-  // Filtered queries
-  const filteredNews = useMemo(() => {
-    return news.filter((n) => {
-      const matchesSearch =
-        n.title.toLowerCase().includes(newsSearch.toLowerCase()) ||
-        n.category.toLowerCase().includes(newsSearch.toLowerCase()) ||
-        n.author.toLowerCase().includes(newsSearch.toLowerCase());
-      const matchesCategory =
-        newsCategoryFilter === 'All' || n.category.toLowerCase() === newsCategoryFilter.toLowerCase();
-      return matchesSearch && matchesCategory;
-    });
-  }, [news, newsSearch, newsCategoryFilter]);
-
-  const filteredOutreaches = useMemo(() => {
-    return outreaches.filter((o) => {
-      const matchesSearch =
-        o.title.toLowerCase().includes(outreachSearch.toLowerCase()) ||
-        o.location.toLowerCase().includes(outreachSearch.toLowerCase()) ||
-        o.pillar.toLowerCase().includes(outreachSearch.toLowerCase());
-      const matchesStatus =
-        outreachStatusFilter === 'All' || o.status.toLowerCase() === outreachStatusFilter.toLowerCase();
-      return matchesSearch && matchesStatus;
-    });
-  }, [outreaches, outreachSearch, outreachStatusFilter]);
-
-  const filteredInquiries = useMemo(() => {
-    return inquiries.filter((i) => {
-      const matchesSearch =
-        i.name?.toLowerCase().includes(inquirySearch.toLowerCase()) ||
-        i.email?.toLowerCase().includes(inquirySearch.toLowerCase()) ||
-        i.category?.toLowerCase().includes(inquirySearch.toLowerCase()) ||
-        i.message?.toLowerCase().includes(inquirySearch.toLowerCase());
-      const matchesFilter =
-        inquiryFilter === 'All'
-          ? true
-          : inquiryFilter === 'Unread'
-          ? i.status?.toLowerCase() === 'unread' || i.status?.toLowerCase() === 'new'
-          : i.status?.toLowerCase() === inquiryFilter.toLowerCase();
-      return matchesSearch && matchesFilter;
-    });
-  }, [inquiries, inquirySearch, inquiryFilter]);
-
-  // Distinct categories for filters
-  const newsCategories = useMemo(() => {
-    const cats = new Set(news.map((n) => n.category));
-    return ['All', ...Array.from(cats)];
-  }, [news]);
+  // Filtered outreaches
+  const filteredOutreaches = outreaches.filter((item) => {
+    const matchesSearch =
+      item.title.toLowerCase().includes(outreachSearch.toLowerCase()) ||
+      item.location.toLowerCase().includes(outreachSearch.toLowerCase()) ||
+      item.description.toLowerCase().includes(outreachSearch.toLowerCase());
+    const matchesStatus =
+      outreachStatusFilter === 'All' || item.status === outreachStatusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   // =========================================================================
-  // VIEW A: EXECUTIVE LOGIN PORTAL (UNAUTHENTICATED)
+  // VIEW A: UNAUTHENTICATED SUPER ADMIN LOGIN SCREEN
   // =========================================================================
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#f8f6f2] text-ink flex flex-col justify-between relative overflow-hidden font-sans selection:bg-primary/20 selection:text-primary">
-        {/* Ambient Wave Backgrounds from Home Page */}
-        <CurvedWaveBackground side="right" />
-        <CurvedWaveBackground side="left" className="opacity-40" />
+      <div className="min-h-screen bg-[#142722] text-[#f8f6f2] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden antialiased">
+        <CurvedWaveBackground side="right" className="opacity-25" />
+        <CurvedWaveBackground side="left" className="opacity-15" />
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-forest/30 rounded-full blur-3xl pointer-events-none"></div>
 
-        {/* Subtle background ambient warm glow mesh */}
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-clay/15 rounded-full blur-3xl pointer-events-none"></div>
-
-        {/* Top Minimal Return Header */}
-        <div className="w-full px-4 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-3 z-10">
-          <button
-            onClick={() => {
-              if (setCurrentPage) setCurrentPage('home');
-              window.location.hash = 'home';
-            }}
-            className="flex items-center gap-2 text-xs font-heading font-semibold text-ink-light hover:text-primary transition-colors cursor-pointer bg-white hover:bg-sand px-4 py-2 rounded-xl border border-[#e7e2d8] shadow-xs w-full sm:w-auto justify-center"
-          >
-            <ArrowLeft className="w-4 h-4 text-primary shrink-0" />
-            <span>Return to Public Website</span>
-          </button>
-
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#e7e2d8] text-[11px] text-ink-light font-medium shadow-xs">
-            <span className="w-2 h-2 rounded-full bg-forest animate-pulse shrink-0"></span>
-            <span>CAC/IT/NO: 148920 • Secure Console</span>
-          </div>
-        </div>
-
-        {/* Centered Login Card */}
-        <div className="flex-1 flex items-center justify-center px-4 py-6 sm:py-8 z-10">
-          <div className="w-full max-w-md bg-white/95 backdrop-blur-xl border border-[#e7e2d8] rounded-2xl sm:rounded-3xl p-5 sm:p-10 shadow-xl shadow-ink/5">
-            {/* Header Lockup */}
-            <div className="text-center mb-6 sm:mb-8">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-sand border border-[#e7e2d8] p-2 mx-auto mb-3 sm:mb-4 shadow-sm flex items-center justify-center">
+        <div className="max-w-md w-full relative z-10">
+          <div className="bg-[#1a332c]/90 backdrop-blur-xl border border-[#2a4d44] rounded-3xl p-8 sm:p-10 shadow-2xl">
+            <div className="flex flex-col items-center text-center mb-8">
+              <div className="w-16 h-16 rounded-2xl bg-[#1f3b34] border border-[#2e564c] p-2 flex items-center justify-center shadow-inner mb-4">
                 <img
-                  alt="Ten Kind Hands Logo"
+                  alt="Ten Kind Hands Official Logo"
                   className="w-full h-full object-contain"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmbaMRmoVzqGDmSGEoX0XoPFIdN6UYrwile-1Gt1d37VzrQ2PeaP9G7MITiOYlV5Mlma8OlajwkWA3r7O1u4I69Sez16xvET1fYSAP8dl7zhMj1M0gMuXfZYOCWyuePctpR97q8v72-LHjIYFUf8CgqilRAMMM-D-G-S-sJToMqi-nhfADpBN1MUQEsECDNokFRkKAoeuKy8OqR7LAReSeIGPvsSwv08HUP9RVs-2uxRF2z55chm270O5kDJRiqFAmMg"
                 />
               </div>
-              <span className="inline-block text-[10px] sm:text-[11px] uppercase tracking-widest text-primary font-bold bg-primary/10 px-3 py-1 rounded-full border border-primary/20 mb-2 font-heading">
-                Executive Portal
+
+              <span className="text-[11px] uppercase tracking-widest font-bold text-[#f7c899] font-heading mb-1">
+                Ten Kind Hands Foundation
               </span>
-              <h1 className="text-xl sm:text-2xl font-heading font-bold text-ink tracking-tight">
-                Ten Kind Hands Portal
+              <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white tracking-tight">
+                Super Admin Console
               </h1>
-              <p className="text-xs text-ink-light mt-1.5">
-                Authorized access for Operations, Audit &amp; Field Staff
+              <p className="text-xs text-[#d4cdc3] mt-2 leading-relaxed">
+                Centralized management system organized by website page. Authorized personnel only.
               </p>
             </div>
 
-            {/* Error Message */}
             {loginError && (
-              <div className="mb-6 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-3 animate-fade-in">
-                <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
+              <div className="mb-6 p-3.5 rounded-2xl bg-rose-950/60 border border-rose-800/80 text-rose-200 text-xs flex items-center gap-2.5">
+                <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
                 <span>{loginError}</span>
               </div>
             )}
 
-            {/* Login Form */}
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label className="block text-xs font-heading font-semibold text-ink mb-1.5">
+                <label className="block text-xs font-heading font-semibold text-[#f8f6f2] mb-1.5">
                   Administrator Email
                 </label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-ink-muted absolute left-3.5 top-3" />
+                  <Mail className="w-4 h-4 text-[#829992] absolute left-3.5 top-3" />
                   <input
                     type="email"
                     required
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
                     placeholder="admin@tenkindhands.org"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-sand/60 border border-[#e7e2d8] text-ink text-xs placeholder:text-ink-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#2a4d44] bg-[#142722]/80 text-[#f8f6f2] text-xs focus:outline-none focus:border-primary placeholder:text-stone-500 transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-heading font-semibold text-ink mb-1.5">
-                  Security Password
+                <label className="block text-xs font-heading font-semibold text-[#f8f6f2] mb-1.5">
+                  Security Passphrase
                 </label>
                 <div className="relative">
-                  <Lock className="w-4 h-4 text-ink-muted absolute left-3.5 top-3" />
+                  <Lock className="w-4 h-4 text-[#829992] absolute left-3.5 top-3" />
                   <input
                     type="password"
                     required
                     value={loginPass}
                     onChange={(e) => setLoginPass(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-sand/60 border border-[#e7e2d8] text-ink text-xs placeholder:text-ink-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#2a4d44] bg-[#142722]/80 text-[#f8f6f2] text-xs focus:outline-none focus:border-primary placeholder:text-stone-500 transition-colors"
                   />
                 </div>
               </div>
@@ -611,56 +522,90 @@ export default function Admin({ setCurrentPage }) {
               <button
                 type="submit"
                 disabled={isLoggingIn}
-                className="w-full py-3 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-primary/20 transition-all disabled:opacity-50 mt-2"
+                className="w-full py-3 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white font-heading font-bold text-xs shadow-lg shadow-primary/30 active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2 disabled:opacity-50"
               >
-                <Unlock className="w-4 h-4" />
-                <span>{isLoggingIn ? 'Authenticating with Operations...' : 'Sign In to Operational Desk'}</span>
+                {isLoggingIn ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    <span>Verifying Session...</span>
+                  </>
+                ) : (
+                  <>
+                    <Unlock className="w-4 h-4" />
+                    <span>Authenticate &amp; Open Console</span>
+                  </>
+                )}
               </button>
             </form>
-          </div>
-        </div>
 
-        {/* Footer info */}
-        <div className="w-full py-4 text-center text-[11px] text-ink-muted border-t border-[#e7e2d8] z-10">
-          Ten Kind Hands Initiative • CAC/IT/NO: 148920 • End-to-End Encrypted Session
+            <div className="mt-8 pt-6 border-t border-[#2a4d44]/60 text-center">
+              <button
+                onClick={() => {
+                  if (setCurrentPage) setCurrentPage('home');
+                  window.location.hash = 'home';
+                }}
+                className="text-xs text-[#f7c899] hover:underline font-heading font-semibold flex items-center justify-center gap-1.5 mx-auto cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Return to Public Website</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   // =========================================================================
-  // VIEW B: AUTHENTICATED SUPER ADMIN COMMAND CENTER (APP SHELL)
+  // VIEW B: AUTHENTICATED SUPER ADMIN COMMAND CENTER (ORGANIZED BY PAGE)
   // =========================================================================
-  const navigationItems = [
+  const navigationGroups = [
     {
-      group: 'EXECUTIVE MANAGEMENT',
+      group: 'EXECUTIVE OVERVIEW',
       items: [
-        { id: 'overview', label: 'Dashboard Overview', icon: Layers, badge: null },
-        { id: 'inquiries', label: 'Inbound Inquiries', icon: Mail, badge: inquiries.length }
+        { id: 'overview', label: 'Dashboard Overview', icon: Layers, badge: null, pageName: 'Executive Center' }
       ]
     },
     {
-      group: 'FIELD DELIVERABLES',
+      group: 'PAGE CONTENT EDITORS',
       items: [
-        { id: 'news', label: 'Field Dispatches', icon: BookOpen, badge: news.length },
-        { id: 'outreaches', label: 'Missions & Outreaches', icon: MapPin, badge: outreaches.length }
+        { id: 'page-home', label: 'Home Page', icon: Globe, badge: '4 Sec', pageName: 'Home' },
+        { id: 'page-story', label: 'Our Story Page', icon: Users, badge: `${storyContent?.stateCoordinators?.length || 5} Coor`, pageName: 'Our Story' },
+        { id: 'page-outreaches', label: 'Missions & Outreaches', icon: MapPin, badge: outreaches.length, pageName: 'Missions & Outreaches' },
+        { id: 'page-news', label: 'News & Dispatches', icon: BookOpen, badge: news.length, pageName: 'News' },
+        { id: 'page-transparency', label: 'Financial Transparency', icon: ShieldCheck, badge: '100%', pageName: 'Transparency' },
+        { id: 'page-testimonials', label: 'Testimonials Page', icon: Quote, badge: testimonialsList?.length || 6, pageName: 'Testimonials' },
+        { id: 'page-contact', label: 'Contact & Inquiries', icon: Mail, badge: inquiries.length, pageName: 'Contact' }
       ]
     },
     {
-      group: 'GOVERNANCE & IMPACT',
+      group: 'SYSTEM & INTEGRITY',
       items: [
-        { id: 'metrics', label: 'Impact Figures', icon: TrendingUp, badge: metrics.length },
-        { id: 'transparency', label: 'Financial Allocation', icon: ShieldCheck, badge: '100%' },
-        { id: 'announcement', label: 'Marquee Banner', icon: Globe, badge: 'Live' }
-      ]
-    },
-    {
-      group: 'SYSTEM & DATABASE',
-      items: [
-        { id: 'backup', label: 'Cloud Backup & Reset', icon: Database, badge: null }
+        { id: 'system-backup', label: 'Cloud Backup & Reset', icon: Database, badge: null, pageName: 'System' }
       ]
     }
   ];
+
+  const getActiveTabTitle = () => {
+    for (const grp of navigationGroups) {
+      const match = grp.items.find((i) => i.id === activeTab);
+      if (match) return match.label;
+    }
+    return activeTab;
+  };
+
+  const getActivePreviewRoute = () => {
+    switch (activeTab) {
+      case 'page-home': return 'home';
+      case 'page-story': return 'our-story';
+      case 'page-outreaches': return 'outreaches';
+      case 'page-news': return 'news';
+      case 'page-transparency': return 'transparency';
+      case 'page-testimonials': return 'testimonials';
+      case 'page-contact': return 'contact';
+      default: return 'home';
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#f8f6f2] text-ink flex flex-col lg:flex-row antialiased font-sans selection:bg-primary/20 selection:text-primary">
@@ -718,7 +663,7 @@ export default function Admin({ setCurrentPage }) {
 
         {/* Navigation Items Groups */}
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-none">
-          {navigationItems.map((group) => (
+          {navigationGroups.map((group) => (
             <div key={group.group}>
               <h3 className="px-3 text-[10px] font-heading font-bold uppercase tracking-wider text-[#7a958e] mb-1.5">
                 {group.group}
@@ -768,42 +713,41 @@ export default function Admin({ setCurrentPage }) {
         </div>
 
         {/* Sidebar Footer: Super Admin Profile & Quick Links */}
-        <div className="p-4 border-t border-[#1f3b34] bg-[#0e1b17] space-y-3">
-          {/* User Badge */}
-          <div className="flex items-center justify-between bg-[#142722] p-2.5 rounded-2xl border border-[#1f3b34]">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-xl bg-primary/20 text-[#f7c899] border border-primary/30 flex items-center justify-center font-bold text-xs shrink-0 font-heading">
+        <div className="p-4 border-t border-[#1f3b34] space-y-3 bg-[#11201c]">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-primary font-bold text-xs font-heading">
                 SA
               </div>
-              <div className="min-w-0 text-left">
-                <p className="text-xs font-bold text-white truncate font-heading">
+              <div className="min-w-0">
+                <span className="block text-xs font-heading font-bold text-white truncate">
                   {adminUser?.name || 'Super Admin'}
-                </p>
-                <p className="text-[10px] text-[#829992] truncate">
+                </span>
+                <span className="block text-[10px] text-[#829992] truncate">
                   {adminUser?.email || 'admin@tenkindhands.org'}
-                </p>
+                </span>
               </div>
             </div>
 
             <button
               onClick={handleLogout}
               title="Sign Out"
-              className="p-1.5 rounded-lg text-[#829992] hover:text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/40 transition-colors cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Quick Return to Public Site Button */}
           <button
             onClick={() => {
-              if (setCurrentPage) setCurrentPage('home');
-              window.location.hash = 'home';
+              const route = getActivePreviewRoute();
+              if (setCurrentPage) setCurrentPage(route);
+              window.location.hash = route;
             }}
             className="w-full py-2 px-3 rounded-xl bg-[#1f3b34] hover:bg-[#25443c] text-[#f8f6f2] hover:text-white text-xs font-heading font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all border border-[#2a4d44]"
           >
             <ExternalLink className="w-3.5 h-3.5 text-[#f7c899]" />
-            <span>Preview Live Public Site</span>
+            <span>Preview Live Site</span>
           </button>
         </div>
       </aside>
@@ -812,7 +756,6 @@ export default function Admin({ setCurrentPage }) {
           MAIN WORKSPACE CANVAS
       ===================================================================== */}
       <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden relative">
-        {/* Ambient Wave Backgrounds from Home Page (Confined to exact content bounds) */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
           <CurvedWaveBackground side="right" />
           <CurvedWaveBackground side="left" className="opacity-30" />
@@ -821,7 +764,6 @@ export default function Admin({ setCurrentPage }) {
         {/* Top Application Header */}
         <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e7e2d8] px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
           <div className="flex items-center gap-3">
-            {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileSidebarOpen(true)}
               className="lg:hidden p-2 rounded-xl text-ink-light hover:bg-sand cursor-pointer"
@@ -833,16 +775,15 @@ export default function Admin({ setCurrentPage }) {
             <div className="flex items-center gap-2 text-xs">
               <span className="text-ink-muted font-medium">Console</span>
               <ChevronRight className="w-3 h-3 text-[#d4cdc3]" />
-              <span className="font-heading font-bold text-ink capitalize">
-                {activeTab.replace('-', ' ')}
+              <span className="font-heading font-bold text-ink">
+                {getActiveTabTitle()}
               </span>
             </div>
           </div>
 
           {/* Right Header Quick Controls */}
           <div className="flex items-center gap-3">
-            {/* Quick Add Button based on active view */}
-            {activeTab === 'news' && (
+            {activeTab === 'page-news' && (
               <button
                 onClick={handleOpenNewNews}
                 className="px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
@@ -852,7 +793,7 @@ export default function Admin({ setCurrentPage }) {
               </button>
             )}
 
-            {activeTab === 'outreaches' && (
+            {activeTab === 'page-outreaches' && (
               <button
                 onClick={handleOpenNewOutreach}
                 className="px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
@@ -862,17 +803,7 @@ export default function Admin({ setCurrentPage }) {
               </button>
             )}
 
-            {activeTab === 'metrics' && (
-              <button
-                onClick={handleOpenNewMetric}
-                className="px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Add Impact Counter</span>
-              </button>
-            )}
-
-            {activeTab === 'transparency' && (
+            {activeTab === 'page-transparency' && (
               <button
                 onClick={() => setDocModalOpen(true)}
                 className="px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
@@ -892,16 +823,17 @@ export default function Admin({ setCurrentPage }) {
               <span className="hidden md:inline">Export JSON</span>
             </button>
 
-            {/* Preview Live Site */}
+            {/* Preview Live Site for active page */}
             <button
               onClick={() => {
-                if (setCurrentPage) setCurrentPage('home');
-                window.location.hash = 'home';
+                const route = getActivePreviewRoute();
+                if (setCurrentPage) setCurrentPage(route);
+                window.location.hash = route;
               }}
               className="px-3 py-1.5 rounded-xl bg-sand hover:bg-sand-dark text-ink text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer transition-colors border border-[#e7e2d8]"
             >
               <Eye className="w-3.5 h-3.5 text-primary" />
-              <span className="hidden sm:inline">Preview Site</span>
+              <span className="hidden sm:inline">Preview Page</span>
             </button>
           </div>
         </header>
@@ -909,407 +841,255 @@ export default function Admin({ setCurrentPage }) {
         {/* Dynamic Tab Body */}
         <main className="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto space-y-8 relative z-10">
           {/* =================================================================
-              TAB 1: DASHBOARD OVERVIEW
+              1. DASHBOARD OVERVIEW
           ================================================================= */}
           {activeTab === 'overview' && (
             <div className="space-y-8 animate-fade-in">
-              {/* Welcome Banner */}
               <div className="bg-gradient-to-br from-[#142722] via-[#1f3b34] to-[#25473e] text-white rounded-3xl p-6 sm:p-8 shadow-sm relative overflow-hidden border border-[#2a4d44]">
                 <CurvedWaveBackground side="right" className="opacity-25" />
                 <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-clay/15 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="max-w-2xl relative z-10">
                   <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-xs text-[#f7c899] border border-white/20 text-xs font-semibold mb-3 font-heading">
                     <span className="w-2 h-2 rounded-full bg-[#f7c899] animate-pulse"></span>
-                    <span>Operational Desk Active &amp; Verified</span>
+                    <span>Operational Desk Active &amp; Page-Organized</span>
                   </div>
                   <h1 className="text-2xl sm:text-3xl font-heading font-extrabold tracking-tight">
-                    Welcome back, <span className="text-[#f7c899]">Field Administrator</span>
+                    Welcome to the <span className="text-[#f7c899]">Super Admin Console</span>
                   </h1>
                   <p className="text-xs sm:text-sm text-white/85 mt-2 leading-relaxed font-normal">
-                    Live command center for Ten Kind Hands. Changes made here immediately update public dispatches, outreach logs, transparency allocations, and community metrics.
+                    Manage and organize all public website content by page: Home, Our Story, Missions &amp; Outreaches, News Dispatches, Financial Transparency, Testimonials, and Contact Leads.
                   </p>
                 </div>
               </div>
 
-              {/* 4 Stat KPI Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div
-                  onClick={() => setActiveTab('news')}
-                  className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md transition-all cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
-                      Field Dispatches
-                    </span>
-                    <div className="w-8 h-8 rounded-xl bg-forest/10 text-forest flex items-center justify-center group-hover:bg-forest group-hover:text-white transition-colors">
-                      <BookOpen className="w-4 h-4" />
-                    </div>
-                  </div>
-                  <div className="text-2xl font-heading font-bold text-ink">{news.length}</div>
-                  <div className="flex items-center justify-between text-[11px] text-ink-muted mt-2 pt-2 border-t border-[#e7e2d8]">
-                    <span>Published articles</span>
-                    <span className="text-forest font-semibold group-hover:underline flex items-center gap-1 font-heading">
-                      Manage <ArrowRight className="w-3 h-3" />
-                    </span>
-                  </div>
-                </div>
-
-                <div
-                  onClick={() => setActiveTab('outreaches')}
-                  className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md transition-all cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
-                      Active Missions
-                    </span>
-                    <div className="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-                      <MapPin className="w-4 h-4" />
-                    </div>
-                  </div>
-                  <div className="text-2xl font-heading font-bold text-ink">{outreaches.length}</div>
-                  <div className="flex items-center justify-between text-[11px] text-ink-muted mt-2 pt-2 border-t border-[#e7e2d8]">
-                    <span>
-                      {outreaches.filter((o) => o.status === 'upcoming').length} upcoming •{' '}
-                      {outreaches.filter((o) => o.status === 'completed').length} done
-                    </span>
-                    <span className="text-primary font-semibold group-hover:underline flex items-center gap-1 font-heading">
-                      Schedule <ArrowRight className="w-3 h-3" />
-                    </span>
-                  </div>
-                </div>
-
-                <div
-                  onClick={() => setActiveTab('transparency')}
-                  className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md transition-all cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
-                      Direct Frontline Ratio
-                    </span>
-                    <div className="w-8 h-8 rounded-xl bg-clay/10 text-clay flex items-center justify-center group-hover:bg-clay group-hover:text-white transition-colors">
-                      <ShieldCheck className="w-4 h-4" />
-                    </div>
-                  </div>
-                  <div className="text-2xl font-heading font-bold text-forest">
-                    {allocations.find((a) => a.id === 'frontline')?.pct || 88.4}%
-                  </div>
-                  <div className="flex items-center justify-between text-[11px] text-ink-muted mt-2 pt-2 border-t border-[#e7e2d8]">
-                    <span>0.0% administrative cuts</span>
-                    <span className="text-forest font-semibold group-hover:underline flex items-center gap-1 font-heading">
-                      Audit <ArrowRight className="w-3 h-3" />
-                    </span>
-                  </div>
-                </div>
-
-                <div
-                  onClick={() => setActiveTab('inquiries')}
-                  className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md transition-all cursor-pointer group"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
-                      Inbound Inquiries
-                    </span>
-                    <div className="w-8 h-8 rounded-xl bg-sand-dark text-ink flex items-center justify-center group-hover:bg-ink group-hover:text-white transition-colors">
-                      <Mail className="w-4 h-4" />
-                    </div>
-                  </div>
-                  <div className="text-2xl font-heading font-bold text-ink">{inquiries.length}</div>
-                  <div className="flex items-center justify-between text-[11px] text-ink-muted mt-2 pt-2 border-t border-[#e7e2d8]">
-                    <span>
-                      {inquiries.filter((i) => i.status === 'New' || i.status === 'Unread').length} unreviewed
-                    </span>
-                    <span className="text-clay font-semibold group-hover:underline flex items-center gap-1 font-heading">
-                      View <ArrowRight className="w-3 h-3" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quick Operational Launchpad */}
-              <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 shadow-xs">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h2 className="text-base font-heading font-bold text-ink">
-                      Operational Quick Actions
-                    </h2>
-                    <p className="text-xs text-ink-muted">
-                      Common management tasks executed across the platform
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <button
-                    onClick={handleOpenNewNews}
-                    className="p-4 rounded-xl border border-[#e7e2d8] bg-sand/50 hover:bg-sand hover:border-forest/40 text-left transition-all cursor-pointer group"
+              {/* Page-by-Page Quick Cards Grid */}
+              <div>
+                <h2 className="text-xs font-heading font-bold uppercase tracking-wider text-ink-muted mb-3">
+                  Website Page Editors Quick Access
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {/* Home Page Card */}
+                  <div
+                    onClick={() => setActiveTab('page-home')}
+                    className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-primary/40 transition-all cursor-pointer group"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-forest/15 text-forest flex items-center justify-center mb-3 group-hover:bg-forest group-hover:text-white transition-colors">
-                      <Plus className="w-4 h-4" />
-                    </div>
-                    <strong className="block text-xs font-heading font-bold text-ink mb-0.5">
-                      Publish Field Dispatch
-                    </strong>
-                    <span className="text-[11px] text-ink-light leading-tight">
-                      Write milestone story with photo documentary.
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={handleOpenNewOutreach}
-                    className="p-4 rounded-xl border border-[#e7e2d8] bg-sand/50 hover:bg-sand hover:border-primary/40 text-left transition-all cursor-pointer group"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-primary/15 text-primary flex items-center justify-center mb-3 group-hover:bg-primary group-hover:text-white transition-colors">
-                      <Calendar className="w-4 h-4" />
-                    </div>
-                    <strong className="block text-xs font-heading font-bold text-ink mb-0.5">
-                      Schedule Outreach
-                    </strong>
-                    <span className="text-[11px] text-ink-light leading-tight">
-                      Register upcoming medical, school or water drive.
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveTab('metrics')}
-                    className="p-4 rounded-xl border border-[#e7e2d8] bg-sand/50 hover:bg-sand hover:border-clay/40 text-left transition-all cursor-pointer group"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-clay/15 text-clay flex items-center justify-center mb-3 group-hover:bg-clay group-hover:text-white transition-colors">
-                      <TrendingUp className="w-4 h-4" />
-                    </div>
-                    <strong className="block text-xs font-heading font-bold text-ink mb-0.5">
-                      Adjust Impact Numbers
-                    </strong>
-                    <span className="text-[11px] text-ink-light leading-tight">
-                      Update students, solar classrooms &amp; clinic counts.
-                    </span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Inquiries Snapshot & Dispatches Feed */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                {/* Inquiries Snapshot (7 cols) */}
-                <div className="lg:col-span-7 bg-white rounded-2xl border border-[#e7e2d8] p-6 shadow-xs">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h2 className="text-base font-heading font-bold text-ink">
-                        Recent Public Inquiries
-                      </h2>
-                      <p className="text-xs text-ink-muted">
-                        Citizen messages, volunteer and partner submissions
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setActiveTab('inquiries')}
-                      className="text-xs text-primary font-heading font-semibold hover:underline flex items-center gap-1 cursor-pointer"
-                    >
-                      <span>View All ({inquiries.length})</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <div className="divide-y divide-[#e7e2d8]">
-                    {inquiries.slice(0, 4).map((inq) => (
-                      <div key={inq.id} className="py-3 flex items-start justify-between gap-4">
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-2">
-                            <strong className="text-xs font-heading font-bold text-ink truncate">
-                              {inq.name}
-                            </strong>
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-sand text-ink-light border border-[#e7e2d8]">
-                              {inq.category}
-                            </span>
-                          </div>
-                          <p className="text-xs text-ink-light truncate mt-0.5">{inq.message}</p>
-                          <span className="text-[10px] text-ink-muted">{inq.date}</span>
-                        </div>
-
-                        <span
-                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold shrink-0 ${
-                            inq.status === 'Reviewed'
-                              ? 'bg-forest/10 text-forest border border-forest/20'
-                              : 'bg-clay/10 text-clay border border-clay/20'
-                          }`}
-                        >
-                          {inq.status || 'New'}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Live Announcement Preview (5 cols) */}
-                <div className="lg:col-span-5 bg-white rounded-2xl border border-[#e7e2d8] p-6 shadow-xs flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <h2 className="text-base font-heading font-bold text-ink">
-                        Global Marquee Status
-                      </h2>
-                      <span className="px-2.5 py-0.5 rounded-full bg-forest/10 text-forest border border-forest/20 text-[10px] font-bold font-heading">
-                        Live on Site
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
+                        Landing Page
                       </span>
-                    </div>
-                    <p className="text-xs text-ink-muted mb-4">
-                      Current alert broadcast to visitors across all pages
-                    </p>
-
-                    <div className="p-4 rounded-xl bg-[#142722] text-white text-xs leading-relaxed border border-[#1f3b34]">
-                      <div className="flex items-center gap-2 text-[#f7c899] font-bold mb-1 text-[11px] font-heading">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#f7c899] animate-pulse"></span>
-                        <span>LIVE TICKER</span>
+                      <div className="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                        <Globe className="w-4 h-4" />
                       </div>
-                      <p className="text-white/90">{announcement || '100% Direct Giving'}</p>
+                    </div>
+                    <div className="text-lg font-heading font-bold text-ink">Home Page</div>
+                    <p className="text-[11px] text-ink-light mt-1">Hero slides, impact counters &amp; marquee ribbon.</p>
+                    <div className="flex items-center justify-between text-[11px] text-primary font-semibold mt-3 pt-2 border-t border-[#e7e2d8]">
+                      <span>4 Editable Sections</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => setActiveTab('announcement')}
-                    className="mt-4 w-full py-2 px-3 rounded-xl bg-sand hover:bg-sand-dark text-ink text-xs font-heading font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-colors border border-[#e7e2d8]"
+                  {/* Our Story Card */}
+                  <div
+                    onClick={() => setActiveTab('page-story')}
+                    className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-forest/40 transition-all cursor-pointer group"
                   >
-                    <Edit3 className="w-3.5 h-3.5 text-primary" />
-                    <span>Edit Live Marquee</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* =================================================================
-              TAB 2: FIELD DISPATCHES (NEWS)
-          ================================================================= */}
-          {activeTab === 'news' && (
-            <div className="space-y-6 animate-fade-in">
-              {/* Header & Controls */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs">
-                <div>
-                  <h1 className="text-xl font-heading font-bold text-ink">Field Dispatches &amp; News</h1>
-                  <p className="text-xs text-ink-muted">
-                    Documentary stories and milestones published to the public website
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <div className="relative">
-                    <Search className="w-3.5 h-3.5 text-ink-muted absolute left-3 top-2.5" />
-                    <input
-                      type="text"
-                      placeholder="Search dispatches..."
-                      value={newsSearch}
-                      onChange={(e) => setNewsSearch(e.target.value)}
-                      className="pl-9 pr-3 py-1.5 rounded-xl border border-[#e7e2d8] bg-sand/40 text-ink text-xs focus:outline-none focus:border-primary w-44 sm:w-56"
-                    />
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
+                        Leadership &amp; Team
+                      </span>
+                      <div className="w-8 h-8 rounded-xl bg-forest/10 text-forest flex items-center justify-center group-hover:bg-forest group-hover:text-white transition-colors">
+                        <Users className="w-4 h-4" />
+                      </div>
+                    </div>
+                    <div className="text-lg font-heading font-bold text-ink">Our Story Page</div>
+                    <p className="text-[11px] text-ink-light mt-1">
+                      {storyContent?.stateCoordinators?.length || 5} State Coordinators &amp; Leadership.
+                    </p>
+                    <div className="flex items-center justify-between text-[11px] text-forest font-semibold mt-3 pt-2 border-t border-[#e7e2d8]">
+                      <span>Coordinators Team</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
                   </div>
 
-                  <select
-                    value={newsCategoryFilter}
-                    onChange={(e) => setNewsCategoryFilter(e.target.value)}
-                    className="py-1.5 px-3 rounded-xl border border-[#e7e2d8] bg-sand/40 text-ink text-xs focus:outline-none focus:border-primary cursor-pointer"
+                  {/* Missions Card */}
+                  <div
+                    onClick={() => setActiveTab('page-outreaches')}
+                    className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-primary/40 transition-all cursor-pointer group"
                   >
-                    {newsCategories.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
+                        Field Actions
+                      </span>
+                      <div className="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                        <MapPin className="w-4 h-4" />
+                      </div>
+                    </div>
+                    <div className="text-lg font-heading font-bold text-ink">Outreaches Page</div>
+                    <p className="text-[11px] text-ink-light mt-1">{outreaches.length} scheduled &amp; completed missions.</p>
+                    <div className="flex items-center justify-between text-[11px] text-primary font-semibold mt-3 pt-2 border-t border-[#e7e2d8]">
+                      <span>Missions Schedule</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
 
-                  <button
-                    onClick={handleOpenNewNews}
-                    className="py-2 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                  {/* News Card */}
+                  <div
+                    onClick={() => setActiveTab('page-news')}
+                    className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-forest/40 transition-all cursor-pointer group"
                   >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>New Dispatch</span>
-                  </button>
-                </div>
-              </div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
+                        Field Journalism
+                      </span>
+                      <div className="w-8 h-8 rounded-xl bg-forest/10 text-forest flex items-center justify-center group-hover:bg-forest group-hover:text-white transition-colors">
+                        <BookOpen className="w-4 h-4" />
+                      </div>
+                    </div>
+                    <div className="text-lg font-heading font-bold text-ink">News &amp; Dispatches</div>
+                    <p className="text-[11px] text-ink-light mt-1">{news.length} published documentary stories.</p>
+                    <div className="flex items-center justify-between text-[11px] text-forest font-semibold mt-3 pt-2 border-t border-[#e7e2d8]">
+                      <span>Publish &amp; Edit</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
 
-              {/* Data Table */}
-              <div className="bg-white rounded-2xl border border-[#e7e2d8] overflow-hidden shadow-xs">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-sand/70 border-b border-[#e7e2d8] text-[11px] font-heading font-bold text-ink-muted uppercase tracking-wider">
-                      <tr>
-                        <th className="py-3 px-4">Article</th>
-                        <th className="py-3 px-4">Category</th>
-                        <th className="py-3 px-4">Author &amp; Date</th>
-                        <th className="py-3 px-4">Excerpt</th>
-                        <th className="py-3 px-4 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#e7e2d8]/60">
-                      {filteredNews.length === 0 ? (
-                        <tr>
-                          <td colSpan="5" className="py-12 text-center text-ink-muted">
-                            No field dispatches found matching your search.
-                          </td>
-                        </tr>
-                      ) : (
-                        filteredNews.map((item) => (
-                          <tr key={item.id} className="hover:bg-sand/30 transition-colors">
-                            <td className="py-3 px-4">
-                              <div className="flex items-center gap-3">
-                                <img
-                                  src={item.image}
-                                  alt=""
-                                  className="w-12 h-12 rounded-xl object-cover border border-[#e7e2d8] shrink-0"
-                                />
-                                <div className="font-heading font-bold text-ink max-w-xs truncate">
-                                  {item.title}
-                                </div>
-                              </div>
-                            </td>
-                            <td className="py-3 px-4">
-                              <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-forest/10 text-forest border border-forest/20 whitespace-nowrap">
-                                {item.category}
-                              </span>
-                            </td>
-                            <td className="py-3 px-4 text-ink-light whitespace-nowrap">
-                              <div className="font-medium text-ink">{item.author}</div>
-                              <div className="text-[11px] text-ink-muted">{item.date}</div>
-                            </td>
-                            <td className="py-3 px-4 text-ink-light max-w-sm">
-                              <p className="line-clamp-2">{item.excerpt}</p>
-                            </td>
-                            <td className="py-3 px-4 text-right whitespace-nowrap">
-                              <div className="flex items-center justify-end gap-1.5">
-                                <button
-                                  onClick={() => handleOpenEditNews(item)}
-                                  className="p-1.5 rounded-lg text-ink-muted hover:text-forest hover:bg-forest/10 cursor-pointer transition-colors"
-                                  title="Edit Dispatch"
-                                >
-                                  <Edit3 className="w-4 h-4" />
-                                </button>
-                                <button
-                                  onClick={() => handleDeleteNews(item)}
-                                  className="p-1.5 rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 cursor-pointer transition-colors"
-                                  title="Delete Dispatch"
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
+                  {/* Transparency Card */}
+                  <div
+                    onClick={() => setActiveTab('page-transparency')}
+                    className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-clay/40 transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
+                        Radical Honesty
+                      </span>
+                      <div className="w-8 h-8 rounded-xl bg-clay/10 text-clay flex items-center justify-center group-hover:bg-clay group-hover:text-white transition-colors">
+                        <ShieldCheck className="w-4 h-4" />
+                      </div>
+                    </div>
+                    <div className="text-lg font-heading font-bold text-ink">Transparency</div>
+                    <p className="text-[11px] text-ink-light mt-1">100% direct-giving sliders &amp; CAC audits.</p>
+                    <div className="flex items-center justify-between text-[11px] text-clay font-semibold mt-3 pt-2 border-t border-[#e7e2d8]">
+                      <span>{documents.length} Audit PDFs</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
+
+                  {/* Testimonials Card */}
+                  <div
+                    onClick={() => setActiveTab('page-testimonials')}
+                    className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-primary/40 transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
+                        Community Voices
+                      </span>
+                      <div className="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                        <Quote className="w-4 h-4" />
+                      </div>
+                    </div>
+                    <div className="text-lg font-heading font-bold text-ink">Testimonials</div>
+                    <p className="text-[11px] text-ink-light mt-1">{testimonialsList?.length || 6} beneficiary &amp; donor quotes.</p>
+                    <div className="flex items-center justify-between text-[11px] text-primary font-semibold mt-3 pt-2 border-t border-[#e7e2d8]">
+                      <span>Manage Quotes</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
+
+                  {/* Contact & Inquiries Card */}
+                  <div
+                    onClick={() => setActiveTab('page-contact')}
+                    className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-emerald-800/40 transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
+                        Inbound Leads
+                      </span>
+                      <div className="w-8 h-8 rounded-xl bg-emerald-800/10 text-emerald-800 flex items-center justify-center group-hover:bg-emerald-800 group-hover:text-white transition-colors">
+                        <Mail className="w-4 h-4" />
+                      </div>
+                    </div>
+                    <div className="text-lg font-heading font-bold text-ink">Contact Page</div>
+                    <p className="text-[11px] text-ink-light mt-1">{inquiries.length} citizen messages &amp; secretariat info.</p>
+                    <div className="flex items-center justify-between text-[11px] text-emerald-800 font-semibold mt-3 pt-2 border-t border-[#e7e2d8]">
+                      <span>Inquiries Desk</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
+
+                  {/* Cloud Backup Card */}
+                  <div
+                    onClick={() => setActiveTab('system-backup')}
+                    className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-ink/40 transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-heading font-semibold uppercase tracking-wider text-ink-muted">
+                        Database
+                      </span>
+                      <div className="w-8 h-8 rounded-xl bg-sand-dark text-ink flex items-center justify-center group-hover:bg-ink group-hover:text-white transition-colors">
+                        <Database className="w-4 h-4" />
+                      </div>
+                    </div>
+                    <div className="text-lg font-heading font-bold text-ink">Cloud Backup</div>
+                    <p className="text-[11px] text-ink-light mt-1">Export full JSON snapshot &amp; platform integrity.</p>
+                    <div className="flex items-center justify-between text-[11px] text-ink font-semibold mt-3 pt-2 border-t border-[#e7e2d8]">
+                      <span>Export / Reset</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
           {/* =================================================================
-              TAB 3: OUTREACHES & MISSIONS
+              2. HOME PAGE CONTENT EDITOR
           ================================================================= */}
-          {activeTab === 'outreaches' && (
+          {activeTab === 'page-home' && (
+            <HomePageEditor
+              homeContent={homeContent}
+              updateHomeContent={updateHomeContent}
+              metrics={metrics}
+              handleOpenEditMetric={handleOpenEditMetric}
+              handleOpenNewMetric={handleOpenNewMetric}
+              handleDeleteMetric={handleDeleteMetric}
+              announcement={announcement}
+              updateAnnouncement={updateAnnouncement}
+              setCurrentPage={setCurrentPage}
+              showToast={showToast}
+            />
+          )}
+
+          {/* =================================================================
+              3. OUR STORY CONTENT EDITOR
+          ================================================================= */}
+          {activeTab === 'page-story' && (
+            <StoryPageEditor
+              storyContent={storyContent}
+              updateStoryContent={updateStoryContent}
+              updateStoryCoordinators={updateStoryCoordinators}
+              updateStoryLeadership={updateStoryLeadership}
+              setCurrentPage={setCurrentPage}
+              showToast={showToast}
+            />
+          )}
+
+          {/* =================================================================
+              4. MISSIONS & OUTREACHES PAGE EDITOR
+          ================================================================= */}
+          {activeTab === 'page-outreaches' && (
             <div className="space-y-6 animate-fade-in">
-              {/* Header & Controls */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs">
                 <div>
-                  <h1 className="text-xl font-heading font-bold text-ink">
-                    Frontline Missions &amp; Outreaches
-                  </h1>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
+                      Page Editor
+                    </span>
+                    <span className="text-xs font-semibold text-ink-muted">• Public Route: /#outreaches</span>
+                  </div>
+                  <h1 className="text-xl font-heading font-bold text-ink">Missions &amp; Outreaches Manager</h1>
                   <p className="text-xs text-ink-muted">
-                    Medical, educational, and clean water field activities
+                    Schedule medical triage camps, classroom builds, and clean water borehole projects.
                   </p>
                 </div>
 
@@ -1325,25 +1105,9 @@ export default function Admin({ setCurrentPage }) {
                     />
                   </div>
 
-                  <div className="flex items-center bg-sand p-1 rounded-xl text-xs border border-[#e7e2d8]">
-                    {['All', 'upcoming', 'completed'].map((st) => (
-                      <button
-                        key={st}
-                        onClick={() => setOutreachStatusFilter(st)}
-                        className={`px-3 py-1 rounded-lg font-heading font-semibold capitalize cursor-pointer transition-colors ${
-                          outreachStatusFilter === st
-                            ? 'bg-white text-ink shadow-xs'
-                            : 'text-ink-muted hover:text-ink'
-                        }`}
-                      >
-                        {st}
-                      </button>
-                    ))}
-                  </div>
-
                   <button
                     onClick={handleOpenNewOutreach}
-                    className="py-2 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                    className="py-1.5 px-3.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Schedule Mission</span>
@@ -1351,51 +1115,69 @@ export default function Admin({ setCurrentPage }) {
                 </div>
               </div>
 
-              {/* Missions Grid Cards */}
+              {/* Sub-Section Pills */}
+              <div className="bg-white p-2 rounded-2xl border border-[#e7e2d8] shadow-xs">
+                <div className="flex items-center gap-2">
+                  {[
+                    { id: 'All', label: `All Missions (${outreaches.length})` },
+                    { id: 'upcoming', label: `Upcoming (${outreaches.filter((o) => o.status === 'upcoming').length})` },
+                    { id: 'completed', label: `Completed (${outreaches.filter((o) => o.status === 'completed').length})` }
+                  ].map((filter) => (
+                    <button
+                      key={filter.id}
+                      onClick={() => setOutreachStatusFilter(filter.id)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-heading font-bold cursor-pointer transition-colors ${
+                        outreachStatusFilter === filter.id
+                          ? 'bg-primary text-white shadow-xs'
+                          : 'bg-sand/40 hover:bg-sand text-ink-muted hover:text-ink'
+                      }`}
+                    >
+                      {filter.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Outreaches Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {filteredOutreaches.map((item) => {
                   const isUpcoming = item.status === 'upcoming';
                   return (
                     <div
                       key={item.id}
-                      className="bg-white rounded-2xl border border-[#e7e2d8] p-5 shadow-xs flex flex-col justify-between"
+                      className="bg-white rounded-2xl border border-[#e7e2d8] p-5 shadow-xs flex flex-col justify-between hover:border-primary/40 transition-all"
                     >
                       <div>
-                        <div className="flex items-start justify-between gap-3 mb-3">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`px-2.5 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wider ${
-                                isUpcoming
-                                  ? 'bg-clay/10 text-clay border border-clay/20'
-                                  : 'bg-forest/10 text-forest border border-forest/20'
-                              }`}
-                            >
-                              {item.status}
-                            </span>
-                            <span className="text-[11px] font-heading font-semibold text-forest">
-                              {item.pillar}
-                            </span>
-                          </div>
+                        <div className="flex items-center justify-between mb-3">
+                          <span
+                            className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold font-heading uppercase tracking-wider ${
+                              isUpcoming
+                                ? 'bg-primary/10 text-primary border border-primary/20'
+                                : 'bg-forest/10 text-forest border border-forest/20'
+                            }`}
+                          >
+                            {isUpcoming ? 'Upcoming Mission' : 'Mission Completed'}
+                          </span>
 
                           <div className="flex items-center gap-1">
                             <button
                               onClick={() => handleOpenEditOutreach(item)}
-                              className="p-1.5 rounded-lg text-ink-muted hover:text-forest hover:bg-forest/10 cursor-pointer transition-colors"
+                              className="p-1.5 rounded-lg text-ink-muted hover:text-primary hover:bg-primary/10 cursor-pointer transition-colors"
                               title="Edit Mission"
                             >
-                              <Edit3 className="w-4 h-4" />
+                              <Edit3 className="w-3.5 h-3.5" />
                             </button>
                             <button
                               onClick={() => handleDeleteOutreach(item)}
                               className="p-1.5 rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 cursor-pointer transition-colors"
                               title="Delete Mission"
                             >
-                              <Trash2 className="w-4 h-4" />
+                              <Trash2 className="w-3.5 h-3.5" />
                             </button>
                           </div>
                         </div>
 
-                        <h3 className="text-base font-heading font-bold text-ink mb-2 leading-snug">
+                        <h3 className="text-sm font-heading font-bold text-ink mb-2">
                           {item.title}
                         </h3>
 
@@ -1445,328 +1227,21 @@ export default function Admin({ setCurrentPage }) {
           )}
 
           {/* =================================================================
-              TAB 4: IMPACT FIGURES
+              5. NEWS & DISPATCHES PAGE EDITOR
           ================================================================= */}
-          {activeTab === 'metrics' && (
+          {activeTab === 'page-news' && (
             <div className="space-y-6 animate-fade-in">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs">
                 <div>
-                  <h1 className="text-xl font-heading font-bold text-ink">Audited Impact Figures</h1>
-                  <p className="text-xs text-ink-muted">
-                    Live public counters displayed on the homepage and impact report
-                  </p>
-                </div>
-
-                <button
-                  onClick={handleOpenNewMetric}
-                  className="py-2 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Add Impact Counter</span>
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {metrics.map((m) => (
-                  <div
-                    key={m.id}
-                    className="bg-white rounded-2xl border border-[#e7e2d8] p-5 shadow-xs flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider bg-sand text-ink-light border border-[#e7e2d8] font-heading">
-                          {m.category || 'education'}
-                        </span>
-                        <div className="flex items-center gap-1">
-                          <button
-                            onClick={() => handleOpenEditMetric(m)}
-                            className="p-1.5 rounded-lg text-ink-muted hover:text-forest hover:bg-forest/10 cursor-pointer transition-colors"
-                            title="Edit Metric"
-                          >
-                            <Edit3 className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => handleDeleteMetric(m)}
-                            className="p-1.5 rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 cursor-pointer transition-colors"
-                            title="Delete Metric"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-
-                      <div className="text-3xl font-heading font-extrabold text-ink mb-1 font-mono">{m.stat}</div>
-                      <div className="text-xs font-heading font-bold text-ink-light mb-1">{m.description}</div>
-                      <div className="inline-block px-2 py-0.5 rounded bg-forest/10 text-forest text-[10px] font-bold mb-3 border border-forest/20 font-heading">
-                        {m.growth}
-                      </div>
-                      <p className="text-xs text-ink-light leading-relaxed">{m.detail}</p>
-                    </div>
-
-                    <div className="pt-3 mt-4 border-t border-[#e7e2d8] text-[11px] text-ink-muted">
-                      ID: <code className="font-mono text-[10px]">{m.id}</code>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* =================================================================
-              TAB 5: FINANCIAL ALLOCATION & TRANSPARENCY
-          ================================================================= */}
-          {activeTab === 'transparency' && (
-            <div className="space-y-8 animate-fade-in">
-              {/* Sliders Card */}
-              <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                  <div>
-                    <h2 className="text-lg font-heading font-bold text-ink">
-                      Financial Allocation Sliders (100% Model)
-                    </h2>
-                    <p className="text-xs text-ink-muted">
-                      Demonstrates our radical 100% direct-giving model to donors and audit bodies
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold border flex items-center gap-1.5 ${
-                        isTotalAlloc100
-                          ? 'bg-forest/10 text-forest border-forest/20'
-                          : 'bg-rose-50 text-rose-700 border-rose-200'
-                      }`}
-                    >
-                      <span>Sum: {totalAllocPct.toFixed(1)}%</span>
-                      {isTotalAlloc100 ? (
-                        <Check className="w-3.5 h-3.5" />
-                      ) : (
-                        <AlertTriangle className="w-3.5 h-3.5" />
-                      )}
-                    </div>
-
-                    <button
-                      onClick={handleSaveAllocations}
-                      className="py-2 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
-                    >
-                      <Save className="w-3.5 h-3.5" />
-                      <span>Save Percentages</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Progress Bar Visualization */}
-                <div className="h-4 rounded-full overflow-hidden flex mb-8 bg-sand-dark border border-[#e7e2d8]">
-                  {localAllocations.map((a) => (
-                    <div
-                      key={a.id}
-                      style={{ width: `${a.pct}%` }}
-                      className={`${
-                        a.id === 'frontline'
-                          ? 'bg-forest'
-                          : a.id === 'audits'
-                          ? 'bg-clay'
-                          : 'bg-primary/70'
-                      } transition-all duration-300`}
-                      title={`${a.label}: ${a.pct}%`}
-                    ></div>
-                  ))}
-                </div>
-
-                {/* Interactive Sliders */}
-                <div className="space-y-6">
-                  {localAllocations.map((alloc, idx) => (
-                    <div key={alloc.id} className="p-4 rounded-xl bg-sand/40 border border-[#e7e2d8]">
-                      <div className="flex items-center justify-between mb-2">
-                        <label className="text-xs font-heading font-bold text-ink">{alloc.label}</label>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="number"
-                            step="0.1"
-                            min="0"
-                            max="100"
-                            value={alloc.pct}
-                            onChange={(e) => handleAllocationPctChange(idx, e.target.value)}
-                            className="w-20 px-2.5 py-1 rounded-lg bg-white border border-[#e7e2d8] text-xs font-mono font-bold text-ink text-right focus:outline-none focus:border-primary"
-                          />
-                          <span className="text-xs font-bold text-ink-muted">%</span>
-                        </div>
-                      </div>
-
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        step="0.1"
-                        value={alloc.pct}
-                        onChange={(e) => handleAllocationPctChange(idx, e.target.value)}
-                        className="w-full accent-primary cursor-pointer"
-                      />
-
-                      <p className="text-[11px] text-ink-muted mt-1">{alloc.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Audited Documents Table */}
-              <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h2 className="text-lg font-heading font-bold text-ink">
-                      Audited Financial &amp; Legal Records
-                    </h2>
-                    <p className="text-xs text-ink-muted">
-                      CAC, SCUML, and independent accounting audit statements available for public download
-                    </p>
-                  </div>
-
-                  <button
-                    onClick={() => setDocModalOpen(true)}
-                    className="py-2 px-3.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Add PDF Record</span>
-                  </button>
-                </div>
-
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-sand/70 text-[11px] font-heading font-bold text-ink-muted uppercase tracking-wider border-b border-[#e7e2d8]">
-                      <tr>
-                        <th className="py-3 px-4">Document Title</th>
-                        <th className="py-3 px-4">Size</th>
-                        <th className="py-3 px-4">Audited Date</th>
-                        <th className="py-3 px-4">Certifying Body</th>
-                        <th className="py-3 px-4 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#e7e2d8]/60">
-                      {documents.map((doc) => (
-                        <tr key={doc.id || doc.title} className="hover:bg-sand/30 transition-colors">
-                          <td className="py-3 px-4">
-                            <div className="flex items-center gap-2.5 font-heading font-bold text-ink">
-                              <FileText className="w-4 h-4 text-primary shrink-0" />
-                              <span>{doc.title}</span>
-                            </div>
-                          </td>
-                          <td className="py-3 px-4 text-ink-light">{doc.size}</td>
-                          <td className="py-3 px-4 text-ink-light">{doc.date}</td>
-                          <td className="py-3 px-4 text-ink-light">{doc.auditor}</td>
-                          <td className="py-3 px-4 text-right">
-                            <button
-                              onClick={() => handleDeleteDoc(doc)}
-                              className="p-1.5 rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 cursor-pointer transition-colors"
-                              title="Delete Record"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* =================================================================
-              TAB 6: MARQUEE ANNOUNCEMENT BANNER
-          ================================================================= */}
-          {activeTab === 'announcement' && (
-            <div className="max-w-3xl space-y-6 animate-fade-in">
-              <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h1 className="text-xl font-heading font-bold text-ink">
-                      Global Announcement Ribbon
-                    </h1>
-                    <p className="text-xs text-ink-muted">
-                      Live ticker ribbon displayed across the top of public website pages
-                    </p>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full bg-forest/10 text-forest border border-forest/20 text-xs font-heading font-bold">
-                    Real-Time
-                  </span>
-                </div>
-
-                {/* Simulated Live Preview */}
-                <div className="mb-6 p-4 rounded-xl bg-[#142722] text-white text-xs border border-[#1f3b34]">
-                  <div className="flex items-center gap-2 text-[#f7c899] font-bold mb-1.5 text-[11px] font-heading">
-                    <span className="w-2 h-2 rounded-full bg-[#f7c899] animate-pulse"></span>
-                    <span>LIVE SIMULATION (DESKTOP &amp; MOBILE)</span>
-                  </div>
-                  <p className="text-white/95 font-medium">
-                    {tempAnnouncement || '100% Direct-to-Field Giving'}
-                  </p>
-                </div>
-
-                <form onSubmit={handleSaveAnnouncement} className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-heading font-bold text-ink mb-1.5">
-                      Announcement Text
-                    </label>
-                    <textarea
-                      rows="3"
-                      value={tempAnnouncement}
-                      onChange={(e) => setTempAnnouncement(e.target.value)}
-                      placeholder="e.g. Commissioning new solar classrooms in Kaduna & mobile clinic in Enugu"
-                      className="w-full p-3.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-xs text-ink focus:outline-none focus:border-primary leading-relaxed"
-                    ></textarea>
-                    <span className="text-[11px] text-ink-muted block text-right mt-1">
-                      {tempAnnouncement?.length || 0} characters
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wider bg-forest/10 text-forest border border-forest/20">
+                      Page Editor
                     </span>
+                    <span className="text-xs font-semibold text-ink-muted">• Public Route: /#news</span>
                   </div>
-
-                  {/* Preset quick picks */}
-                  <div>
-                    <span className="block text-[11px] font-heading font-bold text-ink-muted uppercase tracking-wider mb-2">
-                      Suggested Quick Presets:
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        'Commissioning new solar classrooms in Kaduna & mobile health clinic in Enugu',
-                        '100% Direct Giving: Zero kobo deducted for administrative salaries or office fees',
-                        'Q4 2026 Primary School Book & Uniform Distribution Drive scheduled for Rivers State',
-                        'Special Report: 2025 Full Financial & Field Impact Audit published'
-                      ].map((preset) => (
-                        <button
-                          key={preset}
-                          type="button"
-                          onClick={() => setTempAnnouncement(preset)}
-                          className="text-[11px] text-left px-3 py-1.5 rounded-lg bg-sand hover:bg-sand-dark text-ink-light border border-[#e7e2d8] cursor-pointer transition-colors"
-                        >
-                          "{preset.slice(0, 45)}..."
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-[#e7e2d8] flex items-center justify-end">
-                    <button
-                      type="submit"
-                      className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-2 cursor-pointer shadow-xs transition-colors"
-                    >
-                      <Save className="w-3.5 h-3.5" />
-                      <span>Publish Live Marquee</span>
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
-
-          {/* =================================================================
-              TAB 7: INBOUND INQUIRIES & LEADS DESK
-          ================================================================= */}
-          {activeTab === 'inquiries' && (
-            <div className="space-y-6 animate-fade-in">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs">
-                <div>
-                  <h1 className="text-xl font-heading font-bold text-ink">Inbound Public Inquiries</h1>
+                  <h1 className="text-xl font-heading font-bold text-ink">Field Dispatches &amp; News Manager</h1>
                   <p className="text-xs text-ink-muted">
-                    Citizen submissions from Contact, Volunteer, and Corporate Partnership forms
+                    Publish documentary stories, milestone reports, and photographic updates from remote missions.
                   </p>
                 </div>
 
@@ -1775,117 +1250,334 @@ export default function Admin({ setCurrentPage }) {
                     <Search className="w-3.5 h-3.5 text-ink-muted absolute left-3 top-2.5" />
                     <input
                       type="text"
-                      placeholder="Search messages..."
-                      value={inquirySearch}
-                      onChange={(e) => setInquirySearch(e.target.value)}
+                      placeholder="Search dispatches..."
+                      value={newsSearch}
+                      onChange={(e) => setNewsSearch(e.target.value)}
                       className="pl-9 pr-3 py-1.5 rounded-xl border border-[#e7e2d8] bg-sand/40 text-ink text-xs focus:outline-none focus:border-primary w-44 sm:w-56"
                     />
                   </div>
 
-                  <div className="flex items-center bg-sand p-1 rounded-xl text-xs border border-[#e7e2d8]">
-                    {['All', 'Unread', 'Reviewed'].map((st) => (
-                      <button
-                        key={st}
-                        onClick={() => setInquiryFilter(st)}
-                        className={`px-3 py-1 rounded-lg font-heading font-semibold cursor-pointer transition-colors ${
-                          inquiryFilter === st
-                            ? 'bg-white text-ink shadow-xs'
-                            : 'text-ink-muted hover:text-ink'
-                        }`}
-                      >
-                        {st}
-                      </button>
-                    ))}
-                  </div>
+                  <button
+                    onClick={handleOpenNewNews}
+                    className="py-1.5 px-3.5 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>New Dispatch</span>
+                  </button>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl border border-[#e7e2d8] overflow-hidden shadow-xs">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-sand/70 text-[11px] font-heading font-bold text-ink-muted uppercase tracking-wider border-b border-[#e7e2d8]">
-                      <tr>
-                        <th className="py-3 px-4">Contact</th>
-                        <th className="py-3 px-4">Category</th>
-                        <th className="py-3 px-4">Message</th>
-                        <th className="py-3 px-4">Date</th>
-                        <th className="py-3 px-4">Status</th>
-                        <th className="py-3 px-4 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#e7e2d8]/60">
-                      {filteredInquiries.length === 0 ? (
-                        <tr>
-                          <td colSpan="6" className="py-12 text-center text-ink-muted">
-                            No inbound inquiries found matching your filter.
-                          </td>
-                        </tr>
-                      ) : (
-                        filteredInquiries.map((inq) => (
-                          <tr key={inq.id} className="hover:bg-sand/30 transition-colors">
-                            <td className="py-3.5 px-4">
-                              <div className="font-heading font-bold text-ink">{inq.name}</div>
-                              <div className="text-[11px] text-ink-light">{inq.email}</div>
-                              {inq.phone && (
-                                <div className="text-[10px] text-ink-muted">{inq.phone}</div>
-                              )}
-                            </td>
-                            <td className="py-3.5 px-4 whitespace-nowrap">
-                              <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-sand text-ink-light border border-[#e7e2d8]">
-                                {inq.category}
-                              </span>
-                            </td>
-                            <td className="py-3.5 px-4 max-w-sm text-ink-light">
-                              <p className="line-clamp-2">{inq.message}</p>
-                            </td>
-                            <td className="py-3.5 px-4 text-ink-muted whitespace-nowrap">
-                              {inq.date}
-                            </td>
-                            <td className="py-3.5 px-4 whitespace-nowrap">
-                              <button
-                                onClick={() =>
-                                  updateInquiryStatus(
-                                    inq.id,
-                                    inq.status === 'Reviewed' ? 'Unread' : 'Reviewed'
-                                  )
-                                }
-                                className={`px-2.5 py-1 rounded-full text-[10px] font-heading font-semibold cursor-pointer transition-colors ${
-                                  inq.status === 'Reviewed'
-                                    ? 'bg-forest/10 text-forest border border-forest/20 hover:bg-forest/20'
-                                    : 'bg-clay/10 text-clay border border-clay/20 hover:bg-clay/20'
-                                }`}
-                              >
-                                {inq.status || 'New'}
-                              </button>
-                            </td>
-                            <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                              <button
-                                onClick={() => {
-                                  if (window.confirm(`Delete inquiry from "${inq.name}"?`)) {
-                                    deleteInquiry(inq.id);
-                                    showToast('Inquiry deleted');
-                                  }
-                                }}
-                                className="p-1.5 rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 cursor-pointer transition-colors"
-                                title="Delete Inquiry"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
+              {/* Sub-Section Categories */}
+              <div className="bg-white p-2 rounded-2xl border border-[#e7e2d8] shadow-xs">
+                <div className="flex items-center gap-2 overflow-x-auto">
+                  {['All', 'Field Milestone', 'Medical Mission', 'Transparency'].map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setNewsCategoryFilter(cat)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-heading font-bold cursor-pointer transition-colors whitespace-nowrap ${
+                        newsCategoryFilter === cat
+                          ? 'bg-forest text-white shadow-xs'
+                          : 'bg-sand/40 hover:bg-sand text-ink-muted hover:text-ink'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
                 </div>
+              </div>
+
+              {/* Dispatches Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {filteredNews.map((item) => (
+                  <div
+                    key={item.id}
+                    className="bg-white rounded-2xl border border-[#e7e2d8] overflow-hidden shadow-xs flex flex-col justify-between hover:border-forest/40 transition-all group"
+                  >
+                    <div>
+                      <div className="h-44 overflow-hidden relative bg-sand">
+                        <img
+                          src={encodeURI(item.image)}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wider bg-white/95 text-ink shadow-xs">
+                          {item.category}
+                        </span>
+                      </div>
+
+                      <div className="p-5">
+                        <span className="text-[10px] text-ink-muted block mb-1">{item.date}</span>
+                        <h3 className="text-sm font-heading font-bold text-ink leading-snug mb-2 group-hover:text-forest transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-ink-light line-clamp-3 leading-relaxed">
+                          {item.excerpt}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="px-5 py-3 border-t border-[#e7e2d8] bg-sand/20 flex items-center justify-between">
+                      <span className="text-[10px] text-ink-muted truncate max-w-[150px]">
+                        By {item.author}
+                      </span>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleOpenEditNews(item)}
+                          className="p-1.5 rounded-lg text-ink-muted hover:text-forest hover:bg-forest/10 cursor-pointer transition-colors"
+                          title="Edit Dispatch"
+                        >
+                          <Edit3 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteNews(item)}
+                          className="p-1.5 rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 cursor-pointer transition-colors"
+                          title="Delete Dispatch"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
 
           {/* =================================================================
-              TAB 8: CLOUD BACKUP & DATABASE SYSTEM
+              6. FINANCIAL TRANSPARENCY PAGE EDITOR
           ================================================================= */}
-          {activeTab === 'backup' && (
+          {activeTab === 'page-transparency' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wider bg-clay/15 text-clay border border-clay/25">
+                      Page Editor
+                    </span>
+                    <span className="text-xs font-semibold text-ink-muted">• Public Route: /#transparency</span>
+                  </div>
+                  <h1 className="text-xl font-heading font-bold text-ink">Financial Transparency Manager</h1>
+                  <p className="text-xs text-ink-muted">
+                    Configure the 100% direct-giving financial allocation model and publish audited PDF records.
+                  </p>
+                </div>
+              </div>
+
+              {/* Sub-Section Pills */}
+              <div className="bg-white p-2 rounded-2xl border border-[#e7e2d8] shadow-xs">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setTransparencySubTab('allocations')}
+                    className={`px-4 py-2 rounded-xl text-xs font-heading font-bold cursor-pointer transition-colors ${
+                      transparencySubTab === 'allocations'
+                        ? 'bg-clay text-white shadow-xs'
+                        : 'bg-sand/40 hover:bg-sand text-ink-muted hover:text-ink'
+                    }`}
+                  >
+                    100% Fund Allocation Model
+                  </button>
+                  <button
+                    onClick={() => setTransparencySubTab('documents')}
+                    className={`px-4 py-2 rounded-xl text-xs font-heading font-bold cursor-pointer transition-colors ${
+                      transparencySubTab === 'documents'
+                        ? 'bg-clay text-white shadow-xs'
+                        : 'bg-sand/40 hover:bg-sand text-ink-muted hover:text-ink'
+                    }`}
+                  >
+                    Audited Legal &amp; Financial PDF Records ({documents.length})
+                  </button>
+                </div>
+              </div>
+
+              {transparencySubTab === 'allocations' && (
+                <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <h2 className="text-base font-heading font-bold text-ink">
+                        Direct Giving Allocation Sliders
+                      </h2>
+                      <p className="text-xs text-ink-muted">
+                        Must sum to exactly 100.0% to uphold radical transparency commitments.
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold border flex items-center gap-1.5 ${
+                          isTotalAlloc100
+                            ? 'bg-forest/10 text-forest border-forest/20'
+                            : 'bg-rose-50 text-rose-700 border-rose-200'
+                        }`}
+                      >
+                        <span>Sum: {totalAllocPct.toFixed(1)}%</span>
+                        {isTotalAlloc100 ? (
+                          <Check className="w-3.5 h-3.5" />
+                        ) : (
+                          <AlertTriangle className="w-3.5 h-3.5" />
+                        )}
+                      </div>
+
+                      <button
+                        onClick={handleSaveAllocations}
+                        className="py-2 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                      >
+                        <Save className="w-3.5 h-3.5" />
+                        <span>Save Percentages</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div className="h-4 rounded-full overflow-hidden flex bg-sand-dark border border-[#e7e2d8]">
+                    {localAllocations.map((a) => (
+                      <div
+                        key={a.id}
+                        style={{ width: `${a.pct}%` }}
+                        className={`${
+                          a.id === 'frontline'
+                            ? 'bg-forest'
+                            : a.id === 'audits'
+                            ? 'bg-clay'
+                            : 'bg-primary/70'
+                        } transition-all duration-300`}
+                        title={`${a.label}: ${a.pct}%`}
+                      ></div>
+                    ))}
+                  </div>
+
+                  {/* Sliders */}
+                  <div className="space-y-6">
+                    {localAllocations.map((alloc, idx) => (
+                      <div key={alloc.id} className="p-4 rounded-xl bg-sand/40 border border-[#e7e2d8]">
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="text-xs font-heading font-bold text-ink">{alloc.label}</label>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="number"
+                              step="0.1"
+                              min="0"
+                              max="100"
+                              value={alloc.pct}
+                              onChange={(e) => handleAllocationPctChange(idx, e.target.value)}
+                              className="w-20 px-2.5 py-1 rounded-lg bg-white border border-[#e7e2d8] text-xs font-mono font-bold text-ink text-right focus:outline-none focus:border-primary"
+                            />
+                            <span className="text-xs font-bold text-ink-muted">%</span>
+                          </div>
+                        </div>
+
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          step="0.1"
+                          value={alloc.pct}
+                          onChange={(e) => handleAllocationPctChange(idx, e.target.value)}
+                          className="w-full accent-primary cursor-pointer"
+                        />
+
+                        <p className="text-[11px] text-ink-muted mt-1">{alloc.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {transparencySubTab === 'documents' && (
+                <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h2 className="text-base font-heading font-bold text-ink">
+                        Published Legal &amp; Audit Records
+                      </h2>
+                      <p className="text-xs text-ink-muted">
+                        Verified CAC certificate, SCUML anti-money laundering documents, and audited statements.
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => setDocModalOpen(true)}
+                      className="py-2 px-3.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Add PDF Record</span>
+                    </button>
+                  </div>
+
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs">
+                      <thead className="bg-sand/70 text-[11px] font-heading font-bold text-ink-muted uppercase tracking-wider border-b border-[#e7e2d8]">
+                        <tr>
+                          <th className="py-3 px-4">Document Title</th>
+                          <th className="py-3 px-4">Size</th>
+                          <th className="py-3 px-4">Audited Date</th>
+                          <th className="py-3 px-4">Certifying Body</th>
+                          <th className="py-3 px-4 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#e7e2d8]/60">
+                        {documents.map((doc) => (
+                          <tr key={doc.id || doc.title} className="hover:bg-sand/30 transition-colors">
+                            <td className="py-3 px-4">
+                              <div className="flex items-center gap-2.5 font-heading font-bold text-ink">
+                                <FileText className="w-4 h-4 text-primary shrink-0" />
+                                <span>{doc.title}</span>
+                              </div>
+                            </td>
+                            <td className="py-3 px-4 text-ink-light">{doc.size}</td>
+                            <td className="py-3 px-4 text-ink-light">{doc.date}</td>
+                            <td className="py-3 px-4 text-ink-light">{doc.auditor}</td>
+                            <td className="py-3 px-4 text-right">
+                              <button
+                                onClick={() => handleDeleteDoc(doc)}
+                                className="p-1.5 rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 cursor-pointer transition-colors"
+                                title="Delete Record"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* =================================================================
+              7. TESTIMONIALS PAGE EDITOR
+          ================================================================= */}
+          {activeTab === 'page-testimonials' && (
+            <TestimonialsPageEditor
+              testimonialsList={testimonialsList}
+              addTestimonial={addTestimonial}
+              updateTestimonials={updateTestimonials}
+              deleteTestimonial={deleteTestimonial}
+              setCurrentPage={setCurrentPage}
+              showToast={showToast}
+            />
+          )}
+
+          {/* =================================================================
+              8. CONTACT & INQUIRIES PAGE EDITOR
+          ================================================================= */}
+          {activeTab === 'page-contact' && (
+            <ContactPageEditor
+              inquiries={inquiries}
+              updateInquiryStatus={updateInquiryStatus}
+              deleteInquiry={deleteInquiry}
+              contactInfo={contactInfo}
+              updateContactInfo={updateContactInfo}
+              setCurrentPage={setCurrentPage}
+              showToast={showToast}
+            />
+          )}
+
+          {/* =================================================================
+              9. CLOUD BACKUP & DATABASE SYSTEM
+          ================================================================= */}
+          {activeTab === 'system-backup' && (
             <div className="space-y-6 animate-fade-in max-w-3xl">
               <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs">
                 <div className="flex items-center justify-between mb-4">
@@ -1933,6 +1625,14 @@ export default function Admin({ setCurrentPage }) {
                       <span className="text-[#829992]">Missions &amp; Outreaches:</span>
                       <span className="font-heading font-bold text-white">{outreaches.length} items</span>
                     </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#829992]">State Coordinators:</span>
+                      <span className="font-heading font-bold text-white">{storyContent?.stateCoordinators?.length || 5} members</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#829992]">Community Testimonials:</span>
+                      <span className="font-heading font-bold text-white">{testimonialsList?.length || 6} quotes</span>
+                    </div>
                   </div>
                 </div>
 
@@ -1944,7 +1644,7 @@ export default function Admin({ setCurrentPage }) {
                         Export Full JSON Snapshot
                       </strong>
                       <span className="text-[11px] text-ink-muted">
-                        Download all current dispatches, outreaches, metrics, and inquiries.
+                        Download all current pages, dispatches, coordinators, and inquiries.
                       </span>
                     </div>
                     <button
@@ -1962,14 +1662,14 @@ export default function Admin({ setCurrentPage }) {
                         Reset Platform to Default Records
                       </strong>
                       <span className="text-[11px] text-rose-700">
-                        Restore all seed articles, missions, and metrics to default state.
+                        Restore all seed articles, missions, coordinators, and metrics to default state.
                       </span>
                     </div>
                     <button
                       onClick={() => {
                         if (
                           window.confirm(
-                            'Are you sure you want to restore all website content to default starter records? Any custom dispatches will be reset.'
+                            'Are you sure you want to restore all website content to default starter records? Any custom dispatches or coordinators will be reset.'
                           )
                         ) {
                           resetToDefaults();
@@ -2052,7 +1752,6 @@ export default function Admin({ setCurrentPage }) {
                     required
                     value={newsFormData.date}
                     onChange={(e) => setNewsFormData({ ...newsFormData, date: e.target.value })}
-                    placeholder="September 8, 2026"
                     className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
                   />
                 </div>
@@ -2060,56 +1759,43 @@ export default function Admin({ setCurrentPage }) {
 
               <div>
                 <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Photo URL &amp; Presets
+                  Feature Image Path
                 </label>
                 <input
-                  type="url"
+                  type="text"
                   required
                   value={newsFormData.image}
                   onChange={(e) => setNewsFormData({ ...newsFormData, image: e.target.value })}
-                  placeholder="https://..."
-                  className="w-full px-3.5 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary mb-2"
+                  placeholder="/images/IMG_0303.JPG"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary font-mono text-[11px]"
                 />
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[10px] font-heading font-bold text-ink-muted uppercase tracking-wider">Presets:</span>
-                  {imagePresets.map((preset) => (
-                    <button
-                      key={preset.label}
-                      type="button"
-                      onClick={() => setNewsFormData({ ...newsFormData, image: preset.url })}
-                      className="text-[10px] px-2 py-1 rounded bg-sand hover:bg-sand-dark text-ink-light border border-[#e7e2d8] cursor-pointer"
-                    >
-                      {preset.label}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               <div>
                 <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Short Excerpt / Teaser
+                  Executive Excerpt
                 </label>
                 <textarea
                   rows="2"
                   required
                   value={newsFormData.excerpt}
                   onChange={(e) => setNewsFormData({ ...newsFormData, excerpt: e.target.value })}
-                  placeholder="Summary for article previews and search listings..."
-                  className="w-full px-3.5 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                  placeholder="Summary displayed on homepage cards..."
+                  className="w-full p-3 rounded-xl border border-[#e7e2d8] bg-sand/30 text-xs text-ink focus:outline-none focus:border-primary leading-relaxed"
                 ></textarea>
               </div>
 
               <div>
                 <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Full Story Body (Markdown Supported)
+                  Full Dispatch Body (Markdown &amp; Paragraphs)
                 </label>
                 <textarea
                   rows="6"
                   required
                   value={newsFormData.body}
                   onChange={(e) => setNewsFormData({ ...newsFormData, body: e.target.value })}
-                  placeholder="Full dispatch text..."
-                  className="w-full px-3.5 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary font-sans"
+                  placeholder="Complete documentary story..."
+                  className="w-full p-3 rounded-xl border border-[#e7e2d8] bg-sand/30 text-xs text-ink focus:outline-none focus:border-primary leading-relaxed font-mono"
                 ></textarea>
               </div>
 
@@ -2123,7 +1809,7 @@ export default function Admin({ setCurrentPage }) {
                 </button>
                 <button
                   type="submit"
-                  className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs"
+                  className="py-2.5 px-6 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold cursor-pointer shadow-xs"
                 >
                   {editingNews ? 'Save Changes' : 'Publish Dispatch'}
                 </button>
@@ -2134,14 +1820,14 @@ export default function Admin({ setCurrentPage }) {
       )}
 
       {/* =====================================================================
-          MODAL 2: SCHEDULE / EDIT OUTREACH MISSION
+          MODAL 2: SCHEDULE / EDIT MISSION & OUTREACH
       ===================================================================== */}
       {outreachModalOpen && (
         <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
           <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8] max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e7e2d8]">
               <h2 className="text-lg font-heading font-bold text-ink">
-                {editingOutreach ? 'Edit Outreach Mission' : 'Schedule New Mission'}
+                {editingOutreach ? 'Edit Outreach Mission' : 'Schedule New Field Mission'}
               </h2>
               <button
                 onClick={() => setOutreachModalOpen(false)}
@@ -2154,7 +1840,7 @@ export default function Admin({ setCurrentPage }) {
             <form onSubmit={handleSaveOutreach} className="space-y-4">
               <div>
                 <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Mission Headline
+                  Mission Title
                 </label>
                 <input
                   type="text"
@@ -2163,44 +1849,32 @@ export default function Admin({ setCurrentPage }) {
                   onChange={(e) =>
                     setOutreachFormData({ ...outreachFormData, title: e.target.value })
                   }
-                  placeholder="e.g. Q4 Primary School Book & Uniform Distribution Drive"
+                  placeholder="Q4 2026 Primary School Book & Uniform Distribution Drive"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-heading font-semibold text-ink mb-1">Status</label>
-                  <select
-                    value={outreachFormData.status}
+                  <label className="block text-xs font-heading font-semibold text-ink mb-1">
+                    Location / State
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={outreachFormData.location}
                     onChange={(e) =>
-                      setOutreachFormData({ ...outreachFormData, status: e.target.value })
+                      setOutreachFormData({ ...outreachFormData, location: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary cursor-pointer"
-                  >
-                    <option value="upcoming">Upcoming</option>
-                    <option value="completed">Completed</option>
-                  </select>
+                    placeholder="Ikwerre & Emohua Districts, Rivers State"
+                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                  />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-heading font-semibold text-ink mb-1">Pillar</label>
-                  <select
-                    value={outreachFormData.pillar}
-                    onChange={(e) =>
-                      setOutreachFormData({ ...outreachFormData, pillar: e.target.value })
-                    }
-                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary cursor-pointer"
-                  >
-                    <option value="Education">Education</option>
-                    <option value="Healthcare">Healthcare</option>
-                    <option value="Infrastructure">Infrastructure</option>
-                    <option value="Youth & Widows">Youth &amp; Widows</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-heading font-semibold text-ink mb-1">Date</label>
+                  <label className="block text-xs font-heading font-semibold text-ink mb-1">
+                    Scheduled Dates
+                  </label>
                   <input
                     type="text"
                     required
@@ -2214,23 +1888,40 @@ export default function Admin({ setCurrentPage }) {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs font-heading font-semibold text-ink mb-1">Location</label>
-                  <input
-                    type="text"
-                    required
-                    value={outreachFormData.location}
+                  <label className="block text-xs font-heading font-semibold text-ink mb-1">Pillar</label>
+                  <select
+                    value={outreachFormData.pillar}
                     onChange={(e) =>
-                      setOutreachFormData({ ...outreachFormData, location: e.target.value })
+                      setOutreachFormData({ ...outreachFormData, pillar: e.target.value })
                     }
-                    placeholder="Ikwerre & Emohua, Rivers State"
                     className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
-                  />
+                  >
+                    <option value="Education">Education</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Infrastructure">Infrastructure</option>
+                    <option value="Empowerment">Empowerment</option>
+                  </select>
                 </div>
+
+                <div>
+                  <label className="block text-xs font-heading font-semibold text-ink mb-1">Status</label>
+                  <select
+                    value={outreachFormData.status}
+                    onChange={(e) =>
+                      setOutreachFormData({ ...outreachFormData, status: e.target.value })
+                    }
+                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                  >
+                    <option value="upcoming">Upcoming</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </div>
+
                 <div>
                   <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                    Beneficiaries Target
+                    Target Beneficiaries
                   </label>
                   <input
                     type="text"
@@ -2250,22 +1941,23 @@ export default function Admin({ setCurrentPage }) {
 
               <div>
                 <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Volunteer Needs / Resource Requests
+                  Field Photo
                 </label>
                 <input
                   type="text"
-                  value={outreachFormData.needs}
+                  required
+                  value={outreachFormData.image}
                   onChange={(e) =>
-                    setOutreachFormData({ ...outreachFormData, needs: e.target.value })
+                    setOutreachFormData({ ...outreachFormData, image: e.target.value })
                   }
-                  placeholder="Volunteer doctors, logistics drivers, packing assistants."
-                  className="w-full px-3.5 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                  placeholder="/images/IMG_0294.JPG"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary font-mono text-[11px]"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Mission Summary
+                  Scope &amp; Deliverables
                 </label>
                 <textarea
                   rows="3"
@@ -2274,9 +1966,24 @@ export default function Admin({ setCurrentPage }) {
                   onChange={(e) =>
                     setOutreachFormData({ ...outreachFormData, description: e.target.value })
                   }
-                  placeholder="Scope of medical consultation, school supplies, or borehole commissioning..."
-                  className="w-full px-3.5 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                  placeholder="Delivering full uniform sets, branded exercise books..."
+                  className="w-full p-3 rounded-xl border border-[#e7e2d8] bg-sand/30 text-xs text-ink focus:outline-none focus:border-primary leading-relaxed"
                 ></textarea>
+              </div>
+
+              <div>
+                <label className="block text-xs font-heading font-semibold text-ink mb-1">
+                  Volunteer &amp; Resource Needs
+                </label>
+                <input
+                  type="text"
+                  value={outreachFormData.needs}
+                  onChange={(e) =>
+                    setOutreachFormData({ ...outreachFormData, needs: e.target.value })
+                  }
+                  placeholder="Volunteer doctors, logistics drivers, packing assistants"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                />
               </div>
 
               <div className="pt-4 border-t border-[#e7e2d8] flex items-center justify-end gap-2.5">
@@ -2291,7 +1998,7 @@ export default function Admin({ setCurrentPage }) {
                   type="submit"
                   className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs"
                 >
-                  {editingOutreach ? 'Save Outreach' : 'Schedule Mission'}
+                  {editingOutreach ? 'Save Changes' : 'Schedule Mission'}
                 </button>
               </div>
             </form>
@@ -2300,11 +2007,11 @@ export default function Admin({ setCurrentPage }) {
       )}
 
       {/* =====================================================================
-          MODAL 3: ADD / EDIT IMPACT METRIC
+          MODAL 3: ADD / EDIT IMPACT FIGURE
       ===================================================================== */}
       {metricModalOpen && (
         <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8]">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8]">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e7e2d8]">
               <h2 className="text-lg font-heading font-bold text-ink">
                 {editingMetric ? 'Edit Impact Counter' : 'Add Impact Counter'}
@@ -2318,22 +2025,6 @@ export default function Admin({ setCurrentPage }) {
             </div>
 
             <form onSubmit={handleSaveMetric} className="space-y-4">
-              <div>
-                <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Indicator Label
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={metricFormData.label}
-                  onChange={(e) =>
-                    setMetricFormData({ ...metricFormData, label: e.target.value })
-                  }
-                  placeholder="e.g. Education Impact"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
-                />
-              </div>
-
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-heading font-semibold text-ink mb-1">
@@ -2346,12 +2037,15 @@ export default function Admin({ setCurrentPage }) {
                     onChange={(e) =>
                       setMetricFormData({ ...metricFormData, stat: e.target.value })
                     }
-                    placeholder="12,500"
-                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs font-mono font-bold focus:outline-none focus:border-primary"
+                    placeholder="12,500+"
+                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary font-mono font-bold text-sm"
                   />
                 </div>
+
                 <div>
-                  <label className="block text-xs font-heading font-semibold text-ink mb-1">YoY Growth</label>
+                  <label className="block text-xs font-heading font-semibold text-ink mb-1">
+                    Growth Badge
+                  </label>
                   <input
                     type="text"
                     required
@@ -2366,31 +2060,50 @@ export default function Admin({ setCurrentPage }) {
               </div>
 
               <div>
-                <label className="block text-xs font-heading font-semibold text-ink mb-1">Subtitle</label>
+                <label className="block text-xs font-heading font-semibold text-ink mb-1">
+                  Card Title
+                </label>
                 <input
                   type="text"
                   required
                   value={metricFormData.description}
                   onChange={(e) =>
-                    setMetricFormData({ ...metricFormData, description: e.target.value })
+                    setMetricFormData({ ...metricFormData, description: e.target.value, label: e.target.value })
                   }
-                  placeholder="Students Enrolled & Supplied"
-                  className="w-full px-3.5 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                  placeholder="Students Supplied"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
                 />
               </div>
 
               <div>
+                <label className="block text-xs font-heading font-semibold text-ink mb-1">Pillar Category</label>
+                <select
+                  value={metricFormData.category}
+                  onChange={(e) =>
+                    setMetricFormData({ ...metricFormData, category: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                >
+                  <option value="education">Education</option>
+                  <option value="healthcare">Healthcare</option>
+                  <option value="infrastructure">Infrastructure</option>
+                  <option value="transparency">Transparency</option>
+                </select>
+              </div>
+
+              <div>
                 <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Detailed Verification Note
+                  Explanatory Detail
                 </label>
                 <textarea
                   rows="3"
+                  required
                   value={metricFormData.detail}
                   onChange={(e) =>
                     setMetricFormData({ ...metricFormData, detail: e.target.value })
                   }
-                  placeholder="Provided free uniforms, solar classroom desks..."
-                  className="w-full px-3.5 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                  placeholder="Full uniforms, textbooks, and tuition scholarships across 24 partner schools."
+                  className="w-full p-3 rounded-xl border border-[#e7e2d8] bg-sand/30 text-xs text-ink focus:outline-none focus:border-primary leading-relaxed"
                 ></textarea>
               </div>
 

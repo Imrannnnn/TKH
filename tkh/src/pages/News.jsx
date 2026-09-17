@@ -218,13 +218,13 @@ export default function News({ initialArticleId = null }) {
             Stay Connected with Field Updates
           </h3>
           <p className="text-xs sm:text-sm text-ink-light max-w-md mx-auto mb-6 leading-relaxed">
-            We send a quarterly dispatch detailing completed classrooms, clinical numbers, and upcoming village outreaches. Zero spam.
+            We send monthly reports on our outreaches and projects as well as impact measurements
           </p>
 
           {subscribed ? (
             <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-800 bg-white px-5 py-2.5 rounded-full border border-emerald-200 font-heading">
               <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-              <span>Thank you for subscribing to our quarterly dispatches.</span>
+              <span>Thank you for subscribing to our monthly dispatches.</span>
             </div>
           ) : (
             <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 max-w-md mx-auto">

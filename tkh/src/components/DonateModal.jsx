@@ -91,11 +91,10 @@ export default function DonateModal({ isOpen, onClose }) {
               <button
                 type="button"
                 onClick={() => setPaymentMode('card')}
-                className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                  paymentMode === 'card'
-                    ? 'bg-white text-ink shadow-xs'
-                    : 'text-ink-light hover:text-ink'
-                }`}
+                className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${paymentMode === 'card'
+                  ? 'bg-white text-ink shadow-xs'
+                  : 'text-ink-light hover:text-ink'
+                  }`}
               >
                 <CreditCard className="w-3.5 h-3.5" />
                 <span>Card / Online</span>
@@ -103,11 +102,10 @@ export default function DonateModal({ isOpen, onClose }) {
               <button
                 type="button"
                 onClick={() => setPaymentMode('transfer')}
-                className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                  paymentMode === 'transfer'
-                    ? 'bg-white text-ink shadow-xs'
-                    : 'text-ink-light hover:text-ink'
-                }`}
+                className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${paymentMode === 'transfer'
+                  ? 'bg-white text-ink shadow-xs'
+                  : 'text-ink-light hover:text-ink'
+                  }`}
               >
                 <Landmark className="w-3.5 h-3.5" />
                 <span>Bank Transfer</span>
@@ -118,16 +116,16 @@ export default function DonateModal({ isOpen, onClose }) {
               <div className="space-y-3 bg-sand p-5 rounded-2xl border border-[#e7e2d8] animate-fade-in">
                 <div className="flex items-center justify-between border-b border-[#e7e2d8] pb-2.5">
                   <span className="text-xs text-ink-light">Bank Name</span>
-                  <span className="text-xs font-bold text-ink">Guaranty Trust Bank (GTBank)</span>
+                  <span className="text-xs font-bold text-ink">Providus Bank</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#e7e2d8] pb-2.5">
                   <span className="text-xs text-ink-light">Account Name</span>
-                  <span className="text-xs font-bold text-ink">Ten Kind Hands Initiative</span>
+                  <span className="text-xs font-bold text-ink">Ten Kind Hands Foundation</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-[#e7e2d8] pb-2.5">
                   <span className="text-xs text-ink-light">Naira Account (NGN)</span>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-base font-bold text-primary">0123456789</span>
+                    <span className="font-mono text-base font-bold text-primary">1309157309</span>
                     <button
                       type="button"
                       onClick={handleCopyAccount}
@@ -157,9 +155,8 @@ export default function DonateModal({ isOpen, onClose }) {
                         setSelectedAmount('15,000');
                         setCustomAmount('');
                       }}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                        currency === 'NGN' ? 'bg-white text-ink shadow-xs' : 'text-ink-muted'
-                      }`}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${currency === 'NGN' ? 'bg-white text-ink shadow-xs' : 'text-ink-muted'
+                        }`}
                     >
                       NGN (₦)
                     </button>
@@ -170,9 +167,8 @@ export default function DonateModal({ isOpen, onClose }) {
                         setSelectedAmount('35');
                         setCustomAmount('');
                       }}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                        currency === 'USD' ? 'bg-white text-ink shadow-xs' : 'text-ink-muted'
-                      }`}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${currency === 'USD' ? 'bg-white text-ink shadow-xs' : 'text-ink-muted'
+                        }`}
                     >
                       USD ($)
                     </button>
@@ -182,18 +178,16 @@ export default function DonateModal({ isOpen, onClose }) {
                     <button
                       type="button"
                       onClick={() => setFrequency('one-time')}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                        frequency === 'one-time' ? 'bg-ink text-white shadow-xs' : 'text-ink-muted'
-                      }`}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${frequency === 'one-time' ? 'bg-ink text-white shadow-xs' : 'text-ink-muted'
+                        }`}
                     >
                       One-Time
                     </button>
                     <button
                       type="button"
                       onClick={() => setFrequency('monthly')}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                        frequency === 'monthly' ? 'bg-ink text-white shadow-xs' : 'text-ink-muted'
-                      }`}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${frequency === 'monthly' ? 'bg-ink text-white shadow-xs' : 'text-ink-muted'
+                        }`}
                     >
                       Monthly
                     </button>
@@ -216,11 +210,10 @@ export default function DonateModal({ isOpen, onClose }) {
                             setSelectedAmount(tier.value);
                             setCustomAmount('');
                           }}
-                          className={`p-3 rounded-2xl text-left transition-all cursor-pointer border ${
-                            isSelected
-                              ? 'bg-sand border-primary shadow-xs'
-                              : 'bg-white border-[#e7e2d8] hover:border-ink'
-                          }`}
+                          className={`p-3 rounded-2xl text-left transition-all cursor-pointer border ${isSelected
+                            ? 'bg-sand border-primary shadow-xs'
+                            : 'bg-white border-[#e7e2d8] hover:border-ink'
+                            }`}
                         >
                           <div className="flex items-center justify-between">
                             <span className={`text-sm font-bold ${isSelected ? 'text-primary' : 'text-ink'}`}>

@@ -76,7 +76,7 @@ export default function Contact() {
                   <Phone className="w-5 h-5 text-forest shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-ink block font-heading">Phone &amp; Hotline:</strong>
-                    <span>+234 803 000 1234 / +234 809 111 5678</span>
+                    <span>+234 818 099 4301 / +234 803 000 1234</span>
                   </div>
                 </div>
 
@@ -107,17 +107,17 @@ export default function Contact() {
                   <MessageCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-heading font-bold text-ink">WhatsApp Desk</h4>
-                  <span className="text-[11px] text-ink-muted">Quick responses within 2 hours</span>
+                  <h4 className="text-sm font-heading font-bold text-ink">WhatsApp Live Desk</h4>
+                  <span className="text-[11px] text-ink-muted">+234 818 099 4301 • Quick responses</span>
                 </div>
               </div>
               <a
-                href="https://wa.me/2348030001234?text=Hello%20Ten%20Kind%20Hands,%20I%20would%20like%20to%20inquire%20about..."
+                href="https://wa.me/2348180994301?text=Hello%20Ten%20Kind%20Hands,%20I%20would%20like%20to%20inquire%20about..."
                 target="_blank"
                 rel="noreferrer"
                 className="w-full sm:w-auto text-center px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors font-heading"
               >
-                Chat Now
+                Chat on WhatsApp
               </a>
             </div>
           </div>

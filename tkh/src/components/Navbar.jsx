@@ -218,7 +218,7 @@ export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSe
                 Ten Kind Hands
               </span>
               <span className="text-[10px] uppercase tracking-widest text-ink-muted font-medium mt-0.5 block">
-                Initiative • Nigeria
+                Initiative • Africa
               </span>
             </div>
           </button>
