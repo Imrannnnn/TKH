@@ -16,7 +16,7 @@ export default function Transparency({ onOpenDonate }) {
   const defaultDocuments = [
     { title: '2025 Audited Financial Statement (PDF)', size: '2.4 MB', date: 'Published June 2026', auditor: 'Bakare & Co. Chartered Accountants' },
     { title: '2024 Audited Financial Statement (PDF)', size: '2.1 MB', date: 'Published June 2025', auditor: 'Bakare & Co. Chartered Accountants' },
-    { title: 'CAC Certificate of Incorporation (IT/NO: 148920)', size: '1.2 MB', date: 'Incorporated Nigeria', auditor: 'Corporate Affairs Commission' },
+    { title: 'CAC Certificate of Incorporation', size: '1.2 MB', date: 'Incorporated Nigeria', auditor: 'Corporate Affairs Commission' },
     { title: 'SCUML Anti-Money Laundering Compliance Certificate', size: '950 KB', date: 'Certified', auditor: 'Special Control Unit Against Money Laundering (EFCC)' },
     { title: 'Ten Kind Hands Child Protection & Safeguarding Policy', size: '1.8 MB', date: 'Revised 2026', auditor: 'Ethics & Legal Review Committee' }
   ];

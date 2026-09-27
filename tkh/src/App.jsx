@@ -83,7 +83,8 @@ export default function App() {
           />
         );
       case 'news':
-        return <News setCurrentPage={setCurrentPage} />;
+      case 'videos':
+        return <News setCurrentPage={setCurrentPage} onOpenDonate={() => setIsDonateOpen(true)} />;
       case 'outreaches':
         return (
           <Outreaches
@@ -145,6 +146,7 @@ export default function App() {
             setCurrentPage={setCurrentPage}
             onOpenDonate={() => setIsDonateOpen(true)}
             onSelectLegalTab={(tab) => setSelectedLegalTab(tab)}
+            onSelectProgram={(progId) => setSelectedProgramId(progId)}
           />
         )}
       </div>

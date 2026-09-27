@@ -35,7 +35,10 @@ export default function HomePageEditor({
     homeContent?.heroSubtitle || 'Every act of kindness shapes a brighter future.'
   );
   const [registeredBadge, setRegisteredBadge] = useState(
-    homeContent?.registeredBadge || 'Registered Non-Profit NGO in Nigeria • CAC/IT/NO: 148920'
+    (homeContent?.registeredBadge || 'Registered Non-Profit NGO in Nigeria')
+      .replace(/ • CAC\/IT\/NO: 148920/g, '')
+      .replace(/CAC\/IT\/NO: 148920\.?/g, '')
+      .trim()
   );
   const [slides, setSlides] = useState(
     homeContent?.heroSlides || [

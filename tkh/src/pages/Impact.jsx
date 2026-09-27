@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { School, Stethoscope, Droplets, BookOpen, TrendingUp, Download, FileText, ShieldCheck, Globe, Heart, MapPin, HandHeart } from '../components/Icons';
+import { School, Stethoscope, Droplets, BookOpen, TrendingUp, ShieldCheck, Globe, Heart, MapPin, HandHeart } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 const iconMap = {
@@ -16,7 +16,6 @@ const iconMap = {
 export default function Impact({ onOpenDonate }) {
   const { metrics: dynamicMetrics } = useData();
   const [activeTab, setActiveTab] = useState('all');
-  const [downloadingReport, setDownloadingReport] = useState(null);
 
   const defaultMetricCards = [
     {
@@ -88,11 +87,11 @@ export default function Impact({ onOpenDonate }) {
   ];
 
   const regionalReach = [
-    { state: 'Kaduna State', schools: 18, clinics: 4, boreholes: 10, reach: '5,800+ lives' },
-    { state: 'Enugu State', schools: 12, clinics: 3, boreholes: 7, reach: '4,200+ lives' },
-    { state: 'Ogun State', schools: 8, clinics: 2, boreholes: 5, reach: '3,100+ lives' },
-    { state: 'Niger State', schools: 4, clinics: 2, boreholes: 4, reach: '2,400+ lives' },
-    { state: 'Kano Outreach', schools: 3, clinics: 1, boreholes: 2, reach: '1,500+ lives' },
+    { state: 'Abuja', education: 18, health: 6, women: 12, children: 16, orphanage: 4 },
+    { state: 'Benue', education: 14, health: 4, women: 10, children: 12, orphanage: 3 },
+    { state: 'Plateau', education: 12, health: 3, women: 8, children: 11, orphanage: 3 },
+    { state: 'Oyo', education: 10, health: 5, women: 9, children: 10, orphanage: 4 },
+    { state: 'Lagos', education: 16, health: 7, women: 14, children: 18, orphanage: 4 },
   ];
 
   const currentMetrics = dynamicMetrics && dynamicMetrics.length > 0 ? dynamicMetrics : defaultMetricCards;
@@ -101,13 +100,7 @@ export default function Impact({ onOpenDonate }) {
     ? currentMetrics
     : currentMetrics.filter((m) => m.category === activeTab);
 
-  const handleDownloadReport = (year) => {
-    setDownloadingReport(year);
-    setTimeout(() => {
-      setDownloadingReport(null);
-      alert(`Ten Kind Hands ${year} Annual Audited Financial & Impact Report opened.`);
-    }, 1000);
-  };
+
 
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
@@ -261,35 +254,40 @@ export default function Impact({ onOpenDonate }) {
               <h3 className="text-2xl md:text-3xl font-heading font-bold text-ink">
                 Impact by Nigerian Region
               </h3>
+              <p className="text-xs sm:text-sm font-semibold text-primary mt-1 font-heading">
+                STATES: Abuja | Benue | Plateau | Oyo | Lagos
+              </p>
             </div>
             <span className="px-4 py-2 rounded-xl bg-sand text-xs font-bold text-forest flex items-center gap-1.5 border border-[#e7e2d8] font-heading">
               <Globe className="w-4 h-4" />
-              5 Active Geopolitical Zones
+              over 200 communities reached
             </span>
           </div>
 
           <div className="overflow-x-auto -mx-1 px-1">
-            <table className="w-full text-left text-sm min-w-[520px]">
+            <table className="w-full text-left text-sm min-w-[680px]">
               <thead>
                 <tr className="border-b border-[#e7e2d8] text-xs font-heading text-ink-muted uppercase">
-                  <th className="pb-3 px-3">State &amp; Region</th>
-                  <th className="pb-3 px-3">Solar Schools</th>
-                  <th className="pb-3 px-3">Health Posts</th>
-                  <th className="pb-3 px-3">Water Boreholes</th>
-                  <th className="pb-3 px-3">Direct Beneficiaries</th>
+                  <th className="pb-3 px-3">STATE</th>
+                  <th className="pb-3 px-3">EDUCATION</th>
+                  <th className="pb-3 px-3">HEALTH</th>
+                  <th className="pb-3 px-3">WOMEN</th>
+                  <th className="pb-3 px-3">CHILDREN</th>
+                  <th className="pb-3 px-3">ORPHANAGE</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#f8f6f2]">
                 {regionalReach.map((r, i) => (
                   <tr key={i} className="hover:bg-sand transition-colors">
                     <td className="py-3.5 px-3 font-bold text-ink flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-primary" />
+                      <MapPin className="w-4 h-4 text-primary shrink-0" />
                       <span>{r.state}</span>
                     </td>
-                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.schools}</td>
-                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.clinics}</td>
-                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.boreholes}</td>
-                    <td className="py-3.5 px-3 font-bold text-primary font-mono">{r.reach}</td>
+                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.education}</td>
+                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.health}</td>
+                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.women}</td>
+                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.children}</td>
+                    <td className="py-3.5 px-3 font-bold text-primary font-mono">{r.orphanage}</td>
                   </tr>
                 ))}
               </tbody>
@@ -298,34 +296,6 @@ export default function Impact({ onOpenDonate }) {
         </div>
       </section>
 
-      {/* Downloadable Annual Audit Reports */}
-      <section className="py-14 px-4 md:px-8 max-w-7xl mx-auto mb-12">
-        <div className="bg-white p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs text-center max-w-3xl mx-auto">
-          <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
-            Public Audits &amp; Financials
-          </span>
-          <h3 className="text-2xl md:text-3xl font-heading font-bold text-ink mb-3">
-            Download Our Independent Annual Reports
-          </h3>
-          <p className="text-sm text-ink-light mb-8 leading-relaxed max-w-lg mx-auto">
-            Review detailed balance sheets, expenditure breakdowns, vendor receipts, and photographic third-party project audits.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-3">
-            {['2024 Audit Report (PDF)', '2023 Audit Report (PDF)', '2022 Financials (PDF)'].map((report, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleDownloadReport(report)}
-                className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-full bg-sand hover:bg-white border border-[#e7e2d8] text-xs font-bold text-ink hover:text-primary transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 shadow-xs font-heading"
-              >
-                <FileText className="w-4 h-4" />
-                <span>{downloadingReport === report ? 'Opening PDF...' : report}</span>
-                <Download className="w-3.5 h-3.5" />
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

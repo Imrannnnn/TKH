@@ -28,7 +28,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
           </h1>
 
           <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
-            Operating with strict adherence to Nigerian Non-Profit laws (CAC/IT/NO: 148920), NDPR data privacy, and UNICEF child safeguarding protocols.
+            Operating with strict adherence to Nigerian Non-Profit laws, NDPR data privacy, and UNICEF child safeguarding protocols.
           </p>
 
           <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto">
@@ -69,7 +69,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
             <div className="prose text-xs sm:text-sm text-ink-light leading-relaxed space-y-6">
               <h2 className="text-2xl font-heading font-bold text-ink">Privacy Policy &amp; Data Protection (NDPR Compliance)</h2>
               <p>
-                Ten Kind Hands ("TKH", "we", "our") is registered under the Companies and Allied Matters Act of Nigeria (CAC/IT/NO: 148920). We respect your personal privacy and comply strictly with the Nigeria Data Protection Act (NDPA) and Global GDPR standards.
+                Ten Kind Hands ("TKH", "we", "our") is registered under the Companies and Allied Matters Act of Nigeria. We respect your personal privacy and comply strictly with the Nigeria Data Protection Act (NDPA) and Global GDPR standards.
               </p>
 
               <h3 className="text-lg font-heading font-bold text-ink">1. Information We Collect</h3>

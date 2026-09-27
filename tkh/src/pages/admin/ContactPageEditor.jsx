@@ -30,7 +30,9 @@ export default function ContactPageEditor({
 
   // Secretariat Info State
   const [headquarters, setHeadquarters] = useState(
-    contactInfo?.headquarters || 'Plot 402, Constitution Avenue, Central Business District, Abuja, FCT, Nigeria'
+    (!contactInfo?.headquarters || contactInfo.headquarters.includes('Plot 402') || contactInfo.headquarters === 'Abuja, Federal Capital Territory, Nigeria')
+      ? 'Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria'
+      : contactInfo.headquarters
   );
   const [phone, setPhone] = useState(contactInfo?.phone || '+234 818 099 4301 / +234 803 000 1234');
   const [email, setEmail] = useState(contactInfo?.email || 'info@tenkindhands.org');

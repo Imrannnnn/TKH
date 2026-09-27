@@ -98,9 +98,9 @@ export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSe
       label: 'Programs',
       hasDropdown: true,
       subItems: [
-        { id: 'scholarships', label: 'Scholarships' },
-        { id: 'youth-development', label: 'Youth Development' },
-        { id: 'orphanages-outreaches', label: 'Orphanages & Outreaches' },
+        { id: 'scholarship', label: 'Scholarship' },
+        { id: 'youth-empowerment', label: 'Youth Empowerment' },
+        { id: 'orphanage-outreaches', label: 'Orphanage Outreaches' },
         { id: 'school-donations', label: 'School Donations' },
         { id: 'medical-outreaches', label: 'Medical Outreaches' },
         { id: 'women-widows', label: 'Women & Widows Impact' },
@@ -117,7 +117,7 @@ export default function Navbar({ currentPage, setCurrentPage, onOpenDonate, onSe
         { id: 'partnership', label: 'Partnership' }
       ]
     },
-    { id: 'news', label: 'Field Notes' },
+    { id: 'news', label: 'Outreach Videos' },
     { id: 'outreaches', label: 'Outreaches' },
     { id: 'contact', label: 'Contact' },
   ];

@@ -1,251 +1,403 @@
-import { useState } from 'react';
-import { useData } from '../context/DataContext';
-import { Calendar, ArrowRight, ArrowLeft, Mail, CheckCircle2 } from '../components/Icons';
+import { useState, useEffect } from 'react';
+import { youtubeChannel, youtubePlaylists } from '../data/youtubeData';
+import { Play, Youtube, ExternalLink, X, Search, Heart, ArrowRight } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
-const newsArticles = [
-  {
-    id: 'gidan-solar-commissioned',
-    title: 'Commissioning of the 45th Solar Classroom in Gidan Community',
-    date: 'August 14, 2026',
-    category: 'Field Milestone',
-    author: 'Field Engineering Team',
-    excerpt: 'After four months of construction alongside local village craftsmen, Gidan Community Primary School officially switched on clean solar lighting and opened its 500-book reading box.',
-    image: '/images/IMG_0303.JPG',
-    body: `
-      On Thursday, August 14, 2026, village elders, teachers, and pupils of Gidan Community in Kaduna State gathered to cut the ribbon on a brand new 3-classroom block powered entirely by rooftop solar arrays.
+export default function News({ onOpenDonate }) {
+  const [activePlaylistId, setActivePlaylistId] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [modalVideo, setModalVideo] = useState(null);
+  const [spotlightVideo, setSpotlightVideo] = useState(
+    youtubePlaylists[1]?.videos[0] || youtubePlaylists[0]?.videos[0]
+  ); // Defaults to "We are Ten kind hands"
 
-      Before this intervention, children studied on compacted dirt floors inside a mud-walled shelter that had to be evacuated whenever rain clouds gathered. Today, the classrooms feature weather-insulated zinc roofing, ceiling ventilation fans, dual-seater wooden desks built by local carpenters, and an attached clean water borehole.
+  // Handle escape key to close video modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setModalVideo(null);
+      }
+    };
+    if (modalVideo) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalVideo]);
 
-      "Our pupils no longer fear the rain or the dark," said Headmistress Mrs. Amina Danjuma during the opening ceremony. "Attendance has already jumped by 40% in our first week."
+  // Calculate total video count
+  const totalVideosCount = youtubePlaylists.reduce(
+    (acc, pl) => acc + pl.videos.length,
+    0
+  );
 
-      This project was 100% funded through individual donor contributions, with zero cuts taken for administrative expenses.
-    `
-  },
-  {
-    id: 'mobile-health-enugu-outreach',
-    title: 'Q3 Mobile Medical Outreach Treats Over 650 Patients in Enugu Rural',
-    date: 'July 28, 2026',
-    category: 'Medical Mission',
-    author: 'Dr. Zainab Aliyu, Lead Physician',
-    excerpt: 'A four-day clinical mission deployed across three remote hamlets in Oji River District, providing free malaria triage, maternal health packs, and essential hypertension management.',
-    image: '/images/food-distribution.jpg',
-    body: `
-      From July 24–27, 2026, Ten Kind Hands deployed two 4x4 mobile clinic vehicles staffed by seven volunteer doctors, nurses, and pharmacists deep into the rural farming settlements of Oji River, Enugu State.
+  // Filter playlists based on active pill
+  const displayedPlaylists = youtubePlaylists
+    .filter((pl) => (activePlaylistId === 'all' ? true : pl.id === activePlaylistId))
+    .map((pl) => {
+      if (!searchQuery.trim()) return pl;
+      const q = searchQuery.toLowerCase();
+      return {
+        ...pl,
+        videos: pl.videos.filter(
+          (v) =>
+            v.title.toLowerCase().includes(q) ||
+            pl.title.toLowerCase().includes(q)
+        ),
+      };
+    })
+    .filter((pl) => pl.videos.length > 0);
 
-      Over four days of dawn-to-dusk clinics:
-      • 654 patients received one-on-one medical consultations.
-      • 412 rapid malaria diagnostic tests were administered, with 100% of positive cases receiving full free courses of Artemisinin-based combination therapy (ACT).
-      • 85 expectant mothers received sterile delivery packs (Mama Kits) and prenatal multivitamin courses.
-      • 12 emergency hospital transport vouchers were issued for patients requiring urgent specialized surgical intervention.
-
-      "For many elderly patients in these hamlets, this was their first encounter with a licensed medical practitioner in over two years," noted Dr. Zainab Aliyu.
-    `
-  },
-  {
-    id: 'annual-audit-2025-released',
-    title: 'Ten Kind Hands Releases 2025 Full Financial & Field Impact Audit',
-    date: 'June 30, 2026',
-    category: 'Transparency',
-    author: 'Board of Trustees',
-    excerpt: 'Demonstrating 100% direct giving: 88.4% of all institutional funds directed to frontline deliverables, with trustee endowments covering all overhead and banking fees.',
-    image: '/images/IMG_0300.JPG',
-    body: `
-      In accordance with our founding charter of radical transparency, Ten Kind Hands has published its complete 2025 Audited Financial Statement and Independent Field Review.
-
-      Key Highlights:
-      • Total donor funds raised in 2025: ₦142,600,000 (~$185,000 USD).
-      • 88.4% deployed directly to classroom construction, student tuition scholarships, and pharmaceutical supplies.
-      • 11.6% allocated to field monitoring, GPS tracking verification, and certified engineering audits.
-      • 0.0% deducted for administrative overhead — 100% of executive salaries and office expenses are covered under a separate trustee endowment.
-
-      The full 38-page audit report with itemized vendor receipts is available for free download on our Transparency page.
-    `
-  }
-];
-
-export default function News({ initialArticleId = null }) {
-  const { news } = useData();
-  const currentArticles = news && news.length > 0 ? news : newsArticles;
-  const [selectedArticleId, setSelectedArticleId] = useState(initialArticleId);
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const activeArticle = currentArticles.find((a) => a.id === selectedArticleId);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    setSubscribed(true);
+  const handlePlayVideo = (video, playlistTitle) => {
+    setModalVideo({ ...video, playlistTitle });
   };
 
-  // Render Full Article View
-  if (activeArticle) {
-    return (
-      <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-        <div className="relative max-w-3xl mx-auto px-4 md:px-8 py-6 overflow-hidden">
-          <CurvedWaveBackground side="right" />
-
-          <div className="relative z-10">
-            <button
-              onClick={() => setSelectedArticleId(null)}
-              className="inline-flex items-center gap-2 text-xs font-semibold text-ink-light hover:text-ink mb-8 cursor-pointer font-heading"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to All Field Dispatches</span>
-            </button>
-
-            <div className="flex items-center gap-3 text-xs text-ink-muted mb-3 font-heading">
-              <span className="px-3 py-1 rounded-full bg-sand text-primary font-bold border border-[#e7e2d8]">
-                {activeArticle.category}
-              </span>
-              <span>{activeArticle.date}</span>
-              <span>•</span>
-              <span>By {activeArticle.author}</span>
-            </div>
-
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-heading font-bold text-ink mb-6 tracking-tight leading-tight">
-              {activeArticle.title}
-            </h1>
-
-            <div className="w-full h-56 sm:h-72 md:h-96 rounded-3xl overflow-hidden mb-8 border border-[#e7e2d8]">
-              <img
-                src={activeArticle.image}
-                alt={activeArticle.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="prose text-sm text-ink-light leading-relaxed space-y-4 whitespace-pre-line font-normal">
-              {activeArticle.body}
-            </div>
-
-            <div className="mt-12 pt-8 border-t border-[#e7e2d8] flex justify-between items-center">
-              <button
-                onClick={() => setSelectedArticleId(null)}
-                className="btn-secondary text-xs px-6 py-2.5 cursor-pointer font-heading"
-              >
-                Back to Dispatches
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // News Index View
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-      <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-5xl mx-auto text-center overflow-hidden">
+      {/* Header with Ambient Wave */}
+      <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-6xl mx-auto text-center overflow-hidden">
         <CurvedWaveBackground side="right" />
 
         <div className="relative z-10">
-          <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
-            Field Dispatches
-          </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f9ecee] text-[#801426] text-xs font-bold font-heading mb-3 border border-[#801426]/20">
+            <Youtube className="w-3.5 h-3.5 text-[#cc0000]" />
+            <span>OFFICIAL YOUTUBE FIELD DISPATCHES</span>
+          </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
-            Stories of progress, <br />
-            <span className="text-primary">direct from the frontline.</span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-ink max-w-4xl mx-auto mb-5 tracking-tight">
+            Outreach Videos from <br />
+            <span className="text-primary">the Frontlines of Nigeria.</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
-            Read verified updates, project handovers, and clinical accounts from our team working across Nigerian communities.
+          <p className="text-sm sm:text-base md:text-lg text-ink-light max-w-2xl mx-auto mb-7 leading-relaxed font-normal">
+            Watch unfiltered live chronicles from our missions across rural schools, markets, and healthcare settlements. Organized directly by community outreach playlists.
           </p>
+
+          {/* Channel Subscribe / Follow Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <a
+              href={youtubeChannel.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#cc0000] hover:bg-[#aa0000] text-white text-xs font-heading font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
+            >
+              <Youtube className="w-4 h-4 fill-white" />
+              <span>Subscribe to @TenkindhandsFoundation</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+
+            {onOpenDonate && (
+              <button
+                onClick={onOpenDonate}
+                className="btn-primary text-xs px-5 py-2.5 inline-flex items-center gap-1.5 cursor-pointer font-heading font-semibold shadow-xs"
+              >
+                <span>Support an Outreach</span>
+                <Heart className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
         </div>
       </section>
 
-      {/* Article Cards with Mirrored Wave */}
-      <section className="relative px-4 md:px-8 max-w-7xl mx-auto mb-20 overflow-hidden">
-        <CurvedWaveBackground side="left" />
+      {/* Featured Spotlight Theater Screen */}
+      {spotlightVideo && (
+        <section className="relative px-4 md:px-8 max-w-5xl mx-auto mb-16">
+          <div className="bg-[#142722] text-white rounded-3xl p-4 sm:p-7 md:p-8 shadow-2xl border border-[#1f3b34]">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="text-[11px] font-heading font-bold text-emerald-300 uppercase tracking-widest">
+                  Featured Mission Spotlight
+                </span>
+              </div>
+              <a
+                href={spotlightVideo.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-white/70 hover:text-white flex items-center gap-1 font-medium transition-colors"
+              >
+                <span>Watch on YouTube</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
 
-        <div className="relative z-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {currentArticles.map((art) => (
-            <div
-              key={art.id}
-              className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between bg-white/95 backdrop-blur-xs shadow-xs"
-            >
+            {/* Embedded Responsive YouTube Player */}
+            <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-lg bg-black">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${spotlightVideo.id}?rel=0`}
+                title={spotlightVideo.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            </div>
+
+            <div className="mt-4 pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <div className="h-48 sm:h-52 overflow-hidden relative">
-                  <img
-                    src={art.image}
-                    alt={art.title}
-                    className="w-full h-full object-cover hover:scale-102 transition-transform duration-700"
-                  />
-                  <div className="absolute top-3 left-3 bg-white px-3 py-1 rounded-full text-[10px] font-heading font-bold text-primary shadow-xs">
-                    {art.category}
+                <h3 className="text-base sm:text-lg font-heading font-bold text-white">
+                  {spotlightVideo.title}
+                </h3>
+                <p className="text-xs text-white/60 mt-0.5">
+                  Direct Field Video • Ten Kind Hands Foundation
+                </p>
+              </div>
+              <a
+                href={spotlightVideo.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-colors shrink-0"
+              >
+                <Youtube className="w-3.5 h-3.5 text-[#ff4e45]" />
+                <span>Open in YouTube App</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Playlist Filter Pills & Search */}
+      <section className="relative px-4 md:px-8 max-w-6xl mx-auto mb-12">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pb-6 border-b border-[#e7e2d8]">
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5 sm:gap-2">
+            <button
+              onClick={() => setActivePlaylistId('all')}
+              className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-heading font-semibold transition-all cursor-pointer ${
+                activePlaylistId === 'all'
+                  ? 'bg-ink text-white shadow-xs'
+                  : 'bg-sand text-ink-light hover:text-ink border border-[#e7e2d8]'
+              }`}
+            >
+              All Playlists ({totalVideosCount})
+            </button>
+
+            {youtubePlaylists.map((pl) => {
+              const isActive = activePlaylistId === pl.id;
+              return (
+                <button
+                  key={pl.id}
+                  onClick={() => setActivePlaylistId(pl.id)}
+                  className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-heading font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    isActive
+                      ? 'bg-primary text-white shadow-xs'
+                      : 'bg-sand text-ink-light hover:text-ink border border-[#e7e2d8]'
+                  }`}
+                >
+                  <span>{pl.title}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                      isActive ? 'bg-white/20 text-white' : 'bg-white text-ink-muted'
+                    }`}
+                  >
+                    {pl.videos.length}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Quick Search */}
+          <div className="w-full md:w-64 relative">
+            <Search className="w-4 h-4 text-ink-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Search outreach videos..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-sand border border-[#e7e2d8] text-xs focus:outline-none focus:border-primary text-ink placeholder:text-ink-muted"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Categorized Video Playlists Sections */}
+      <section className="relative px-4 md:px-8 max-w-6xl mx-auto space-y-16">
+        {displayedPlaylists.length === 0 ? (
+          <div className="text-center py-16 bg-sand/60 rounded-3xl border border-[#e7e2d8]">
+            <p className="text-sm text-ink-light">No videos matched your search query.</p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setActivePlaylistId('all');
+              }}
+              className="mt-3 text-xs font-bold text-primary hover:underline cursor-pointer"
+            >
+              Reset Filters
+            </button>
+          </div>
+        ) : (
+          displayedPlaylists.map((pl) => (
+            <div key={pl.id} id={pl.id} className="scroll-mt-32">
+              {/* Category Playlist Header */}
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 pb-4 border-b border-[#e7e2d8]">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[11px] font-heading font-bold text-primary uppercase tracking-wider bg-primary/10 px-2.5 py-0.5 rounded-full">
+                      {pl.badge}
+                    </span>
+                    <span className="text-xs text-ink-muted font-mono font-medium">
+                      {pl.videos.length} Videos
+                    </span>
                   </div>
-                </div>
-
-                <div className="p-5 sm:p-6">
-                  <div className="flex items-center gap-2 text-[11px] text-ink-muted mb-2 font-heading">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>{art.date}</span>
-                  </div>
-
-                  <h3 className="text-xl font-heading font-bold text-ink mb-3 leading-snug">
-                    {art.title}
-                  </h3>
-
-                  <p className="text-xs text-ink-light leading-relaxed line-clamp-3">
-                    {art.excerpt}
+                  <h2 className="text-2xl sm:text-3xl font-heading font-bold text-ink">
+                    {pl.title}
+                  </h2>
+                  <p className="text-xs sm:text-sm text-ink-light max-w-2xl mt-1 leading-relaxed">
+                    {pl.description}
                   </p>
                 </div>
-              </div>
 
-              <div className="px-6 pb-6 pt-2">
-                <button
-                  onClick={() => {
-                    setSelectedArticleId(art.id);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="text-xs font-heading font-bold text-primary hover:text-primary-dark flex items-center gap-1.5 cursor-pointer"
+                <a
+                  href={pl.playlistUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-heading font-bold text-[#cc0000] hover:text-[#990000] shrink-0 group transition-colors py-1"
                 >
-                  <span>Read Full Dispatch</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                  <Youtube className="w-4 h-4 fill-current" />
+                  <span>Open Full Playlist</span>
+                  <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                </a>
+              </div>
+
+              {/* Videos Grid for this Playlist */}
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {pl.videos.map((vid) => (
+                  <div
+                    key={vid.id}
+                    className="paper-card rounded-2xl overflow-hidden bg-white border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-primary/40 transition-all flex flex-col justify-between group"
+                  >
+                    <div>
+                      {/* Video Thumbnail with Hover Play Button */}
+                      <div
+                        onClick={() => handlePlayVideo(vid, pl.title)}
+                        className="relative aspect-video w-full bg-sand cursor-pointer overflow-hidden"
+                      >
+                        <img
+                          src={vid.thumbnail}
+                          alt={vid.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-black/25 group-hover:bg-black/45 transition-colors flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-full bg-[#cc0000] text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <Play className="w-5 h-5 ml-0.5 fill-white" />
+                          </div>
+                        </div>
+
+                        {/* YouTube Badge in Corner */}
+                        <div className="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                          <Youtube className="w-3 h-3 text-[#ff4e45]" />
+                          <span>HD</span>
+                        </div>
+                      </div>
+
+                      {/* Video Metadata */}
+                      <div className="p-4 sm:p-5">
+                        <span className="text-[10px] font-heading font-bold text-ink-muted uppercase tracking-wider block mb-1.5">
+                          {pl.title}
+                        </span>
+                        <h4
+                          onClick={() => handlePlayVideo(vid, pl.title)}
+                          className="text-sm font-heading font-bold text-ink group-hover:text-primary transition-colors line-clamp-2 leading-snug cursor-pointer"
+                          title={vid.title}
+                        >
+                          {vid.title}
+                        </h4>
+                      </div>
+                    </div>
+
+                    {/* Card Actions */}
+                    <div className="px-4 sm:px-5 pb-4 pt-1 flex items-center justify-between border-t border-[#f4f0ea]">
+                      <button
+                        onClick={() => setSpotlightVideo(vid)}
+                        className="text-[11px] font-heading font-bold text-ink hover:text-primary flex items-center gap-1 cursor-pointer transition-colors"
+                      >
+                        <span>Set in Theater</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </button>
+
+                      <a
+                        href={vid.youtubeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] text-ink-muted hover:text-[#cc0000] flex items-center gap-1 transition-colors"
+                        title="Open on YouTube in new tab"
+                      >
+                        <span>YouTube</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
+          ))
+        )}
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="px-4 md:px-8 max-w-4xl mx-auto">
-        <div className="bg-sand p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] text-center">
-          <Mail className="w-8 h-8 text-primary mx-auto mb-3" />
-          <h3 className="text-2xl sm:text-3xl font-heading font-bold text-ink mb-2">
-            Stay Connected with Field Updates
-          </h3>
-          <p className="text-xs sm:text-sm text-ink-light max-w-md mx-auto mb-6 leading-relaxed">
-            We send monthly reports on our outreaches and projects as well as impact measurements
-          </p>
-
-          {subscribed ? (
-            <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-800 bg-white px-5 py-2.5 rounded-full border border-emerald-200 font-heading">
-              <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-              <span>Thank you for subscribing to our monthly dispatches.</span>
-            </div>
-          ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                required
-                placeholder="Enter your email address"
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                className="flex-1 px-4 py-3 rounded-full bg-white border border-[#e7e2d8] text-xs focus:outline-none focus:border-primary"
-              />
+      {/* Floating Video Player Modal (Lightbox) */}
+      {modalVideo && (
+        <div
+          onClick={() => setModalVideo(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-sm animate-fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-4xl bg-[#142722] text-white rounded-3xl overflow-hidden shadow-2xl border border-white/10 my-4"
+          >
+            {/* Modal Top Bar */}
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10">
+              <div className="flex items-center gap-2 pr-6">
+                <Youtube className="w-4 h-4 text-[#ff4e45]" />
+                <span className="text-xs font-heading font-bold text-white/90 truncate">
+                  {modalVideo.playlistTitle || 'Outreach Video'}
+                </span>
+              </div>
               <button
-                type="submit"
-                className="btn-primary w-full sm:w-auto text-xs px-6 py-3 rounded-full cursor-pointer shadow-xs font-heading font-semibold"
+                onClick={() => setModalVideo(null)}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center cursor-pointer transition-colors"
+                aria-label="Close video player"
               >
-                Subscribe
+                <X className="w-4 h-4" />
               </button>
-            </form>
-          )}
+            </div>
+
+            {/* Embedded YouTube Iframe */}
+            <div className="relative aspect-video w-full bg-black">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${modalVideo.id}?autoplay=1&rel=0`}
+                title={modalVideo.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            </div>
+
+            {/* Modal Bottom Metadata */}
+            <div className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#0d1a17]">
+              <div>
+                <h3 className="text-sm sm:text-base font-heading font-bold text-white leading-snug">
+                  {modalVideo.title}
+                </h3>
+                <span className="text-xs text-white/60 block mt-0.5">
+                  Ten Kind Hands Foundation • Official Field Outreach
+                </span>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <a
+                  href={modalVideo.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-xl bg-[#cc0000] hover:bg-[#aa0000] text-white text-xs font-heading font-bold flex items-center gap-1.5 transition-colors"
+                >
+                  <Youtube className="w-3.5 h-3.5 fill-white" />
+                  <span>Open on YouTube</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
+      )}
     </div>
   );
 }

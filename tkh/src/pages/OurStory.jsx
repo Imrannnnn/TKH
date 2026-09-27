@@ -92,15 +92,7 @@ export default function OurStory({ onOpenDonate }) {
     }
   ];
 
-  const managementTeam = [
-    {
-      name: 'John Iyalla',
-      role: 'Founder',
-      badge: 'Founder',
-      initials: 'JI',
-      image: null,
-      description: 'Visionary behind Ten Kind Hands, championing a radical 100% direct-giving model to bring transformative education and healthcare to vulnerable communities.'
-    },
+  const volunteers = [
     {
       name: 'Suotonye Augustine Arthur',
       role: 'Country Head',
@@ -109,7 +101,6 @@ export default function OurStory({ onOpenDonate }) {
       image: '/images/Suotonye Augustine Arthur - Country Head.jpeg',
       description: 'Oversees country-wide program execution, institutional donor relations, and high-impact partnerships across state governments and communities.'
     },
-
     {
       name: 'Ahange Kumawuese Keziah',
       role: 'Finance Manager',
@@ -134,7 +125,6 @@ export default function OurStory({ onOpenDonate }) {
       image: '/images/Abubakar Muhammed Accountant.jpeg',
       description: 'Ensures ledger accuracy, audit-readiness, and meticulous disbursement records for all classroom, medical, and community relief initiatives.'
     },
-
     {
       name: 'Ibrahim Favour Adoba',
       role: 'Project Manager',
@@ -143,9 +133,6 @@ export default function OurStory({ onOpenDonate }) {
       image: '/images/Ibrahim Favour Adoba - Project Manager.jpeg',
       description: 'Leads frontline project deployment, monitoring school solar renovations, clean water drilling, and rural clinic logistics on the ground.'
     },
-  ];
-
-  const stateCoordinators = [
     {
       name: 'Job Orokpo Agada',
       role: 'Benue State Coordinator',
@@ -188,8 +175,15 @@ export default function OurStory({ onOpenDonate }) {
     }
   ];
 
-  const displayManagementTeam = storyContent?.leadership?.length > 0 ? storyContent.leadership : managementTeam;
-  const displayStateCoordinators = storyContent?.stateCoordinators?.length > 0 ? storyContent.stateCoordinators : stateCoordinators;
+  const rawLeadership = (storyContent?.leadership?.length > 0 ? storyContent.leadership : []).filter(
+    (m) => m.name !== 'John Iyalla' && m.initials !== 'JI' && m.role !== 'Founder'
+  );
+  const rawCoordinators = storyContent?.stateCoordinators?.length > 0 ? storyContent.stateCoordinators : [];
+
+  const displayVolunteers = (rawLeadership.length > 0 || rawCoordinators.length > 0)
+    ? [...rawLeadership, ...rawCoordinators]
+    : volunteers;
+
   const displayVision = storyContent?.visionStatement || 'A world where every child has access to quality education, and every woman and child has access to comprehensive healthcare. We strive to break the cycle of poverty and increase the overall well-being of communities by empowering children through education and promoting the health and well-being of women and children.';
 
   return (
@@ -230,11 +224,11 @@ export default function OurStory({ onOpenDonate }) {
             <div className="rounded-2xl overflow-hidden border border-[#e7e2d8] p-2 bg-sand">
               <img
                 className="w-full h-80 rounded-xl object-cover"
-                alt="Ten Kind Hands Leadership & Outreach Team"
+                alt="Ten Kind Hands Volunteers & Outreach Team"
                 src="/images/IMG_0300.JPG"
               />
               <div className="pt-2 px-1 text-center">
-                <span className="text-xs font-bold text-ink block font-heading">Ten Kind Hands Leadership</span>
+                <span className="text-xs font-bold text-ink block font-heading">Ten Kind Hands Volunteers</span>
                 <span className="text-[11px] text-ink-muted">Empowering African Women &amp; Children</span>
               </div>
             </div>
@@ -290,22 +284,22 @@ export default function OurStory({ onOpenDonate }) {
         </div>
       </section>
 
-      {/* Leadership & Management Team */}
+      {/* Volunteers Section */}
       <section className="py-20 px-4 md:px-8 max-w-7xl mx-auto border-b border-[#e7e2d8]">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-            Leadership &amp; Governance
+            Dedicated Field Force
           </span>
           <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink mb-3">
-            The Management Team
+            Our Volunteers
           </h2>
           <p className="text-sm text-ink-light leading-relaxed">
-            Meet the dedicated leaders and ground coordinators driving our education, healthcare, and community empowerment initiatives across Nigeria.
+            Meet the dedicated coordinators and frontline volunteers driving our education, healthcare, and community empowerment initiatives across Nigeria.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayManagementTeam.map((member) => (
+          {displayVolunteers.map((member) => (
             <div
               key={member.name}
               className="bg-sand/60 rounded-3xl border border-[#e7e2d8] p-5 sm:p-8 flex flex-col items-center text-center shadow-xs hover:border-primary/40 hover:shadow-md transition-all group"
@@ -343,54 +337,6 @@ export default function OurStory({ onOpenDonate }) {
 
               <p className="text-xs text-ink-light leading-relaxed">
                 {member.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* State Coordinators Team */}
-      <section className="py-20 px-4 md:px-8 max-w-7xl mx-auto border-b border-[#e7e2d8]">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-            Regional Leadership
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink mb-3">
-            State Coordinators Team
-          </h2>
-          <p className="text-sm text-ink-light leading-relaxed">
-            Our state coordinators drive ground-level initiatives, maintaining strong community ties and ensuring projects are delivered directly where the need is greatest.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {displayStateCoordinators.map((coordinator) => (
-            <div
-              key={coordinator.name}
-              className="bg-sand/60 rounded-3xl border border-[#e7e2d8] p-5 sm:p-8 flex flex-col items-center text-center shadow-xs hover:border-primary/40 hover:shadow-md transition-all group"
-            >
-              <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden border-2 border-[#e7e2d8] group-hover:border-primary/40 shadow-xs mb-5 bg-white shrink-0">
-                <img
-                  src={encodeURI(coordinator.image)}
-                  alt={coordinator.name}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-
-              <span className="px-3 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider font-heading mb-2 bg-white text-forest border border-[#e7e2d8]">
-                {coordinator.badge}
-              </span>
-
-              <h3 className="text-lg font-heading font-bold text-ink mb-1 group-hover:text-primary transition-colors">
-                {coordinator.name}
-              </h3>
-
-              <p className="text-xs font-bold text-primary font-heading mb-3">
-                {coordinator.role}
-              </p>
-
-              <p className="text-xs text-ink-light leading-relaxed">
-                {coordinator.description}
               </p>
             </div>
           ))}

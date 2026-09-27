@@ -1,73 +1,21 @@
-import { useState } from 'react';
-import { CheckCircle2, Heart, MessageSquare } from './Icons';
+import { Heart, MessageSquare } from './Icons';
 
-export default function Footer({ setCurrentPage, onSelectLegalTab }) {
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
+export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgram }) {
   const handleNav = (pageId, subId = null) => {
     if (pageId === 'legal' && subId && onSelectLegalTab) {
       onSelectLegalTab(subId);
+    }
+    if (pageId === 'programs' && onSelectProgram) {
+      onSelectProgram(subId);
     }
     setCurrentPage(pageId);
     window.location.hash = subId ? `${pageId}/${subId}` : pageId;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setTimeout(() => {
-        setEmail('');
-        setSubscribed(false);
-      }, 3500);
-    }
-  };
-
   return (
     <footer className="bg-sand w-full pt-16 pb-12 border-t border-[#e7e2d8]">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        {/* Top Newsletter Card */}
-        <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl mb-10 sm:mb-14 flex flex-col lg:flex-row items-center justify-between gap-6 border border-[#e7e2d8]">
-          <div className="max-w-xl text-center lg:text-left">
-            <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1">
-              Field Dispatch &amp; Transparency
-            </span>
-            <h3 className="editorial-title text-xl sm:text-2xl md:text-3xl text-ink">
-              Receive monthly audited reports &amp; field stories.
-            </h3>
-            <p className="text-xs sm:text-sm text-ink-light mt-2 leading-relaxed">
-              Every month, we send transparent project reports, photographic updates, and community testimonies directly to our partners.
-            </p>
-          </div>
-
-          <div className="w-full lg:w-auto">
-            {subscribed ? (
-              <div className="px-5 sm:px-6 py-3 rounded-2xl bg-sand text-ink text-xs font-semibold flex items-center gap-2 border border-[#e7e2d8]">
-                <CheckCircle2 className="w-4 h-4 text-forest shrink-0" />
-                <span>Thank you. You are subscribed to our monthly field audit.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2.5 sm:gap-2 w-full max-w-md">
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="px-4 py-3 rounded-full bg-sand text-xs border border-[#e7e2d8] text-ink focus:outline-none focus:border-primary flex-grow w-full"
-                />
-                <button
-                  type="submit"
-                  className="btn-primary text-xs px-6 py-3 cursor-pointer whitespace-nowrap w-full sm:w-auto justify-center"
-                >
-                  Join Dispatch
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
 
         {/* 5 Columns Navigation */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-[#e7e2d8]">
@@ -99,34 +47,32 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
             </p>
 
             <div className="flex items-center gap-2 pt-1 text-[11px] text-ink-muted">
-              <span>CAC/IT/NO: 148920</span>
-              <span>•</span>
               <span className="text-forest font-semibold">100% Direct Giving</span>
             </div>
           </div>
 
-          {/* 6 Programs */}
+          {/* Core Initiatives */}
           <div className="flex flex-col gap-2.5">
             <h4 className="text-xs uppercase tracking-wider text-ink font-bold mb-1">
               Core Initiatives
             </h4>
-            <button onClick={() => handleNav('programs')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
-              Scholarships
+            <button onClick={() => handleNav('programs', 'women-widows')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+              Women
             </button>
-            <button onClick={() => handleNav('programs')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
-              Youth Development
+            <button onClick={() => handleNav('programs', 'orphanage-outreaches')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+              Children
             </button>
-            <button onClick={() => handleNav('programs')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
-              Orphanages &amp; Outreaches
+            <button onClick={() => handleNav('programs', 'scholarship')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+              Education
             </button>
-            <button onClick={() => handleNav('programs')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
-              School Donations
+            <button onClick={() => handleNav('programs', 'medical-outreaches')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+              Health
             </button>
-            <button onClick={() => handleNav('programs')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
-              Medical Outreaches
+            <button onClick={() => handleNav('programs', 'school-donations')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+              Community support
             </button>
-            <button onClick={() => handleNav('programs')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
-              Women &amp; Widows Impact
+            <button onClick={() => handleNav('programs', 'youth-empowerment')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+              Empowerment
             </button>
           </div>
 
@@ -151,7 +97,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
               Financial Transparency
             </button>
             <button onClick={() => handleNav('news')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
-              Field Dispatches &amp; News
+              Outreach Videos (YouTube)
             </button>
             <button onClick={() => handleNav('outreaches')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Outreach Log
@@ -185,7 +131,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-800 hover:bg-emerald-900 text-white text-[11px] font-semibold transition-all"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>WhatsApp Live (+234 818 099 4301)</span>
+                <span>WhatsApp Live</span>
               </a>
             </div>
           </div>
@@ -197,15 +143,14 @@ export default function Footer({ setCurrentPage, onSelectLegalTab }) {
               Address
             </h4>
             <button onClick={() => handleNav('contact')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
-              Abuja Liaison Office:
-              Plot 402, Constitution Avenue, Central Business District, Abuja, FCT, Nigeria
+              Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria
             </button>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-muted">
-          <p>© {new Date().getFullYear()} Ten Kind Hands Initiative • Africa. CAC/IT/NO: 148920.</p>
+          <p>© {new Date().getFullYear()} Ten Kind Hands Initiative • Africa. All rights reserved.</p>
           <div className="flex items-center gap-5 flex-wrap justify-center">
             <button onClick={() => handleNav('legal', 'privacy')} className="hover:text-ink transition-colors cursor-pointer">
               Privacy Policy

@@ -147,17 +147,10 @@ export default function Testimonials({ onOpenDonate }) {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#f0ece8] flex items-center gap-3.5">
-                <img
-                  src={t.avatar}
-                  alt={t.author}
-                  className="w-11 h-11 rounded-full object-cover border border-[#e7e2d8]"
-                />
-                <div>
-                  <h4 className="text-sm font-heading font-bold text-ink">{t.author}</h4>
-                  <p className="text-xs text-ink-muted">{t.role}</p>
-                  <span className="text-[11px] text-primary font-medium block">{t.institution}</span>
-                </div>
+              <div className="pt-4 border-t border-[#f0ece8]">
+                <h4 className="text-sm font-heading font-bold text-ink">{t.author}</h4>
+                <p className="text-xs text-ink-muted">{t.role}</p>
+                <span className="text-[11px] text-primary font-medium block mt-0.5">{t.institution}</span>
               </div>
             </div>
           ))}

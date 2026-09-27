@@ -232,32 +232,16 @@ export default function TestimonialsPageEditor({
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#e7e2d8] flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden bg-sand shrink-0 border border-[#e7e2d8]">
-                  {item.avatar ? (
-                    <img
-                      src={encodeURI(item.avatar)}
-                      alt={item.author}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center font-bold text-xs text-primary bg-primary/10">
-                      {item.author?.[0] || 'T'}
-                    </div>
-                  )}
-                </div>
-
-                <div className="min-w-0">
-                  <h4 className="text-xs font-heading font-bold text-ink truncate">
-                    {item.author || 'Anonymous'}
-                  </h4>
-                  <p className="text-[11px] text-primary font-medium truncate">
-                    {item.role}
-                  </p>
-                  <p className="text-[10px] text-ink-muted truncate">
-                    {item.institution}
-                  </p>
-                </div>
+              <div className="pt-4 border-t border-[#e7e2d8]">
+                <h4 className="text-xs font-heading font-bold text-ink truncate">
+                  {item.author || 'Anonymous'}
+                </h4>
+                <p className="text-[11px] text-primary font-medium truncate">
+                  {item.role}
+                </p>
+                <p className="text-[10px] text-ink-muted truncate">
+                  {item.institution}
+                </p>
               </div>
             </div>
           ))
@@ -352,19 +336,6 @@ export default function TestimonialsPageEditor({
                     onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
                     placeholder="Gidan Community School, Kaduna"
                     className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                    Photo Avatar Path
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.avatar}
-                    onChange={(e) => setFormData({ ...formData, avatar: e.target.value })}
-                    placeholder="/images/IMG_0300.JPG"
-                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary font-mono text-[11px]"
                   />
                 </div>
               </div>

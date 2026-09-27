@@ -25,7 +25,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
   const heroHeadline = homeContent?.heroHeadline || 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.';
   const heroSubtitle = homeContent?.heroSubtitle || 'Every act of kindness shapes a brighter future.';
-  const registeredBadge = homeContent?.registeredBadge || 'Registered Non-Profit NGO in Nigeria • CAC/IT/NO: 148920';
+  const rawBadge = homeContent?.registeredBadge || 'Registered Non-Profit NGO in Nigeria';
+  const registeredBadge = rawBadge.replace(/ • CAC\/IT\/NO: 148920/g, '').replace(/CAC\/IT\/NO: 148920\.?/g, '').trim();
   const fieldReality = homeContent?.fieldReality || {
     stat: 'Over 10M',
     label: 'Children currently out of primary school in Nigeria (UNESCO)',
@@ -316,14 +317,14 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             Education builds futures. Healthcare protects potential.
           </h2>
           <p className="text-sm text-ink-light mt-2 leading-relaxed">
-            We invest in scholarships, books, and learning opportunities, while advancing healthcare and women’s empowerment to strengthen families and communities across.
+            We invest in scholarships, books, and learning opportunities, while advancing healthcare and women’s empowerment to strengthen families and communities across Nigeria.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Education Pillar Card */}
           <div className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between">
-            <div className="h-64 overflow-hidden relative">
+            <div className="h-64 sm:h-72 overflow-hidden relative">
               <img
                 src="/images/IMG_0296.JPG"
                 alt="Pupils receiving school supplies in Nigeria"
@@ -336,14 +337,15 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
             <div className="p-8">
               <h3 className="text-2xl font-heading font-bold text-ink mb-3">
-                Solar Classrooms, Scholarships &amp; Teacher Support
+                Scholarships, School Materials &amp; Empowerment
               </h3>
               <p className="text-sm text-ink-light leading-relaxed mb-6">
-                Constructing insulated classroom blocks, providing full tuition and uniform coverage for orphans, and supplying reading libraries to rural primary schools.
+                Providing scholarships, books, school materials, learning support, and practical skills opportunities to help vulnerable children and young people learn, grow, and thrive.
               </p>
 
               <button
                 onClick={() => {
+                  window.location.hash = 'programs/scholarship';
                   setCurrentPage('programs');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
@@ -357,27 +359,28 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
           {/* Healthcare Pillar Card */}
           <div className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between">
-            <div className="h-64 overflow-hidden relative">
+            <div className="h-64 sm:h-72 overflow-hidden relative">
               <img
-                src="/images/food-distribution.jpg"
-                alt="Community and family relief outreach in Nigeria"
-                className="w-full h-full object-cover hover:scale-102 transition-transform duration-700"
+                src="/images/pillar2-health-outreach.jpg"
+                alt="Medical and health outreach at Orthopaedic & Trauma Dept in Nigeria"
+                className="w-full h-full object-cover object-top hover:scale-102 transition-transform duration-700"
               />
               <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-heading font-bold text-forest shadow-xs">
-                Pillar 02 • Community &amp; Care
+                Pillar 02 • Health
               </div>
             </div>
 
             <div className="p-8">
               <h3 className="text-2xl font-heading font-bold text-ink mb-3">
-                Mobile Clinics, Maternal Care &amp; Clean Water
+                Medical Outreaches, Malaria Prevention &amp; Maternal Care
               </h3>
               <p className="text-sm text-ink-light leading-relaxed mb-6">
-                Bringing licensed doctors directly into remote villages for malaria diagnosis, free antibiotics, sterile birth kits (Mama Kits), and solar deep water boreholes.
+                Bringing essential healthcare, malaria prevention, health education, screenings, and treatment support closer to vulnerable women, children, and underserved communities across Nigeria.
               </p>
 
               <button
                 onClick={() => {
+                  window.location.hash = 'programs/medical-outreaches';
                   setCurrentPage('programs');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}

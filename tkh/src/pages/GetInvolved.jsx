@@ -300,7 +300,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
               <div className="p-5 rounded-2xl bg-sand/90 border border-[#e7e2d8]">
                 <span className="text-xs font-bold text-forest uppercase tracking-wider block mb-1 font-heading">Skills Role</span>
-                <h4 className="text-base font-heading font-bold text-ink mb-1"> Skill Acquisition Tutorst</h4>
+                <h4 className="text-base font-heading font-bold text-ink mb-1"> Skill Acquisition Tutors</h4>
                 <p className="text-xs text-ink-light leading-relaxed mb-2">
                   Facilitating practical training, mentoring beneficiaries, and supporting hands-on learning during monthly empowerment outreaches.
                 </p>

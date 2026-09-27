@@ -1,36 +1,152 @@
 import { useState } from 'react';
-import { CreditCard, Landmark, CheckCircle2, Copy, X, ArrowRight, Check } from './Icons';
+import { CreditCard, Landmark, CheckCircle2, Copy, X, ArrowRight, Check, ChevronDown, BookOpen } from './Icons';
+
+// SVG Icons matching the visual design
+function FoundationLogo({ className = "w-7 h-7" }) {
+  return (
+    <svg viewBox="0 0 36 36" fill="currentColor" className={className}>
+      {/* Central Heart */}
+      <path d="M18 7.2c-1.3-2-3.7-2.8-5.9-2-2.5 1-3.7 3.8-2.8 6.4.8 2.3 3.2 4.7 6.3 7.4 1.1 1 1.8 1.6 2.4 2.2.6-.6 1.3-1.2 2.4-2.2 3.1-2.7 5.5-5.1 6.3-7.4.9-2.6-.3-5.4-2.8-6.4-2.2-.8-4.6 0-5.9 2z" />
+      {/* Left Cupped Hand */}
+      <path d="M6 14.5c0-.6.4-1 1-1s1 .4 1 1c0 5 3.5 9.2 8.2 10.4v2.1C10.2 25.7 6 20.6 6 14.5zm3 4c0-.6.4-1 1-1s1 .4 1 1c0 3.2 2.2 6 5.2 6.8v2.1C11.5 27.5 9 23.3 9 18.5z" />
+      {/* Right Cupped Hand */}
+      <path d="M30 14.5c0-.6-.4-1-1-1s-1 .4-1 1c0 5-3.5 9.2-8.2 10.4v2.1c6-1.3 10.2-6.4 10.2-12.5zm-3 4c0-.6-.4-1-1-1s-1 .4-1 1c0 3.2-2.2 6-5.2 6.8v2.1c4.7-.9 7.2-5.1 7.2-9.9z" />
+    </svg>
+  );
+}
+
+function GraduationCapIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+      <path d="M6 12.5v4.5c3 3 9 3 12 0v-4.5" />
+    </svg>
+  );
+}
+
+function MosquitoIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M12 7v10" />
+      <ellipse cx="12" cy="12" rx="2" ry="4" />
+      <path d="m10 9-5-4" />
+      <path d="m14 9 5-4" />
+      <path d="m10 12-6 2" />
+      <path d="m14 12 6 2" />
+      <path d="m10 15-5 5" />
+      <path d="m14 15 5 5" />
+      <path d="m11 7-2-4" />
+      <path d="m13 7 2-4" />
+    </svg>
+  );
+}
+
+function MaternalIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="6" r="3" />
+      <path d="M8 20v-3a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v3" />
+      <circle cx="16" cy="14" r="2" />
+      <path d="M18 19a2 2 0 0 0-2-2h-1" />
+      <path d="M12 11c.7-.7 1.5-.7 2 0 .5.5 0 1.2-.6 1.6l-1.4 1.2-1.4-1.2c-.6-.4-1.1-1.1-.6-1.6.5-.7 1.3-.7 2 0z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function TargetIcon({ className = "w-4 h-4" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
+      <path d="M12 2v2m0 16v2M2 12h2m16 0h2" />
+    </svg>
+  );
+}
 
 export default function DonateModal({ isOpen, onClose }) {
   const [currency, setCurrency] = useState('NGN');
   const [paymentMode, setPaymentMode] = useState('card'); // 'card' | 'transfer'
-  const [selectedAmount, setSelectedAmount] = useState('15,000');
+  const [selectedTierId, setSelectedTierId] = useState('books'); // Matches screenshot (Card 2 selected by default)
   const [customAmount, setCustomAmount] = useState('');
-  const [cause, setCause] = useState('General Fund');
+  const [cause, setCause] = useState('Where Most Needed (General Impact Fund)');
   const [frequency, setFrequency] = useState('one-time');
   const [copiedBank, setCopiedBank] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   if (!isOpen) return null;
 
-  const presetAmountsNGN = [
-    { value: '5,000', label: '₦5,000', impact: 'Basic student toolkit + vitamins' },
-    { value: '15,000', label: '₦15,000', impact: 'Full term tuition, books & health check' },
-    { value: '50,000', label: '₦50,000', impact: 'Mobile clinic visits for 40 villagers' },
-    { value: '100,000', label: '₦100,000', impact: 'Solar classroom desk & power set' }
+  const tiersNGN = [
+    {
+      id: 'fees',
+      amount: '50,000',
+      formattedAmount: '₦50,000',
+      title: 'School fees support for one child',
+      icon: GraduationCapIcon,
+    },
+    {
+      id: 'books',
+      amount: '50,000',
+      formattedAmount: '₦50,000',
+      title: 'Books, school bag & writing pack',
+      icon: BookOpen,
+    },
+    {
+      id: 'nets',
+      amount: '25,000',
+      formattedAmount: '₦25,000',
+      title: 'Mosquito nets & insecticide support',
+      icon: MosquitoIcon,
+    },
+    {
+      id: 'maternal',
+      amount: '100,000',
+      formattedAmount: '₦100,000',
+      title: 'Maternal care & essential support',
+      icon: MaternalIcon,
+    },
   ];
 
-  const presetAmountsUSD = [
-    { value: '15', label: '$15', impact: 'Nutritional therapy for 3 infants' },
-    { value: '35', label: '$35', impact: 'Full term tuition & learning materials' },
-    { value: '100', label: '$100', impact: 'Mobile medical diagnostics kit' },
-    { value: '250', label: '$250', impact: 'Clean water borehole maintenance' }
+  const tiersUSD = [
+    {
+      id: 'fees',
+      amount: '35',
+      formattedAmount: '$35',
+      title: 'School fees support for one child',
+      icon: GraduationCapIcon,
+    },
+    {
+      id: 'books',
+      amount: '35',
+      formattedAmount: '$35',
+      title: 'Books, school bag & writing pack',
+      icon: BookOpen,
+    },
+    {
+      id: 'nets',
+      amount: '20',
+      formattedAmount: '$20',
+      title: 'Mosquito nets & insecticide support',
+      icon: MosquitoIcon,
+    },
+    {
+      id: 'maternal',
+      amount: '70',
+      formattedAmount: '$70',
+      title: 'Maternal care & essential support',
+      icon: MaternalIcon,
+    },
   ];
 
-  const currentPresets = currency === 'NGN' ? presetAmountsNGN : presetAmountsUSD;
+  const currentTiers = currency === 'NGN' ? tiersNGN : tiersUSD;
+  const currentTier = currentTiers.find((t) => t.id === selectedTierId);
+
+  const displayAmountText = customAmount
+    ? `${currency === 'NGN' ? '₦' : '$'}${customAmount}${frequency === 'monthly' ? ' / Month' : ''}`
+    : `${currentTier ? currentTier.formattedAmount : (currency === 'NGN' ? '₦50,000' : '$35')}${frequency === 'monthly' ? ' / Month' : ''}`;
 
   const handleCopyAccount = () => {
-    navigator.clipboard.writeText('0123456789');
+    navigator.clipboard.writeText('1309157309');
     setCopiedBank(true);
     setTimeout(() => setCopiedBank(false), 2000);
   };
@@ -45,12 +161,12 @@ export default function DonateModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 animate-fade-in overflow-y-auto">
-      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-5 sm:p-6 md:p-8 border border-[#e7e2d8] my-6 sm:my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-fade-in overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-5 sm:p-7 md:p-8 border border-gray-100 my-6 sm:my-8">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 text-ink-muted hover:text-ink p-2 rounded-full bg-sand cursor-pointer transition-colors"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-800 flex items-center justify-center cursor-pointer transition-colors"
           aria-label="Close modal"
         >
           <X className="w-4 h-4" />
@@ -58,8 +174,8 @@ export default function DonateModal({ isOpen, onClose }) {
 
         {isSubmitted ? (
           <div className="text-center py-10 flex flex-col items-center gap-4 animate-fade-in">
-            <div className="w-14 h-14 rounded-2xl bg-sand text-primary flex items-center justify-center border border-[#e7e2d8]">
-              <CheckCircle2 className="w-8 h-8 text-primary" />
+            <div className="w-14 h-14 rounded-2xl bg-[#f9ecee] text-[#801426] flex items-center justify-center border border-[#801426]/20">
+              <CheckCircle2 className="w-8 h-8 text-[#801426]" />
             </div>
             <h3 className="editorial-title text-3xl text-ink">
               Thank you for your generosity.
@@ -68,46 +184,61 @@ export default function DonateModal({ isOpen, onClose }) {
               Your donation has been earmarked for frontline operations in Nigeria. A formal receipt and allocation confirmation have been sent to your email.
             </p>
             <div className="mt-2 px-4 py-2 rounded-full bg-sand text-ink text-xs font-semibold border border-[#e7e2d8]">
-              100% Tax-Deductible Non-Profit Receipt
+              100% Direct Impact Allocation
             </div>
           </div>
         ) : (
           <div>
-            {/* Modal Header */}
-            <div className="mb-5 sm:mb-6 pr-8">
-              <span className="text-[10px] uppercase tracking-widest text-primary font-bold block mb-1">
-                Direct Dignity Fund
+            {/* Modal Header & Brand Lockup */}
+            <div className="mb-5 sm:mb-6 pr-6">
+              <div className="flex items-center gap-2.5 mb-3.5">
+                <FoundationLogo className="w-7 h-7 text-[#801426] shrink-0" />
+                <div>
+                  <span className="block text-xs font-black tracking-wider text-[#801426] uppercase leading-tight font-heading">
+                    TEN KIND HANDS
+                  </span>
+                  <span className="block text-[9px] font-semibold tracking-[0.28em] text-[#801426] uppercase leading-tight font-sans">
+                    FOUNDATION
+                  </span>
+                </div>
+              </div>
+
+              <div className="w-7 h-[2.5px] bg-[#801426] mb-1.5 rounded-full"></div>
+              <span className="text-[11px] font-bold text-[#801426] tracking-wider uppercase block">
+                DIRECT IMPACT FUND
               </span>
-              <h2 className="editorial-title text-2xl sm:text-3xl text-ink">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight mt-1 leading-tight">
                 Make a direct contribution.
               </h2>
-              <p className="text-xs text-ink-light mt-1">
-                Zero cuts taken for overhead. 100% directly funds frontline education and clinics.
+              <p className="text-xs sm:text-[13px] text-gray-600 mt-1.5 leading-relaxed">
+                Your support helps provide education and essential healthcare to vulnerable children, women, and communities across Nigeria.
               </p>
             </div>
 
             {/* Payment Method Selector */}
-            <div className="flex gap-2 p-1 rounded-xl bg-sand mb-5 border border-[#e7e2d8]">
+            <div className="flex gap-2 p-1 rounded-2xl bg-gray-100/90 mb-5 border border-gray-200/60">
               <button
                 type="button"
                 onClick={() => setPaymentMode('card')}
-                className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${paymentMode === 'card'
-                  ? 'bg-white text-ink shadow-xs'
-                  : 'text-ink-light hover:text-ink'
-                  }`}
+                className={`flex-1 py-2.5 rounded-xl text-xs sm:text-[13px] font-bold transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                  paymentMode === 'card'
+                    ? 'bg-white text-gray-900 shadow-xs'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
               >
-                <CreditCard className="w-3.5 h-3.5" />
+                <CreditCard className="w-4 h-4 text-gray-700" />
                 <span>Card / Online</span>
               </button>
               <button
                 type="button"
                 onClick={() => setPaymentMode('transfer')}
-                className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${paymentMode === 'transfer'
-                  ? 'bg-white text-ink shadow-xs'
-                  : 'text-ink-light hover:text-ink'
-                  }`}
+                className={`flex-1 py-2.5 rounded-xl text-xs sm:text-[13px] font-bold transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                  paymentMode === 'transfer'
+                    ? 'bg-white text-gray-900 shadow-xs'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
               >
-                <Landmark className="w-3.5 h-3.5" />
+                <Landmark className="w-4 h-4 text-gray-700" />
                 <span>Bank Transfer</span>
               </button>
             </div>
@@ -146,17 +277,17 @@ export default function DonateModal({ isOpen, onClose }) {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Currency & Frequency Toggle */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                  <div className="flex p-1 rounded-xl bg-sand border border-[#e7e2d8]">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex p-1 rounded-xl bg-gray-100/90 border border-gray-200/60">
                     <button
                       type="button"
                       onClick={() => {
                         setCurrency('NGN');
-                        setSelectedAmount('15,000');
                         setCustomAmount('');
                       }}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${currency === 'NGN' ? 'bg-white text-ink shadow-xs' : 'text-ink-muted'
-                        }`}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        currency === 'NGN' ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-500 hover:text-gray-800'
+                      }`}
                     >
                       NGN (₦)
                     </button>
@@ -164,111 +295,162 @@ export default function DonateModal({ isOpen, onClose }) {
                       type="button"
                       onClick={() => {
                         setCurrency('USD');
-                        setSelectedAmount('35');
                         setCustomAmount('');
                       }}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${currency === 'USD' ? 'bg-white text-ink shadow-xs' : 'text-ink-muted'
-                        }`}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        currency === 'USD' ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-500 hover:text-gray-800'
+                      }`}
                     >
                       USD ($)
                     </button>
                   </div>
 
-                  <div className="flex p-1 rounded-xl bg-sand border border-[#e7e2d8]">
+                  <div className="flex p-1 rounded-xl bg-gray-100/90 border border-gray-200/60">
                     <button
                       type="button"
                       onClick={() => setFrequency('one-time')}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${frequency === 'one-time' ? 'bg-ink text-white shadow-xs' : 'text-ink-muted'
-                        }`}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        frequency === 'one-time'
+                          ? 'bg-[#801426] text-white shadow-xs'
+                          : 'text-gray-500 hover:text-gray-800'
+                      }`}
                     >
                       One-Time
                     </button>
                     <button
                       type="button"
                       onClick={() => setFrequency('monthly')}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${frequency === 'monthly' ? 'bg-ink text-white shadow-xs' : 'text-ink-muted'
-                        }`}
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        frequency === 'monthly'
+                          ? 'bg-[#801426] text-white shadow-xs'
+                          : 'text-gray-500 hover:text-gray-800'
+                      }`}
                     >
                       Monthly
                     </button>
                   </div>
                 </div>
 
-                {/* Preset Amount Tiles */}
+                {/* Preset Support Levels */}
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase font-bold text-ink-muted tracking-wider block">
-                    Choose Support Level
+                  <label className="text-[11px] font-bold text-gray-500 tracking-wider uppercase block">
+                    CHOOSE SUPPORT LEVEL
                   </label>
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {currentPresets.map((tier) => {
-                      const isSelected = selectedAmount === tier.value && !customAmount;
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {currentTiers.map((tier) => {
+                      const isSelected = selectedTierId === tier.id && !customAmount;
+                      const IconComponent = tier.icon;
                       return (
                         <button
-                          key={tier.value}
+                          key={tier.id}
                           type="button"
                           onClick={() => {
-                            setSelectedAmount(tier.value);
+                            setSelectedTierId(tier.id);
                             setCustomAmount('');
                           }}
-                          className={`p-3 rounded-2xl text-left transition-all cursor-pointer border ${isSelected
-                            ? 'bg-sand border-primary shadow-xs'
-                            : 'bg-white border-[#e7e2d8] hover:border-ink'
-                            }`}
+                          className={`relative p-3.5 rounded-2xl text-left transition-all cursor-pointer flex items-center gap-3.5 bg-white ${
+                            isSelected
+                              ? 'border-2 border-[#801426] shadow-sm'
+                              : 'border border-gray-200/90 hover:border-gray-400'
+                          }`}
                         >
-                          <div className="flex items-center justify-between">
-                            <span className={`text-sm font-bold ${isSelected ? 'text-primary' : 'text-ink'}`}>
-                              {tier.label}
-                            </span>
-                            {isSelected && (
-                              <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
-                            )}
+                          {/* Selected Checkmark Badge */}
+                          {isSelected && (
+                            <div className="absolute top-2.5 right-2.5 w-4 h-4 rounded-full bg-[#801426] flex items-center justify-center text-white shadow-xs">
+                              <Check className="w-2.5 h-2.5 stroke-[3]" />
+                            </div>
+                          )}
+
+                          {/* Tinted Circular Icon Badge */}
+                          <div className="w-10 h-10 rounded-full bg-[#f9ecee] text-[#801426] flex items-center justify-center shrink-0">
+                            <IconComponent className="w-5 h-5 text-[#801426]" />
                           </div>
-                          <p className="text-[10px] text-ink-light mt-0.5 line-clamp-1">
-                            {tier.impact}
-                          </p>
+
+                          {/* Amount and Title */}
+                          <div className="pr-4">
+                            <div className="text-base sm:text-lg font-extrabold text-[#801426] tracking-tight leading-tight">
+                              {tier.formattedAmount}
+                            </div>
+                            <p className="text-[11px] text-gray-600 font-normal leading-snug mt-0.5">
+                              {tier.title}
+                            </p>
+                          </div>
                         </button>
                       );
                     })}
                   </div>
-                  <input
-                    type="number"
-                    placeholder={currency === 'NGN' ? 'Or Enter Custom Amount in Naira (₦)' : 'Or Enter Custom Amount in Dollars ($)'}
-                    value={customAmount}
-                    onChange={(e) => {
-                      setCustomAmount(e.target.value);
-                      setSelectedAmount('');
-                    }}
-                    className="w-full px-4 py-2.5 rounded-xl bg-sand border border-[#e7e2d8] text-xs focus:outline-none focus:border-primary placeholder:text-ink-muted"
-                  />
+
+                  {/* Custom Amount Input */}
+                  <div className="relative flex items-center rounded-xl bg-gray-50 border border-gray-200/90 px-3.5 py-1.5 focus-within:border-[#801426] focus-within:bg-white transition-all">
+                    <div className="w-5 h-5 rounded-full border border-gray-400/80 flex items-center justify-center text-[11px] font-bold text-gray-500 shrink-0 select-none mr-2.5">
+                      {currency === 'NGN' ? '₦' : '$'}
+                    </div>
+                    <input
+                      type="text"
+                      placeholder={
+                        currency === 'NGN'
+                          ? 'Or Enter Custom Amount in Naira (₦)'
+                          : 'Or Enter Custom Amount in Dollars ($)'
+                      }
+                      value={customAmount}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/[^0-9]/g, '');
+                        const formatted = val ? Number(val).toLocaleString() : '';
+                        setCustomAmount(formatted);
+                        if (formatted) setSelectedTierId(null);
+                      }}
+                      className="w-full bg-transparent text-xs text-gray-800 placeholder:text-gray-400 font-medium focus:outline-none py-1.5"
+                    />
+                  </div>
                 </div>
 
-                {/* Program Selector */}
-                <div className="space-y-1">
-                  <label className="text-[10px] uppercase font-bold text-ink-muted tracking-wider block">
-                    Designate Support To
+                {/* Program / Cause Designation */}
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold text-gray-500 tracking-wider uppercase block">
+                    DESIGNATE SUPPORT TO
                   </label>
-                  <select
-                    value={cause}
-                    onChange={(e) => setCause(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-sand border border-[#e7e2d8] text-xs text-ink focus:outline-none focus:border-primary cursor-pointer"
-                  >
-                    <option value="General Fund">Where Urgent Need Arises (General Field Fund)</option>
-                    <option value="Education">Primary School Desks, Solar Power &amp; Books</option>
-                    <option value="Healthcare">Mobile Primary Clinics &amp; Malaria Treatments</option>
-                    <option value="Water">Clean Solar Water Boreholes</option>
-                    <option value="Teacher Training">Teacher Fellowship &amp; Educator Grants</option>
-                  </select>
+                  <div className="relative flex items-center rounded-xl bg-gray-50 border border-gray-200/90 px-3.5 py-2.5 focus-within:border-[#801426] transition-all">
+                    <TargetIcon className="w-4 h-4 text-gray-500 shrink-0 mr-2.5" />
+                    <select
+                      value={cause}
+                      onChange={(e) => setCause(e.target.value)}
+                      className="w-full bg-transparent text-xs text-gray-800 font-medium focus:outline-none cursor-pointer pr-6 appearance-none"
+                    >
+                      <option value="Where Most Needed (General Impact Fund)">
+                        Where Most Needed (General Impact Fund)
+                      </option>
+                      <option value="Education & Scholarships">
+                        Education &amp; Scholarships
+                      </option>
+                      <option value="Healthcare & Medical Outreaches">
+                        Healthcare &amp; Medical Outreaches
+                      </option>
+                      <option value="Mosquito Nets & Malaria Prevention">
+                        Mosquito Nets &amp; Malaria Prevention
+                      </option>
+                      <option value="Maternal Care & Essential Support">
+                        Maternal Care &amp; Essential Support
+                      </option>
+                      <option value="Women & Widows Empowerment">
+                        Women &amp; Widows Empowerment
+                      </option>
+                      <option value="Orphanage Relief & Food Packs">
+                        Orphanage Relief &amp; Food Packs
+                      </option>
+                    </select>
+                    <ChevronDown className="w-4 h-4 text-gray-500 pointer-events-none absolute right-3.5" />
+                  </div>
                 </div>
 
-                {/* Submit */}
+                {/* Submit / Proceed Button */}
                 <button
                   type="submit"
-                  className="btn-primary w-full py-3.5 text-xs font-heading font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-md mt-2"
+                  className="w-full py-3.5 sm:py-4 rounded-2xl bg-[#801426] hover:bg-[#681423] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer mt-4"
                 >
                   <span>
-                    Proceed with {currency === 'NGN' ? '₦' : '$'}{customAmount ? customAmount : selectedAmount} {frequency === 'monthly' ? '/ Month' : ''}
+                    Proceed with {displayAmountText}
                   </span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
             )}

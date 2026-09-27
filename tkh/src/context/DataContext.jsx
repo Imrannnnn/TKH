@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const STORAGE_KEY = 'tkh_platform_data_v2';
+const STORAGE_KEY = 'tkh_platform_data_v3';
 
 const initialNewsArticles = [
   {
@@ -37,52 +37,250 @@ const initialNewsArticles = [
 
 const initialOutreaches = [
   {
-    id: 'outreach-1',
+    id: 'outreach-aug-2026',
+    month: 'August 2026',
+    date: 'August 1 – 24, 2026',
+    status: 'completed',
+    title: 'Youth Skills, Digital Literacy & Academic Outreach',
+    pillar: 'Education & Skills',
+    theme: 'Youth Skills Empowerment • Education • Community Development',
+    location: 'Lagos, Plateau, Benue & FCT Abuja',
+    beneficiariesTarget: '345 Youths & Students Reached',
+    description: 'A five-stage empowerment intervention spanning four states: 5-week youth digital tech lab in Ikorodu, academic speech day scholarships in Jos, primary school learning kits, shoe-making apprenticeships, and vocational hairdressing tools.',
+    image: '/images/IMG_0294.JPG',
+    focusAreas: ['Digital Literacy Bootcamps', 'Merit Scholarships & Book Packs', 'Vocational Trade Toolkits', 'Youth Mentorship'],
+    deployments: [
+      {
+        state: 'Lagos State',
+        location: 'JAMBELLS School, Ikorodu',
+        date: 'August 5, 2026',
+        beneficiaries: '30 Youths (27 Active)',
+        activity: 'Launched 5-week Youth Digital Skills Empowerment Programme in a dedicated computer lab covering Computer Fundamentals, Microsoft Word, Excel, PowerPoint, AI tools, and Graphic Design.'
+      },
+      {
+        state: 'Plateau State',
+        location: 'Beckwin International School, Jos',
+        date: 'July 24, 2026',
+        beneficiaries: '102 Pupils',
+        activity: 'Speech & Prize Giving Day: awarded 100% full scholarships to 5 Best Overall pupils, 50% scholarships to 5 Second Best Overall pupils, and distributed exercise books, water bottles, and hygiene kits.'
+      },
+      {
+        state: 'Plateau State',
+        location: 'Deeper Life Church, Abattoir, Jos',
+        date: 'August 1, 2026',
+        beneficiaries: '200 School Children',
+        activity: 'Distributed exercise books and complete pencil packs (2 biros, 1 crayon, 1 sharpener, 1 eraser) to support multi-denominational learning.'
+      },
+      {
+        state: 'Benue State',
+        location: 'Kanshio, Makurdi',
+        date: 'August 24, 2026',
+        beneficiaries: '10 Young Women',
+        activity: 'Hairdressing vocational empowerment: distributed dummy mannequin heads, hair attachments, professional styling scissors, and combs for self-reliance.'
+      },
+      {
+        state: 'FCT Abuja',
+        location: 'Dutse PE Community, Bwari Area Council',
+        date: 'June 25, 2026',
+        beneficiaries: '3 Youths (Joshua, Angela, Muhammed)',
+        activity: 'Enrolled in an intensive 6-month shoe-making training program with complete artisanal starter toolkits and parental consent.'
+      }
+    ],
+    feedback: '"We continue to combine immediate educational support with practical empowerment opportunities designed to strengthen pathways toward economic independence."',
+    partners: 'JAMBELLS School, EDAB360 & Local Community Councils'
+  },
+  {
+    id: 'outreach-jul-2026',
+    month: 'July 2026',
+    date: 'July 4 – 20, 2026',
+    status: 'completed',
+    title: 'Empower 1 Initiative: Sustainable Youth Entrepreneurship',
+    pillar: 'Youth Empowerment',
+    theme: 'Fostering Sustainable Youth Entrepreneurship & Micro-Business Ownership',
+    location: 'Plateau (Jos) & Benue (Makurdi)',
+    beneficiariesTarget: '2 Youths Established with Full Barbershops',
+    description: 'Transitioned trained youths from 2025 vocational apprenticeships to full commercial barbershop business ownership with shop rentals, interior setup, electrical wiring, and commercial-grade barber tools in Jos and Makurdi.',
+    image: '/images/IMG_0300.JPG',
+    focusAreas: ['Apprenticeship-to-Ownership Transition', 'Complete Shop Setup & Leases', 'Professional Hairdressing Tools', 'Sustainable Income'],
+    deployments: [
+      {
+        state: 'Plateau State',
+        location: 'Angwan Kuruma, Jos',
+        date: 'July 4, 2026',
+        beneficiaries: 'Promise Jacob (Barbershop Owner)',
+        activity: 'Successfully established with a fully equipped barbershop. Infrastructure: shop lease covered, interior painting, 4ft × 3ft mirror console with drawer, 2 professional barbing chairs, waiting chair, electrical setup. Tools: 2 high-performance clippers, 3 covers, cleaning brushes, clipper oil.'
+      },
+      {
+        state: 'Benue State',
+        location: 'Makurdi',
+        date: 'July 20, 2026',
+        beneficiaries: 'Samuel (Barbershop Owner)',
+        activity: 'Transitioned from 2025 barbing apprenticeship to full business ownership: official presentation of keys and shop handover, full equipment presentation, and live demonstration haircut for first client.'
+      }
+    ],
+    feedback: '"The initiative provides a sustainable source of income and a brighter economic future for Promise Jacob and Samuel."',
+    partners: 'Local Village Elders, Community Leaders & Artisan Mentors'
+  },
+  {
+    id: 'outreach-jun-2026',
+    month: 'June 2026',
+    date: 'June 2 – 21, 2026',
+    status: 'completed',
+    title: 'Widows Empowerment Outreach: Sustainable Cooking & Welfare',
+    pillar: 'Women Empowerment',
+    theme: 'Empowering Widows through Sustainable Solutions & Clean Energy',
+    location: 'Abuja, Benue, Oyo & Lagos (4 States)',
+    beneficiariesTarget: '80 Vulnerable Widows (20 per State)',
+    description: 'Transitioned 80 widows from hazardous firewood smoke to modernized, fuel-efficient coal pots across 4 states, providing live safety demonstrations, domestic respiratory health orientations, and direct cash grants in Benue.',
+    image: '/images/IMG_0995.JPG',
+    focusAreas: ['Clean Household Energy', 'Firewood Smoke Hazard Elimination', 'Cooking Fuel Expense Relief', 'Widow Social Inclusion'],
+    deployments: [
+      {
+        state: 'FCT Abuja',
+        location: 'Dafara Community, Kuje',
+        date: 'June 2, 2026',
+        beneficiaries: '20 Widows',
+        activity: 'Distributed 20 modernized coal pots with physical usage and safety demonstrations, plus domestic health and economic orientation.'
+      },
+      {
+        state: 'Benue State',
+        location: 'Otukpa Community, Ogbadibo LGA',
+        date: 'June 8, 2026',
+        beneficiaries: '20 Widows',
+        activity: 'Distributed 20 modernized coal pots and ₦2,000 cash grant per beneficiary courtesy of the LGA Chairman partnership to ease daily living costs.'
+      },
+      {
+        state: 'Oyo State',
+        location: 'Amuloko Idi-Ose, Ibadan',
+        date: 'June 12, 2026',
+        beneficiaries: '20 Widows',
+        activity: 'Empowered widows with energy-efficient stoves to counteract gas price spikes and eliminate domestic firewood smoke hazards.'
+      },
+      {
+        state: 'Lagos State',
+        location: 'Araromi Community',
+        date: 'June 21, 2026',
+        beneficiaries: '20 Widows',
+        activity: 'Supplied modernized coal stoves to alleviate household cooking expenses, supported by practical demonstrations and community testimonials.'
+      }
+    ],
+    feedback: '"The women were so happy and it was written on their faces. The coal pots and financial assistance ease heavy daily living expenses."',
+    partners: 'Ogbadibo LGA Council, Traditional Ward Leaders & Community Groups'
+  },
+  {
+    id: 'outreach-may-2026',
+    month: 'May 2026',
+    date: 'April 27 – May 12, 2026',
+    status: 'completed',
+    title: 'Child Empowerment Program: Academic Materials & Student Retention',
+    pillar: 'Education',
+    theme: 'Educational Equity, Learning Resource Distribution & Motivation',
+    location: 'Benue, Lagos, Plateau & Oyo (4 States)',
+    beneficiariesTarget: '300 Primary & Secondary Pupils',
+    description: 'Supplied 300 students across 4 diverse states with curriculum-aligned notebooks, writing packs, water bottles, and stationery kits, removing immediate classroom resource barriers for the full academic term.',
+    image: '/images/IMG_0294.JPG',
+    focusAreas: ['Classroom Tool Provision', 'Student Motivation & Retention', 'Writing & Creative Kits', 'School Community Trust'],
+    deployments: [
+      {
+        state: 'Benue State',
+        location: 'UBE Northbank, Makurdi',
+        date: 'April 27, 2026',
+        beneficiaries: '94 Students Reached',
+        activity: 'Distributed 94 comprehensive writing packs (2 pencils, 5 biros, 1 pack of crayons, eraser, ruler, sharpener) solving learning material shortages.'
+      },
+      {
+        state: 'Oyo State',
+        location: 'Oluode Community Primary School, Oke-Alaro, Apata, Ibadan',
+        date: 'May 4, 2026',
+        beneficiaries: '50 Pupils (Primary 5 & 6)',
+        activity: 'Equipped 50 pupils with full educational kits: 5 exercise books, 5 pens, 5 pencils, erasers, sharpeners, ruler, and pencil case.'
+      },
+      {
+        state: 'Lagos State',
+        location: 'Jambells Schools, Ikorodu',
+        date: 'May 11, 2026',
+        beneficiaries: '86 Students',
+        activity: 'Delivered notebooks, writing packs, water bottles, biros, rulers, and crayons to support primary and secondary learners.'
+      },
+      {
+        state: 'Plateau State',
+        location: 'LEA Kunga Targwong, Bauchi Road, Jos',
+        date: 'May 12, 2026',
+        beneficiaries: '70 Pupils',
+        activity: 'Supplied 70 writing material packs, 70 packs of exercise books, and 70 durable water bottles to enhance classroom participation.'
+      }
+    ],
+    feedback: '"Beneficiaries expressed gratitude through songs and appreciation messages. The intervention equipped pupils with the exact tools needed for the term."',
+    partners: 'School Headteachers, SUBEB Teachers & Community Parents'
+  },
+  {
+    id: 'outreach-apr-2026',
+    month: 'April 2026',
+    date: 'April 4 – 20, 2026',
+    status: 'completed',
+    title: 'Malaria Eradication Campaign: Frontline Prevention & Health Education',
+    pillar: 'Healthcare',
+    theme: 'Malaria Prevention • Maternal & Child Health • Local Language Education',
+    location: 'Lagos, Plateau & FCT Abuja (3 Regions)',
+    beneficiariesTarget: '130 High-Risk Individuals',
+    description: 'Targeted frontline campaign prioritizing pregnant and nursing mothers, providing long-lasting treated mosquito nets, insecticides, sprayers, and Vitamin C, backed by bilingual health education in English and Hausa.',
+    image: '/images/11222.jpeg',
+    focusAreas: ['Insecticide-Treated Nets (LLINs)', 'Maternal & Nursing Mother Care', 'Hausa & English Health Education', 'Vector Control Sprayers'],
+    deployments: [
+      {
+        state: 'Lagos State',
+        location: 'Abata, Orile, Surulere',
+        date: 'April 4, 2026',
+        beneficiaries: '30 Pregnant & Nursing Mothers',
+        activity: 'Supplied mosquito treated nets, insecticides, and Vitamin C supplements accompanied by an interactive maternal malaria prevention orientation.'
+      },
+      {
+        state: 'FCT Abuja',
+        location: 'Idu Karimo Community',
+        date: 'April 8, 2026',
+        beneficiaries: '50 Individuals',
+        activity: 'Community awareness campaign educating women on malaria transmission causes and preventive sanitation, with educational flyers and digital advocacy.'
+      },
+      {
+        state: 'Plateau State',
+        location: 'Rinze Community, Jos East LGA',
+        date: 'April 20, 2026',
+        beneficiaries: '50 Women',
+        activity: 'Delivered health education in Hausa for clear grassroots understanding; distributed 50 mosquito treated nets, 50 BNC sprayers, and 50 Vitamin C packs.'
+      }
+    ],
+    feedback: '"The village chief and beneficiaries expressed sincere gratitude for the nets and sprayers. Delivering health education in Hausa made the safety practices clear to all."',
+    partners: 'Primary Healthcare Workers, Traditional Village Chiefs & Women Advocates'
+  },
+  {
+    id: 'outreach-oct-2026',
+    month: 'October 2026',
+    date: 'October 17–19, 2026',
     status: 'upcoming',
     title: 'Q4 2026 Primary School Book & Uniform Distribution Drive',
-    location: 'Ikwerre & Emohua Districts, Rivers State',
-    date: 'October 17–19, 2026',
     pillar: 'Education',
-    beneficiariesTarget: '1,200 Primary Pupils',
+    theme: 'School Uniforms • Textbooks & Desks • Rural Classrooms',
+    location: 'Ikwerre & Emohua Districts, Rivers State',
+    beneficiariesTarget: '1,200 Primary Pupils Target',
     description: 'Delivering full uniform sets, branded exercise books, mathematics geometry sets, and 30 dual-seater desks across four rural community schools.',
     needs: 'Volunteer teachers, logistics drivers, packing assistants.',
-    image: '/images/IMG_0294.JPG'
+    image: '/images/IMG_0303.JPG',
+    focusAreas: ['Classroom Infrastructure', 'Uniform Tailoring', 'Curriculum Materials', 'Desk Distribution']
   },
   {
-    id: 'outreach-2',
+    id: 'outreach-nov-2026',
+    month: 'November 2026',
+    date: 'November 6–8, 2026',
     status: 'upcoming',
     title: 'Rural Maternal Health & Malaria Screening Mission',
-    location: 'Kajuru & Kachia Hamlets, Southern Kaduna',
-    date: 'November 6–8, 2026',
     pillar: 'Healthcare',
-    beneficiariesTarget: '800+ Mothers & Infants',
+    theme: 'Antenatal Care • Malaria Diagnostics • Infant Care',
+    location: 'Kajuru & Kachia Hamlets, Southern Kaduna',
+    beneficiariesTarget: '800+ Mothers & Infants Target',
     description: 'Free rapid malaria testing, antenatal checks, distribution of 300 Mama Kits (sterile birth packs), and pediatric deworming treatments.',
     needs: 'Volunteer doctors, registered nurses, pharmacist assistants.',
-    image: '/images/IMG_0995.JPG'
-  },
-  {
-    id: 'outreach-3',
-    status: 'completed',
-    title: 'Solar Deep Aquifer Borehole Commissioning',
-    location: 'Ijebu North Hamlets, Ogun State',
-    date: 'August 8, 2026',
-    pillar: 'Infrastructure',
-    beneficiariesTarget: '2,500 Community Residents',
-    description: 'Completed drilling of a 95-meter deep solar-powered borehole with an 8-spigot distribution station and local water management committee training.',
-    needs: 'Project fully delivered and handed over to village council.',
-    image: '/images/food-distribution.jpg'
-  },
-  {
-    id: 'outreach-4',
-    status: 'completed',
-    title: 'Enugu Rural Mobile Health Mission',
-    location: 'Oji River District, Enugu State',
-    date: 'July 24–27, 2026',
-    pillar: 'Healthcare',
-    beneficiariesTarget: '654 Patients Treated',
-    description: 'Conducted comprehensive outpatient clinic, malaria diagnostics, and dispensed 1,200+ prescription medications at zero cost to patients.',
-    needs: 'Project fully delivered.',
-    image: '/images/IMG_0300.JPG'
+    image: '/images/IMG_0995.JPG',
+    focusAreas: ['Antenatal Triage', 'Mama Kits (Sterile Birth Packs)', 'Rapid Malaria Diagnostics', 'Pediatric Deworming']
   }
 ];
 
@@ -196,7 +394,7 @@ const initialDocuments = [
   },
   {
     id: 'doc-3',
-    title: 'CAC Certificate of Incorporation (IT/NO: 148920)',
+    title: 'CAC Certificate of Incorporation',
     size: '1.2 MB',
     date: 'Incorporated Nigeria',
     auditor: 'Corporate Affairs Commission'
@@ -245,7 +443,7 @@ const initialInquiries = [
 const initialHomeContent = {
   heroHeadline: 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.',
   heroSubtitle: 'Every act of kindness shapes a brighter future.',
-  registeredBadge: 'Registered Non-Profit NGO in Nigeria • CAC/IT/NO: 148920',
+  registeredBadge: 'Registered Non-Profit NGO in Nigeria',
   heroSlides: [
     {
       img: "/images/IMG_0294.JPG",
@@ -273,14 +471,6 @@ const initialStoryContent = {
   visionHeadline: 'A seed planted in hope. A forest grown in dignity.',
   visionStatement: 'A world where every child has access to quality education, and every woman and child has access to comprehensive healthcare. We strive to break the cycle of poverty and increase the overall well-being of communities by empowering children through education and promoting the health and well-being of women and children.',
   leadership: [
-    {
-      name: 'John Iyalla',
-      role: 'Founder',
-      badge: 'Founder',
-      initials: 'JI',
-      image: null,
-      description: 'Visionary behind Ten Kind Hands, championing a radical 100% direct-giving model to bring transformative education and healthcare to vulnerable communities.'
-    },
     {
       name: 'Suotonye Augustine Arthur',
       role: 'Country Head',
@@ -373,8 +563,7 @@ const initialTestimonialsList = [
     quote: "Before Ten Kind Hands brought solar power and desks, our pupils learned on bare floors and had to go home whenever rain clouds gathered. Today, attendance has soared to over 98% and our children read aloud with pride.",
     author: "Mrs. Amina Danjuma",
     role: "Headmistress",
-    institution: "Gidan Community Primary School, Kaduna State",
-    avatar: "/images/IMG_0300.JPG"
+    institution: "Gidan Community Primary School, Kaduna State"
   },
   {
     id: 't-2',
@@ -382,8 +571,7 @@ const initialTestimonialsList = [
     quote: "The mobile health clinic detected my child's severe pneumonia in time and provided all treatments free of charge. Having caring medical staff reach our remote hamlet is a blessing I will never forget.",
     author: "Grace Adebayo",
     role: "Mother of 3 & Community Health Advocate",
-    institution: "Rural Women's Forum, Ogun State",
-    avatar: "/images/IMG_0995.JPG"
+    institution: "Rural Women's Forum, Ogun State"
   },
   {
     id: 't-3',
@@ -391,8 +579,7 @@ const initialTestimonialsList = [
     quote: "Ten Kind Hands does not dictate to us; they sit with village elders and ask what our youth need most. This is genuine dignity, respect for our culture, and true partnership.",
     author: "Chief Emeka Okafor",
     role: "Community Elder & Development Secretary",
-    institution: "Oji River Council, Enugu State",
-    avatar: "/images/IMG_0994.JPG"
+    institution: "Oji River Council, Enugu State"
   },
   {
     id: 't-4',
@@ -400,8 +587,7 @@ const initialTestimonialsList = [
     quote: "Serving as a volunteer doctor on the Kaduna medical mission was the most grounding experience of my clinical career. Seeing 100% of donated drugs reach patients directly restored my faith in grassroots charity.",
     author: "Dr. Chinedu Eze",
     role: "Volunteer Pediatrician",
-    institution: "Lagos University Teaching Hospital",
-    avatar: "/images/IMG_0294.JPG"
+    institution: "Lagos University Teaching Hospital"
   },
   {
     id: 't-5',
@@ -409,8 +595,7 @@ const initialTestimonialsList = [
     quote: "What sets TKH apart is their radical financial honesty. Getting an email with GPS coordinates and photos of the exact classroom block my monthly contribution helped build was deeply moving.",
     author: "Farida Mohammed",
     role: "Monthly Impact Sustainer",
-    institution: "Abuja, Nigeria",
-    avatar: "/images/IMG_0300.JPG"
+    institution: "Abuja, Nigeria"
   },
   {
     id: 't-6',
@@ -418,13 +603,12 @@ const initialTestimonialsList = [
     quote: "Our diaspora foundation has partnered with Ten Kind Hands across three Nigerian states. Their operational discipline and flawless accounting make them our most trusted on-ground implementation partner.",
     author: "Dr. Anthony Nwankwo",
     role: "Director of International Giving",
-    institution: "UK-Nigeria Diaspora Health Trust",
-    avatar: "/images/IMG_0994.JPG"
+    institution: "UK-Nigeria Diaspora Health Trust"
   }
 ];
 
 const initialContactInfo = {
-  headquarters: 'Abuja, Federal Capital Territory, Nigeria',
+  headquarters: 'Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria',
   email: 'contact@tenkindhands.org',
   partnershipsEmail: 'partners@tenkindhands.org',
   phone: '+234 818 099 4301',
@@ -450,12 +634,42 @@ const defaultData = {
 const API_BASE = 'http://localhost:5000/api';
 const DataContext = createContext(null);
 
+const sanitizeData = (raw) => {
+  if (!raw) return raw;
+  const cleaned = { ...raw };
+  if (cleaned.homeContent?.registeredBadge) {
+    cleaned.homeContent = {
+      ...cleaned.homeContent,
+      registeredBadge: cleaned.homeContent.registeredBadge
+        .replace(/ • CAC\/IT\/NO: 148920/g, '')
+        .replace(/CAC\/IT\/NO: 148920\.?/g, '')
+        .trim()
+    };
+  }
+  if (Array.isArray(cleaned.documents)) {
+    cleaned.documents = cleaned.documents.map((d) => ({
+      ...d,
+      title: d.title.replace(' (IT/NO: 148920)', '').replace('CAC/IT/NO: 148920', '').trim()
+    }));
+  }
+  if (cleaned.contactInfo) {
+    if (!cleaned.contactInfo.headquarters || cleaned.contactInfo.headquarters.includes('Plot 402') || cleaned.contactInfo.headquarters === 'Abuja, Federal Capital Territory, Nigeria') {
+      cleaned.contactInfo = {
+        ...cleaned.contactInfo,
+        headquarters: 'Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria'
+      };
+    }
+  }
+  return cleaned;
+};
+
 export function DataProvider({ children }) {
   const [data, setData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved);
+        const rawParsed = JSON.parse(saved);
+        const parsed = sanitizeData(rawParsed);
         let loadedMetrics = parsed.metrics || defaultData.metrics;
         initialMetrics.forEach((initM) => {
           if (!loadedMetrics.some((m) => m.id === initM.id)) {
@@ -491,7 +705,8 @@ export function DataProvider({ children }) {
         if (!res.ok) throw new Error(`HTTP status ${res.status}`);
         return res.json();
       })
-      .then((remoteData) => {
+      .then((rawRemoteData) => {
+        const remoteData = sanitizeData(rawRemoteData);
         if (isMounted && remoteData && Array.isArray(remoteData.news)) {
           let remoteMetrics = remoteData.metrics || defaultData.metrics;
           initialMetrics.forEach((initM) => {

@@ -68,7 +68,7 @@ export default function Contact() {
                   <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-ink block font-heading">Abuja Liaison Office:</strong>
-                    <span>Plot 402, Constitution Avenue, Central Business District, Abuja, FCT, Nigeria.</span>
+                    <span>Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria</span>
                   </div>
                 </div>
 
@@ -108,7 +108,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="text-sm font-heading font-bold text-ink">WhatsApp Live Desk</h4>
-                  <span className="text-[11px] text-ink-muted">+234 818 099 4301 • Quick responses</span>
+                  <span className="text-[11px] text-ink-muted">Direct desk • Quick responses</span>
                 </div>
               </div>
               <a

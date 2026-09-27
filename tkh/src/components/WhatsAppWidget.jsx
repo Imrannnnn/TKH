@@ -39,7 +39,7 @@ export default function WhatsAppWidget({ currentPage, selectedProgram }) {
                 <h4 className="text-xs font-bold text-[#2a1f1f]">TKH Direct Desk</h4>
                 <span className="text-[10px] text-emerald-700 font-semibold flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                  +234 818 099 4301
+                  Online
                 </span>
               </div>
             </div>
@@ -52,12 +52,12 @@ export default function WhatsAppWidget({ currentPage, selectedProgram }) {
           </div>
 
           <p className="text-xs text-[#635453] mb-3 leading-relaxed">
-            Need fast assistance, scholarship inquiry, or to confirm project locations? Chat directly with our field coordination desk.
+            Interested in partnering, sponsoring, or supporting our projects? Connect directly with our partnerships and development desk today.
           </p>
 
           <div className="p-2.5 rounded-xl bg-[#fbf8f7] border border-[#ebdcd9] mb-3 text-[11px] text-[#635453] flex items-center gap-2">
             <Clock className="w-3.5 h-3.5 text-secondary shrink-0" />
-            <span>Response window: Mon–Sat, 8:00 AM – 6:00 PM WAT</span>
+            <span>Response window: Mon–Sun, 8:00 AM – 8:00 PM WAT</span>
           </div>
 
           <button
