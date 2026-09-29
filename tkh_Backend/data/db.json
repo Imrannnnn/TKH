@@ -84,36 +84,36 @@
   "metrics": [
     {
       "id": "students",
-      "category": "education",
-      "iconName": "School",
-      "label": "Students Supplied",
-      "stat": "12,500+",
-      "description": "Students Supplied",
+      "category": "transparency",
+      "iconName": "Users",
+      "label": "Beneficiaries Reached",
+      "stat": "5,500+",
+      "description": "Beneficiaries Reached",
       "growth": "+32% YoY",
       "color": "text-primary",
-      "detail": "Full uniforms, textbooks, and tuition scholarships across 24 partner schools."
+      "detail": "People reached through education, healthcare, empowerment, and community outreach initiatives..."
     },
     {
       "id": "schools",
       "category": "education",
-      "iconName": "BookOpen",
-      "label": "Solar Classrooms",
-      "stat": "45",
-      "description": "Solar Classrooms",
-      "growth": "+14 New in 2024",
+      "iconName": "School",
+      "label": "Scholarships Awarded",
+      "stat": "150+",
+      "description": "Scholarships Awarded",
+      "growth": "+40 New in 2026",
       "color": "text-ink",
-      "detail": "Weather-proof, solar-lit learning blocks built in Kaduna, Niger & Ogun."
+      "detail": "Children and young people supported with access to education through scholarships and financial assistance."
     },
     {
       "id": "patients",
-      "category": "healthcare",
-      "iconName": "Stethoscope",
-      "label": "Patients Treated",
-      "stat": "8,200+",
-      "description": "Patients Treated",
+      "category": "transparency",
+      "iconName": "HandHeart",
+      "label": "Women & Girls Reached",
+      "stat": "2,100+",
+      "description": "Women & Girls Reached",
       "growth": "+45% YoY",
       "color": "text-forest",
-      "detail": "Free mobile clinical triage, malaria testing, and prescription drugs."
+      "detail": "Women and girls supported through education, healthcare, empowerment, and community outreach initiatives."
     },
     {
       "id": "giving-model",
@@ -128,25 +128,25 @@
     },
     {
       "id": "clinics",
-      "category": "healthcare",
-      "iconName": "Stethoscope",
-      "label": "Frontline Healthcare",
-      "stat": "12",
-      "description": "Community Health Posts",
+      "category": "transparency",
+      "iconName": "Building2",
+      "label": "Communities Served",
+      "stat": "130+",
+      "description": "Communities Served",
       "growth": "100% Operational",
       "color": "text-forest",
-      "detail": "Permanent village posts staffed by qualified nurse practitioners and community health volunteers."
+      "detail": "Communities reached through education, healthcare, empowerment, and community outreach initiatives."
     },
     {
-      "id": "water",
-      "category": "infrastructure",
-      "iconName": "Droplets",
-      "label": "Clean Water",
-      "stat": "28",
-      "description": "Solar Deep Boreholes",
-      "growth": "+8 This Year",
+      "id": "metric-1790695260926",
+      "category": "transparency",
+      "iconName": "Sparkles",
+      "label": "Children & Youths Reached",
+      "stat": "3,312+",
+      "description": "Children & Youths Reached",
+      "growth": "+1,300",
       "color": "text-primary",
-      "detail": "Deep aquifer boreholes supplying over 70,000 liters of safe drinking water daily to rural hamlets."
+      "detail": "Children and young people supported through education, skills development, healthcare, and empowerment initiative..."
     }
   ],
   "allocations": [

@@ -287,36 +287,36 @@ const initialOutreaches = [
 const initialMetrics = [
   {
     id: 'students',
-    category: 'education',
-    iconName: 'School',
-    label: 'Students Supplied',
-    stat: '12,500+',
-    description: 'Students Supplied',
+    category: 'transparency',
+    iconName: 'Users',
+    label: 'Beneficiaries Reached',
+    stat: '5,500+',
+    description: 'Beneficiaries Reached',
     growth: '+32% YoY',
     color: 'text-primary',
-    detail: 'Full uniforms, textbooks, and tuition scholarships across 24 partner schools.'
+    detail: 'People reached through education, healthcare, empowerment, and community outreach initiatives...'
   },
   {
     id: 'schools',
     category: 'education',
-    iconName: 'BookOpen',
-    label: 'Solar Classrooms',
-    stat: '45',
-    description: 'Solar Classrooms',
-    growth: '+14 New in 2024',
+    iconName: 'School',
+    label: 'Scholarships Awarded',
+    stat: '150+',
+    description: 'Scholarships Awarded',
+    growth: '+40 New in 2026',
     color: 'text-ink',
-    detail: 'Weather-proof, solar-lit learning blocks built in Kaduna, Niger & Ogun.'
+    detail: 'Children and young people supported with access to education through scholarships and financial assistance.'
   },
   {
     id: 'patients',
-    category: 'healthcare',
-    iconName: 'Stethoscope',
-    label: 'Patients Treated',
-    stat: '8,200+',
-    description: 'Patients Treated',
+    category: 'transparency',
+    iconName: 'HandHeart',
+    label: 'Women & Girls Reached',
+    stat: '2,100+',
+    description: 'Women & Girls Reached',
     growth: '+45% YoY',
     color: 'text-forest',
-    detail: 'Free mobile clinical triage, malaria testing, and prescription drugs.'
+    detail: 'Women and girls supported through education, healthcare, empowerment, and community outreach initiatives.'
   },
   {
     id: 'giving-model',
@@ -331,25 +331,25 @@ const initialMetrics = [
   },
   {
     id: 'clinics',
-    category: 'healthcare',
-    iconName: 'Stethoscope',
-    label: 'Frontline Healthcare',
-    stat: '12',
-    description: 'Community Health Posts',
+    category: 'transparency',
+    iconName: 'Building2',
+    label: 'Communities Served',
+    stat: '130+',
+    description: 'Communities Served',
     growth: '100% Operational',
     color: 'text-forest',
-    detail: 'Permanent village posts staffed by qualified nurse practitioners and community health volunteers.'
+    detail: 'Communities reached through education, healthcare, empowerment, and community outreach initiatives.'
   },
   {
-    id: 'water',
-    category: 'infrastructure',
-    iconName: 'Droplets',
-    label: 'Clean Water',
-    stat: '28',
-    description: 'Solar Deep Boreholes',
-    growth: '+8 This Year',
+    id: 'metric-1790695260926',
+    category: 'transparency',
+    iconName: 'Sparkles',
+    label: 'Children & Youths Reached',
+    stat: '3,312+',
+    description: 'Children & Youths Reached',
+    growth: '+1,300',
     color: 'text-primary',
-    detail: 'Deep aquifer boreholes supplying over 70,000 liters of safe drinking water daily to rural hamlets.'
+    detail: 'Children and young people supported through education, skills development, healthcare, and empowerment initiative...'
   }
 ];
 
@@ -443,7 +443,7 @@ const initialInquiries = [
 const initialHomeContent = {
   heroHeadline: 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.',
   heroSubtitle: 'Every act of kindness shapes a brighter future.',
-  registeredBadge: 'Registered Non-Profit NGO in Nigeria',
+  registeredBadge: '',
   heroSlides: [
     {
       img: "/images/IMG_0294.JPG",
@@ -638,13 +638,20 @@ const sanitizeData = (raw) => {
   if (!raw) return raw;
   const cleaned = { ...raw };
   if (cleaned.homeContent?.registeredBadge) {
-    cleaned.homeContent = {
-      ...cleaned.homeContent,
-      registeredBadge: cleaned.homeContent.registeredBadge
-        .replace(/ • CAC\/IT\/NO: 148920/g, '')
-        .replace(/CAC\/IT\/NO: 148920\.?/g, '')
-        .trim()
-    };
+    if (cleaned.homeContent.registeredBadge.includes('Registered Non-Profit NGO in Nigeria')) {
+      cleaned.homeContent = {
+        ...cleaned.homeContent,
+        registeredBadge: ''
+      };
+    } else {
+      cleaned.homeContent = {
+        ...cleaned.homeContent,
+        registeredBadge: cleaned.homeContent.registeredBadge
+          .replace(/ • CAC\/IT\/NO: 148920/g, '')
+          .replace(/CAC\/IT\/NO: 148920\.?/g, '')
+          .trim()
+      };
+    }
   }
   if (Array.isArray(cleaned.documents)) {
     cleaned.documents = cleaned.documents.map((d) => ({
@@ -660,6 +667,50 @@ const sanitizeData = (raw) => {
       };
     }
   }
+  if (Array.isArray(cleaned.metrics)) {
+    const hasLegacy = cleaned.metrics.some(
+      (m) =>
+        m.stat === '12,500+' ||
+        m.stat === '12,500' ||
+        m.stat === '8,200+' ||
+        m.stat === '8,200' ||
+        m.stat === '45' ||
+        m.stat === '12' ||
+        m.stat === '28' ||
+        m.id === 'water' ||
+        m.description === 'Students Supplied' ||
+        m.label === 'Students Supplied' ||
+        m.description === 'Solar Classrooms' ||
+        m.label === 'Solar Classrooms' ||
+        m.description === 'Patients Treated' ||
+        m.label === 'Patients Treated' ||
+        m.description === 'Community Health Posts' ||
+        m.label === 'Frontline Healthcare' ||
+        m.description === 'Solar Deep Boreholes' ||
+        m.label === 'Clean Water'
+    );
+    const exactOrder = ['students', 'schools', 'patients', 'giving-model', 'clinics', 'metric-1790695260926'];
+    const exactStats = {
+      'students': '5,500+',
+      'schools': '150+',
+      'patients': '2,100+',
+      'giving-model': '100%',
+      'clinics': '130+',
+      'metric-1790695260926': '3,312+'
+    };
+    const matchesOrder =
+      cleaned.metrics.length === 6 &&
+      cleaned.metrics.every((m, idx) => m.id === exactOrder[idx]);
+    const matchesStats =
+      matchesOrder &&
+      cleaned.metrics.every((m) => exactStats[m.id] && m.stat === exactStats[m.id]);
+
+    if (hasLegacy || !matchesOrder || !matchesStats) {
+      cleaned.metrics = initialMetrics;
+    }
+  } else {
+    cleaned.metrics = initialMetrics;
+  }
   return cleaned;
 };
 
@@ -670,14 +721,17 @@ export function DataProvider({ children }) {
       if (saved) {
         const rawParsed = JSON.parse(saved);
         const parsed = sanitizeData(rawParsed);
-        let loadedMetrics = parsed.metrics || defaultData.metrics;
-        initialMetrics.forEach((initM) => {
-          if (!loadedMetrics.some((m) => m.id === initM.id)) {
-            loadedMetrics = [...loadedMetrics, initM];
-          }
-        });
+        let loadedMetrics = parsed.metrics;
+        const exactOrder = ['students', 'schools', 'patients', 'giving-model', 'clinics', 'metric-1790695260926'];
+        if (
+          !loadedMetrics ||
+          loadedMetrics.length !== 6 ||
+          !loadedMetrics.every((m, idx) => m.id === exactOrder[idx])
+        ) {
+          loadedMetrics = initialMetrics;
+        }
 
-        return {
+        const stateObj = {
           news: parsed.news || defaultData.news,
           outreaches: parsed.outreaches || defaultData.outreaches,
           metrics: loadedMetrics,
@@ -690,6 +744,12 @@ export function DataProvider({ children }) {
           testimonialsList: parsed.testimonialsList || defaultData.testimonialsList,
           contactInfo: parsed.contactInfo || defaultData.contactInfo
         };
+
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(stateObj));
+        } catch (_) {}
+
+        return stateObj;
       }
     } catch (err) {
       console.warn('Failed to parse localStorage data:', err);
@@ -708,12 +768,15 @@ export function DataProvider({ children }) {
       .then((rawRemoteData) => {
         const remoteData = sanitizeData(rawRemoteData);
         if (isMounted && remoteData && Array.isArray(remoteData.news)) {
-          let remoteMetrics = remoteData.metrics || defaultData.metrics;
-          initialMetrics.forEach((initM) => {
-            if (!remoteMetrics.some((m) => m.id === initM.id)) {
-              remoteMetrics = [...remoteMetrics, initM];
-            }
-          });
+          let remoteMetrics = remoteData.metrics;
+          const exactOrder = ['students', 'schools', 'patients', 'giving-model', 'clinics', 'metric-1790695260926'];
+          if (
+            !remoteMetrics ||
+            remoteMetrics.length !== 6 ||
+            !remoteMetrics.every((m, idx) => m.id === exactOrder[idx])
+          ) {
+            remoteMetrics = initialMetrics;
+          }
           const mergedRemote = { ...remoteData, metrics: remoteMetrics };
           setData(mergedRemote);
           localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedRemote));

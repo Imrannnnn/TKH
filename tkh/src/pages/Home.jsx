@@ -25,8 +25,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
   const heroHeadline = homeContent?.heroHeadline || 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.';
   const heroSubtitle = homeContent?.heroSubtitle || 'Every act of kindness shapes a brighter future.';
-  const rawBadge = homeContent?.registeredBadge || 'Registered Non-Profit NGO in Nigeria';
-  const registeredBadge = rawBadge.replace(/ • CAC\/IT\/NO: 148920/g, '').replace(/CAC\/IT\/NO: 148920\.?/g, '').trim();
+  const rawBadge = homeContent?.registeredBadge || '';
+  const registeredBadge = rawBadge === 'Registered Non-Profit NGO in Nigeria'
+    ? ''
+    : rawBadge.replace(/ • CAC\/IT\/NO: 148920/g, '').replace(/CAC\/IT\/NO: 148920\.?/g, '').trim();
   const fieldReality = homeContent?.fieldReality || {
     stat: 'Over 10M',
     label: 'Children currently out of primary school in Nigeria (UNESCO)',
@@ -107,13 +109,15 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
         {/* Text Layer (Poppins + Open Sans) with Generous Top Breathing Room */}
         <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-6 my-auto">
           {/* High-Visibility Verified NGO Badge */}
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/75 backdrop-blur-md text-white text-[11px] sm:text-xs font-semibold tracking-wide border border-white/35 shadow-lg max-w-full text-center">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-            <span className="leading-snug">{registeredBadge}</span>
-          </div>
+          {registeredBadge && (
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/75 backdrop-blur-md text-white text-[11px] sm:text-xs font-semibold tracking-wide border border-white/35 shadow-lg max-w-full text-center">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+              <span className="leading-snug">{registeredBadge}</span>
+            </div>
+          )}
 
-          {/* Clean & Proportional Poppins Headline */}
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-white max-w-3xl tracking-tight leading-snug sm:leading-[1.2]">
+          {/* Clean & Proportional Poppins Headline (compact ~2 lines) */}
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-bold sm:font-extrabold text-white max-w-4xl tracking-tight leading-snug sm:leading-tight">
             {heroHeadline}
           </h1>
 
@@ -206,7 +210,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
               <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-                Field Accounting • August 2026
+                Our Impact
               </span>
               <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
                 Verified outcomes, community by community.
@@ -219,86 +223,135 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               }}
               className="text-xs font-bold text-primary hover:underline flex items-center gap-1 cursor-pointer font-heading"
             >
-              <span>Explore all audited metrics</span>
+              <span>Explore impact dashboard</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
           {(() => {
-            const studentMetric = metrics?.find((m) => m.id === 'students') || {
-              stat: '12,500+',
-              label: 'Students Supplied',
-              description: 'Students Supplied',
-              detail: 'Full uniforms, textbooks, and tuition scholarships across 24 partner schools.'
-            };
-            const schoolMetric = metrics?.find((m) => m.id === 'schools') || {
-              stat: '45',
-              label: 'Solar Classrooms',
-              description: 'Solar Classrooms',
-              detail: 'Weather-proof, solar-lit learning blocks built in Kaduna, Niger & Ogun.'
-            };
-            const patientMetric = metrics?.find((m) => m.id === 'patients') || {
-              stat: '8,200+',
-              label: 'Patients Treated',
-              description: 'Patients Treated',
-              detail: 'Free mobile clinical triage, malaria testing, and prescription drugs.'
-            };
-            const givingMetric = metrics?.find((m) => m.id === 'giving-model' || m.id === 'direct-giving') || {
-              stat: '100%',
-              label: 'Direct Giving Model',
-              description: 'Direct Giving Model',
-              detail: 'Zero cuts from public gifts; admin is funded privately by trustee endowment.'
-            };
+            const defaultHomeMetrics = [
+              {
+                id: 'students',
+                category: 'Transparency',
+                stat: '5,500+',
+                label: 'Beneficiaries Reached',
+                description: 'Beneficiaries Reached',
+                growth: '+32% YoY',
+                detail: 'People reached through education, healthcare, empowerment, and community outreach initiatives...',
+                color: 'text-primary'
+              },
+              {
+                id: 'schools',
+                category: 'Education',
+                stat: '150+',
+                label: 'Scholarships Awarded',
+                description: 'Scholarships Awarded',
+                growth: '+40 New in 2026',
+                detail: 'Children and young people supported with access to education through scholarships and financial assistance.',
+                color: 'text-ink'
+              },
+              {
+                id: 'patients',
+                category: 'Transparency',
+                stat: '2,100+',
+                label: 'Women & Girls Reached',
+                description: 'Women & Girls Reached',
+                growth: '+45% YoY',
+                detail: 'Women and girls supported through education, healthcare, empowerment, and community outreach initiatives.',
+                color: 'text-forest'
+              },
+              {
+                id: 'giving-model',
+                category: 'Transparency',
+                stat: '100%',
+                label: 'Direct Giving Model',
+                description: 'Direct Giving Model',
+                growth: '100% Direct',
+                detail: 'Zero cuts from public gifts; admin is funded privately by trustee endowment.',
+                color: 'text-emerald-800'
+              },
+              {
+                id: 'clinics',
+                category: 'Transparency',
+                stat: '130+',
+                label: 'Communities Served',
+                description: 'Communities Served',
+                growth: '100% Operational',
+                detail: 'Communities reached through education, healthcare, empowerment, and community outreach initiatives.',
+                color: 'text-forest'
+              },
+              {
+                id: 'metric-1790695260926',
+                category: 'Transparency',
+                stat: '3,312+',
+                label: 'Children & Youths Reached',
+                description: 'Children & Youths Reached',
+                growth: '+1,300',
+                detail: 'Children and young people supported through education, skills development, healthcare, and empowerment initiative...',
+                color: 'text-primary'
+              }
+            ];
+
+            const displayMetrics = defaultHomeMetrics.map((def) => {
+              const live = metrics?.find((m) => m.id === def.id);
+              if (!live) return def;
+              if (
+                live.stat === '12,500+' ||
+                live.stat === '12,500' ||
+                live.stat === '8,200+' ||
+                live.stat === '8,200' ||
+                live.stat === '45' ||
+                live.stat === '12' ||
+                live.stat === '28' ||
+                live.description === 'Students Supplied' ||
+                live.description === 'Solar Classrooms' ||
+                live.description === 'Patients Treated' ||
+                live.description === 'Community Health Posts' ||
+                live.description === 'Solar Deep Boreholes' ||
+                live.label === 'Students Supplied' ||
+                live.label === 'Solar Classrooms' ||
+                live.label === 'Patients Treated' ||
+                live.label === 'Frontline Healthcare' ||
+                live.label === 'Clean Water'
+              ) {
+                return def;
+              }
+              return { ...def, ...live };
+            });
 
             return (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                <div className="p-5 sm:p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
-                  <span className="font-mono text-3xl sm:text-4xl font-bold text-primary block mb-1">
-                    {studentMetric.stat}
-                  </span>
-                  <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">
-                    {studentMetric.description || studentMetric.label}
-                  </h3>
-                  <p className="text-xs text-ink-muted leading-relaxed">
-                    {studentMetric.detail}
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                {displayMetrics.map((item) => (
+                  <div
+                    key={item.id}
+                    className="p-5 sm:p-6 rounded-2xl bg-white/95 backdrop-blur-xs border border-[#e7e2d8] shadow-xs flex flex-col justify-between hover:border-primary/40 transition-colors"
+                  >
+                    <div>
+                      <div className="mb-3">
+                        <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-ink-muted font-bold font-heading px-2.5 py-0.5 rounded-md bg-sand border border-[#e7e2d8]">
+                          {item.category || 'Transparency'}
+                        </span>
+                      </div>
 
-                <div className="p-5 sm:p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
-                  <span className="font-mono text-3xl sm:text-4xl font-bold text-ink block mb-1">
-                    {schoolMetric.stat}
-                  </span>
-                  <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">
-                    {schoolMetric.description || schoolMetric.label}
-                  </h3>
-                  <p className="text-xs text-ink-muted leading-relaxed">
-                    {schoolMetric.detail}
-                  </p>
-                </div>
-
-                <div className="p-5 sm:p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
-                  <span className="font-mono text-3xl sm:text-4xl font-bold text-forest block mb-1">
-                    {patientMetric.stat}
-                  </span>
-                  <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">
-                    {patientMetric.description || patientMetric.label}
-                  </h3>
-                  <p className="text-xs text-ink-muted leading-relaxed">
-                    {patientMetric.detail}
-                  </p>
-                </div>
-
-                <div className="p-5 sm:p-6 rounded-2xl bg-white/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
-                  <span className="font-mono text-3xl sm:text-4xl font-bold text-emerald-800 block mb-1">
-                    {givingMetric.stat}
-                  </span>
-                  <h3 className="text-xs uppercase font-heading font-bold text-ink mb-1">
-                    {givingMetric.description || givingMetric.label}
-                  </h3>
-                  <p className="text-xs text-ink-muted leading-relaxed">
-                    {givingMetric.detail}
-                  </p>
-                </div>
+                      <span className={`font-mono text-3xl sm:text-4xl font-bold ${item.color || 'text-ink'} block mb-1`}>
+                        {item.stat}
+                      </span>
+                      <h3 className="text-sm font-heading font-bold text-ink mb-1.5">
+                        {item.label || item.description}
+                      </h3>
+                      {item.growth && (
+                        <div className="mb-3">
+                          <span className="inline-block px-2 py-0.5 rounded bg-forest/10 text-forest text-[11px] font-bold border border-forest/20 font-heading">
+                            {item.growth}
+                          </span>
+                        </div>
+                      )}
+                      <p className="text-xs text-ink-muted leading-relaxed">
+                        {item.detail}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             );
           })()}
@@ -412,6 +465,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               Words from the people who live the mission.
             </h2>
           </div>
+
+
 
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((t, idx) => (

@@ -35,7 +35,9 @@ export default function HomePageEditor({
     homeContent?.heroSubtitle || 'Every act of kindness shapes a brighter future.'
   );
   const [registeredBadge, setRegisteredBadge] = useState(
-    (homeContent?.registeredBadge || 'Registered Non-Profit NGO in Nigeria')
+    (homeContent?.registeredBadge && homeContent.registeredBadge !== 'Registered Non-Profit NGO in Nigeria'
+      ? homeContent.registeredBadge
+      : '')
       .replace(/ • CAC\/IT\/NO: 148920/g, '')
       .replace(/CAC\/IT\/NO: 148920\.?/g, '')
       .trim()
@@ -404,7 +406,7 @@ export default function HomePageEditor({
                 Homepage Impact Statistics
               </h2>
               <p className="text-xs text-ink-muted">
-                These numbers power the 4 live counter cards displayed under "Measured Field Impact".
+                These numbers power the live counter cards displayed under "Our Impact".
               </p>
             </div>
 

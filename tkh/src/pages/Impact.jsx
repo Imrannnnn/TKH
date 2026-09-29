@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { School, Stethoscope, Droplets, BookOpen, TrendingUp, ShieldCheck, Globe, Heart, MapPin, HandHeart } from '../components/Icons';
+import { School, Stethoscope, Droplets, BookOpen, TrendingUp, ShieldCheck, Globe, Heart, MapPin, HandHeart, Users, Building2, Sparkles } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 const iconMap = {
@@ -10,7 +10,11 @@ const iconMap = {
   Droplets,
   HandHeart,
   TrendingUp,
-  ShieldCheck
+  ShieldCheck,
+  Users,
+  Building2,
+  Sparkles,
+  MapPin
 };
 
 export default function Impact({ onOpenDonate }) {
@@ -20,69 +24,75 @@ export default function Impact({ onOpenDonate }) {
   const defaultMetricCards = [
     {
       id: 'students',
-      category: 'education',
-      icon: School,
-      label: 'Education Impact',
-      stat: '12,500',
-      description: 'Students Enrolled & Supplied',
+      category: 'transparency',
+      icon: Users,
+      iconName: 'Users',
+      label: 'Beneficiaries Reached',
+      stat: '5,500+',
+      description: 'Beneficiaries Reached',
       growth: '+32% YoY',
       color: 'text-primary',
-      detail: 'Provided free uniforms, textbooks, solar classroom seating, and daily sanitary supplies across 45 schools.'
+      detail: 'People reached through education, healthcare, empowerment, and community outreach initiatives...'
     },
     {
       id: 'schools',
       category: 'education',
-      icon: BookOpen,
-      label: 'Infrastructure',
-      stat: '45',
-      description: 'Solar Classrooms Built',
-      growth: '+14 New in 2024',
-      color: 'text-tertiary',
-      detail: 'Equipped with solar power generation, weatherproof roofing, ventilated windows, and modern desks.'
+      icon: School,
+      iconName: 'School',
+      label: 'Scholarships Awarded',
+      stat: '150+',
+      description: 'Scholarships Awarded',
+      growth: '+40 New in 2026',
+      color: 'text-ink',
+      detail: 'Children and young people supported with access to education through scholarships and financial assistance.'
     },
     {
       id: 'patients',
-      category: 'healthcare',
-      icon: Stethoscope,
-      label: 'Clinical Outreach',
-      stat: '8,200',
-      description: 'Free Medical Consultations',
+      category: 'transparency',
+      icon: HandHeart,
+      iconName: 'HandHeart',
+      label: 'Women & Girls Reached',
+      stat: '2,100+',
+      description: 'Women & Girls Reached',
       growth: '+45% YoY',
       color: 'text-forest',
-      detail: 'Malaria screening, antibiotic courses, hypertension monitoring, and routine infant vaccinations.'
+      detail: 'Women and girls supported through education, healthcare, empowerment, and community outreach initiatives.'
+    },
+    {
+      id: 'giving-model',
+      category: 'transparency',
+      icon: ShieldCheck,
+      iconName: 'ShieldCheck',
+      label: 'Direct Giving Model',
+      stat: '100%',
+      description: 'Direct Giving Model',
+      growth: '100% Direct',
+      color: 'text-emerald-800',
+      detail: 'Zero cuts from public gifts; admin is funded privately by trustee endowment.'
     },
     {
       id: 'clinics',
-      category: 'healthcare',
-      icon: Stethoscope,
-      label: 'Frontline Healthcare',
-      stat: '12',
-      description: 'Community Health Posts',
+      category: 'transparency',
+      icon: Building2,
+      iconName: 'Building2',
+      label: 'Communities Served',
+      stat: '130+',
+      description: 'Communities Served',
       growth: '100% Operational',
       color: 'text-forest',
-      detail: 'Permanent village posts staffed by qualified nurse practitioners and community health volunteers.'
+      detail: 'Communities reached through education, healthcare, empowerment, and community outreach initiatives.'
     },
     {
-      id: 'water',
-      category: 'infrastructure',
-      icon: Droplets,
-      label: 'Clean Water',
-      stat: '28',
-      description: 'Solar Deep Boreholes',
-      growth: 'Zero Waterborne Disease',
-      color: 'text-emerald-800',
-      detail: 'Delivering continuous safe drinking water directly within school premises and local hamlets.'
-    },
-    {
-      id: 'mothers',
-      category: 'healthcare',
-      icon: HandHeart,
-      label: 'Maternal Care',
-      stat: '3,400',
-      description: 'Safe Birth Kits Delivered',
-      growth: '+28% YoY',
+      id: 'metric-1790695260926',
+      category: 'transparency',
+      icon: Sparkles,
+      iconName: 'Sparkles',
+      label: 'Children & Youths Reached',
+      stat: '3,312+',
+      description: 'Children & Youths Reached',
+      growth: '+1,300',
       color: 'text-primary',
-      detail: 'Sterile delivery supplies and prenatal nutrition packs distributed to rural expectant mothers.'
+      detail: 'Children and young people supported through education, skills development, healthcare, and empowerment initiative...'
     },
   ];
 
@@ -98,7 +108,16 @@ export default function Impact({ onOpenDonate }) {
 
   const filteredMetrics = activeTab === 'all'
     ? currentMetrics
-    : currentMetrics.filter((m) => m.category === activeTab);
+    : currentMetrics.filter((m) => {
+        const cat = (m.category || '').toLowerCase();
+        if (activeTab === 'education') {
+          return cat === 'education' || m.id === 'schools' || m.id === 'students' || m.id === 'metric-1790695260926';
+        }
+        if (activeTab === 'healthcare') {
+          return cat === 'healthcare' || m.id === 'patients' || m.id === 'clinics';
+        }
+        return cat === activeTab.toLowerCase();
+      });
 
 
 
@@ -183,13 +202,6 @@ export default function Impact({ onOpenDonate }) {
                   }`}
               >
                 Healthcare
-              </button>
-              <button
-                onClick={() => setActiveTab('infrastructure')}
-                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${activeTab === 'infrastructure' ? 'bg-clay text-white shadow-xs' : 'text-ink-light hover:text-ink'
-                  }`}
-              >
-                Water &amp; Solar
               </button>
             </div>
           </div>

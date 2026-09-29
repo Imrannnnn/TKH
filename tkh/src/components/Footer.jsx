@@ -158,9 +158,6 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
             <button onClick={() => handleNav('legal', 'terms')} className="hover:text-ink transition-colors cursor-pointer">
               Terms of Service
             </button>
-            <button onClick={() => handleNav('legal', 'donor-rights')} className="hover:text-ink transition-colors cursor-pointer">
-              Donor Bill of Rights
-            </button>
             <button onClick={() => handleNav('admin')} className="hover:text-primary text-ink-light font-semibold transition-colors cursor-pointer flex items-center gap-1">
               <span>Staff / Admin</span>
             </button>
