@@ -431,7 +431,8 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
 
           <div className="relative z-10">
             {/* Back button */}
-            <button
+            <a
+              href="#programs"
               onClick={() => {
                 setSelectedProgramId(null);
                 window.location.hash = 'programs';
@@ -441,7 +442,7 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
             >
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
               <span>Back to All Programmes</span>
-            </button>
+            </a>
 
             {/* Program Header */}
             <div className="border-b border-[#e7e2d8] pb-10 mb-10">
@@ -764,7 +765,8 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
 
                 {/* Card Footer Actions */}
                 <div className="pt-4 mt-2 border-t border-[#f0ece8] flex items-center justify-between">
-                  <button
+                  <a
+                    href={`#programs/${prog.id}`}
                     onClick={() => {
                       setSelectedProgramId(prog.id);
                       window.location.hash = `programs/${prog.id}`;
@@ -774,7 +776,7 @@ export default function Programs({ onOpenDonate, initialProgramId = null }) {
                   >
                     <span>View Detail</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  </a>
 
                   <button
                     onClick={onOpenDonate}

@@ -34,7 +34,7 @@ export default function ContactPageEditor({
       ? 'Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria'
       : contactInfo.headquarters
   );
-  const [phone, setPhone] = useState(contactInfo?.phone || '+234 818 099 4301 / +234 803 000 1234');
+  const [phone, setPhone] = useState(contactInfo?.phone || '+234 818 099 4301');
   const [email, setEmail] = useState(contactInfo?.email || 'info@tenkindhands.org');
   const [partnershipsEmail, setPartnershipsEmail] = useState(
     contactInfo?.partnershipsEmail || 'partnerships@tenkindhands.org'

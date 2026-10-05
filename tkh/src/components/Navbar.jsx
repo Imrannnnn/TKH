@@ -35,7 +35,6 @@ export default function Navbar({
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Marquee announcement state
-  const [marqueeCycles, setMarqueeCycles] = useState(0);
   const [marqueeDismissed, setMarqueeDismissed] = useState(false);
   const [marqueeFading, setMarqueeFading] = useState(false);
   const leaveTimeoutRef = useRef(null);
@@ -45,7 +44,6 @@ export default function Navbar({
   if (prevAnnouncement !== announcement) {
     setPrevAnnouncement(announcement);
     if (announcement) {
-      setMarqueeCycles(0);
       setMarqueeFading(false);
       setMarqueeDismissed(false);
     }
@@ -56,16 +54,6 @@ export default function Navbar({
     setTimeout(() => {
       setMarqueeDismissed(true);
     }, 700);
-  };
-
-  const handleMarqueeIteration = () => {
-    setMarqueeCycles((prev) => {
-      const next = prev + 1;
-      if (next >= 5) {
-        handleDismissMarquee();
-      }
-      return next;
-    });
   };
 
   // Scroll detection for subtle shadow elevation
@@ -357,26 +345,30 @@ export default function Navbar({
           <div className="flex-1 overflow-hidden relative flex items-center mx-2 group">
             <div
               className="animate-marquee flex items-center gap-8 sm:gap-12 whitespace-nowrap will-change-transform cursor-pointer"
-              onAnimationIteration={handleMarqueeIteration}
               title="Hover to pause announcement"
             >
-              {[...Array(4)].map((_, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-8 sm:gap-12 text-xs sm:text-[13px] text-white/95 font-medium"
-                >
-                  <span>{announcement}</span>
-                  <span className="text-[#f7c899]/60 text-xs select-none">✦</span>
-                </div>
-              ))}
+              {[
+                announcement,
+                'Free educational learning materials & uniforms deployed across primary schools',
+                'Mobile healthcare missions active in rural Nigerian communities',
+                '100% Direct Giving: Zero administrative cuts from public donations',
+                'Official Registration: Corporate Affairs Commission (CAC) RC: 7015705'
+              ]
+                .filter(Boolean)
+                .map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-8 sm:gap-12 text-xs sm:text-[13px] text-white/95 font-medium"
+                  >
+                    <span>{item}</span>
+                    <span className="text-[#f7c899]/60 text-xs select-none">✦</span>
+                  </div>
+                ))}
             </div>
           </div>
 
-          {/* Controls: Loop Count & Dismiss Button */}
+          {/* Controls: Dismiss Button */}
           <div className="shrink-0 flex items-center gap-2 sm:gap-3 pl-2 sm:pl-3 pr-3 sm:pr-6 py-0.5 bg-[#142722] z-10 border-l border-[#1f3b34]">
-            <span className="text-[10px] font-mono font-medium text-[#f7c899]/85 px-2 py-0.5 rounded-full bg-white/5 border border-white/10 hidden sm:inline-block">
-              Loop {Math.min(marqueeCycles + 1, 5)}/5
-            </span>
             <button
               onClick={handleDismissMarquee}
               className="text-white/60 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
@@ -393,8 +385,12 @@ export default function Navbar({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex justify-between items-center gap-4">
           {/* Bespoke Logo Lockup */}
-          <button
-            onClick={() => handleNavClick('home')}
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick('home');
+            }}
             className="flex items-center gap-3 text-left focus:outline-none cursor-pointer group shrink-0"
           >
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sand border border-[#e7e2d8] flex items-center justify-center p-1 group-hover:border-primary transition-colors">
@@ -412,7 +408,7 @@ export default function Navbar({
                 Initiative • Africa
               </span>
             </div>
-          </button>
+          </a>
 
           {/* Desktop Nav Items (Well-Organized 6 Items with Balanced Spacing) */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
@@ -468,9 +464,10 @@ export default function Navbar({
                             <div>
                               {item.overviewLink && (
                                 <>
-                                  <button
-                                    type="button"
+                                  <a
+                                    href={`#${item.pageId}`}
                                     onClick={(e) => {
+                                      e.preventDefault();
                                       e.stopPropagation();
                                       handleNavClick(item.pageId, null);
                                     }}
@@ -490,7 +487,7 @@ export default function Navbar({
                                       </div>
                                     </div>
                                     <ArrowRight className="w-4 h-4 text-primary opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0" />
-                                  </button>
+                                  </a>
                                   <div className="h-px bg-[#f0ece8] mb-2"></div>
                                 </>
                               )}
@@ -498,11 +495,13 @@ export default function Navbar({
                               <div className="grid grid-cols-2 gap-1.5">
                                 {item.items.map((sub) => {
                                   const SubIcon = sub.icon;
+                                  const subHref = sub.pageId ? (sub.subId ? `#${sub.pageId}/${sub.subId}` : `#${sub.pageId}`) : '#';
                                   return (
-                                    <button
+                                    <a
                                       key={sub.id}
-                                      type="button"
+                                      href={subHref}
                                       onClick={(e) => {
+                                        e.preventDefault();
                                         e.stopPropagation();
                                         handleItemClick(sub);
                                       }}
@@ -519,7 +518,7 @@ export default function Navbar({
                                           {sub.desc}
                                         </span>
                                       </div>
-                                    </button>
+                                    </a>
                                   );
                                 })}
                               </div>
@@ -535,11 +534,15 @@ export default function Navbar({
                               <div className="flex flex-col gap-1">
                                 {item.items.map((sub) => {
                                   const SubIcon = sub.icon;
+                                  const subHref = sub.action === 'donate' ? '#get-involved/donate' : (sub.pageId ? (sub.subId ? `#${sub.pageId}/${sub.subId}` : `#${sub.pageId}`) : '#');
                                   return (
-                                    <button
+                                    <a
                                       key={sub.id}
-                                      type="button"
+                                      href={subHref}
                                       onClick={(e) => {
+                                        if (sub.action === 'donate') {
+                                          e.preventDefault();
+                                        }
                                         e.stopPropagation();
                                         handleItemClick(sub);
                                       }}
@@ -564,7 +567,7 @@ export default function Navbar({
                                         </span>
                                       </div>
                                       <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-60 group-hover:translate-x-0.5 transition-all text-ink-muted shrink-0" />
-                                    </button>
+                                    </a>
                                   );
                                 })}
                               </div>
@@ -578,10 +581,15 @@ export default function Navbar({
               }
 
               const isActive = currentPage === item.pageId;
+              const href = item.pageId === 'home' ? '#' : `#${item.pageId}`;
               return (
-                <button
+                <a
                   key={item.id}
-                  onClick={() => handleNavClick(item.pageId)}
+                  href={href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.pageId);
+                  }}
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer select-none ${
                     isActive
                       ? 'bg-primary/10 text-primary font-bold shadow-xs'
@@ -589,7 +597,7 @@ export default function Navbar({
                   }`}
                 >
                   {item.label}
-                </button>
+                </a>
               );
             })}
           </nav>
@@ -597,14 +605,18 @@ export default function Navbar({
           {/* Action CTA: Staff Portal, Donate Button & Mobile Toggle */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Staff / Admin Portal link (discreet pill on wide screens) */}
-            <button
-              onClick={() => handleNavClick('admin')}
+            <a
+              href="#admin"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick('admin');
+              }}
               className="hidden xl:flex items-center gap-1.5 text-xs text-ink-muted hover:text-primary transition-colors cursor-pointer px-3 py-1.5 rounded-full hover:bg-sand font-medium border border-transparent hover:border-[#e7e2d8]"
               title="Staff / Admin Portal"
             >
               <Lock className="w-3.5 h-3.5 text-primary" />
               <span>Staff Portal</span>
-            </button>
+            </a>
 
             {/* High-Impact Donate CTA Button */}
             <button
@@ -665,23 +677,32 @@ export default function Navbar({
                     {isAccordionOpen && (
                       <div className="pl-3 pr-1 py-1.5 flex flex-col gap-1 border-l-2 border-primary/20 ml-4 my-1 animate-fade-in">
                         {item.overviewLink && (
-                          <button
-                            type="button"
-                            onClick={() => handleNavClick(item.pageId, null)}
+                          <a
+                            href={`#${item.pageId}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleNavClick(item.pageId, null);
+                            }}
                             className="text-left text-xs font-bold text-primary p-2 rounded-lg bg-sand/80 hover:bg-sand flex items-center justify-between cursor-pointer"
                           >
                             <span>{item.overviewLink.label}</span>
                             <ArrowRight className="w-3.5 h-3.5 opacity-70" />
-                          </button>
+                          </a>
                         )}
 
                         {item.items.map((sub) => {
                           const SubIcon = sub.icon;
+                          const subHref = sub.action === 'donate' ? '#get-involved/donate' : (sub.pageId ? (sub.subId ? `#${sub.pageId}/${sub.subId}` : `#${sub.pageId}`) : '#');
                           return (
-                            <button
+                            <a
                               key={sub.id}
-                              type="button"
-                              onClick={() => handleItemClick(sub)}
+                              href={subHref}
+                              onClick={(e) => {
+                                if (sub.action === 'donate') {
+                                  e.preventDefault();
+                                }
+                                handleItemClick(sub);
+                              }}
                               className="text-left py-2 px-2.5 rounded-lg hover:bg-sand transition-colors cursor-pointer flex items-center gap-2.5 group"
                             >
                               {SubIcon && (
@@ -706,7 +727,7 @@ export default function Navbar({
                                   </span>
                                 )}
                               </div>
-                            </button>
+                            </a>
                           );
                         })}
                       </div>
@@ -716,17 +737,22 @@ export default function Navbar({
               }
 
               const isActive = currentPage === item.pageId;
+              const href = item.pageId === 'home' ? '#' : `#${item.pageId}`;
               return (
-                <button
+                <a
                   key={item.id}
-                  onClick={() => handleNavClick(item.pageId)}
+                  href={href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.pageId);
+                  }}
                   className={`w-full text-left font-medium text-sm py-2.5 px-3 rounded-xl transition-all cursor-pointer flex items-center justify-between ${
                     isActive ? 'bg-sand text-primary font-bold' : 'text-ink hover:bg-sand/60'
                   }`}
                 >
                   <span>{item.label}</span>
                   <ArrowRight className="w-4 h-4 opacity-40" />
-                </button>
+                </a>
               );
             })}
 
@@ -743,8 +769,12 @@ export default function Navbar({
                 <Heart className="w-3.5 h-3.5 fill-white/20" />
               </button>
 
-              <button
-                onClick={() => handleNavClick('admin')}
+              <a
+                href="#admin"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick('admin');
+                }}
                 className="w-full text-left font-medium text-xs py-2 px-3 rounded-xl bg-sand/60 hover:bg-sand text-ink-light flex items-center justify-between cursor-pointer"
               >
                 <div className="flex items-center gap-2">
@@ -752,7 +782,7 @@ export default function Navbar({
                   <span>Staff &amp; Admin Console</span>
                 </div>
                 <ArrowRight className="w-3.5 h-3.5 opacity-50" />
-              </button>
+              </a>
             </div>
           </div>
         )}

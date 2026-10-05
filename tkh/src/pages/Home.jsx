@@ -10,25 +10,63 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
   const heroSlides = homeContent?.heroSlides?.length > 0 ? homeContent.heroSlides : [
     {
-      img: "/images/IMG_0294.JPG",
+      img: "/images/hero-debate-competition-makurdi.webp",
+      caption: "Inter-Secondary School Debate Competition (₦50,000 • ₦30,000 • ₦20,000 Awards) • Makurdi"
+    },
+    {
+      img: "/images/hero-digital-literacy-computer-lab.webp",
+      caption: "Youth Digital Literacy & Computer Lab Setup • Plateau State"
+    },
+    {
+      img: "/images/hero-orphanage-food-educational-support.webp",
+      caption: "Food Relief & Educational Supplies Donation • Oyiza Orphanage"
+    },
+    {
+      img: "/images/hero-widows-clean-cooking-stoves.webp",
+      caption: "Widows Clean Energy & Eco-Cooking Stove Distribution • Dafara"
+    },
+    {
+      img: "/images/hero-jambells-school-outreach.webp",
+      caption: "Educational Materials & School Supplies Distribution • JAMBELLS School, Lagos"
+    },
+    {
+      img: "/images/hero-maternal-health-malaria-prevention.webp",
+      caption: "Maternal Healthcare & Malaria Prevention Outreach • Lagos"
+    },
+    {
+      img: "/images/hero-youth-vocational-shoemaking.webp",
+      caption: "Youth Vocational Skills & Shoemaking Apprenticeship • Abuja"
+    },
+    {
+      img: "/images/hero-visually-impaired-education.webp",
+      caption: "Special Education & Inclusive Learning for Visually Impaired Students"
+    },
+    {
+      img: "/images/hero-digital-skills-youth-training.webp",
+      caption: "Youth Digital Skills & Computer Training Lab • Lagos"
+    },
+    {
+      img: "/images/hero-community-empowerment.webp",
+      caption: "Sustainable Community Livelihood & Family Empowerment Outreach"
+    },
+    {
+      img: "/images/IMG_0294.webp",
       caption: "Child empowerment Program • Makurdi"
     },
     {
-      img: "/images/11222.jpeg",
-      caption: " Medical outreach to children at Abuja Teaching Hospital"
+      img: "/images/11222.webp",
+      caption: "Medical outreach to children at Abuja Teaching Hospital"
     },
     {
-      img: "/images/IMG_0995.JPG",
+      img: "/images/IMG_0995.webp",
       caption: "Women Empowerment Outreach • Dafara"
     }
   ];
 
   const heroHeadline = homeContent?.heroHeadline || 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.';
   const heroSubtitle = homeContent?.heroSubtitle || 'Every act of kindness shapes a brighter future.';
-  const rawBadge = homeContent?.registeredBadge || '';
-  const registeredBadge = rawBadge === 'Registered Non-Profit NGO in Nigeria'
-    ? ''
-    : rawBadge.replace(/ • CAC\/IT\/NO: 148920/g, '').replace(/CAC\/IT\/NO: 148920\.?/g, '').trim();
+  const rawBadge = homeContent?.registeredBadge || 'Registered Non-Profit • CAC RC: 7015705';
+  const registeredBadge = rawBadge.replace(/ • CAC\/IT\/NO: 148920/g, '').replace(/CAC\/IT\/NO: 148920\.?/g, '').trim();
   const fieldReality = homeContent?.fieldReality || {
     stat: 'Over 10M',
     label: 'Children currently out of primary school in Nigeria (UNESCO)',
@@ -45,36 +83,36 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
   }, [heroSlides.length]);
 
   const calculateImpacts = (amt) => {
-    const students = Math.max(1, Math.floor(amt / 5000));
+    const learningKits = Math.max(1, Math.floor(amt / 5000));
     const clinicVisits = Math.max(1, Math.floor(amt / 1250));
     const booksSupplied = Math.max(2, Math.floor(amt / 1000));
     const safeWaterDays = Math.max(10, Math.floor(amt / 250));
-    return { students, clinicVisits, booksSupplied, safeWaterDays };
+    return { learningKits, clinicVisits, booksSupplied, safeWaterDays };
   };
 
   const currentImpact = calculateImpacts(calcAmount);
 
   const testimonials = [
     {
-      quote: "I sincerely appreciate Ten Kind Hands Foundation for their incredible support. After promising us computer systems during our Speech and Prize-Giving Ceremony in July, they returned and surprised us by setting up a well-equipped computer laboratory with nine computers, cubicles, seating, and an air conditioner.  This means so much to us because our children can now gain the digital skills they need to compete in today’s world.  Thank you, Ten Kind Hands Foundation. God bless you!   ",
+      quote: "I sincerely appreciate Ten Kind Hands Foundation for their incredible support. After promising us computer systems during our Speech and Prize-Giving Ceremony in July, they returned and surprised us by setting up a well-equipped computer laboratory with nine computers, cubicles, seating, and an air conditioner. This means so much to us because our children can now gain the digital skills they need to compete in today’s world. Thank you, Ten Kind Hands Foundation. God bless you!",
       author: "Mrs. Becky Omagbogu",
       role: "Proprietor",
       institution: "Beckwin International School",
       location: "Plateau State"
     },
     {
-      quote: "We are so grateful to Ten Kind Hands Foundation for remembering and supporting our children with the donation of free notebooks.  Some of our pupils did not have writing materials and were struggling to manage with what they had. But today, things are better, and these children now have something to begin with as they prepare for the new school year.  We are truly grateful. May God richly bless Ten Kind Hands Foundation. May they never lack, and may this act of kindness reach many more places.  Thank you, Ten Kind Hands Foundation. We love you and appreciate you!  .",
-      author: ".",
-      role: "Proprietor",
-      institution: " , Karvron Montessori School, Abuja",
-      location: "Abuja"
+      quote: "We are so grateful to Ten Kind Hands Foundation for remembering and supporting our children with the donation of free notebooks. Some of our pupils did not have writing materials and were struggling to manage with what they had. But today, things are better, and these children now have something to begin with as they prepare for the new school year. We are truly grateful. May God richly bless Ten Kind Hands Foundation. May they never lack, and may this act of kindness reach many more places. Thank you, Ten Kind Hands Foundation. We love you and appreciate you!",
+      author: "",
+      role: "Proprietor, Karvron Montessori School",
+      institution: "Abuja",
+      location: "Federal Capital Territory"
     },
     {
-      quote: "Thank you, Ten Kind Hands Foundation. We truly appreciate and love you for coming to our community to educate us about malaria, how to prevent it, and how to take better care of ourselves.  The mosquito nets, insecticides, supplements, and other medical supplies donated in large quantities have provided meaningful support to our community in the fight against malaria.  May God bless you richly for all you are doing.  .",
+      quote: "Thank you, Ten Kind Hands Foundation. We truly appreciate and love you for coming to our community to educate us about malaria, how to prevent it, and how to take better care of ourselves. The mosquito nets, insecticides, supplements, and other medical supplies donated in large quantities have provided meaningful support to our community in the fight against malaria. May God bless you richly for all you are doing.",
       author: "",
-      role: " Widows/Nursing Mothers",
-      institution: "Abata Community, Lagos",
-      location: "Lagos"
+      role: "Community Beneficiaries & Nursing Mothers",
+      institution: "Abata Community",
+      location: "Lagos State"
     }
   ];
 
@@ -83,10 +121,11 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       {/* =========================================================
           HERO: GENEROUSLY SPACED DOCUMENTARY CANVAS
       ========================================================= */}
-      <section className="relative w-full min-h-[90vh] md:min-h-[94vh] flex items-center justify-center overflow-hidden px-4 md:px-8 pt-36 sm:pt-40 md:pt-48 pb-24 bg-black">
+      <section className="relative w-full h-[100svh] min-h-[580px] max-h-[860px] flex items-center justify-center overflow-hidden px-4 md:px-8 pt-24 sm:pt-28 pb-8 bg-black">
         {/* Cross-fading Background Slides */}
         {heroSlides.map((slide, index) => {
           const isActive = index === heroImageIdx;
+          const optimizedSrc = slide.img ? slide.img.replace(/\.(jpe?g|png)$/i, '.webp') : slide.img;
           return (
             <div
               key={index}
@@ -94,8 +133,9 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 }`}
             >
               <img
-                src={slide.img}
+                src={optimizedSrc}
                 alt={slide.caption}
+                fetchPriority={index === 0 ? "high" : "auto"}
                 className={`w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${isActive ? 'scale-105' : 'scale-100'
                   }`}
               />
@@ -136,23 +176,25 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               <Heart className="w-4 h-4" />
             </button>
 
-            <button
+            <a
+              href="#our-story"
               onClick={() => {
+                window.location.hash = 'our-story';
                 setCurrentPage('our-story');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="btn-secondary w-full sm:w-auto text-xs sm:text-sm px-7 py-3 sm:px-8 sm:py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95 font-heading font-semibold"
+              className="btn-secondary w-full sm:w-auto text-xs sm:text-sm px-7 py-3 sm:px-8 sm:py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95 font-heading font-semibold no-underline"
             >
               <span>Read Our Story</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </a>
           </div>
 
           {/* Dynamic Image Caption & Carousel Dots */}
           <div className="flex flex-col items-center gap-2 pt-4">
             <div className="flex items-center gap-1.5 text-white/80 text-[11px] font-medium transition-all duration-700">
               <MapPin className="w-3.5 h-3.5 text-[#f7c899]" />
-              <span>{heroSlides[heroImageIdx].caption}</span>
+              <span>{heroSlides[heroImageIdx]?.caption || ''}</span>
             </div>
 
             {/* Slide Indicator Dots */}
@@ -216,8 +258,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 Verified outcomes, community by community.
               </h2>
             </div>
-            <button
+            <a
+              href="#impact"
               onClick={() => {
+                window.location.hash = 'impact';
                 setCurrentPage('impact');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
@@ -225,7 +269,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             >
               <span>Explore impact dashboard</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            </a>
           </div>
 
           {(() => {
@@ -379,8 +423,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           <div className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between">
             <div className="h-64 sm:h-72 overflow-hidden relative">
               <img
-                src="/images/IMG_0296.JPG"
+                src="/images/IMG_0296.webp"
                 alt="Pupils receiving school supplies in Nigeria"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover hover:scale-102 transition-transform duration-700"
               />
               <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-heading font-bold text-primary shadow-xs">
@@ -396,7 +442,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 Providing scholarships, books, school materials, learning support, and practical skills opportunities to help vulnerable children and young people learn, grow, and thrive.
               </p>
 
-              <button
+              <a
+                href="#programs/scholarship"
                 onClick={() => {
                   window.location.hash = 'programs/scholarship';
                   setCurrentPage('programs');
@@ -406,7 +453,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               >
                 <span>View Education Initiatives</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              </a>
             </div>
           </div>
 
@@ -414,8 +461,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           <div className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between">
             <div className="h-64 sm:h-72 overflow-hidden relative">
               <img
-                src="/images/pillar2-health-outreach.jpg"
+                src="/images/pillar2-health-outreach.webp"
                 alt="Medical and health outreach at Orthopaedic & Trauma Dept in Nigeria"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-top hover:scale-102 transition-transform duration-700"
               />
               <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-heading font-bold text-forest shadow-xs">
@@ -431,7 +480,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 Bringing essential healthcare, malaria prevention, health education, screenings, and treatment support closer to vulnerable women, children, and underserved communities across Nigeria.
               </p>
 
-              <button
+              <a
+                href="#programs/medical-outreaches"
                 onClick={() => {
                   window.location.hash = 'programs/medical-outreaches';
                   setCurrentPage('programs');
@@ -441,7 +491,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               >
                 <span>View Healthcare Initiatives</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -479,9 +529,15 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 </div>
 
                 <div className="pt-4 border-t border-[#e0d9cc]">
-                  <h4 className="text-sm font-heading font-bold text-ink">{t.author}</h4>
-                  <p className="text-xs text-ink-muted">{t.role} • {t.institution}</p>
-                  <span className="text-xs text-primary font-medium block mt-0.5">{t.location}</span>
+                  {t.author && t.author.trim() !== '.' && (
+                    <h4 className="text-sm font-heading font-bold text-ink">{t.author}</h4>
+                  )}
+                  <p className="text-xs text-ink-muted">
+                    {[t.role, t.institution].filter(Boolean).join(' • ')}
+                  </p>
+                  {t.location && (
+                    <span className="text-xs text-primary font-medium block mt-0.5">{t.location}</span>
+                  )}
                 </div>
               </div>
             ))}
@@ -531,12 +587,12 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             </div>
 
             {/* Generated Deliverables */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-4">
               <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
                 <span className="font-mono text-xl sm:text-2xl font-bold text-primary block mb-0.5">
-                  {currentImpact.students}
+                  {currentImpact.learningKits}
                 </span>
-                <span className="text-[11px] sm:text-xs text-ink-muted">Students Funded</span>
+                <span className="text-[11px] sm:text-xs text-ink-muted">Pupil Learning Kits</span>
               </div>
 
               <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
@@ -561,9 +617,13 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               </div>
             </div>
 
+            <p className="text-[11px] text-ink-muted text-center mb-6">
+              ₦5,000 supplies 1 pupil back-to-school learning kit (exercise books, writing materials &amp; supplies) • ₦50,000 sponsors a child's full-term school fees scholarship.
+            </p>
+
             <div className="text-center">
               <button
-                onClick={onOpenDonate}
+                onClick={() => onOpenDonate(calcAmount)}
                 className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-6 sm:px-8 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
               >
                 <span>Donate ₦{calcAmount.toLocaleString()} to Direct Impact</span>

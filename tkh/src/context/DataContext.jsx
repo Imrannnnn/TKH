@@ -377,43 +377,7 @@ const initialAllocations = [
   }
 ];
 
-const initialDocuments = [
-  {
-    id: 'doc-1',
-    title: '2025 Audited Financial Statement (PDF)',
-    size: '2.4 MB',
-    date: 'Published June 2026',
-    auditor: 'Bakare & Co. Chartered Accountants'
-  },
-  {
-    id: 'doc-2',
-    title: '2024 Audited Financial Statement (PDF)',
-    size: '2.1 MB',
-    date: 'Published June 2025',
-    auditor: 'Bakare & Co. Chartered Accountants'
-  },
-  {
-    id: 'doc-3',
-    title: 'CAC Certificate of Incorporation',
-    size: '1.2 MB',
-    date: 'Incorporated Nigeria',
-    auditor: 'Corporate Affairs Commission'
-  },
-  {
-    id: 'doc-4',
-    title: 'SCUML Anti-Money Laundering Compliance Certificate',
-    size: '950 KB',
-    date: 'Certified',
-    auditor: 'Special Control Unit Against Money Laundering (EFCC)'
-  },
-  {
-    id: 'doc-5',
-    title: 'Ten Kind Hands Child Protection & Safeguarding Policy',
-    size: '1.8 MB',
-    date: 'Revised 2026',
-    auditor: 'Ethics & Legal Review Committee'
-  }
-];
+const initialDocuments = [];
 
 const initialAnnouncement = 'Commissioning new solar classrooms in Kaduna & mobile health clinic in Enugu';
 
@@ -443,18 +407,58 @@ const initialInquiries = [
 const initialHomeContent = {
   heroHeadline: 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.',
   heroSubtitle: 'Every act of kindness shapes a brighter future.',
-  registeredBadge: '',
+  registeredBadge: 'Registered Non-Profit • CAC RC: 7015705',
   heroSlides: [
     {
-      img: "/images/IMG_0294.JPG",
+      img: "/images/hero-debate-competition-makurdi.webp",
+      caption: "Inter-Secondary School Debate Competition (₦50,000 • ₦30,000 • ₦20,000 Awards) • Makurdi"
+    },
+    {
+      img: "/images/hero-digital-literacy-computer-lab.webp",
+      caption: "Youth Digital Literacy & Computer Lab Setup • Plateau State"
+    },
+    {
+      img: "/images/hero-orphanage-food-educational-support.webp",
+      caption: "Food Relief & Educational Supplies Donation • Oyiza Orphanage"
+    },
+    {
+      img: "/images/hero-widows-clean-cooking-stoves.webp",
+      caption: "Widows Clean Energy & Eco-Cooking Stove Distribution • Dafara"
+    },
+    {
+      img: "/images/hero-jambells-school-outreach.webp",
+      caption: "Educational Materials & School Supplies Distribution • JAMBELLS School, Lagos"
+    },
+    {
+      img: "/images/hero-maternal-health-malaria-prevention.webp",
+      caption: "Maternal Healthcare & Malaria Prevention Outreach • Lagos"
+    },
+    {
+      img: "/images/hero-youth-vocational-shoemaking.webp",
+      caption: "Youth Vocational Skills & Shoemaking Apprenticeship • Abuja"
+    },
+    {
+      img: "/images/hero-visually-impaired-education.webp",
+      caption: "Special Education & Inclusive Learning for Visually Impaired Students"
+    },
+    {
+      img: "/images/hero-digital-skills-youth-training.webp",
+      caption: "Youth Digital Skills & Computer Training Lab • Lagos"
+    },
+    {
+      img: "/images/hero-community-empowerment.webp",
+      caption: "Sustainable Community Livelihood & Family Empowerment Outreach"
+    },
+    {
+      img: "/images/IMG_0294.webp",
       caption: "Child empowerment Program • Makurdi"
     },
     {
-      img: "/images/11222.jpeg",
-      caption: " Medical outreach to children at Abuja Teaching Hospital"
+      img: "/images/11222.webp",
+      caption: "Medical outreach to children at Abuja Teaching Hospital"
     },
     {
-      img: "/images/IMG_0995.JPG",
+      img: "/images/IMG_0995.webp",
       caption: "Women Empowerment Outreach • Dafara"
     }
   ],
@@ -609,6 +613,8 @@ const initialTestimonialsList = [
 
 const initialContactInfo = {
   headquarters: 'Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria',
+  rcNumber: 'RC: 7015705',
+  cacStatus: 'CAC RC: 7015705 (Incorporated Non-Profit)',
   email: 'contact@tenkindhands.org',
   partnershipsEmail: 'partners@tenkindhands.org',
   phone: '+234 818 099 4301',
@@ -631,7 +637,21 @@ const defaultData = {
   contactInfo: initialContactInfo
 };
 
-const API_BASE = 'http://localhost:5000/api';
+export const getApiBase = () => {
+  if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL.replace(/\/$/, '');
+  }
+  if (typeof window !== 'undefined') {
+    const { hostname } = window.location;
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return 'http://localhost:5000/api';
+    }
+    return '/api';
+  }
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE = getApiBase();
 const DataContext = createContext(null);
 
 const sanitizeData = (raw) => {
@@ -653,10 +673,21 @@ const sanitizeData = (raw) => {
       };
     }
   }
+  if (cleaned.homeContent) {
+    const slides = cleaned.homeContent.heroSlides;
+    const hasBatch2 = Array.isArray(slides) && slides.some((s) => s.img && s.img.includes('hero-orphanage'));
+    const hasDebateAwards = Array.isArray(slides) && slides.some((s) => s.caption && s.caption.includes('₦50,000'));
+    if (!hasBatch2 || !hasDebateAwards) {
+      cleaned.homeContent = {
+        ...cleaned.homeContent,
+        heroSlides: initialHomeContent.heroSlides
+      };
+    }
+  }
   if (Array.isArray(cleaned.documents)) {
     cleaned.documents = cleaned.documents.map((d) => ({
       ...d,
-      title: d.title.replace(' (IT/NO: 148920)', '').replace('CAC/IT/NO: 148920', '').trim()
+      title: (d.title || '').replace(' (RC: 7015705)', '').replace('RC: 7015705', '').trim()
     }));
   }
   if (cleaned.contactInfo) {
@@ -747,7 +778,7 @@ export function DataProvider({ children }) {
 
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(stateObj));
-        } catch (_) {}
+        } catch (_) { }
 
         return stateObj;
       }
@@ -973,22 +1004,46 @@ export function DataProvider({ children }) {
   };
 
   // Inquiries / Leads from forms
-  const addInquiry = (inquiry) => {
+  const addInquiry = async (inquiry) => {
     const newInquiry = {
       ...inquiry,
       id: inquiry.id || `inq-${Date.now()}`,
       date: inquiry.date || new Date().toISOString().split('T')[0],
       status: inquiry.status || 'New'
     };
-    setData((prev) => ({ ...prev, inquiries: [newInquiry, ...prev.inquiries] }));
+    // Always persist to local state and localStorage immediately
+    setData((prev) => ({ ...prev, inquiries: [newInquiry, ...(prev.inquiries || [])] }));
 
-    fetch(`${API_BASE}/inquiries`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newInquiry)
-    }).catch((err) => console.warn('Sync inquiry to backend:', err.message));
+    let serverSynced = false;
+    let syncError = null;
 
-    return newInquiry;
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
+      const res = await fetch(`${getApiBase()}/inquiries`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newInquiry),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        serverSynced = true;
+      } else {
+        syncError = `Server responded with ${res.status}`;
+      }
+    } catch (err) {
+      syncError = err.message || 'Network request failed';
+      console.warn('Sync inquiry to backend:', syncError);
+    }
+
+    return {
+      success: true,
+      serverSynced,
+      inquiry: newInquiry,
+      error: syncError
+    };
   };
 
   const updateInquiryStatus = (id, status) => {

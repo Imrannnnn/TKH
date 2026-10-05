@@ -25,7 +25,9 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
     location: 'Nigeria (On-ground)',
     skills: ''
   });
+  const [volSubmitting, setVolSubmitting] = useState(false);
   const [volSubmitted, setVolSubmitted] = useState(false);
+  const [volResult, setVolResult] = useState(null);
 
   // Partnership form state
   const [partForm, setPartForm] = useState({
@@ -35,7 +37,9 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
     partnerType: 'financial-sponsorship',
     message: ''
   });
+  const [partSubmitting, setPartSubmitting] = useState(false);
   const [partSubmitted, setPartSubmitted] = useState(false);
+  const [partResult, setPartResult] = useState(null);
 
   const [copiedBank, setCopiedBank] = useState(false);
 
@@ -45,10 +49,12 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
     setTimeout(() => setCopiedBank(false), 2000);
   };
 
-  const handleVolSubmit = (e) => {
+  const handleVolSubmit = async (e) => {
     e.preventDefault();
+    setVolSubmitting(true);
+    let res = null;
     if (addInquiry) {
-      addInquiry({
+      res = await addInquiry({
         name: volForm.name,
         email: volForm.email,
         phone: volForm.phone,
@@ -57,13 +63,17 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
         source: 'Volunteer Form'
       });
     }
+    setVolSubmitting(false);
+    setVolResult(res);
     setVolSubmitted(true);
   };
 
-  const handlePartSubmit = (e) => {
+  const handlePartSubmit = async (e) => {
     e.preventDefault();
+    setPartSubmitting(true);
+    let res = null;
     if (addInquiry) {
-      addInquiry({
+      res = await addInquiry({
         name: `${partForm.contactName} (${partForm.orgName})`,
         email: partForm.email,
         phone: '',
@@ -72,6 +82,8 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
         source: 'Partner Form'
       });
     }
+    setPartSubmitting(false);
+    setPartResult(res);
     setPartSubmitted(true);
   };
 
@@ -320,17 +332,64 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
             {/* Application Form */}
             {volSubmitted ? (
-              <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center animate-fade-in">
-                <CheckCircle2 className="w-10 h-10 text-emerald-700 mx-auto mb-3" />
-                <h3 className="text-xl font-heading font-bold text-emerald-900 mb-2">
-                  Volunteer Application Received
-                </h3>
-                <p className="text-xs text-emerald-800 max-w-md mx-auto leading-relaxed mb-4">
-                  Thank you for stepping forward, {volForm.name}. Our Volunteer Coordination desk will review your details and contact you via email ({volForm.email}) within <strong>5 business days</strong> for orientation.
-                </p>
-                <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-800 bg-white px-4 py-2 rounded-full border border-emerald-200 font-heading">
-                  <Clock className="w-3.5 h-3.5" />
-                  <span>Next Step: Virtual 20-Minute Onboarding Call</span>
+              <div className="p-8 rounded-2xl bg-sand/90 border border-[#e7e2d8] text-center animate-fade-in">
+                {volResult?.serverSynced ? (
+                  <>
+                    <CheckCircle2 className="w-10 h-10 text-emerald-700 mx-auto mb-3" />
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-700 font-bold block mb-1">
+                      Reference #{volResult.inquiry?.id || 'VOL-REG'}
+                    </span>
+                    <h3 className="text-xl font-heading font-bold text-ink mb-2">
+                      Volunteer Application Received &amp; Logged
+                    </h3>
+                    <p className="text-xs text-ink-light max-w-md mx-auto leading-relaxed mb-4">
+                      Thank you for stepping forward, {volForm.name}. Your application is in our database. Our Volunteer Coordination desk will contact you at <strong>{volForm.email}</strong> within <strong>5 business days</strong> for orientation.
+                    </p>
+                    <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-800 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-200 font-heading">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>Next Step: Virtual 20-Minute Onboarding Call</span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle2 className="w-10 h-10 text-amber-700 mx-auto mb-3" />
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-amber-800 font-bold block mb-1">
+                      Saved Locally • Connect with Coordinator
+                    </span>
+                    <h3 className="text-xl font-heading font-bold text-ink mb-2">
+                      Application Saved In Browser
+                    </h3>
+                    <p className="text-xs text-ink-light max-w-md mx-auto leading-relaxed mb-4">
+                      Your details are saved in your browser cache. For immediate enrollment on our active field rota, send your application directly to our volunteer coordinator:
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
+                      <a
+                        href={`https://wa.me/2348180994301?text=${encodeURIComponent(`Hello Ten Kind Hands Volunteer Desk,\nMy name is ${volForm.name}.\nRole: ${volForm.role}\nEmail: ${volForm.email}\nPhone: ${volForm.phone}\nSkills: ${volForm.skills}`)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn-primary text-xs px-5 py-2 font-heading font-semibold"
+                      >
+                        Send via WhatsApp Desk
+                      </a>
+                      <a
+                        href="mailto:volunteer@tenkindhands.org"
+                        className="btn-secondary text-xs px-5 py-2 font-heading font-semibold"
+                      >
+                        Email: volunteer@tenkindhands.org
+                      </a>
+                    </div>
+                  </>
+                )}
+                <div className="mt-4">
+                  <button
+                    onClick={() => {
+                      setVolSubmitted(false);
+                      setVolForm({ name: '', email: '', phone: '', role: 'outreach-support', availability: 'weekends', location: 'Nigeria (On-ground)', skills: '' });
+                    }}
+                    className="text-xs text-primary font-bold hover:underline cursor-pointer"
+                  >
+                    Submit Another Application
+                  </button>
                 </div>
               </div>
             ) : (
@@ -403,10 +462,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
                 <button
                   type="submit"
-                  className="btn-primary w-full py-3.5 text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm font-heading font-semibold"
+                  disabled={volSubmitting}
+                  className="btn-primary w-full py-3.5 text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm font-heading font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <span>Submit Volunteer Application</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>{volSubmitting ? 'Transmitting Application...' : 'Submit Volunteer Application'}</span>
+                  <ArrowRight className={`w-4 h-4 ${volSubmitting ? 'animate-pulse' : ''}`} />
                 </button>
               </form>
             )}
@@ -465,17 +525,61 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
             {/* Partnership Form */}
             {partSubmitted ? (
-              <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center animate-fade-in">
-                <CheckCircle2 className="w-10 h-10 text-emerald-700 mx-auto mb-3" />
-                <h3 className="text-xl font-heading font-bold text-emerald-900 mb-2">
-                  Partnership Inquiry Submitted
-                </h3>
-                <p className="text-xs text-emerald-800 max-w-md mx-auto leading-relaxed mb-4">
-                  Thank you, {partForm.contactName} representing {partForm.orgName}. Our Executive &amp; Partnerships Desk will review your proposal and reply within <strong>2 business days</strong>.
-                </p>
-                <span className="text-xs font-semibold text-emerald-800 font-heading">
-                  Direct Desk: favour@tenkindhands.org
-                </span>
+              <div className="p-8 rounded-2xl bg-sand/90 border border-[#e7e2d8] text-center animate-fade-in">
+                {partResult?.serverSynced ? (
+                  <>
+                    <CheckCircle2 className="w-10 h-10 text-emerald-700 mx-auto mb-3" />
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-700 font-bold block mb-1">
+                      Reference #{partResult.inquiry?.id || 'PART-REF'}
+                    </span>
+                    <h3 className="text-xl font-heading font-bold text-ink mb-2">
+                      Partnership Inquiry Logged
+                    </h3>
+                    <p className="text-xs text-ink-light max-w-md mx-auto leading-relaxed mb-4">
+                      Thank you, {partForm.contactName} representing {partForm.orgName}. Your proposal has been transmitted to our Executive &amp; Partnerships Desk. We will review and reply to <strong>{partForm.email}</strong> within <strong>2 business days</strong>.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle2 className="w-10 h-10 text-amber-700 mx-auto mb-3" />
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-amber-800 font-bold block mb-1">
+                      Saved In Browser • Direct Desk Routing
+                    </span>
+                    <h3 className="text-xl font-heading font-bold text-ink mb-2">
+                      Proposal Saved Locally
+                    </h3>
+                    <p className="text-xs text-ink-light max-w-md mx-auto leading-relaxed mb-4">
+                      Your proposal is cached locally. To connect immediately with our Executive &amp; Partnerships team, please reach us directly:
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
+                      <a
+                        href={`https://wa.me/2348180994301?text=${encodeURIComponent(`Hello Ten Kind Hands Partnerships Desk,\nI represent ${partForm.orgName}.\nContact: ${partForm.contactName}\nEmail: ${partForm.email}\nScope: ${partForm.partnerType}\n\n${partForm.message}`)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn-primary text-xs px-5 py-2 font-heading font-semibold"
+                      >
+                        Connect via WhatsApp
+                      </a>
+                      <a
+                        href="mailto:partnerships@tenkindhands.org"
+                        className="btn-secondary text-xs px-5 py-2 font-heading font-semibold"
+                      >
+                        Email: partnerships@tenkindhands.org
+                      </a>
+                    </div>
+                  </>
+                )}
+                <div className="mt-4">
+                  <button
+                    onClick={() => {
+                      setPartSubmitted(false);
+                      setPartForm({ orgName: '', contactName: '', email: '', partnerType: 'financial-sponsorship', message: '' });
+                    }}
+                    className="text-xs text-primary font-bold hover:underline cursor-pointer"
+                  >
+                    Submit Another Inquiry
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handlePartSubmit} className="space-y-4 max-w-xl mx-auto">
@@ -548,10 +652,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
                 <button
                   type="submit"
-                  className="btn-primary w-full py-3.5 text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm font-heading font-semibold"
+                  disabled={partSubmitting}
+                  className="btn-primary w-full py-3.5 text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm font-heading font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <span>Submit Partnership Proposal</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>{partSubmitting ? 'Transmitting Proposal...' : 'Submit Partnership Proposal'}</span>
+                  <ArrowRight className={`w-4 h-4 ${partSubmitting ? 'animate-pulse' : ''}`} />
                 </button>
               </form>
             )}

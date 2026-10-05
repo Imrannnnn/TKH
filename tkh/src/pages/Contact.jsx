@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { Mail, Phone, MapPin, Send, CheckCircle2, MessageCircle, Clock } from '../components/Icons';
+import { Mail, Phone, MapPin, Send, CheckCircle2, MessageCircle, Clock, ShieldCheck } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Contact() {
@@ -12,12 +12,16 @@ export default function Contact() {
     category: 'general',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitResult, setSubmitResult] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    let res = null;
     if (addInquiry) {
-      addInquiry({
+      res = await addInquiry({
         name: form.name,
         email: form.email,
         phone: form.phone,
@@ -26,6 +30,8 @@ export default function Contact() {
         source: 'Contact Page'
       });
     }
+    setIsSubmitting(false);
+    setSubmitResult(res);
     setSubmitted(true);
   };
 
@@ -73,10 +79,18 @@ export default function Contact() {
                 </div>
 
                 <div className="flex items-start gap-3.5">
+                  <ShieldCheck className="w-5 h-5 text-forest shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-ink block font-heading">Official Registration:</strong>
+                    <span>CAC RC: 7015705 (Incorporated Non-Profit)</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5">
                   <Phone className="w-5 h-5 text-forest shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-ink block font-heading">Phone &amp; Hotline:</strong>
-                    <span>+234 818 099 4301 / +234 803 000 1234</span>
+                    <span>+234 818 099 4301</span>
                   </div>
                 </div>
 
@@ -125,17 +139,63 @@ export default function Contact() {
           {/* Contact Message Form */}
           <div className="md:col-span-7 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
             {submitted ? (
-              <div className="py-12 text-center animate-fade-in">
-                <CheckCircle2 className="w-12 h-12 text-emerald-700 mx-auto mb-4" />
-                <h3 className="text-2xl font-heading font-bold text-emerald-900 mb-2">
-                  Message Sent Successfully
-                </h3>
-                <p className="text-xs sm:text-sm text-emerald-800 max-w-md mx-auto leading-relaxed mb-6">
-                  Thank you, {form.name}. Your inquiry has been routed to the relevant desk. Our coordination team will respond to <strong>{form.email}</strong> within 1 business day.
-                </p>
+              <div className="py-10 text-center animate-fade-in">
+                {submitResult?.serverSynced ? (
+                  <>
+                    <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200 mx-auto mb-4">
+                      <CheckCircle2 className="w-8 h-8 text-emerald-700" />
+                    </div>
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-700 font-bold block mb-1">
+                      Reference #{submitResult.inquiry?.id || 'TKH-INQ'}
+                    </span>
+                    <h3 className="text-2xl font-heading font-bold text-ink mb-2">
+                      Message Received by Secretariat
+                    </h3>
+                    <p className="text-xs sm:text-sm text-ink-light max-w-md mx-auto leading-relaxed mb-6">
+                      Thank you, {form.name}. Your inquiry has been securely transmitted to our national coordination desk in Abuja. Our team will review and reply to <strong>{form.email}</strong> within 1 business day.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center border border-amber-200 mx-auto mb-4">
+                      <MessageCircle className="w-8 h-8 text-amber-700" />
+                    </div>
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-amber-800 font-bold block mb-1">
+                      Direct Routing Recommended
+                    </span>
+                    <h3 className="text-2xl font-heading font-bold text-ink mb-2">
+                      Reach Our Live Coordination Desk
+                    </h3>
+                    <p className="text-xs sm:text-sm text-ink-light max-w-md mx-auto leading-relaxed mb-5">
+                      Your inquiry has been stored locally. For an immediate, verified response without waiting on server sync, forward your inquiry directly to our Abuja duty desk:
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6 max-w-md mx-auto">
+                      <a
+                        href={`https://wa.me/2348180994301?text=${encodeURIComponent(`Hello Ten Kind Hands,\nMy name is ${form.name}.\nCategory: ${form.category}\nEmail: ${form.email}\nPhone: ${form.phone || 'N/A'}\n\nMessage:\n${form.message}`)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn-primary text-xs px-5 py-2.5 flex items-center justify-center gap-2 font-heading font-semibold"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        <span>Send via WhatsApp Desk</span>
+                      </a>
+                      <a
+                        href={`mailto:info@tenkindhands.org?subject=${encodeURIComponent(`Inquiry from ${form.name} (${form.category})`)}&body=${encodeURIComponent(`${form.message}\n\nFrom: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}`)}`}
+                        className="btn-secondary text-xs px-5 py-2.5 flex items-center justify-center gap-2 font-heading font-semibold"
+                      >
+                        <Mail className="w-4 h-4" />
+                        <span>Send via Email</span>
+                      </a>
+                    </div>
+                  </>
+                )}
+
                 <button
-                  onClick={() => setSubmitted(false)}
-                  className="btn-secondary text-xs px-6 py-2.5 font-heading font-semibold cursor-pointer"
+                  onClick={() => {
+                    setSubmitted(false);
+                    setForm({ name: '', email: '', phone: '', category: 'general', message: '' });
+                  }}
+                  className="btn-secondary text-xs px-6 py-2 font-heading font-semibold cursor-pointer"
                 >
                   Send Another Message
                 </button>
@@ -151,8 +211,9 @@ export default function Contact() {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-bold text-ink block mb-1 font-heading">Full Name *</label>
+                    <label htmlFor="contact-name" className="text-xs font-bold text-ink block mb-1 font-heading">Full Name *</label>
                     <input
+                      id="contact-name"
                       type="text"
                       required
                       placeholder="e.g. Amina Bello"
@@ -162,8 +223,9 @@ export default function Contact() {
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-bold text-ink block mb-1 font-heading">Email Address *</label>
+                    <label htmlFor="contact-email" className="text-xs font-bold text-ink block mb-1 font-heading">Email Address *</label>
                     <input
+                      id="contact-email"
                       type="email"
                       required
                       placeholder="name@domain.com"
@@ -176,8 +238,9 @@ export default function Contact() {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-bold text-ink block mb-1 font-heading">Phone Number</label>
+                    <label htmlFor="contact-phone" className="text-xs font-bold text-ink block mb-1 font-heading">Phone Number</label>
                     <input
+                      id="contact-phone"
                       type="tel"
                       placeholder="080 1234 5678"
                       value={form.phone}
@@ -186,8 +249,9 @@ export default function Contact() {
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-bold text-ink block mb-1 font-heading">Topic / Department *</label>
+                    <label htmlFor="contact-category" className="text-xs font-bold text-ink block mb-1 font-heading">Topic / Department *</label>
                     <select
+                      id="contact-category"
                       value={form.category}
                       onChange={(e) => setForm({ ...form, category: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-sand border border-[#e7e2d8] text-xs focus:outline-none focus:border-primary cursor-pointer font-heading"
@@ -202,8 +266,9 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-ink block mb-1 font-heading">Message *</label>
+                  <label htmlFor="contact-message" className="text-xs font-bold text-ink block mb-1 font-heading">Message *</label>
                   <textarea
+                    id="contact-message"
                     rows={4}
                     required
                     placeholder="Type your message or inquiry here..."
@@ -215,10 +280,11 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="btn-primary w-full py-3.5 text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm font-heading font-semibold"
+                  disabled={isSubmitting}
+                  className="btn-primary w-full py-3.5 text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm font-heading font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <span>Submit Direct Message</span>
-                  <Send className="w-4 h-4" />
+                  <span>{isSubmitting ? 'Transmitting to Secretariat Desk...' : 'Submit Direct Message'}</span>
+                  <Send className={`w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />
                 </button>
               </form>
             )}

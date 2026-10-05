@@ -17,6 +17,82 @@ import Transparency from './pages/Transparency';
 import Contact from './pages/Contact';
 import Legal from './pages/Legal';
 import Admin from './pages/Admin';
+import NotFound from './pages/NotFound';
+
+const PAGE_METADATA = {
+  home: {
+    title: 'Ten Kind Hands | Restoring Dignity Through Education & Healthcare in Nigeria',
+    description: 'Ten Kind Hands Initiative is a CAC-registered non-profit foundation (RC: 7015705) operating a 100% direct-giving model for education, healthcare, and women empowerment across Nigeria.'
+  },
+  'our-story': {
+    title: 'Our Story & Origin | Ten Kind Hands Foundation',
+    description: 'Learn about the origins, trustees, state coordinators, and mission of Ten Kind Hands Foundation across Nigeria.'
+  },
+  programs: {
+    title: 'Programs & Core Initiatives | Ten Kind Hands',
+    description: 'Explore our 6 core sustainable initiatives: education scholarships, medical outreaches, women & widows empowerment, school donations, and youth development.'
+  },
+  impact: {
+    title: 'Audited Impact Metrics | Ten Kind Hands',
+    description: 'Verifiable impact: over 3,300+ children and youths reached, 130+ communities served, and 100% direct public donation allocation.'
+  },
+  'get-involved': {
+    title: 'Get Involved - Donate & Volunteer | Ten Kind Hands',
+    description: 'Partner with Ten Kind Hands through direct donations, volunteer field missions, and corporate CSR partnerships in Nigeria.'
+  },
+  news: {
+    title: 'News & Outreach Dispatches | Ten Kind Hands',
+    description: 'Documentary stories, field reports, and video dispatches from our community outreaches and school commissioning missions.'
+  },
+  videos: {
+    title: 'Outreach Videos & Field Documentaries | Ten Kind Hands',
+    description: 'Watch video documentation of our frontline educational and medical outreaches across Nigerian communities.'
+  },
+  outreaches: {
+    title: 'Field Outreaches Log | Ten Kind Hands',
+    description: 'Scheduled and completed humanitarian missions with GPS coordinates, beneficiary tallies, and photographic records.'
+  },
+  testimonials: {
+    title: 'Community Letters & Beneficiary Stories | Ten Kind Hands',
+    description: 'Letters of appreciation and testimonials from school proprietors, community leaders, and families supported by Ten Kind Hands.'
+  },
+  transparency: {
+    title: 'Financial Transparency & 100% Direct Giving | Ten Kind Hands',
+    description: 'Open Books, Pure Trust. 100% of public donations fund frontline deliverables. Trustee endowments privately fund all administration. CAC RC: 7015705.'
+  },
+  contact: {
+    title: 'Contact National Secretariat | Ten Kind Hands',
+    description: 'Reach our national secretariat at Danglo Plaza, Gwarinpa, Abuja, or connect directly with our live WhatsApp coordination desk.'
+  },
+  legal: {
+    title: 'Legal, Privacy Policy & Terms | Ten Kind Hands',
+    description: 'Privacy policy, terms of service, safeguarding commitments, and non-profit governance charter of Ten Kind Hands Initiative.'
+  },
+  admin: {
+    title: 'Super Admin Command Console | Ten Kind Hands',
+    description: 'Secure operational content and field dispatch administration console.'
+  },
+  'not-found': {
+    title: '404 - Page Not Found | Ten Kind Hands',
+    description: 'The requested page could not be found on Ten Kind Hands Foundation.'
+  }
+};
+
+const VALID_PAGES = new Set([
+  'home',
+  'our-story',
+  'programs',
+  'impact',
+  'get-involved',
+  'news',
+  'videos',
+  'outreaches',
+  'testimonials',
+  'transparency',
+  'contact',
+  'legal',
+  'admin'
+]);
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -24,11 +100,18 @@ export default function App() {
   const [selectedGetInvolvedTab, setSelectedGetInvolvedTab] = useState('donate');
   const [selectedLegalTab, setSelectedLegalTab] = useState('privacy');
   const [isDonateOpen, setIsDonateOpen] = useState(false);
+  const [donateInitialAmount, setDonateInitialAmount] = useState(null);
 
-  // Sync hash routing
+  const handleOpenDonate = (amount) => {
+    setDonateInitialAmount(amount || null);
+    setIsDonateOpen(true);
+  };
+
+  // Sync hash routing and address bar
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '').trim();
+      const rawHash = window.location.hash.replace('#', '').trim();
+      const hash = rawHash.replace(/^\/+/, '');
       if (!hash) {
         setCurrentPage('home');
         return;
@@ -46,12 +129,16 @@ export default function App() {
         const tab = hash.replace('legal/', '');
         setCurrentPage('legal');
         setSelectedLegalTab(tab);
-      } else {
+      } else if (VALID_PAGES.has(hash)) {
         if (hash === 'programs') {
           setSelectedProgramId(null);
         }
         setCurrentPage(hash);
+      } else {
+        // Unknown address -> show 404 page
+        setCurrentPage('not-found');
       }
+      window.scrollTo({ top: 0, behavior: 'instant' });
     };
 
     handleHashChange();
@@ -59,51 +146,75 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  // Update document title & metadata dynamically
+  useEffect(() => {
+    const meta = PAGE_METADATA[currentPage] || PAGE_METADATA['not-found'];
+    let pageTitle = meta.title;
+    if (currentPage === 'programs' && selectedProgramId) {
+      const formattedProg = selectedProgramId
+        .split('-')
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+      pageTitle = `${formattedProg} Initiative | Ten Kind Hands`;
+    }
+    document.title = pageTitle;
+
+    const descTag = document.querySelector('meta[name="description"]');
+    if (descTag && meta.description) {
+      descTag.setAttribute('content', meta.description);
+    }
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+    const twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute('content', pageTitle);
+  }, [currentPage, selectedProgramId]);
+
   const renderCurrentPage = () => {
     switch (currentPage) {
       case 'home':
-        return <Home onOpenDonate={() => setIsDonateOpen(true)} setCurrentPage={setCurrentPage} />;
+        return <Home onOpenDonate={handleOpenDonate} setCurrentPage={setCurrentPage} />;
       case 'our-story':
-        return <OurStory onOpenDonate={() => setIsDonateOpen(true)} setCurrentPage={setCurrentPage} />;
+        return <OurStory onOpenDonate={handleOpenDonate} setCurrentPage={setCurrentPage} />;
       case 'programs':
         return (
           <Programs
-            onOpenDonate={() => setIsDonateOpen(true)}
+            onOpenDonate={handleOpenDonate}
             setCurrentPage={setCurrentPage}
             initialProgramId={selectedProgramId}
           />
         );
       case 'impact':
-        return <Impact onOpenDonate={() => setIsDonateOpen(true)} />;
+        return <Impact onOpenDonate={handleOpenDonate} />;
       case 'get-involved':
         return (
           <GetInvolved
-            onOpenDonate={() => setIsDonateOpen(true)}
+            onOpenDonate={handleOpenDonate}
             initialTab={selectedGetInvolvedTab}
           />
         );
       case 'news':
       case 'videos':
-        return <News setCurrentPage={setCurrentPage} onOpenDonate={() => setIsDonateOpen(true)} />;
+        return <News setCurrentPage={setCurrentPage} onOpenDonate={handleOpenDonate} />;
       case 'outreaches':
         return (
           <Outreaches
             setCurrentPage={setCurrentPage}
-            onOpenDonate={() => setIsDonateOpen(true)}
+            onOpenDonate={handleOpenDonate}
           />
         );
       case 'testimonials':
-        return <Testimonials onOpenDonate={() => setIsDonateOpen(true)} />;
+        return <Testimonials onOpenDonate={handleOpenDonate} />;
       case 'transparency':
-        return <Transparency onOpenDonate={() => setIsDonateOpen(true)} />;
+        return <Transparency onOpenDonate={handleOpenDonate} />;
       case 'contact':
         return <Contact />;
       case 'legal':
         return <Legal initialTab={selectedLegalTab} />;
       case 'admin':
         return <Admin setCurrentPage={setCurrentPage} />;
+      case 'not-found':
       default:
-        return <Home onOpenDonate={() => setIsDonateOpen(true)} setCurrentPage={setCurrentPage} />;
+        return <NotFound setCurrentPage={setCurrentPage} />;
     }
   };
 
@@ -115,7 +226,7 @@ export default function App() {
           <Navbar
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            onOpenDonate={() => setIsDonateOpen(true)}
+            onOpenDonate={() => handleOpenDonate(null)}
             onSelectProgram={(progId) => setSelectedProgramId(progId)}
             onSelectGetInvolvedTab={(tab) => setSelectedGetInvolvedTab(tab)}
           />
@@ -137,14 +248,18 @@ export default function App() {
         {/* Global Modal for Multi-Currency Impact Donation */}
         <DonateModal
           isOpen={isDonateOpen}
-          onClose={() => setIsDonateOpen(false)}
+          initialAmount={donateInitialAmount}
+          onClose={() => {
+            setIsDonateOpen(false);
+            setDonateInitialAmount(null);
+          }}
         />
 
         {/* Global Footer (Hidden on Admin page for a focused dashboard experience) */}
         {currentPage !== 'admin' && (
           <Footer
             setCurrentPage={setCurrentPage}
-            onOpenDonate={() => setIsDonateOpen(true)}
+            onOpenDonate={() => handleOpenDonate(null)}
             onSelectLegalTab={(tab) => setSelectedLegalTab(tab)}
             onSelectProgram={(progId) => setSelectedProgramId(progId)}
           />

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useData } from '../context/DataContext';
+import { useData, getApiBase } from '../context/DataContext';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 import HomePageEditor from './admin/HomePageEditor';
 import StoryPageEditor from './admin/StoryPageEditor';
@@ -25,7 +25,6 @@ import {
   ArrowRight,
   ArrowLeft,
   TrendingUp,
-  FileText,
   ShieldCheck,
   Globe,
   Mail,
@@ -56,9 +55,6 @@ export default function Admin({ setCurrentPage }) {
     deleteMetric,
     allocations,
     updateAllocations,
-    documents,
-    addDocument,
-    deleteDocument,
     announcement,
     updateAnnouncement,
     inquiries,
@@ -106,7 +102,6 @@ export default function Admin({ setCurrentPage }) {
   const [newsCategoryFilter, setNewsCategoryFilter] = useState('All');
   const [outreachSearch, setOutreachSearch] = useState('');
   const [outreachStatusFilter, setOutreachStatusFilter] = useState('All');
-  const [transparencySubTab, setTransparencySubTab] = useState('allocations');
 
   // Toast notification state
   const [toastMessage, setToastMessage] = useState(null);
@@ -150,14 +145,6 @@ export default function Admin({ setCurrentPage }) {
     category: 'education'
   });
 
-  const [docModalOpen, setDocModalOpen] = useState(false);
-  const [docFormData, setDocFormData] = useState({
-    title: '',
-    size: '1.5 MB',
-    date: `Published ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`,
-    auditor: 'Independent Certified Public Auditor'
-  });
-
   // Local allocations state for sliders
   const [localAllocations, setLocalAllocations] = useState(allocations);
   const [prevAlloc, setPrevAlloc] = useState(allocations);
@@ -180,7 +167,7 @@ export default function Admin({ setCurrentPage }) {
     setIsLoggingIn(true);
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch(`${getApiBase()}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginEmail, password: loginPass })
@@ -406,21 +393,6 @@ export default function Admin({ setCurrentPage }) {
   const handleSaveAllocations = () => {
     updateAllocations(localAllocations);
     showToast('Direct giving allocations updated successfully');
-  };
-
-  // Document Handlers
-  const handleSaveDoc = (e) => {
-    e.preventDefault();
-    addDocument(docFormData);
-    setDocModalOpen(false);
-    showToast(`Added audit record: "${docFormData.title}"`);
-  };
-
-  const handleDeleteDoc = (doc) => {
-    if (window.confirm(`Delete document record "${doc.title}"?`)) {
-      deleteDocument(doc.id || doc.title);
-      showToast('Document record deleted');
-    }
   };
 
   // Filtered news
@@ -803,16 +775,6 @@ export default function Admin({ setCurrentPage }) {
               </button>
             )}
 
-            {activeTab === 'page-transparency' && (
-              <button
-                onClick={() => setDocModalOpen(true)}
-                className="px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Add Audit Document</span>
-              </button>
-            )}
-
             {/* Export Backup shortcut */}
             <button
               onClick={exportDataBackup}
@@ -968,9 +930,9 @@ export default function Admin({ setCurrentPage }) {
                       </div>
                     </div>
                     <div className="text-lg font-heading font-bold text-ink">Transparency</div>
-                    <p className="text-[11px] text-ink-light mt-1">100% direct-giving sliders &amp; CAC audits.</p>
+                    <p className="text-[11px] text-ink-light mt-1">100% direct-giving financial allocation model.</p>
                     <div className="flex items-center justify-between text-[11px] text-clay font-semibold mt-3 pt-2 border-t border-[#e7e2d8]">
-                      <span>{documents.length} Audit PDFs</span>
+                      <span>{allocations.length} Allocation Targets</span>
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
@@ -1358,190 +1320,101 @@ export default function Admin({ setCurrentPage }) {
                   </div>
                   <h1 className="text-xl font-heading font-bold text-ink">Financial Transparency Manager</h1>
                   <p className="text-xs text-ink-muted">
-                    Configure the 100% direct-giving financial allocation model and publish audited PDF records.
+                    Configure the 100% direct-giving financial allocation model and financial stewardship targets.
                   </p>
                 </div>
               </div>
 
-              {/* Sub-Section Pills */}
-              <div className="bg-white p-2 rounded-2xl border border-[#e7e2d8] shadow-xs">
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setTransparencySubTab('allocations')}
-                    className={`px-4 py-2 rounded-xl text-xs font-heading font-bold cursor-pointer transition-colors ${
-                      transparencySubTab === 'allocations'
-                        ? 'bg-clay text-white shadow-xs'
-                        : 'bg-sand/40 hover:bg-sand text-ink-muted hover:text-ink'
-                    }`}
-                  >
-                    100% Fund Allocation Model
-                  </button>
-                  <button
-                    onClick={() => setTransparencySubTab('documents')}
-                    className={`px-4 py-2 rounded-xl text-xs font-heading font-bold cursor-pointer transition-colors ${
-                      transparencySubTab === 'documents'
-                        ? 'bg-clay text-white shadow-xs'
-                        : 'bg-sand/40 hover:bg-sand text-ink-muted hover:text-ink'
-                    }`}
-                  >
-                    Audited Legal &amp; Financial PDF Records ({documents.length})
-                  </button>
-                </div>
-              </div>
-
-              {transparencySubTab === 'allocations' && (
-                <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs space-y-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                      <h2 className="text-base font-heading font-bold text-ink">
-                        Direct Giving Allocation Sliders
-                      </h2>
-                      <p className="text-xs text-ink-muted">
-                        Must sum to exactly 100.0% to uphold radical transparency commitments.
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold border flex items-center gap-1.5 ${
-                          isTotalAlloc100
-                            ? 'bg-forest/10 text-forest border-forest/20'
-                            : 'bg-rose-50 text-rose-700 border-rose-200'
-                        }`}
-                      >
-                        <span>Sum: {totalAllocPct.toFixed(1)}%</span>
-                        {isTotalAlloc100 ? (
-                          <Check className="w-3.5 h-3.5" />
-                        ) : (
-                          <AlertTriangle className="w-3.5 h-3.5" />
-                        )}
-                      </div>
-
-                      <button
-                        onClick={handleSaveAllocations}
-                        className="py-2 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
-                      >
-                        <Save className="w-3.5 h-3.5" />
-                        <span>Save Percentages</span>
-                      </button>
-                    </div>
+              <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <h2 className="text-base font-heading font-bold text-ink">
+                      Direct Giving Allocation Sliders
+                    </h2>
+                    <p className="text-xs text-ink-muted">
+                      Must sum to exactly 100.0% to uphold radical transparency commitments.
+                    </p>
                   </div>
 
-                  {/* Progress Bar */}
-                  <div className="h-4 rounded-full overflow-hidden flex bg-sand-dark border border-[#e7e2d8]">
-                    {localAllocations.map((a) => (
-                      <div
-                        key={a.id}
-                        style={{ width: `${a.pct}%` }}
-                        className={`${
-                          a.id === 'frontline'
-                            ? 'bg-forest'
-                            : a.id === 'audits'
-                            ? 'bg-clay'
-                            : 'bg-primary/70'
-                        } transition-all duration-300`}
-                        title={`${a.label}: ${a.pct}%`}
-                      ></div>
-                    ))}
-                  </div>
-
-                  {/* Sliders */}
-                  <div className="space-y-6">
-                    {localAllocations.map((alloc, idx) => (
-                      <div key={alloc.id} className="p-4 rounded-xl bg-sand/40 border border-[#e7e2d8]">
-                        <div className="flex items-center justify-between mb-2">
-                          <label className="text-xs font-heading font-bold text-ink">{alloc.label}</label>
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="number"
-                              step="0.1"
-                              min="0"
-                              max="100"
-                              value={alloc.pct}
-                              onChange={(e) => handleAllocationPctChange(idx, e.target.value)}
-                              className="w-20 px-2.5 py-1 rounded-lg bg-white border border-[#e7e2d8] text-xs font-mono font-bold text-ink text-right focus:outline-none focus:border-primary"
-                            />
-                            <span className="text-xs font-bold text-ink-muted">%</span>
-                          </div>
-                        </div>
-
-                        <input
-                          type="range"
-                          min="0"
-                          max="100"
-                          step="0.1"
-                          value={alloc.pct}
-                          onChange={(e) => handleAllocationPctChange(idx, e.target.value)}
-                          className="w-full accent-primary cursor-pointer"
-                        />
-
-                        <p className="text-[11px] text-ink-muted mt-1">{alloc.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {transparencySubTab === 'documents' && (
-                <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs">
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <h2 className="text-base font-heading font-bold text-ink">
-                        Published Legal &amp; Audit Records
-                      </h2>
-                      <p className="text-xs text-ink-muted">
-                        Verified CAC certificate, SCUML anti-money laundering documents, and audited statements.
-                      </p>
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold border flex items-center gap-1.5 ${
+                        isTotalAlloc100
+                          ? 'bg-forest/10 text-forest border-forest/20'
+                          : 'bg-rose-50 text-rose-700 border-rose-200'
+                      }`}
+                    >
+                      <span>Sum: {totalAllocPct.toFixed(1)}%</span>
+                      {isTotalAlloc100 ? (
+                        <Check className="w-3.5 h-3.5" />
+                      ) : (
+                        <AlertTriangle className="w-3.5 h-3.5" />
+                      )}
                     </div>
 
                     <button
-                      onClick={() => setDocModalOpen(true)}
-                      className="py-2 px-3.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                      onClick={handleSaveAllocations}
+                      className="py-2 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
                     >
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>Add PDF Record</span>
+                      <Save className="w-3.5 h-3.5" />
+                      <span>Save Percentages</span>
                     </button>
                   </div>
-
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs">
-                      <thead className="bg-sand/70 text-[11px] font-heading font-bold text-ink-muted uppercase tracking-wider border-b border-[#e7e2d8]">
-                        <tr>
-                          <th className="py-3 px-4">Document Title</th>
-                          <th className="py-3 px-4">Size</th>
-                          <th className="py-3 px-4">Audited Date</th>
-                          <th className="py-3 px-4">Certifying Body</th>
-                          <th className="py-3 px-4 text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-[#e7e2d8]/60">
-                        {documents.map((doc) => (
-                          <tr key={doc.id || doc.title} className="hover:bg-sand/30 transition-colors">
-                            <td className="py-3 px-4">
-                              <div className="flex items-center gap-2.5 font-heading font-bold text-ink">
-                                <FileText className="w-4 h-4 text-primary shrink-0" />
-                                <span>{doc.title}</span>
-                              </div>
-                            </td>
-                            <td className="py-3 px-4 text-ink-light">{doc.size}</td>
-                            <td className="py-3 px-4 text-ink-light">{doc.date}</td>
-                            <td className="py-3 px-4 text-ink-light">{doc.auditor}</td>
-                            <td className="py-3 px-4 text-right">
-                              <button
-                                onClick={() => handleDeleteDoc(doc)}
-                                className="p-1.5 rounded-lg text-ink-muted hover:text-rose-600 hover:bg-rose-50 cursor-pointer transition-colors"
-                                title="Delete Record"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
                 </div>
-              )}
+
+                {/* Progress Bar */}
+                <div className="h-4 rounded-full overflow-hidden flex bg-sand-dark border border-[#e7e2d8]">
+                  {localAllocations.map((a) => (
+                    <div
+                      key={a.id}
+                      style={{ width: `${a.pct}%` }}
+                      className={`${
+                        a.id === 'frontline'
+                          ? 'bg-forest'
+                          : a.id === 'audits'
+                          ? 'bg-clay'
+                          : 'bg-primary/70'
+                      } transition-all duration-300`}
+                      title={`${a.label}: ${a.pct}%`}
+                    ></div>
+                  ))}
+                </div>
+
+                {/* Sliders */}
+                <div className="space-y-6">
+                  {localAllocations.map((alloc, idx) => (
+                    <div key={alloc.id} className="p-4 rounded-xl bg-sand/40 border border-[#e7e2d8]">
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="text-xs font-heading font-bold text-ink">{alloc.label}</label>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="number"
+                            step="0.1"
+                            min="0"
+                            max="100"
+                            value={alloc.pct}
+                            onChange={(e) => handleAllocationPctChange(idx, e.target.value)}
+                            className="w-20 px-2.5 py-1 rounded-lg bg-white border border-[#e7e2d8] text-xs font-mono font-bold text-ink text-right focus:outline-none focus:border-primary"
+                          />
+                          <span className="text-xs font-bold text-ink-muted">%</span>
+                        </div>
+                      </div>
+
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        step="0.1"
+                        value={alloc.pct}
+                        onChange={(e) => handleAllocationPctChange(idx, e.target.value)}
+                        className="w-full accent-primary cursor-pointer"
+                      />
+
+                      <p className="text-[11px] text-ink-muted mt-1">{alloc.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
@@ -1611,7 +1484,7 @@ export default function Admin({ setCurrentPage }) {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-[#829992]">Backend Gateway:</span>
-                      <span className="font-mono text-white/90">http://localhost:5000</span>
+                      <span className="font-mono text-white/90">{getApiBase().replace(/\/api$/, '')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-[#829992]">Super Admin User:</span>
@@ -2120,96 +1993,6 @@ export default function Admin({ setCurrentPage }) {
                   className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs"
                 >
                   Save Figure
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* =====================================================================
-          MODAL 4: ADD AUDIT RECORD
-      ===================================================================== */}
-      {docModalOpen && (
-        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8]">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e7e2d8]">
-              <h2 className="text-lg font-heading font-bold text-ink">Upload Audit Record</h2>
-              <button
-                onClick={() => setDocModalOpen(false)}
-                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleSaveDoc} className="space-y-4">
-              <div>
-                <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Document Title
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={docFormData.title}
-                  onChange={(e) => setDocFormData({ ...docFormData, title: e.target.value })}
-                  placeholder="2026 Audited Financial Statement (PDF)"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-heading font-semibold text-ink mb-1">File Size</label>
-                  <input
-                    type="text"
-                    required
-                    value={docFormData.size}
-                    onChange={(e) => setDocFormData({ ...docFormData, size: e.target.value })}
-                    placeholder="2.4 MB"
-                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-heading font-semibold text-ink mb-1">Date</label>
-                  <input
-                    type="text"
-                    required
-                    value={docFormData.date}
-                    onChange={(e) => setDocFormData({ ...docFormData, date: e.target.value })}
-                    placeholder="Published June 2026"
-                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                  Certifying Auditor / Authority
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={docFormData.auditor}
-                  onChange={(e) => setDocFormData({ ...docFormData, auditor: e.target.value })}
-                  placeholder="Bakare & Co. Chartered Accountants"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
-                />
-              </div>
-
-              <div className="pt-4 border-t border-[#e7e2d8] flex items-center justify-end gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setDocModalOpen(false)}
-                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs"
-                >
-                  Add Record
                 </button>
               </div>
             </form>

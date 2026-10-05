@@ -1,7 +1,8 @@
 import { Heart, MessageSquare } from './Icons';
 
 export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgram }) {
-  const handleNav = (pageId, subId = null) => {
+  const handleNav = (e, pageId, subId = null) => {
+    if (e) e.preventDefault();
     if (pageId === 'legal' && subId && onSelectLegalTab) {
       onSelectLegalTab(subId);
     }
@@ -9,7 +10,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
       onSelectProgram(subId);
     }
     setCurrentPage(pageId);
-    window.location.hash = subId ? `${pageId}/${subId}` : pageId;
+    window.location.hash = subId ? `${pageId}/${subId}` : (pageId === 'home' ? '' : pageId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -21,8 +22,9 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-[#e7e2d8]">
           {/* Brand Col */}
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <button
-              onClick={() => handleNav('home')}
+            <a
+              href="#"
+              onClick={(e) => handleNav(e, 'home')}
               className="flex items-center gap-3 text-left cursor-pointer w-fit"
             >
               <div className="w-9 h-9 rounded-xl bg-white border border-[#e7e2d8] flex items-center justify-center p-1">
@@ -40,7 +42,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
                   Initiative • Africa
                 </span>
               </div>
-            </button>
+            </a>
 
             <p className="text-xs text-ink-light leading-relaxed max-w-sm">
               Restoring human dignity through sustainable equal access to education and frontline healthcare in underserved Nigerian communities.
@@ -48,6 +50,8 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
 
             <div className="flex items-center gap-2 pt-1 text-[11px] text-ink-muted">
               <span className="text-forest font-semibold">100% Direct Giving</span>
+              <span>•</span>
+              <span className="font-mono text-ink font-semibold">CAC RC: 7015705</span>
             </div>
           </div>
 
@@ -56,24 +60,24 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
             <h4 className="text-xs uppercase tracking-wider text-ink font-bold mb-1">
               Core Initiatives
             </h4>
-            <button onClick={() => handleNav('programs', 'women-widows')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            <a href="#programs/women-widows" onClick={(e) => handleNav(e, 'programs', 'women-widows')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Women
-            </button>
-            <button onClick={() => handleNav('programs', 'orphanage-outreaches')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#programs/orphanage-outreaches" onClick={(e) => handleNav(e, 'programs', 'orphanage-outreaches')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Children
-            </button>
-            <button onClick={() => handleNav('programs', 'scholarship')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#programs/scholarship" onClick={(e) => handleNav(e, 'programs', 'scholarship')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Education
-            </button>
-            <button onClick={() => handleNav('programs', 'medical-outreaches')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#programs/medical-outreaches" onClick={(e) => handleNav(e, 'programs', 'medical-outreaches')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Health
-            </button>
-            <button onClick={() => handleNav('programs', 'school-donations')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#programs/school-donations" onClick={(e) => handleNav(e, 'programs', 'school-donations')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Community support
-            </button>
-            <button onClick={() => handleNav('programs', 'youth-empowerment')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#programs/youth-empowerment" onClick={(e) => handleNav(e, 'programs', 'youth-empowerment')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Empowerment
-            </button>
+            </a>
           </div>
 
           {/* Organization */}
@@ -81,27 +85,27 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
             <h4 className="text-xs uppercase tracking-wider text-ink font-bold mb-1">
               Organization
             </h4>
-            <button onClick={() => handleNav('home')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            <a href="#" onClick={(e) => handleNav(e, 'home')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Home
-            </button>
-            <button onClick={() => handleNav('our-story')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#our-story" onClick={(e) => handleNav(e, 'our-story')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Our Story &amp; Origin
-            </button>
-            <button onClick={() => handleNav('impact')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#impact" onClick={(e) => handleNav(e, 'impact')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Audited Impact Metrics
-            </button>
-            <button onClick={() => handleNav('testimonials')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#testimonials" onClick={(e) => handleNav(e, 'testimonials')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Community Letters
-            </button>
-            <button onClick={() => handleNav('transparency')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#transparency" onClick={(e) => handleNav(e, 'transparency')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Financial Transparency
-            </button>
-            <button onClick={() => handleNav('news')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#news" onClick={(e) => handleNav(e, 'news')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Outreach Videos (YouTube)
-            </button>
-            <button onClick={() => handleNav('outreaches')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#outreaches" onClick={(e) => handleNav(e, 'outreaches')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Outreach Log
-            </button>
+            </a>
           </div>
 
           {/* Get Involved */}
@@ -109,19 +113,19 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
             <h4 className="text-xs uppercase tracking-wider text-ink font-bold mb-1">
               Get Involved
             </h4>
-            <button onClick={() => handleNav('get-involved', 'donate')} className="text-left text-xs text-primary font-bold hover:underline cursor-pointer flex items-center gap-1">
+            <a href="#get-involved/donate" onClick={(e) => handleNav(e, 'get-involved', 'donate')} className="text-left text-xs text-primary font-bold hover:underline cursor-pointer flex items-center gap-1">
               <span>Donate (Impact Tiers)</span>
               <Heart className="w-3 h-3" />
-            </button>
-            <button onClick={() => handleNav('get-involved', 'volunteer')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#get-involved/volunteer" onClick={(e) => handleNav(e, 'get-involved', 'volunteer')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Volunteer Opportunities
-            </button>
-            <button onClick={() => handleNav('get-involved', 'partnership')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#get-involved/partnership" onClick={(e) => handleNav(e, 'get-involved', 'partnership')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               CSR &amp; Partnerships
-            </button>
-            <button onClick={() => handleNav('contact')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            </a>
+            <a href="#contact" onClick={(e) => handleNav(e, 'contact')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
               Contact &amp; FAQ
-            </button>
+            </a>
 
             <div className="pt-2">
               <a
@@ -136,31 +140,39 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
             </div>
           </div>
 
-
-
+          {/* Address & Legal Registration */}
           <div className="flex flex-col gap-2.5">
             <h4 className="text-xs uppercase tracking-wider text-ink font-bold mb-1">
-              Address
+              Address &amp; Registration
             </h4>
-            <button onClick={() => handleNav('contact')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer">
+            <a href="#contact" onClick={(e) => handleNav(e, 'contact')} className="text-left text-xs text-ink-light hover:text-primary transition-colors cursor-pointer leading-relaxed">
               Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria
-            </button>
+            </a>
+            <div className="pt-2 border-t border-[#e7e2d8] flex flex-col gap-1 text-[11px]">
+              <span className="font-heading font-bold text-ink flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-forest shrink-0"></span>
+                <span>RC: 7015705</span>
+              </span>
+              <span className="text-ink-muted text-[10px] leading-tight">
+                Corporate Affairs Commission (CAC) Registered Non-Profit
+              </span>
+            </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-muted">
-          <p>© {new Date().getFullYear()} Ten Kind Hands Initiative • Africa. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Ten Kind Hands Initiative • CAC RC: 7015705. All rights reserved.</p>
           <div className="flex items-center gap-5 flex-wrap justify-center">
-            <button onClick={() => handleNav('legal', 'privacy')} className="hover:text-ink transition-colors cursor-pointer">
+            <a href="#legal/privacy" onClick={(e) => handleNav(e, 'legal', 'privacy')} className="hover:text-ink transition-colors cursor-pointer">
               Privacy Policy
-            </button>
-            <button onClick={() => handleNav('legal', 'terms')} className="hover:text-ink transition-colors cursor-pointer">
+            </a>
+            <a href="#legal/terms" onClick={(e) => handleNav(e, 'legal', 'terms')} className="hover:text-ink transition-colors cursor-pointer">
               Terms of Service
-            </button>
-            <button onClick={() => handleNav('admin')} className="hover:text-primary text-ink-light font-semibold transition-colors cursor-pointer flex items-center gap-1">
+            </a>
+            <a href="#admin" onClick={(e) => handleNav(e, 'admin')} className="hover:text-primary text-ink-light font-semibold transition-colors cursor-pointer flex items-center gap-1">
               <span>Staff / Admin</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>

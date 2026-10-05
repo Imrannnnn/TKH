@@ -172,43 +172,7 @@
       "desc": "100% covered privately by Trustee Endowment. Zero kobo is deducted from public donor contributions."
     }
   ],
-  "documents": [
-    {
-      "id": "doc-1",
-      "title": "2025 Audited Financial Statement (PDF)",
-      "size": "2.4 MB",
-      "date": "Published June 2026",
-      "auditor": "Bakare & Co. Chartered Accountants"
-    },
-    {
-      "id": "doc-2",
-      "title": "2024 Audited Financial Statement (PDF)",
-      "size": "2.1 MB",
-      "date": "Published June 2025",
-      "auditor": "Bakare & Co. Chartered Accountants"
-    },
-    {
-      "id": "doc-3",
-      "title": "CAC Certificate of Incorporation",
-      "size": "1.2 MB",
-      "date": "Incorporated Nigeria",
-      "auditor": "Corporate Affairs Commission"
-    },
-    {
-      "id": "doc-4",
-      "title": "SCUML Anti-Money Laundering Compliance Certificate",
-      "size": "950 KB",
-      "date": "Certified",
-      "auditor": "Special Control Unit Against Money Laundering (EFCC)"
-    },
-    {
-      "id": "doc-5",
-      "title": "Ten Kind Hands Child Protection & Safeguarding Policy",
-      "size": "1.8 MB",
-      "date": "Revised 2026",
-      "auditor": "Ethics & Legal Review Committee"
-    }
-  ],
+  "documents": [],
   "announcement": "Commissioning new solar classrooms in Kaduna & mobile health clinic in Enugu",
   "inquiries": [
     {
@@ -234,6 +198,17 @@
       "source": "Partner Portal"
     }
   ],
+  "contactInfo": {
+    "headquarters": "Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria",
+    "rcNumber": "RC: 7015705",
+    "cacStatus": "CAC RC: 7015705 (Incorporated Non-Profit)",
+    "email": "contact@tenkindhands.org",
+    "partnershipsEmail": "partners@tenkindhands.org",
+    "phone": "+234 818 099 4301",
+    "whatsapp": "+234 818 099 4301",
+    "emergencyDesk": "+234 818 099 4301",
+    "visitingHours": "Monday – Friday: 9:00 AM – 5:00 PM WAT"
+  },
   "admin": {
     "email": "admin@tenkindhands.org",
     "password": "admin2026"

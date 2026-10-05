@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { ShieldCheck, FileText, Download, CheckCircle2, Heart } from '../components/Icons';
+import { ShieldCheck, CheckCircle2, Heart, Mail } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Transparency({ onOpenDonate }) {
-  const { allocations: dynamicAllocations, documents: dynamicDocuments } = useData();
-  const [downloadingDoc, setDownloadingDoc] = useState(null);
+  const { allocations: dynamicAllocations } = useData();
 
   const defaultAllocations = [
     { label: 'Frontline Programs & Field Deliverables', pct: 88.4, color: 'bg-primary', desc: 'Classroom construction, textbook printing, solar installations, pharmaceutical procurement, and student scholarships.' },
@@ -13,24 +11,7 @@ export default function Transparency({ onOpenDonate }) {
     { label: 'Administrative & Executive Overhead', pct: 0.0, color: 'bg-ink-muted', desc: '100% covered privately by Trustee Endowment. Zero kobo is deducted from public donor contributions.' }
   ];
 
-  const defaultDocuments = [
-    { title: '2025 Audited Financial Statement (PDF)', size: '2.4 MB', date: 'Published June 2026', auditor: 'Bakare & Co. Chartered Accountants' },
-    { title: '2024 Audited Financial Statement (PDF)', size: '2.1 MB', date: 'Published June 2025', auditor: 'Bakare & Co. Chartered Accountants' },
-    { title: 'CAC Certificate of Incorporation', size: '1.2 MB', date: 'Incorporated Nigeria', auditor: 'Corporate Affairs Commission' },
-    { title: 'SCUML Anti-Money Laundering Compliance Certificate', size: '950 KB', date: 'Certified', auditor: 'Special Control Unit Against Money Laundering (EFCC)' },
-    { title: 'Ten Kind Hands Child Protection & Safeguarding Policy', size: '1.8 MB', date: 'Revised 2026', auditor: 'Ethics & Legal Review Committee' }
-  ];
-
   const activeAllocations = dynamicAllocations && dynamicAllocations.length > 0 ? dynamicAllocations : defaultAllocations;
-  const activeDocuments = dynamicDocuments && dynamicDocuments.length > 0 ? dynamicDocuments : defaultDocuments;
-
-  const handleDownload = (docTitle) => {
-    setDownloadingDoc(docTitle);
-    setTimeout(() => {
-      setDownloadingDoc(null);
-      alert(`Downloaded document: ${docTitle}`);
-    }, 1000);
-  };
 
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
@@ -103,46 +84,126 @@ export default function Transparency({ onOpenDonate }) {
           </div>
         </div>
 
-        {/* Public Audit Repository */}
-        <div className="bg-white p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
-          <div className="mb-8">
-            <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-              Official Document Repository
-            </span>
-            <h3 className="text-2xl font-heading font-bold text-ink">
-              Certificates, Charters &amp; Audit Downloads
-            </h3>
+        {/* Legal Status & CAC Incorporation */}
+        <div className="bg-sand/90 p-5 sm:p-8 md:p-10 rounded-3xl border border-[#e7e2d8] shadow-xs mb-12">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-forest/10 text-forest text-xs font-bold font-heading">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Officially Incorporated in Nigeria</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-ink">
+                Corporate Affairs Commission (CAC) Registration
+              </h3>
+              <p className="text-xs sm:text-sm text-ink-light max-w-2xl leading-relaxed">
+                Ten Kind Hands Initiative is a legally incorporated non-profit foundation chartered under the Companies and Allied Matters Act (CAMA) by the Federal Government of Nigeria.
+              </p>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs flex flex-col gap-1 min-w-[240px]">
+              <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-ink-muted">
+                Official Registration Number
+              </span>
+              <span className="font-mono text-2xl font-extrabold text-forest">
+                RC: 7015705
+              </span>
+              <span className="text-[11px] text-ink-light">
+                Verifiable on the public CAC portal (<a href="https://search.cac.gov.ng" target="_blank" rel="noopener noreferrer" className="text-primary underline font-medium">search.cac.gov.ng</a>)
+              </span>
+            </div>
           </div>
 
-          <div className="space-y-4">
-            {activeDocuments.map((doc, idx) => (
-              <div
-                key={idx}
-                className="p-4 sm:p-5 rounded-2xl bg-sand/90 hover:bg-sand transition-colors border border-[#e7e2d8] flex flex-col sm:flex-row justify-between sm:items-center gap-4"
-              >
-                <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-[#e7e2d8] flex items-center justify-center shrink-0">
-                    <FileText className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-heading font-bold text-ink">{doc.title}</h4>
-                    <p className="text-xs text-ink-muted">{doc.auditor} • {doc.date} ({doc.size})</p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => handleDownload(doc.title)}
-                  className="btn-secondary w-full sm:w-auto text-xs px-5 py-2 flex items-center justify-center gap-2 cursor-pointer font-heading font-semibold"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>{downloadingDoc === doc.title ? 'Downloading...' : 'Download File'}</span>
-                </button>
-              </div>
-            ))}
+          <div className="mt-6 pt-5 border-t border-[#e7e2d8] grid sm:grid-cols-2 gap-4 text-xs text-ink-light">
+            <div>
+              <strong className="block font-heading text-ink text-xs mb-0.5">Corporate Entity:</strong>
+              <span>Ten Kind Hands Initiative</span>
+            </div>
+            <div>
+              <strong className="block font-heading text-ink text-xs mb-0.5">Registered Secretariat:</strong>
+              <span>Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria</span>
+            </div>
           </div>
         </div>
 
-        <div className="text-center pt-16">
+        {/* Governance & Fiduciary Safeguards */}
+        <div className="bg-white p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs mb-12">
+          <div className="mb-8">
+            <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
+              Governance Charter
+            </span>
+            <h3 className="text-2xl font-heading font-bold text-ink">
+              Core Principles of Financial Stewardship
+            </h3>
+            <p className="text-xs sm:text-sm text-ink-light mt-1.5 leading-relaxed">
+              How Ten Kind Hands ensures every contribution delivers verifiable frontline impact across Nigeria.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5">
+            <div className="p-5 rounded-2xl bg-sand/80 border border-[#e7e2d8] flex flex-col justify-between">
+              <div>
+                <span className="w-8 h-8 rounded-xl bg-primary/10 text-primary font-bold text-xs flex items-center justify-center mb-3 font-mono">
+                  01
+                </span>
+                <h4 className="text-base font-heading font-bold text-ink mb-1.5">
+                  Direct Vendor Settlement
+                </h4>
+                <p className="text-xs text-ink-light leading-relaxed">
+                  Field transactions are conducted electronically directly to verified educational suppliers, pharmaceutical distributors, and registered artisans. Cash handling on the field is prohibited.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-sand/80 border border-[#e7e2d8] flex flex-col justify-between">
+              <div>
+                <span className="w-8 h-8 rounded-xl bg-forest/10 text-forest font-bold text-xs flex items-center justify-center mb-3 font-mono">
+                  02
+                </span>
+                <h4 className="text-base font-heading font-bold text-ink mb-1.5">
+                  Private Trustee Endowment
+                </h4>
+                <p className="text-xs text-ink-light leading-relaxed">
+                  Our Board of Trustees privately funds all office leases, executive allowances, technology infrastructure, and banking transaction fees. Zero kobo is deducted from your public gift.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-sand/80 border border-[#e7e2d8] flex flex-col justify-between">
+              <div>
+                <span className="w-8 h-8 rounded-xl bg-clay/10 text-clay font-bold text-xs flex items-center justify-center mb-3 font-mono">
+                  03
+                </span>
+                <h4 className="text-base font-heading font-bold text-ink mb-1.5">
+                  Open Field Verification
+                </h4>
+                <p className="text-xs text-ink-light leading-relaxed">
+                  Every school renovation, medical mission, and book distribution is documented with GPS coordinates, beneficiary logs, and photographic records published openly on our Dispatches.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Compliance & Due Diligence Desk Callout */}
+          <div className="mt-8 p-5 rounded-2xl bg-[#faf8f4] border border-[#e7e2d8] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h5 className="text-sm font-heading font-bold text-ink">
+                Institutional Due Diligence &amp; Audit Inquiries
+              </h5>
+              <p className="text-xs text-ink-light mt-0.5 leading-relaxed">
+                For corporate CSR partnerships, grant audits, or governance inquiries, connect directly with our Secretariat Desk.
+              </p>
+            </div>
+            <a
+              href="mailto:finance@tenkindhands.org?subject=Institutional Due Diligence Inquiry"
+              className="btn-secondary text-xs px-5 py-2.5 flex items-center justify-center gap-2 font-heading font-semibold shrink-0 cursor-pointer"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Contact Finance Desk</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="text-center pt-8">
           <button
             onClick={onOpenDonate}
             className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-6 sm:px-8 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
