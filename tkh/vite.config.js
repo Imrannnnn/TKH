@@ -12,7 +12,7 @@ export default defineConfig({
       }
     },
     allowedHosts: [
-      'kinda-runtime-geneva-metropolitan.trycloudflare.com'
+      'https://locks-ebook-airfare-pensions.trycloudflare.com'
     ]
   }
 })

@@ -1,397 +1,415 @@
-import { useData } from '../context/DataContext';
-import { BookOpen, Heart, HandHeart, School, Sun, Stethoscope, ShieldCheck, Users, TrendingUp } from '../components/Icons';
+import { Heart, ArrowRight, ShieldCheck, Check } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
-export default function OurStory({ onOpenDonate }) {
-  const { storyContent } = useData();
-  const milestones = [
-    {
-      year: '2015',
-      title: 'Under the Neem Tree in Zaria',
-      location: 'Kaduna State',
-      description: 'Started as a weekend reading circle with 15 children who had never attended formal primary school. Three volunteer teachers pooled allowances for exercise books and pencils.',
-      impact: '15 Pupils • 3 Volunteer Teachers'
-    },
-    {
-      year: '2018',
-      title: 'First Permanent Solar Classroom Block',
-      location: 'Ogun State',
-      description: 'Constructed an insulated 3-classroom block with solar roof lighting, durable wooden desks, and an attached clean water borehole so pupils never walked thirsty.',
-      impact: '320 Students • 1st Dedicated Learning Post'
-    },
-    {
-      year: '2021',
-      title: 'Deploying Off-Road Mobile Clinics',
-      location: 'Kaduna & Enugu Rural Hamlets',
-      description: 'Acquired 4x4 vehicles equipped with rapid malaria tests, cold-chain infant vaccines, and maternal birth supplies, traveling where roads end.',
-      impact: '5,000+ Screenings Conducted'
-    },
-    {
-      year: '2024–Present',
-      title: 'A Replicable Model Across Nigeria',
-      location: '12 Districts Nationwide',
-      description: 'Operating 45 partner schools, 12 clinics, and 28 water boreholes with 100% local community ownership and zero cuts from individual donor funds.',
-      impact: 'Over 20,000 Lives Touched'
-    }
-  ];
+export default function OurStory({ onOpenDonate, setCurrentPage }) {
+  const handleNav = (pageId, hash = '') => {
+    if (setCurrentPage) setCurrentPage(pageId);
+    window.location.hash = hash || pageId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-  const values = [
+  const team = [
     {
-      title: 'Our Foundation & Devotion',
-      description: 'Ten Kind Hands is an NGO based in Nigeria, devoted to enhancing the lives of disadvantaged women, children, and families via educational and medical programs.',
-      icon: Heart,
-      color: 'text-primary'
-    },
-    {
-      title: 'A Fundamental Human Right',
-      description: 'We consider access to decent education and medical care for all children, regardless of their socioeconomic situation, a fundamental human right.',
-      icon: ShieldCheck,
-      color: 'text-forest'
-    },
-    {
-      title: 'Breaking the Poverty Cycle',
-      description: 'To assist disadvantaged women and children break the cycle of poverty and build brighter futures, it is our aim to give them access to healthcare and quality education.',
-      icon: TrendingUp,
-      color: 'text-clay'
-    },
-    {
-      title: 'Realizing Full Potential',
-      description: 'We strive to ensure that for as many as we can support, we enable them live healthy, productive lives and realize their full potential.',
-      icon: Sun,
-      color: 'text-amber-600'
-    },
-    {
-      title: 'Primary Focus on Education',
-      description: 'Our primary focus is on education. We work to enroll as many children as possible in schools, especially in isolated and underserved areas where access is difficult.',
-      icon: School,
-      color: 'text-primary'
-    },
-    {
-      title: 'Scholarships & Learning Facilities',
-      description: 'To pay for tuition, transportation, and other associated costs, we provide scholarships, financial aid, and support. Additionally, we collaborate with nearby schools to upgrade their facilities and make studying easier, such as by constructing classrooms, libraries, and computer laboratories.',
-      icon: BookOpen,
-      color: 'text-forest'
-    },
-    {
-      title: 'Comprehensive Healthcare Access',
-      description: 'We also acknowledge that healthcare plays a crucial part in enhancing the well-being of women and children, which is why we provide them access to fundamental medical services like immunizations, prenatal care, maternal health, and child nutrition plans. To give women and families the knowledge they need to make informed health decisions, we also run health awareness campaigns and offer training in family planning, nutrition, and cleanliness.',
-      icon: Stethoscope,
-      color: 'text-emerald-800'
-    },
-    {
-      title: 'Devoted Volunteers & Community',
-      description: 'A group of devoted and enthusiastic volunteers participate in ensuring we grow our impact story by collaborating closely with schools, regional governments, other stakeholders, and local communities to make sure that our mission is carried out.',
-      icon: Users,
-      color: 'text-primary'
-    },
-    {
-      title: 'Continuous Review & Donor Trust',
-      description: 'We undertake a continuous review of our programs and initiatives to ensure that they continue to impact those who need them the most. We value the support of our kind donors who enable us to realize our objective of improving the lives of women and children across Africa.',
-      icon: HandHeart,
-      color: 'text-forest'
-    }
-  ];
-
-  const volunteers = [
-    {
+      initials: 'SA',
       name: 'Suotonye Augustine Arthur',
       role: 'Country Head',
-      badge: 'Country Leadership',
-      initials: 'SA',
       image: '/images/Suotonye Augustine Arthur - Country Head.jpeg',
-      description: 'Oversees country-wide program execution, institutional donor relations, and high-impact partnerships across state governments and communities.'
+      badge: 'Country Leadership'
     },
     {
-      name: 'Ahange Kumawuese Keziah',
-      role: 'Finance Manager',
-      badge: 'Finance & Accounts',
-      initials: 'AK',
-      image: '/images/Ahange Kumawuese Keziah  Finance Manager..jpeg',
-      description: 'Drives financial stewardship, strict accounting controls, and transparent reporting ensuring 100% of donor funding goes directly to field impact.'
-    },
-    {
-      name: 'Anedo Deborah',
-      role: 'Human Resource',
-      badge: 'People & Culture',
-      initials: 'AD',
-      image: '/images/Anedo Deborah Human resource.jpeg',
-      description: 'Spearheads talent development, medical volunteer mobilization, and workforce operations supporting our teams across rural missions.'
-    },
-    {
-      name: 'Abubakar Muhammed',
-      role: 'Accountant',
-      badge: 'Financial Audit',
-      initials: 'AM',
-      image: '/images/Abubakar Muhammed Accountant.jpeg',
-      description: 'Ensures ledger accuracy, audit-readiness, and meticulous disbursement records for all classroom, medical, and community relief initiatives.'
-    },
-    {
+      initials: 'IF',
       name: 'Ibrahim Favour Adoba',
       role: 'Project Manager',
-      badge: 'Field Operations',
-      initials: 'IF',
       image: '/images/Ibrahim Favour Adoba - Project Manager.jpeg',
-      description: 'Leads frontline project deployment, monitoring school solar renovations, clean water drilling, and rural clinic logistics on the ground.'
+      badge: 'Field Operations'
     },
     {
-      name: 'Job Orokpo Agada',
-      role: 'Benue State Coordinator',
-      badge: 'Benue State',
-      initials: 'JA',
-      image: '/images/Job orokpo Agada Benue state coordinator.jpeg',
-      description: 'Coordinates community engagement, education scholarships, and frontline healthcare mission delivery across Benue State communities.'
+      initials: 'AK',
+      name: 'Ahange Kumawuese Keziah',
+      role: 'Finance Manager',
+      image: '/images/Ahange Kumawuese Keziah  Finance Manager..jpeg',
+      badge: 'Finance & Accounts'
     },
     {
-      name: 'Talabi Oluwaseyi Hannah',
-      role: 'Oyo State Project Coordinator',
-      badge: 'Oyo State',
-      initials: 'TH',
-      image: '/images/Talabi Oluwaseyi Hannah Oyo State Project Coordinator.jpeg',
-      description: 'Spearheads grassroots school renovations, solar infrastructure projects, and local stakeholder partnerships in Oyo State.'
+      initials: 'AM',
+      name: 'Abubakar Muhammed',
+      role: 'Accountant',
+      image: '/images/Abubakar Muhammed Accountant.jpeg',
+      badge: 'Financial Audit'
     },
     {
-      name: 'Hassan Habeeb Adebayo',
-      role: 'Lagos State Project Coordinator',
-      badge: 'Lagos State',
-      initials: 'HA',
-      image: '/images/lagos State Project Cordinator Hassan Habeeb Adebayo.jpeg',
-      description: 'Leads urban outreach missions, student sponsorship distribution, and volunteer logistics across underserved Lagos communities.'
+      initials: 'AD',
+      name: 'Anedo Deborah',
+      role: 'Human Resources',
+      image: '/images/Anedo Deborah Human resource.jpeg',
+      badge: 'People & Culture'
     },
     {
+      initials: 'IN',
       name: 'Ibrahim Nzoyu Vivian',
-      role: 'FCT Coordinator',
-      badge: 'FCT Abuja',
-      initials: 'IV',
+      role: 'Coordinator, FCT Abuja',
       image: '/images/FCT coordinator IBRAHIM NZOYU VIVIAN.jpeg',
-      description: 'Directs community outreach, educational support programs, and healthcare mission delivery across the Federal Capital Territory.'
+      badge: 'FCT Abuja'
     },
     {
+      initials: 'JO',
+      name: 'Job Orokpo Agada',
+      role: 'Coordinator, Benue',
+      image: '/images/Job orokpo Agada Benue state coordinator.jpeg',
+      badge: 'Benue State'
+    },
+    {
+      initials: 'HH',
+      name: 'Hassan Habeeb Adebayo',
+      role: 'Coordinator, Lagos',
+      image: '/images/lagos State Project Cordinator Hassan Habeeb Adebayo.jpeg',
+      badge: 'Lagos State'
+    },
+    {
+      initials: 'TO',
+      name: 'Talabi Oluwaseyi Hannah',
+      role: 'Coordinator, Oyo',
+      image: '/images/Talabi Oluwaseyi Hannah Oyo State Project Coordinator.jpeg',
+      badge: 'Oyo State'
+    },
+    {
+      initials: 'OT',
       name: 'Oluwadiya Tobi Elijah',
-      role: 'Plateau State Coordinator',
-      badge: 'Plateau State',
-      initials: 'OE',
+      role: 'Coordinator, Plateau',
       image: '/images/Oluwadiya Tobi Elijah Plateau State Coordinator.jpeg',
-      description: 'Coordinates grassroots educational initiatives, youth engagement, and community welfare projects throughout Plateau State.'
+      badge: 'Plateau State'
+    },
+  ];
+
+  const timeline = [
+    {
+      year: '2023',
+      title: 'First grassroots outreach',
+      detail: 'Initiated direct school fee coverage and nutritional relief packs for vulnerable children and widows in rural communities.',
+      image: '/images/IMG_0294.webp',
+      caption: 'Initial educational and nutritional distribution outreach'
+    },
+    {
+      year: '2023',
+      title: 'Registered with Corporate Affairs Commission',
+      detail: 'Formally incorporated as a non-profit foundation under Nigerian law (CAC RC: 7015705).',
+      image: '/images/food-distribution.jpg',
+      caption: 'CAC RC: 7015705 incorporation & community field deployment'
+    },
+    {
+      year: '2026',
+      title: '5-State Coordination Network',
+      detail: 'Monthly outreaches supported by on-the-ground state coordinators across FCT Abuja, Benue, Lagos, Oyo, and Plateau.',
+      image: '/images/hero-debate-competition-makurdi.webp',
+      caption: 'Makurdi Inter-Secondary debate & scholarship prizes'
+    },
+    {
+      year: '2026',
+      title: 'Nine-computer lab commissioned',
+      detail: 'Full digital laboratory and learning equipment donated to Beckwin International School, Plateau State.',
+      image: '/images/hero-digital-literacy-computer-lab.webp',
+      caption: 'Beckwin International School 9-system computer laboratory'
     }
   ];
 
-  const rawLeadership = (storyContent?.leadership?.length > 0 ? storyContent.leadership : []).filter(
-    (m) => m.name !== 'John Iyalla' && m.initials !== 'JI' && m.role !== 'Founder'
-  );
-  const rawCoordinators = storyContent?.stateCoordinators?.length > 0 ? storyContent.stateCoordinators : [];
-
-  const displayVolunteers = (rawLeadership.length > 0 || rawCoordinators.length > 0)
-    ? [...rawLeadership, ...rawCoordinators]
-    : volunteers;
-
-  const displayVision = storyContent?.visionStatement || 'A world where every child has access to quality education, and every woman and child has access to comprehensive healthcare. We strive to break the cycle of poverty and increase the overall well-being of communities by empowering children through education and promoting the health and well-being of women and children.';
+  const steps = [
+    {
+      number: '01',
+      title: 'Find the need',
+      detail: 'State coordinators work with community leaders and school heads to identify the children and families who need help most.'
+    },
+    {
+      number: '02',
+      title: 'Verify it',
+      detail: 'We visit homes and schools to confirm each need first-hand before anything is funded.'
+    },
+    {
+      number: '03',
+      title: 'Pay directly',
+      detail: 'Fees go straight to schools and materials straight from suppliers. No cash is handed out in the field.'
+    },
+    {
+      number: '04',
+      title: 'Report back',
+      detail: 'Every outreach gets a public field report with photos, numbers and what it cost.'
+    }
+  ];
 
   return (
-    <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-      {/* Editorial Story Header with Ambient Wave */}
-      <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-5xl mx-auto text-center overflow-hidden">
+    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a]">
+
+      {/* 1. Hero with Curved Wave Background */}
+      <section className="relative pt-10 sm:pt-16 pb-14 max-w-[1200px] mx-auto px-4 sm:px-6 overflow-hidden">
         <CurvedWaveBackground side="right" />
 
-        <div className="relative z-10">
-          <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
-            Mission • Vision • Values
-          </span>
-
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
-            A seed planted in hope. <br />
-            <span className="text-primary">A forest grown in dignity.</span>
-          </h1>
-          <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-10 leading-relaxed font-normal"> vision </p>
-
-
-          <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-10 leading-relaxed font-normal">{displayVision}
-          </p>
-
-          <div className="w-full h-64 sm:h-80 md:h-[450px] rounded-3xl overflow-hidden relative border border-[#e7e2d8] shadow-xs">
-            <img
-              className="w-full h-full object-cover"
-              alt="Community outreach gathering in Nigeria"
-              src="/images/IMG_0294.JPG"
-            />
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-7 flex flex-col items-start gap-4">
+            <span className="text-xs uppercase font-bold tracking-widest text-maroon">
+              ABOUT US
+            </span>
+            <h1 className="font-heading font-bold text-3xl sm:text-5xl leading-[1.15] text-[#1c1c1a]">
+              Every child should be able to learn and stay healthy, whatever their family can afford.
+            </h1>
+            <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
+              Ten Kind Hands is a Nigerian non-profit working with schools, communities and volunteers to help disadvantaged children, women and families break the cycle of poverty.
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* Genesis Essay */}
-      <section className="py-16 px-4 md:px-8 max-w-4xl mx-auto border-b border-[#e7e2d8]">
-        <div className="grid md:grid-cols-12 gap-10 items-start">
-          <div className="md:col-span-5">
-            <div className="rounded-2xl overflow-hidden border border-[#e7e2d8] p-2 bg-sand">
+          <div className="lg:col-span-5">
+            <div className="relative rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md bg-white group">
               <img
-                className="w-full h-80 rounded-xl object-cover"
-                alt="Ten Kind Hands Volunteers & Outreach Team"
-                src="/images/IMG_0300.JPG"
+                src="/images/food-distribution.jpg"
+                alt="Ten Kind Hands team and community families"
+                className="w-full h-[320px] sm:h-[380px] object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/images/IMG_0303.JPG';
+                }}
               />
-              <div className="pt-2 px-1 text-center">
-                <span className="text-xs font-bold text-ink block font-heading">Ten Kind Hands Volunteers</span>
-                <span className="text-[11px] text-ink-muted">Empowering African Women &amp; Children</span>
+              <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/75 via-black/30 to-transparent">
+                <span className="text-xs text-white font-medium px-3 py-1 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 inline-block">
+                  Community distribution · On-the-ground team
+                </span>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="md:col-span-7 space-y-4">
+      {/* 2. Mission & Vision */}
+      <section className="py-10 max-w-[1200px] mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          {/* Mission: Deep Forest Card */}
+          <div className="bg-forest text-white rounded-3xl p-8 sm:p-10 shadow-sm flex flex-col justify-between">
+            <div>
+              <span className="text-xs uppercase tracking-widest text-[#a8d5c4] font-bold block mb-3">
+                OUR MISSION
+              </span>
+              <p className="font-heading font-semibold text-xl sm:text-2xl leading-snug">
+                To improve the lives of women and children by providing educational opportunities and healthcare services that promote better health outcomes and a brighter future.
+              </p>
+            </div>
+            <div className="pt-6 mt-6 border-t border-white/20 text-xs text-white/80">
+              Grassroots Delivery · Direct Giving Model
+            </div>
+          </div>
 
-            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
-              Mission
-            </h2>
-            <p className="text-lg sm:text-xl md:text-2xl text-ink-light leading-relaxed">
-              To improve the lives of women and children by providing educational opportunities and healthcare services that promote better health outcomes and a brighter future.
-            </p>
-
-            <div className="p-4 rounded-xl bg-sand border-l-2 border-primary text-xs italic text-ink-light leading-relaxed mt-4">
-              "When you empower a widow with a livelihood, equip a child with the tools to learn, or give a young person the skills to earn, you do more than meet an immediate need — you create a ripple of hope, dignity, and lasting change across an entire community."
+          {/* Vision: Clean Light Card */}
+          <div className="bg-white border border-[#e5e0d8] rounded-3xl p-8 sm:p-10 shadow-sm flex flex-col justify-between">
+            <div>
+              <span className="text-xs uppercase tracking-widest text-maroon font-bold block mb-3">
+                OUR VISION
+              </span>
+              <p className="font-heading font-semibold text-xl sm:text-2xl leading-snug text-[#1c1c1a]">
+                A world where every child has access to quality education, and every woman and child has access to comprehensive healthcare.
+              </p>
+            </div>
+            <div className="pt-6 mt-6 border-t border-[#e5e0d8] text-xs text-[#706e68]">
+              Dignity · Equity · Sustainable Progress
             </div>
           </div>
         </div>
       </section>
 
-      {/* Core Principles */}
-      <section className="py-20 px-4 md:px-8 max-w-7xl mx-auto border-b border-[#e7e2d8]">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-            Who we are
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
-            Principles that govern every project.
-          </h2>
-        </div>
+      {/* 3. How We Started (Story + Timeline with Documentary Photos) */}
+      <section className="py-16 sm:py-20 bg-[#f5f1e8] border-y border-[#e5e0d8]">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            {/* Left Story Column */}
+            <div className="lg:col-span-5 flex flex-col justify-between">
+              <div>
+                <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a] mb-4">
+                  How we started
+                </h2>
+                <div className="text-sm sm:text-base text-[#4a4a46] space-y-4 leading-relaxed mb-6">
+                  <p>
+                    Ten Kind Hands was founded with a straightforward conviction: that no child should be locked out of classroom doors because their parents fell on hard times, and no mother should suffer preventable illnesses because basic care was out of reach.
+                  </p>
+                  <p>
+                    We saw that traditional charity models often swallowed donor gifts in excessive overhead. We chose a different path: <strong className="text-[#1c1c1a]">100% of public gifts go directly into frontline school fees, learning kits, and medications</strong>, while our founders and trustees personally underwrite operating costs.
+                  </p>
+                  <p>
+                    Today, what began as modest outreach has expanded into a nationwide team of state coordinators across five Nigerian states.
+                  </p>
+                </div>
+              </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {values.map((v, i) => {
-            const IconComponent = v.icon;
-            return (
-              <div key={i} className="p-6 rounded-2xl bg-sand border border-[#e7e2d8] flex flex-col justify-between hover:border-primary/40 hover:shadow-xs transition-all">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-white border border-[#e7e2d8] flex items-center justify-center">
-                      <IconComponent className={`w-5 h-5 ${v.color}`} />
+              {/* Supporting Documentary Photo */}
+              <div className="rounded-2xl overflow-hidden border border-[#e5e0d8] bg-white shadow-xs">
+                <img
+                  src="/images/hero-widows-clean-cooking-stoves.webp"
+                  alt="Ten Kind Hands field outreach in Dafara"
+                  className="w-full h-48 object-cover object-center"
+                />
+                <div className="p-3 bg-white text-xs text-[#706e68]">
+                  Community outreach &amp; eco-clean cookstove distribution in Dafara
+                </div>
+              </div>
+            </div>
+
+            {/* Right Timeline Column with Field Images */}
+            <div className="lg:col-span-7 flex flex-col gap-6">
+              {timeline.map((item, idx) => (
+                <div key={idx} className="bg-white rounded-2xl p-5 sm:p-6 border border-[#e5e0d8] shadow-sm flex flex-col sm:flex-row items-start gap-4">
+                  <div className="w-full sm:w-36 h-28 shrink-0 rounded-xl overflow-hidden bg-sand border border-[#e5e0d8]">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover object-center"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/images/IMG_0300.webp';
+                      }}
+                    />
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-heading font-bold text-maroon text-base">
+                        {item.year}
+                      </span>
+                      <span className="text-[#d0c8bb]">•</span>
+                      <h3 className="font-heading font-bold text-base text-[#1c1c1a]">
+                        {item.title}
+                      </h3>
                     </div>
-                    <span className="font-mono text-xs font-bold text-ink-muted/60 bg-white/70 px-2.5 py-1 rounded-full border border-[#e7e2d8]">
-                      0{i + 1}
+                    <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-2">
+                      {item.detail}
+                    </p>
+                    <span className="text-[11px] text-[#706e68] font-medium block">
+                      {item.caption}
                     </span>
                   </div>
-                  <h3 className="text-lg font-heading font-bold text-ink mb-2">{v.title}</h3>
-                  <p className="text-xs text-ink-light leading-relaxed">{v.description}</p>
                 </div>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+
+          </div>
         </div>
       </section>
 
-      {/* Volunteers Section */}
-      <section className="py-20 px-4 md:px-8 max-w-7xl mx-auto border-b border-[#e7e2d8]">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-            Dedicated Field Force
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink mb-3">
-            Our Volunteers
+      {/* 4. How We Work (4-Step Way of Working) */}
+      <section className="py-16 sm:py-20 max-w-[1200px] mx-auto px-4 sm:px-6">
+        <div className="max-w-2xl mb-12">
+          <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1.5">
+            HOW WE WORK
+          </div>
+          <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
+            Local people choose who we help. We pay schools and suppliers directly.
           </h2>
-          <p className="text-sm text-ink-light leading-relaxed">
-            Meet the dedicated coordinators and frontline volunteers driving our education, healthcare, and community empowerment initiatives across Nigeria.
-          </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayVolunteers.map((member) => (
-            <div
-              key={member.name}
-              className="bg-sand/60 rounded-3xl border border-[#e7e2d8] p-5 sm:p-8 flex flex-col items-center text-center shadow-xs hover:border-primary/40 hover:shadow-md transition-all group"
-            >
-              {member.image ? (
-                <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl overflow-hidden border-2 border-[#e7e2d8] group-hover:border-primary/40 shadow-xs mb-5 bg-white shrink-0">
-                  <img
-                    src={encodeURI(member.image)}
-                    alt={member.name}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              ) : (
-                <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/15 via-sand to-forest/15 flex flex-col items-center justify-center shadow-xs mb-5 shrink-0 group-hover:border-primary/50 transition-all">
-                  <span className="font-heading font-extrabold text-3xl sm:text-4xl text-primary mb-1">
-                    {member.initials}
-                  </span>
-                  <span className="text-[10px] font-heading font-bold uppercase tracking-wider text-ink-muted">
-                    {member.badge}
-                  </span>
-                </div>
-              )}
-
-              <span className="px-3 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider font-heading mb-2 bg-white text-primary border border-[#e7e2d8]">
-                {member.badge}
-              </span>
-
-              <h3 className="text-lg font-heading font-bold text-ink mb-1 group-hover:text-primary transition-colors">
-                {member.name}
-              </h3>
-
-              <p className="text-xs font-bold text-forest font-heading mb-3">
-                {member.role}
-              </p>
-
-              <p className="text-xs text-ink-light leading-relaxed">
-                {member.description}
-              </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {steps.map((st) => (
+            <div key={st.number} className="bg-white rounded-2xl p-6 border border-[#e5e0d8] shadow-sm flex flex-col justify-between">
+              <div>
+                <span className="font-heading font-bold text-2xl text-maroon block mb-3">
+                  {st.number}
+                </span>
+                <h3 className="font-heading font-bold text-lg text-[#1c1c1a] mb-2">
+                  {st.title}
+                </h3>
+                <p className="text-sm text-[#4a4a46] leading-relaxed">
+                  {st.detail}
+                </p>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Timeline Journey with Mirrored Wave */}
-      <section className="relative py-20 px-4 md:px-8 max-w-4xl mx-auto overflow-hidden">
+      {/* 5. Team Grid: The people behind every outreach (WITH REAL HEADSHOTS) */}
+      <section className="relative py-16 sm:py-20 bg-[#f5f1e8] border-t border-[#e5e0d8] overflow-hidden">
         <CurvedWaveBackground side="left" />
 
-        <div className="relative z-10">
-          <div className="text-center mb-14">
-            <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-              A Decade of Work
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
-              Milestones along the way.
-            </h2>
+        <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1.5">
+                OUR TEAM
+              </div>
+              <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
+                The people behind every outreach
+              </h2>
+            </div>
+            <button
+              onClick={() => handleNav('get-involved', 'get-involved/volunteer')}
+              className="text-sm font-semibold text-maroon hover:text-maroon-dark transition-colors inline-flex items-center gap-1 cursor-pointer"
+            >
+              <span>Join as a volunteer</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
 
-          <div className="space-y-6">
-            {milestones.map((m, idx) => (
-              <div key={idx} className="p-6 sm:p-8 rounded-2xl bg-white/95 backdrop-blur-xs border border-[#e7e2d8] flex flex-col sm:flex-row gap-6 items-start justify-between shadow-xs">
-                <div className="flex items-center gap-4">
-                  <span className="font-mono text-3xl font-bold text-primary">
-                    {m.year}
-                  </span>
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-ink-muted block">{m.location}</span>
-                    <h3 className="text-xl font-heading font-bold text-ink">{m.title}</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6">
+            {team.map((m, idx) => (
+              <div key={idx} className="bg-white rounded-2xl p-4 sm:p-5 border border-[#e5e0d8] text-center flex flex-col items-center shadow-xs hover:shadow-md hover:border-[#cfc7b9] transition-all">
+                {/* Real Team Photo Avatar */}
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden mb-3 border-2 border-white shadow-sm bg-sand relative shrink-0">
+                  {m.image ? (
+                    <img
+                      src={m.image}
+                      alt={m.name}
+                      className="w-full h-full object-cover object-top"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div
+                    className="w-full h-full bg-sand text-maroon font-heading font-bold text-lg flex items-center justify-center"
+                    style={{ display: m.image ? 'none' : 'flex' }}
+                  >
+                    {m.initials}
                   </div>
                 </div>
-                <div className="sm:max-w-md">
-                  <p className="text-xs text-ink-light leading-relaxed mb-3">
-                    {m.description}
-                  </p>
-                  <span className="inline-block px-3 py-1 rounded-full bg-sand text-[11px] font-semibold text-primary border border-[#e7e2d8]">
-                    {m.impact}
+
+                <h4 className="font-heading font-bold text-xs sm:text-sm text-[#1c1c1a] leading-snug mb-1">
+                  {m.name}
+                </h4>
+                <p className="text-[11px] sm:text-xs text-[#706e68] leading-tight">
+                  {m.role}
+                </p>
+                {m.badge && (
+                  <span className="mt-2 text-[10px] uppercase font-semibold tracking-wider text-forest bg-forest-tint px-2 py-0.5 rounded-full">
+                    {m.badge}
                   </span>
-                </div>
+                )}
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center pt-16">
+      {/* 6. Board of Trustees & Registration Box */}
+      <section className="py-14 max-w-[1200px] mx-auto px-4 sm:px-6">
+        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-[#e5e0d8] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="max-w-xl">
+            <h3 className="font-heading font-bold text-xl text-[#1c1c1a] mb-2">
+              Board of Trustees &amp; Governance
+            </h3>
+            <p className="text-sm text-[#4a4a46] leading-relaxed">
+              Trustees personally fund all operational overhead and administration, ensuring 100% of public contributions reach beneficiaries directly.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start md:items-end gap-2 text-sm text-[#4a4a46]">
+            <div><strong className="text-[#1c1c1a]">Registered name:</strong> Ten Kind Hands Initiative</div>
+            <div><strong className="text-[#1c1c1a]">CAC registration:</strong> RC 7015705</div>
+            <div><strong className="text-[#1c1c1a]">Office:</strong> Danglo Plaza 204, 6th Avenue, Gwarinpa, Abuja</div>
             <button
-              onClick={onOpenDonate}
-              className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-6 sm:px-8 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
+              onClick={() => handleNav('transparency')}
+              className="mt-2 text-sm font-semibold text-maroon hover:underline cursor-pointer"
             >
-              <span>Partner With Our Mission</span>
-              <Heart className="w-4 h-4" />
+              See our documents and accounts →
             </button>
           </div>
         </div>
       </section>
+
     </div>
   );
 }
+

@@ -1,296 +1,253 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { Mail, Phone, MapPin, Send, CheckCircle2, MessageCircle, Clock, ShieldCheck } from '../components/Icons';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
+import { MessageCircle, Mail, MapPin, ArrowRight, Check } from '../components/Icons';
 
 export default function Contact() {
   const { addInquiry } = useData();
   const [form, setForm] = useState({
     name: '',
     email: '',
-    phone: '',
-    category: 'general',
+    topic: 'General Question',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [submitResult, setSubmitResult] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    let res = null;
     if (addInquiry) {
-      res = await addInquiry({
+      await addInquiry({
         name: form.name,
         email: form.email,
-        phone: form.phone,
-        category: form.category === 'general' ? 'General Inquiry' : form.category,
+        phone: '',
+        category: form.topic,
         message: form.message,
-        source: 'Contact Page'
+        source: 'Contact Form',
+        date: new Date().toISOString()
       });
     }
-    setIsSubmitting(false);
-    setSubmitResult(res);
-    setSubmitted(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }, 500);
   };
 
   return (
-    <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-      {/* Header with Ambient Wave */}
-      <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-5xl mx-auto text-center overflow-hidden">
-        <CurvedWaveBackground side="right" />
+    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-10 sm:py-16">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
 
-        <div className="relative z-10">
-          <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
-            Direct Communication
+        {/* Header */}
+        <div className="max-w-3xl mb-12">
+          <span className="text-xs uppercase font-bold tracking-widest text-maroon block mb-2">
+            CONTACT
           </span>
-
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
-            We are here to listen, <br />
-            <span className="text-primary">answer &amp; collaborate.</span>
+          <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1c1c1a] mb-4">
+            Talk to a real person.
           </h1>
-
-          <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
-            Reach our field coordination desk in Abuja or connect directly with our partnerships, volunteer, and donor relations teams.
+          <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed">
+            WhatsApp first, two dedicated emails, our national office in Abuja, and one short form below.
           </p>
         </div>
-      </section>
 
-      {/* Main Grid with Mirrored Wave */}
-      <section className="relative px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
-        <CurvedWaveBackground side="left" />
-
-        <div className="relative z-10 grid md:grid-cols-12 gap-8 items-start">
-          {/* Contact Information Column */}
-          <div className="md:col-span-5 space-y-6">
-            <div className="bg-white/95 backdrop-blur-xs p-5 sm:p-8 rounded-3xl border border-[#e7e2d8] shadow-xs">
-              <h3 className="text-2xl font-heading font-bold text-ink mb-6">
-                National Secretariat
-              </h3>
-
-              <div className="space-y-5 text-xs text-ink-light">
-                <div className="flex items-start gap-3.5">
-                  <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-ink block font-heading">Abuja Liaison Office:</strong>
-                    <span>Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5">
-                  <ShieldCheck className="w-5 h-5 text-forest shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-ink block font-heading">Official Registration:</strong>
-                    <span>CAC RC: 7015705 (Incorporated Non-Profit)</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5">
-                  <Phone className="w-5 h-5 text-forest shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-ink block font-heading">Phone &amp; Hotline:</strong>
-                    <span>+234 818 099 4301</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5">
-                  <Mail className="w-5 h-5 text-clay shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-ink block font-heading">Email Desks:</strong>
-                    <span className="block break-all sm:break-normal">General: <a href="mailto:info@tenkindhands.org" className="text-primary hover:underline">info@tenkindhands.org</a></span>
-                    <span className="block break-all sm:break-normal">Partnerships: <a href="mailto:partnerships@tenkindhands.org" className="text-primary hover:underline">partnerships@tenkindhands.org</a></span>
-                    <span className="block break-all sm:break-normal">Volunteers: <a href="mailto:volunteer@tenkindhands.org" className="text-primary hover:underline">volunteer@tenkindhands.org</a></span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5">
-                  <Clock className="w-5 h-5 text-emerald-800 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-ink block font-heading">Desk Hours:</strong>
-                    <span>Monday – Friday: 8:30 AM – 5:00 PM (WAT)</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Instant WhatsApp Card */}
-            <div className="bg-sand/90 p-5 sm:p-6 rounded-3xl border border-[#e7e2d8] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0">
-                  <MessageCircle className="w-5 h-5" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          {/* Left Column: Direct Channels */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            
+            {/* WhatsApp Featured Box */}
+            <div className="bg-forest text-white rounded-3xl p-6 sm:p-8 shadow-sm">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
+                  <MessageCircle className="w-5 h-5 fill-current" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-heading font-bold text-ink">WhatsApp Live Desk</h4>
-                  <span className="text-[11px] text-ink-muted">Direct desk • Quick responses</span>
+                  <span className="text-xs uppercase font-bold tracking-widest text-[#a8d5c4] block">
+                    FASTEST RESPONSE
+                  </span>
+                  <h3 className="font-heading font-bold text-lg text-white">
+                    WhatsApp Desk
+                  </h3>
                 </div>
               </div>
+
+              <p className="text-sm text-white/80 leading-relaxed mb-6">
+                Our operations team answers messages directly. Ideal for quick questions, donor receipts, or volunteering queries.
+              </p>
+
               <a
-                href="https://wa.me/2348180994301?text=Hello%20Ten%20Kind%20Hands,%20I%20would%20like%20to%20inquire%20about..."
+                href="https://wa.me/2348180994301"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full sm:w-auto text-center px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors font-heading"
+                className="w-full py-3.5 px-6 rounded-full bg-white text-forest font-heading font-bold text-sm hover:bg-[#f5f1e8] transition-colors flex items-center justify-center gap-2"
               >
-                Chat on WhatsApp
+                <span>Chat on WhatsApp (+234 818 099 4301)</span>
+                <ArrowRight className="w-4 h-4" />
               </a>
             </div>
+
+            {/* Email Channels Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm flex flex-col gap-5">
+              <h3 className="font-heading font-bold text-base text-[#1c1c1a]">
+                Direct Email Channels
+              </h3>
+
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-maroon-tint text-maroon flex items-center justify-center shrink-0 mt-0.5">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-xs text-[#706e68]">General &amp; Donor Support</div>
+                  <a
+                    href="mailto:info@tenkindhands.org"
+                    className="font-heading font-semibold text-sm text-[#1c1c1a] hover:text-maroon transition-colors"
+                  >
+                    info@tenkindhands.org
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-sand text-[#1c1c1a] flex items-center justify-center shrink-0 mt-0.5">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-xs text-[#706e68]">Corporate CSR &amp; Partnerships</div>
+                  <a
+                    href="mailto:partnerships@tenkindhands.org"
+                    className="font-heading font-semibold text-sm text-[#1c1c1a] hover:text-maroon transition-colors"
+                  >
+                    partnerships@tenkindhands.org
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* National Secretariat Office Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-sand text-[#1c1c1a] flex items-center justify-center shrink-0 mt-0.5">
+                  <MapPin className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-xs uppercase font-bold tracking-wider text-[#706e68] mb-1">
+                    National Secretariat
+                  </div>
+                  <p className="text-sm font-heading font-semibold text-[#1c1c1a] leading-snug">
+                    Danglo Plaza 204, 6th Avenue, Gwarinpa, Abuja, Nigeria
+                  </p>
+                  <p className="text-xs text-[#706e68] mt-2">
+                    Hours: Monday – Friday, 9:00 AM – 5:00 PM (WAT)
+                  </p>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          {/* Contact Message Form */}
-          <div className="md:col-span-7 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
-            {submitted ? (
-              <div className="py-10 text-center animate-fade-in">
-                {submitResult?.serverSynced ? (
-                  <>
-                    <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200 mx-auto mb-4">
-                      <CheckCircle2 className="w-8 h-8 text-emerald-700" />
-                    </div>
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-700 font-bold block mb-1">
-                      Reference #{submitResult.inquiry?.id || 'TKH-INQ'}
-                    </span>
-                    <h3 className="text-2xl font-heading font-bold text-ink mb-2">
-                      Message Received by Secretariat
-                    </h3>
-                    <p className="text-xs sm:text-sm text-ink-light max-w-md mx-auto leading-relaxed mb-6">
-                      Thank you, {form.name}. Your inquiry has been securely transmitted to our national coordination desk in Abuja. Our team will review and reply to <strong>{form.email}</strong> within 1 business day.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center border border-amber-200 mx-auto mb-4">
-                      <MessageCircle className="w-8 h-8 text-amber-700" />
-                    </div>
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-amber-800 font-bold block mb-1">
-                      Direct Routing Recommended
-                    </span>
-                    <h3 className="text-2xl font-heading font-bold text-ink mb-2">
-                      Reach Our Live Coordination Desk
-                    </h3>
-                    <p className="text-xs sm:text-sm text-ink-light max-w-md mx-auto leading-relaxed mb-5">
-                      Your inquiry has been stored locally. For an immediate, verified response without waiting on server sync, forward your inquiry directly to our Abuja duty desk:
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6 max-w-md mx-auto">
-                      <a
-                        href={`https://wa.me/2348180994301?text=${encodeURIComponent(`Hello Ten Kind Hands,\nMy name is ${form.name}.\nCategory: ${form.category}\nEmail: ${form.email}\nPhone: ${form.phone || 'N/A'}\n\nMessage:\n${form.message}`)}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="btn-primary text-xs px-5 py-2.5 flex items-center justify-center gap-2 font-heading font-semibold"
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                        <span>Send via WhatsApp Desk</span>
-                      </a>
-                      <a
-                        href={`mailto:info@tenkindhands.org?subject=${encodeURIComponent(`Inquiry from ${form.name} (${form.category})`)}&body=${encodeURIComponent(`${form.message}\n\nFrom: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}`)}`}
-                        className="btn-secondary text-xs px-5 py-2.5 flex items-center justify-center gap-2 font-heading font-semibold"
-                      >
-                        <Mail className="w-4 h-4" />
-                        <span>Send via Email</span>
-                      </a>
-                    </div>
-                  </>
-                )}
+          {/* Right Column: One Short Form */}
+          <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 border border-[#e5e0d8] shadow-sm">
+            <h2 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-2">
+              Send us a direct message
+            </h2>
+            <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
+              Fill in your details below and a team coordinator will respond within 24 hours.
+            </p>
 
-                <button
-                  onClick={() => {
-                    setSubmitted(false);
-                    setForm({ name: '', email: '', phone: '', category: 'general', message: '' });
-                  }}
-                  className="btn-secondary text-xs px-6 py-2 font-heading font-semibold cursor-pointer"
-                >
-                  Send Another Message
-                </button>
+            {submitted ? (
+              <div className="p-8 rounded-2xl bg-forest-tint text-forest text-center">
+                <div className="w-12 h-12 rounded-full bg-white text-forest flex items-center justify-center mx-auto mb-3 shadow-xs">
+                  <Check className="w-6 h-6 stroke-[2.5]" />
+                </div>
+                <h3 className="font-heading font-bold text-xl mb-1">
+                  Message Sent!
+                </h3>
+                <p className="text-sm">
+                  Thank you, {form.name}. We have received your message and will reply to {form.email} promptly.
+                </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <h3 className="text-2xl font-heading font-bold text-ink mb-1">
-                  Send a Direct Message
-                </h3>
-                <p className="text-xs text-ink-light mb-6">
-                  Fill in the fields below and our communications desk will get back to you promptly.
-                </p>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="contact-name" className="text-xs font-bold text-ink block mb-1 font-heading">Full Name *</label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      required
-                      placeholder="e.g. Amina Bello"
-                      value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-sand border border-[#e7e2d8] text-xs focus:outline-none focus:border-primary"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="contact-email" className="text-xs font-bold text-ink block mb-1 font-heading">Email Address *</label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      required
-                      placeholder="name@domain.com"
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-sand border border-[#e7e2d8] text-xs focus:outline-none focus:border-primary"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="contact-phone" className="text-xs font-bold text-ink block mb-1 font-heading">Phone Number</label>
-                    <input
-                      id="contact-phone"
-                      type="tel"
-                      placeholder="080 1234 5678"
-                      value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-sand border border-[#e7e2d8] text-xs focus:outline-none focus:border-primary"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="contact-category" className="text-xs font-bold text-ink block mb-1 font-heading">Topic / Department *</label>
-                    <select
-                      id="contact-category"
-                      value={form.category}
-                      onChange={(e) => setForm({ ...form, category: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-sand border border-[#e7e2d8] text-xs focus:outline-none focus:border-primary cursor-pointer font-heading"
-                    >
-                      <option value="general">General Inquiries</option>
-                      <option value="donation">Donations &amp; Wire Transfers</option>
-                      <option value="partnership">Corporate &amp; Institutional Partnership</option>
-                      <option value="volunteer">Volunteering &amp; Medical Missions</option>
-                      <option value="media">Media &amp; Press Relations</option>
-                    </select>
-                  </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="e.g. Maryam Bello"
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                  />
                 </div>
 
                 <div>
-                  <label htmlFor="contact-message" className="text-xs font-bold text-ink block mb-1 font-heading">Message *</label>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                    Your Email
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="maryam@example.com"
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                    Topic
+                  </label>
+                  <select
+                    value={form.topic}
+                    onChange={(e) => setForm({ ...form, topic: e.target.value })}
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                  >
+                    <option value="General Question">General Question</option>
+                    <option value="Donation or Receipt Inquiry">Donation or Receipt Inquiry</option>
+                    <option value="Volunteering with State Coordinator">Volunteering with State Coordinator</option>
+                    <option value="CSR / Institutional Partnership">CSR / Institutional Partnership</option>
+                    <option value="School Outreach Referral">School Outreach Referral</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                    Message
+                  </label>
                   <textarea
-                    id="contact-message"
                     rows={4}
                     required
-                    placeholder="Type your message or inquiry here..."
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-sand border border-[#e7e2d8] text-xs focus:outline-none focus:border-primary"
+                    placeholder="Write your message here..."
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary w-full py-3.5 text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm font-heading font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="btn-primary w-full py-4 text-base font-semibold shadow-md mt-2 flex items-center justify-center gap-2"
                 >
-                  <span>{isSubmitting ? 'Transmitting to Secretariat Desk...' : 'Submit Direct Message'}</span>
-                  <Send className={`w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />
+                  {isSubmitting ? (
+                    <span>Sending message...</span>
+                  ) : (
+                    <>
+                      <span>Send message</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </form>
             )}
           </div>
+
         </div>
-      </section>
+
+      </div>
     </div>
   );
 }

@@ -91,12 +91,17 @@ const VALID_PAGES = new Set([
   'transparency',
   'contact',
   'legal',
-  'admin'
+  'admin',
+  'reports',
+  'report',
+  'field-reports',
+  'field-report'
 ]);
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedProgramId, setSelectedProgramId] = useState(null);
+  const [selectedOutreachId, setSelectedOutreachId] = useState(null);
   const [selectedGetInvolvedTab, setSelectedGetInvolvedTab] = useState('donate');
   const [selectedLegalTab, setSelectedLegalTab] = useState('privacy');
   const [isDonateOpen, setIsDonateOpen] = useState(false);
@@ -121,10 +126,41 @@ export default function App() {
         const progId = hash.replace('programs/', '');
         setCurrentPage('programs');
         setSelectedProgramId(progId);
+      } else if (hash.startsWith('outreaches/')) {
+        const outreachId = hash.replace('outreaches/', '');
+        setCurrentPage('outreaches');
+        setSelectedOutreachId(outreachId);
+      } else if (
+        hash.startsWith('reports/') ||
+        hash.startsWith('report/') ||
+        hash.startsWith('field-reports/') ||
+        hash.startsWith('field-report/')
+      ) {
+        const parts = hash.split('/');
+        const outreachId = parts[1] || null;
+        setCurrentPage('outreaches');
+        setSelectedOutreachId(outreachId);
+      } else if (
+        hash === 'reports' ||
+        hash === 'report' ||
+        hash === 'field-reports' ||
+        hash === 'field-report'
+      ) {
+        setCurrentPage('outreaches');
+        setSelectedOutreachId(null);
+      } else if (hash === 'about' || hash === 'about-us' || hash === 'story') {
+        setCurrentPage('our-story');
       } else if (hash.startsWith('get-involved/')) {
         const tab = hash.replace('get-involved/', '');
         setCurrentPage('get-involved');
         setSelectedGetInvolvedTab(tab);
+      } else if (hash === 'donate') {
+        setCurrentPage('get-involved');
+        setSelectedGetInvolvedTab('donate');
+        setIsDonateOpen(true);
+      } else if (hash === 'volunteer') {
+        setCurrentPage('get-involved');
+        setSelectedGetInvolvedTab('volunteer');
       } else if (hash.startsWith('legal/')) {
         const tab = hash.replace('legal/', '');
         setCurrentPage('legal');
@@ -132,6 +168,9 @@ export default function App() {
       } else if (VALID_PAGES.has(hash)) {
         if (hash === 'programs') {
           setSelectedProgramId(null);
+        }
+        if (hash === 'outreaches') {
+          setSelectedOutreachId(null);
         }
         setCurrentPage(hash);
       } else {
@@ -156,6 +195,8 @@ export default function App() {
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(' ');
       pageTitle = `${formattedProg} Initiative | Ten Kind Hands`;
+    } else if (currentPage === 'outreaches' && selectedOutreachId) {
+      pageTitle = `Field Report | Ten Kind Hands`;
     }
     document.title = pageTitle;
 
@@ -180,7 +221,8 @@ export default function App() {
           <Programs
             onOpenDonate={handleOpenDonate}
             setCurrentPage={setCurrentPage}
-            initialProgramId={selectedProgramId}
+            selectedProgramId={selectedProgramId}
+            onSelectProgram={(progId) => setSelectedProgramId(progId)}
           />
         );
       case 'impact':
@@ -190,6 +232,7 @@ export default function App() {
           <GetInvolved
             onOpenDonate={handleOpenDonate}
             initialTab={selectedGetInvolvedTab}
+            setCurrentPage={setCurrentPage}
           />
         );
       case 'news':
@@ -200,12 +243,14 @@ export default function App() {
           <Outreaches
             setCurrentPage={setCurrentPage}
             onOpenDonate={handleOpenDonate}
+            selectedOutreachId={selectedOutreachId}
+            onSelectOutreach={(id) => setSelectedOutreachId(id)}
           />
         );
       case 'testimonials':
         return <Testimonials onOpenDonate={handleOpenDonate} />;
       case 'transparency':
-        return <Transparency onOpenDonate={handleOpenDonate} />;
+        return <Transparency onOpenDonate={handleOpenDonate} setCurrentPage={setCurrentPage} />;
       case 'contact':
         return <Contact />;
       case 'legal':
@@ -220,7 +265,7 @@ export default function App() {
 
   return (
     <DataProvider>
-      <div className="min-h-screen flex flex-col bg-white text-[#1e1a1a] antialiased">
+      <div className="min-h-screen flex flex-col bg-[#fdfbf7] text-[#1c1c1a] antialiased">
         {/* Global Navbar (Hidden on Admin page for dedicated enterprise app shell) */}
         {currentPage !== 'admin' && (
           <Navbar
@@ -233,7 +278,7 @@ export default function App() {
         )}
 
         {/* Main Active Page Component */}
-        <main className="flex-grow bg-white">
+        <main className="flex-grow bg-[#fdfbf7]">
           {renderCurrentPage()}
         </main>
 
@@ -262,6 +307,7 @@ export default function App() {
             onOpenDonate={() => handleOpenDonate(null)}
             onSelectLegalTab={(tab) => setSelectedLegalTab(tab)}
             onSelectProgram={(progId) => setSelectedProgramId(progId)}
+            onSelectGetInvolvedTab={(tab) => setSelectedGetInvolvedTab(tab)}
           />
         )}
       </div>

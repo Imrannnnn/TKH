@@ -1,497 +1,448 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
-import { Heart, ArrowRight, Quote, MapPin } from '../components/Icons';
+import { Heart, ArrowRight, Check, MapPin, Quote } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Home({ onOpenDonate, setCurrentPage }) {
-  const { metrics, homeContent } = useData();
-  const [calcAmount, setCalcAmount] = useState(15000);
-  const [heroImageIdx, setHeroImageIdx] = useState(0);
+  const { metrics, outreaches } = useData();
+  const [heroSlideIdx, setHeroSlideIdx] = useState(0);
 
-  const heroSlides = homeContent?.heroSlides?.length > 0 ? homeContent.heroSlides : [
+  const heroSlides = [
     {
-      img: "/images/hero-debate-competition-makurdi.webp",
-      caption: "Inter-Secondary School Debate Competition (₦50,000 • ₦30,000 • ₦20,000 Awards) • Makurdi"
+      img: '/images/hero-orphanage-food-educational-support.webp',
+      caption: 'Food relief & school supplies donation · Oyiza Orphanage',
+      state: 'FCT Abuja'
     },
     {
-      img: "/images/hero-digital-literacy-computer-lab.webp",
-      caption: "Youth Digital Literacy & Computer Lab Setup • Plateau State"
+      img: '/images/hero-debate-competition-makurdi.webp',
+      caption: 'Inter-Secondary School Debate Competition & Cash Prizes',
+      state: 'Makurdi, Benue State'
     },
     {
-      img: "/images/hero-orphanage-food-educational-support.webp",
-      caption: "Food Relief & Educational Supplies Donation • Oyiza Orphanage"
+      img: '/images/hero-digital-literacy-computer-lab.webp',
+      caption: '9-Computer Laboratory Commissioning · Beckwin International',
+      state: 'Plateau State'
     },
     {
-      img: "/images/hero-widows-clean-cooking-stoves.webp",
-      caption: "Widows Clean Energy & Eco-Cooking Stove Distribution • Dafara"
+      img: '/images/hero-widows-clean-cooking-stoves.webp',
+      caption: 'Widows Clean Energy & Eco-Cooking Stove Distribution',
+      state: 'Dafara Community'
     },
     {
-      img: "/images/hero-jambells-school-outreach.webp",
-      caption: "Educational Materials & School Supplies Distribution • JAMBELLS School, Lagos"
+      img: '/images/hero-maternal-health-malaria-prevention.webp',
+      caption: 'Maternal Healthcare, Mosquito Nets & Malaria Screening',
+      state: 'Lagos State'
     },
     {
-      img: "/images/hero-maternal-health-malaria-prevention.webp",
-      caption: "Maternal Healthcare & Malaria Prevention Outreach • Lagos"
+      img: '/images/hero-jambells-school-outreach.webp',
+      caption: 'Educational Materials & Stationery Distribution',
+      state: 'JAMBELLS School, Lagos'
     },
     {
-      img: "/images/hero-youth-vocational-shoemaking.webp",
-      caption: "Youth Vocational Skills & Shoemaking Apprenticeship • Abuja"
+      img: '/images/hero-youth-vocational-shoemaking.webp',
+      caption: 'Youth Vocational Skills & Shoemaking Apprenticeship',
+      state: 'Abuja'
     },
     {
-      img: "/images/hero-visually-impaired-education.webp",
-      caption: "Special Education & Inclusive Learning for Visually Impaired Students"
-    },
-    {
-      img: "/images/hero-digital-skills-youth-training.webp",
-      caption: "Youth Digital Skills & Computer Training Lab • Lagos"
-    },
-    {
-      img: "/images/hero-community-empowerment.webp",
-      caption: "Sustainable Community Livelihood & Family Empowerment Outreach"
-    },
-    {
-      img: "/images/IMG_0294.webp",
-      caption: "Child empowerment Program • Makurdi"
-    },
-    {
-      img: "/images/11222.webp",
-      caption: "Medical outreach to children at Abuja Teaching Hospital"
-    },
-    {
-      img: "/images/IMG_0995.webp",
-      caption: "Women Empowerment Outreach • Dafara"
+      img: '/images/11222.webp',
+      caption: 'Pediatric Healthcare Support & Clinical Aid',
+      state: 'Abuja Teaching Hospital'
     }
   ];
 
-  const heroHeadline = homeContent?.heroHeadline || 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.';
-  const heroSubtitle = homeContent?.heroSubtitle || 'Every act of kindness shapes a brighter future.';
-  const rawBadge = homeContent?.registeredBadge || 'Registered Non-Profit • CAC RC: 7015705';
-  const registeredBadge = rawBadge.replace(/ • CAC\/IT\/NO: 148920/g, '').replace(/CAC\/IT\/NO: 148920\.?/g, '').trim();
-  const fieldReality = homeContent?.fieldReality || {
-    stat: 'Over 10M',
-    label: 'Children currently out of primary school in Nigeria (UNESCO)',
-    paragraph1: 'When poverty forces families to choose between putting food on the table and paying school expenses, a child’s education is often the first sacrifice. Without books, learning materials, scholarships, and the support needed to stay in school, many children risk falling behind or abandoning their education altogether. At the same time, vulnerable communities continue to face preventable health challenges, while women and widows struggle to access the skills and opportunities needed to achieve financial independence.',
-    paragraph2: 'Ten Kind Hands Foundation bridges these gaps by investing in children’s education through scholarships, educational materials, school donations, learning support, and youth development initiatives, while also extending healthcare interventions and women’s empowerment programmes to vulnerable communities. By meeting immediate needs and creating pathways to opportunity, we help children learn, women thrive, and communities build a stronger and more hopeful future.'
-  };
-
-  // Auto-cycle background images smoothly every 6 seconds
+  // Auto-cycle through real field photos every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setHeroImageIdx((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
+      setHeroSlideIdx((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
     return () => clearInterval(timer);
   }, [heroSlides.length]);
 
-  const calculateImpacts = (amt) => {
-    const learningKits = Math.max(1, Math.floor(amt / 5000));
-    const clinicVisits = Math.max(1, Math.floor(amt / 1250));
-    const booksSupplied = Math.max(2, Math.floor(amt / 1000));
-    const safeWaterDays = Math.max(10, Math.floor(amt / 250));
-    return { learningKits, clinicVisits, booksSupplied, safeWaterDays };
+  const handleNav = (pageId, hash = '') => {
+    setCurrentPage(pageId);
+    window.location.hash = hash || pageId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const currentImpact = calculateImpacts(calcAmount);
-
-  const testimonials = [
-    {
-      quote: "I sincerely appreciate Ten Kind Hands Foundation for their incredible support. After promising us computer systems during our Speech and Prize-Giving Ceremony in July, they returned and surprised us by setting up a well-equipped computer laboratory with nine computers, cubicles, seating, and an air conditioner. This means so much to us because our children can now gain the digital skills they need to compete in today’s world. Thank you, Ten Kind Hands Foundation. God bless you!",
-      author: "Mrs. Becky Omagbogu",
-      role: "Proprietor",
-      institution: "Beckwin International School",
-      location: "Plateau State"
-    },
-    {
-      quote: "We are so grateful to Ten Kind Hands Foundation for remembering and supporting our children with the donation of free notebooks. Some of our pupils did not have writing materials and were struggling to manage with what they had. But today, things are better, and these children now have something to begin with as they prepare for the new school year. We are truly grateful. May God richly bless Ten Kind Hands Foundation. May they never lack, and may this act of kindness reach many more places. Thank you, Ten Kind Hands Foundation. We love you and appreciate you!",
-      author: "",
-      role: "Proprietor, Karvron Montessori School",
-      institution: "Abuja",
-      location: "Federal Capital Territory"
-    },
-    {
-      quote: "Thank you, Ten Kind Hands Foundation. We truly appreciate and love you for coming to our community to educate us about malaria, how to prevent it, and how to take better care of ourselves. The mosquito nets, insecticides, supplements, and other medical supplies donated in large quantities have provided meaningful support to our community in the fight against malaria. May God bless you richly for all you are doing.",
-      author: "",
-      role: "Community Beneficiaries & Nursing Mothers",
-      institution: "Abata Community",
-      location: "Lagos State"
-    }
-  ];
-
   return (
-    <div className="animate-fade-in bg-white">
-      {/* =========================================================
-          HERO: GENEROUSLY SPACED DOCUMENTARY CANVAS
-      ========================================================= */}
-      <section className="relative w-full h-[100svh] min-h-[580px] max-h-[860px] flex items-center justify-center overflow-hidden px-4 md:px-8 pt-24 sm:pt-28 pb-8 bg-black">
-        {/* Cross-fading Background Slides */}
-        {heroSlides.map((slide, index) => {
-          const isActive = index === heroImageIdx;
-          const optimizedSrc = slide.img ? slide.img.replace(/\.(jpe?g|png)$/i, '.webp') : slide.img;
-          return (
-            <div
-              key={index}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-[1800ms] ease-in-out ${isActive ? 'opacity-100 z-0' : 'opacity-0 z-0 pointer-events-none'
-                }`}
-            >
-              <img
-                src={optimizedSrc}
-                alt={slide.caption}
-                fetchPriority={index === 0 ? "high" : "auto"}
-                className={`w-full h-full object-cover object-center transition-transform duration-[7000ms] ease-out ${isActive ? 'scale-105' : 'scale-100'
-                  }`}
-              />
+    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] overflow-x-hidden">
+
+      {/* 1. Hero Section with Ambient Wave Line */}
+      <section className="relative pt-10 sm:pt-16 pb-14 sm:pb-20 max-w-[1200px] mx-auto px-4 sm:px-6 overflow-hidden">
+        {/* Right-side subtle sweeping wave line */}
+        <CurvedWaveBackground side="right" />
+
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          
+          {/* Left Column: Copy & Actions */}
+          <div className="lg:col-span-7 flex flex-col items-start gap-5">
+            {/* Registered Non-Profit Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#e5e0d8] text-xs text-[#4a4a46] font-medium shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-forest animate-pulse" />
+              <span>Registered non-profit · CAC RC 7015705 · Abuja</span>
             </div>
-          );
-        })}
 
-        {/* Dual-Tone Dark Contrast Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/45 z-1 pointer-events-none"></div>
+            {/* Main Headline */}
+            <h1 className="font-heading font-bold text-3xl sm:text-5xl lg:text-[52px] leading-[1.12] tracking-tight text-[#1c1c1a]">
+              Keeping Nigerian children in school and families healthy.
+            </h1>
 
-        {/* Text Layer (Poppins + Open Sans) with Generous Top Breathing Room */}
-        <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-6 my-auto">
-          {/* High-Visibility Verified NGO Badge */}
-          {registeredBadge && (
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/75 backdrop-blur-md text-white text-[11px] sm:text-xs font-semibold tracking-wide border border-white/35 shadow-lg max-w-full text-center">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-              <span className="leading-snug">{registeredBadge}</span>
+            {/* Subtext */}
+            <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
+              We fund scholarships, school supplies and community health outreaches for vulnerable children, women and widows across Nigeria — and publish a field report after every one.
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-3.5 pt-2">
+              <button
+                onClick={() => onOpenDonate()}
+                className="btn-primary px-7 py-3.5 text-base shadow-sm flex items-center gap-2"
+              >
+                <span>Donate now</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => handleNav('outreaches')}
+                className="btn-secondary px-7 py-3.5 text-base"
+              >
+                See our field reports
+              </button>
             </div>
-          )}
-
-          {/* Clean & Proportional Poppins Headline (compact ~2 lines) */}
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-bold sm:font-extrabold text-white max-w-4xl tracking-tight leading-snug sm:leading-tight">
-            {heroHeadline}
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-xs sm:text-base md:text-lg text-white/90 max-w-2xl leading-relaxed font-normal px-2">
-            {heroSubtitle}
-          </p>
-
-          {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto pt-2">
-            <button
-              onClick={onOpenDonate}
-              className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-7 py-3 sm:px-8 sm:py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-95 font-heading font-semibold"
-            >
-              <span>Donate to Direct Impact</span>
-              <Heart className="w-4 h-4" />
-            </button>
-
-            <a
-              href="#our-story"
-              onClick={() => {
-                window.location.hash = 'our-story';
-                setCurrentPage('our-story');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="btn-secondary w-full sm:w-auto text-xs sm:text-sm px-7 py-3 sm:px-8 sm:py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-95 font-heading font-semibold no-underline"
-            >
-              <span>Read Our Story</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
           </div>
 
-          {/* Dynamic Image Caption & Carousel Dots */}
-          <div className="flex flex-col items-center gap-2 pt-4">
-            <div className="flex items-center gap-1.5 text-white/80 text-[11px] font-medium transition-all duration-700">
-              <MapPin className="w-3.5 h-3.5 text-[#f7c899]" />
-              <span>{heroSlides[heroImageIdx]?.caption || ''}</span>
+          {/* Right Column: Real Outreach Photo Showcase with Slide Controls */}
+          <div className="lg:col-span-5">
+            <div className="relative rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md bg-white group">
+              {/* Photo Display */}
+              <div className="relative w-full h-[320px] sm:h-[400px] overflow-hidden bg-sand">
+                {heroSlides.map((slide, idx) => (
+                  <img
+                    key={idx}
+                    src={slide.img}
+                    alt={slide.caption}
+                    className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-in-out ${
+                      idx === heroSlideIdx ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
+                    }`}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/images/IMG_0303.JPG';
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Bottom Caption Pill & Location */}
+              <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col gap-2">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-sm border border-white/40 text-xs font-semibold text-[#1c1c1a] shadow-sm truncate">
+                    {heroSlides[heroSlideIdx].caption}
+                  </div>
+                  <span className="shrink-0 px-2.5 py-1 rounded-full bg-black/60 text-white/90 text-[11px] font-medium border border-white/20 backdrop-blur-sm flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-[#f7c899]" />
+                    {heroSlides[heroSlideIdx].state}
+                  </span>
+                </div>
+
+                {/* Slide Indicator Dots */}
+                <div className="flex items-center gap-1.5 pt-1">
+                  {heroSlides.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setHeroSlideIdx(i)}
+                      aria-label={`Go to photo ${i + 1}`}
+                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                        i === heroSlideIdx ? 'w-6 bg-white shadow-xs' : 'w-2 bg-white/40 hover:bg-white/70'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 2. Full-Width Deep Forest Stats Banner */}
+      <section className="bg-forest !text-white py-12 sm:py-14 border-y border-forest-dark" style={{ color: '#ffffff' }}>
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 !text-white" style={{ color: '#ffffff' }}>
+            <div>
+              <div className="font-heading font-bold text-3xl sm:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
+                {metrics?.totalBeneficiaries ? `${metrics.totalBeneficiaries.toLocaleString()}+` : '3,312+'}
+              </div>
+              <div className="text-sm sm:text-base !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+                children &amp; young people reached
+              </div>
             </div>
 
-            {/* Slide Indicator Dots */}
-            <div className="flex items-center gap-2 mt-1">
-              {heroSlides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setHeroImageIdx(i)}
-                  aria-label={`Go to slide ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${i === heroImageIdx ? 'w-6 bg-white shadow-xs' : 'w-2 bg-white/40 hover:bg-white/70'
-                    }`}
-                />
-              ))}
+            <div>
+              <div className="font-heading font-bold text-3xl sm:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
+                150+
+              </div>
+              <div className="text-sm sm:text-base !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+                scholarships awarded
+              </div>
             </div>
+
+            <div>
+              <div className="font-heading font-bold text-3xl sm:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
+                2,100+
+              </div>
+              <div className="text-sm sm:text-base !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+                women &amp; girls supported
+              </div>
+            </div>
+
+            <div>
+              <div className="font-heading font-bold text-3xl sm:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
+                5 states
+              </div>
+              <div className="text-sm sm:text-base !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+                FCT, Benue, Lagos, Oyo &amp; Plateau
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-white/15 flex items-center justify-between flex-wrap gap-3">
+            <span className="text-xs sm:text-sm !text-white/80" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+              Totals since founding, as reported by Ten Kind Hands.
+            </span>
+            <button
+              onClick={() => handleNav('transparency')}
+              className="text-xs sm:text-sm !text-white underline hover:opacity-80 transition-opacity cursor-pointer"
+              style={{ color: '#ffffff' }}
+            >
+              How we count and spend →
+            </button>
           </div>
         </div>
       </section>
 
-      {/* =========================================================
-          UPPER FLOW: THE CHALLENGE & MEASURED IMPACT
-          (Right-Side Ambient Wave)
-      ========================================================= */}
-      <div className="relative overflow-hidden">
-        {/* Right-side subtle blended wave */}
-        <CurvedWaveBackground side="right" />
-
-        {/* SECTION 1: THE REALITY IN THE FIELD */}
-        <section className="relative z-10 py-24 px-4 md:px-8 max-w-5xl mx-auto border-b border-[#e7e2d8]">
-          <div className="grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-4">
-              <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
-                The Reality in the Field
-              </span>
-              <span className="text-4xl sm:text-5xl font-heading font-bold text-ink block leading-none">
-                {fieldReality.stat}
-              </span>
-              <span className="text-xs text-ink-muted mt-1.5 block">
-                {fieldReality.label}
-              </span>
+      {/* 3. THIS MONTH IN THE FIELD: Side-by-Side Latest Report + Next Outreach */}
+      <section className="py-16 sm:py-20 max-w-[1200px] mx-auto px-4 sm:px-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
+          <div>
+            <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1.5">
+              THIS MONTH IN THE FIELD
             </div>
-
-            <div className="md:col-span-8 space-y-3">
-              <p className="text-base sm:text-lg text-ink-light leading-relaxed">
-                {fieldReality.paragraph1}
-              </p>
-              <p className="text-base sm:text-lg text-ink font-semibold leading-relaxed">
-                {fieldReality.paragraph2}
-              </p>
-            </div>
+            <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
+              Every outreach gets a public report
+            </h2>
           </div>
-        </section>
-
-        {/* SECTION 2: MEASURED FIELD IMPACT */}
-        <section className="relative z-10 py-20 px-4 md:px-8 max-w-7xl mx-auto border-b border-[#e7e2d8]">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-                Our Impact
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
-                Verified outcomes, community by community.
-              </h2>
-            </div>
-            <a
-              href="#impact"
-              onClick={() => {
-                window.location.hash = 'impact';
-                setCurrentPage('impact');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="text-xs font-bold text-primary hover:underline flex items-center gap-1 cursor-pointer font-heading"
-            >
-              <span>Explore impact dashboard</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </a>
-          </div>
-
-          {(() => {
-            const defaultHomeMetrics = [
-              {
-                id: 'students',
-                category: 'Transparency',
-                stat: '5,500+',
-                label: 'Beneficiaries Reached',
-                description: 'Beneficiaries Reached',
-                growth: '+32% YoY',
-                detail: 'People reached through education, healthcare, empowerment, and community outreach initiatives...',
-                color: 'text-primary'
-              },
-              {
-                id: 'schools',
-                category: 'Education',
-                stat: '150+',
-                label: 'Scholarships Awarded',
-                description: 'Scholarships Awarded',
-                growth: '+40 New in 2026',
-                detail: 'Children and young people supported with access to education through scholarships and financial assistance.',
-                color: 'text-ink'
-              },
-              {
-                id: 'patients',
-                category: 'Transparency',
-                stat: '2,100+',
-                label: 'Women & Girls Reached',
-                description: 'Women & Girls Reached',
-                growth: '+45% YoY',
-                detail: 'Women and girls supported through education, healthcare, empowerment, and community outreach initiatives.',
-                color: 'text-forest'
-              },
-              {
-                id: 'giving-model',
-                category: 'Transparency',
-                stat: '100%',
-                label: 'Direct Giving Model',
-                description: 'Direct Giving Model',
-                growth: '100% Direct',
-                detail: 'Zero cuts from public gifts; admin is funded privately by trustee endowment.',
-                color: 'text-emerald-800'
-              },
-              {
-                id: 'clinics',
-                category: 'Transparency',
-                stat: '130+',
-                label: 'Communities Served',
-                description: 'Communities Served',
-                growth: '100% Operational',
-                detail: 'Communities reached through education, healthcare, empowerment, and community outreach initiatives.',
-                color: 'text-forest'
-              },
-              {
-                id: 'metric-1790695260926',
-                category: 'Transparency',
-                stat: '3,312+',
-                label: 'Children & Youths Reached',
-                description: 'Children & Youths Reached',
-                growth: '+1,300',
-                detail: 'Children and young people supported through education, skills development, healthcare, and empowerment initiative...',
-                color: 'text-primary'
-              }
-            ];
-
-            const displayMetrics = defaultHomeMetrics.map((def) => {
-              const live = metrics?.find((m) => m.id === def.id);
-              if (!live) return def;
-              if (
-                live.stat === '12,500+' ||
-                live.stat === '12,500' ||
-                live.stat === '8,200+' ||
-                live.stat === '8,200' ||
-                live.stat === '45' ||
-                live.stat === '12' ||
-                live.stat === '28' ||
-                live.description === 'Students Supplied' ||
-                live.description === 'Solar Classrooms' ||
-                live.description === 'Patients Treated' ||
-                live.description === 'Community Health Posts' ||
-                live.description === 'Solar Deep Boreholes' ||
-                live.label === 'Students Supplied' ||
-                live.label === 'Solar Classrooms' ||
-                live.label === 'Patients Treated' ||
-                live.label === 'Frontline Healthcare' ||
-                live.label === 'Clean Water'
-              ) {
-                return def;
-              }
-              return { ...def, ...live };
-            });
-
-            return (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-                {displayMetrics.map((item) => (
-                  <div
-                    key={item.id}
-                    className="p-5 sm:p-6 rounded-2xl bg-white/95 backdrop-blur-xs border border-[#e7e2d8] shadow-xs flex flex-col justify-between hover:border-primary/40 transition-colors"
-                  >
-                    <div>
-                      <div className="mb-3">
-                        <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-ink-muted font-bold font-heading px-2.5 py-0.5 rounded-md bg-sand border border-[#e7e2d8]">
-                          {item.category || 'Transparency'}
-                        </span>
-                      </div>
-
-                      <span className={`font-mono text-3xl sm:text-4xl font-bold ${item.color || 'text-ink'} block mb-1`}>
-                        {item.stat}
-                      </span>
-                      <h3 className="text-sm font-heading font-bold text-ink mb-1.5">
-                        {item.label || item.description}
-                      </h3>
-                      {item.growth && (
-                        <div className="mb-3">
-                          <span className="inline-block px-2 py-0.5 rounded bg-forest/10 text-forest text-[11px] font-bold border border-forest/20 font-heading">
-                            {item.growth}
-                          </span>
-                        </div>
-                      )}
-                      <p className="text-xs text-ink-muted leading-relaxed">
-                        {item.detail}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            );
-          })()}
-        </section>
-      </div>
-
-      {/* =========================================================
-          SECTION 3: WHAT WE DO: SIDE-BY-SIDE CORE PILLARS
-      ========================================================= */}
-      <section className="py-20 px-4 md:px-8 max-w-7xl mx-auto border-b border-[#e7e2d8]">
-        <div className="max-w-2xl mb-14">
-          <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-            Two Interconnected Pillars
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
-            Education builds futures. Healthcare protects potential.
-          </h2>
-          <p className="text-sm text-ink-light mt-2 leading-relaxed">
-            We invest in scholarships, books, and learning opportunities, while advancing healthcare and women’s empowerment to strengthen families and communities across Nigeria.
-          </p>
+          <button
+            onClick={() => handleNav('outreaches')}
+            className="text-sm font-semibold text-maroon hover:text-maroon-dark transition-colors inline-flex items-center gap-1.5"
+          >
+            <span>All field reports</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Education Pillar Card */}
-          <div className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between">
-            <div className="h-64 sm:h-72 overflow-hidden relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          {/* Latest Outreach Card (7 Cols) */}
+          <div className="lg:col-span-7 bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:border-[#cfc7b9] transition-all flex flex-col justify-between">
+            <div className="relative h-60 sm:h-72 overflow-hidden bg-gray-100">
               <img
-                src="/images/IMG_0296.webp"
-                alt="Pupils receiving school supplies in Nigeria"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover hover:scale-102 transition-transform duration-700"
+                src="/images/IMG_0294.webp"
+                alt="Youth skills and computer lab training"
+                className="w-full h-full object-cover object-center"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/images/hero-digital-literacy-computer-lab.webp';
+                }}
               />
-              <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-heading font-bold text-primary shadow-xs">
-                Pillar 01 • Education
+              <div className="absolute top-4 left-4 flex gap-2">
+                <span className="px-3 py-1 rounded-full bg-forest-tint text-forest font-semibold text-xs border border-forest/20 shadow-sm">
+                  Report published
+                </span>
+                <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[#1c1c1a] font-medium text-xs shadow-sm">
+                  August 2026
+                </span>
               </div>
             </div>
 
-            <div className="p-8">
-              <h3 className="text-2xl font-heading font-bold text-ink mb-3">
-                Scholarships, School Materials &amp; Empowerment
-              </h3>
-              <p className="text-sm text-ink-light leading-relaxed mb-6">
-                Providing scholarships, books, school materials, learning support, and practical skills opportunities to help vulnerable children and young people learn, grow, and thrive.
-              </p>
+            <div className="p-6 sm:p-8 flex flex-col justify-between flex-1">
+              <div>
+                <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-2">
+                  Youth skills, digital literacy &amp; academic outreach
+                </h3>
+                <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
+                  A 5-week youth tech lab in Ikorodu, speech-day scholarships in Jos, primary school learning kits, and shoemaking and hairdressing toolkits.
+                </p>
+              </div>
 
-              <a
-                href="#programs/scholarship"
-                onClick={() => {
-                  window.location.hash = 'programs/scholarship';
-                  setCurrentPage('programs');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="text-xs font-heading font-bold text-primary hover:text-primary-dark flex items-center gap-1.5 cursor-pointer"
-              >
-                <span>View Education Initiatives</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+              <div className="pt-4 border-t border-[#e5e0d8] flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center gap-5 text-sm text-[#4a4a46]">
+                  <div>
+                    <span className="font-heading font-bold text-[#1c1c1a] text-lg block leading-none">345</span>
+                    <span className="text-xs text-[#706e68]">youths &amp; students</span>
+                  </div>
+                  <div className="h-6 w-px bg-[#e5e0d8]" />
+                  <div>
+                    <span className="font-heading font-bold text-[#1c1c1a] text-lg block leading-none">4</span>
+                    <span className="text-xs text-[#706e68]">states reached</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => handleNav('outreaches', 'outreaches/outreach-aug-2026')}
+                  className="font-semibold text-sm text-maroon hover:text-maroon-dark transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                >
+                  <span>Read the report</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Healthcare Pillar Card */}
-          <div className="paper-card rounded-3xl overflow-hidden flex flex-col justify-between">
-            <div className="h-64 sm:h-72 overflow-hidden relative">
-              <img
-                src="/images/pillar2-health-outreach.webp"
-                alt="Medical and health outreach at Orthopaedic & Trauma Dept in Nigeria"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover object-top hover:scale-102 transition-transform duration-700"
-              />
-              <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-heading font-bold text-forest shadow-xs">
-                Pillar 02 • Health
+          {/* Next Outreach Dark Card (5 Cols) */}
+          <div className="lg:col-span-5 bg-[#1c1c1a] text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-lg">
+            <div>
+              <div className="inline-block px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold uppercase tracking-wider mb-4">
+                NEXT OUTREACH
+              </div>
+              <h3 className="font-heading font-bold text-2xl text-white mb-3 leading-snug">
+                October 2026 outreach — Primary School Retention &amp; Learning Kits
+              </h3>
+              <p className="text-sm text-white/70 leading-relaxed">
+                Rural communities in Plateau &amp; Benue State. Distributing uniforms, exercise books, pencils and essential desks for primary school pupils at risk of dropping out.
+              </p>
+            </div>
+
+            <div className="pt-8 flex flex-col gap-3">
+              <button
+                onClick={() => handleNav('get-involved', 'get-involved/volunteer')}
+                className="w-full py-3.5 px-6 rounded-full bg-white hover:bg-[#f5f1e8] text-[#1c1c1a] font-semibold text-sm transition-all cursor-pointer text-center"
+              >
+                Volunteer on this outreach
+              </button>
+              <button
+                onClick={() => onOpenDonate()}
+                className="w-full py-3 px-6 rounded-full border border-white/30 hover:border-white text-white font-medium text-sm transition-all cursor-pointer text-center hover:bg-white/5"
+              >
+                Fund this outreach
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 4. OUR WORK: Children who learn. Mothers who stay healthy. Families who earn. */}
+      <section className="py-16 sm:py-20 bg-[#f5f1e8] border-y border-[#e5e0d8]">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+          <div className="mb-12">
+            <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1.5">
+              OUR WORK
+            </div>
+            <h2 className="font-heading font-bold text-2xl sm:text-4xl text-[#1c1c1a]">
+              Children who learn. Mothers who stay healthy. Families who earn.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Education Card */}
+            <div className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+              <div className="h-52 overflow-hidden bg-gray-100">
+                <img
+                  src="/images/pillar1-education-scholarship.webp"
+                  alt="Education and Scholarships"
+                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/hero-debate-competition-makurdi.webp';
+                  }}
+                />
+              </div>
+              <div className="p-6 flex flex-col justify-between flex-1">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-maroon block mb-1">
+                    Education
+                  </span>
+                  <h3 className="font-heading font-bold text-lg text-[#1c1c1a] mb-2">
+                    Scholarships, school supplies &amp; computer labs
+                  </h3>
+                  <p className="text-xs text-[#4a4a46] leading-relaxed mb-4">
+                    School fees, uniforms, stationery kits, and digital literacy labs to ensure children stay in school.
+                  </p>
+                </div>
+                <button
+                  onClick={() => handleNav('programs')}
+                  className="text-xs font-semibold text-maroon hover:text-maroon-dark inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <span>3 programmes →</span>
+                </button>
               </div>
             </div>
 
-            <div className="p-8">
-              <h3 className="text-2xl font-heading font-bold text-ink mb-3">
-                Medical Outreaches, Malaria Prevention &amp; Maternal Care
-              </h3>
-              <p className="text-sm text-ink-light leading-relaxed mb-6">
-                Bringing essential healthcare, malaria prevention, health education, screenings, and treatment support closer to vulnerable women, children, and underserved communities across Nigeria.
-              </p>
+            {/* Health Card */}
+            <div className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+              <div className="h-52 overflow-hidden bg-gray-100">
+                <img
+                  src="/images/pillar2-health-outreach.webp"
+                  alt="Medical outreaches and malaria prevention"
+                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/hero-maternal-health-malaria-prevention.webp';
+                  }}
+                />
+              </div>
+              <div className="p-6 flex flex-col justify-between flex-1">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-forest block mb-1">
+                    Health
+                  </span>
+                  <h3 className="font-heading font-bold text-lg text-[#1c1c1a] mb-2">
+                    Medical outreaches &amp; malaria prevention
+                  </h3>
+                  <p className="text-xs text-[#4a4a46] leading-relaxed mb-4">
+                    Treated mosquito nets, rapid tests, maternal health packs, and health education in rural areas.
+                  </p>
+                </div>
+                <button
+                  onClick={() => handleNav('programs')}
+                  className="text-xs font-semibold text-forest hover:text-forest-dark inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <span>1 programme →</span>
+                </button>
+              </div>
+            </div>
 
-              <a
-                href="#programs/medical-outreaches"
-                onClick={() => {
-                  window.location.hash = 'programs/medical-outreaches';
-                  setCurrentPage('programs');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="text-xs font-heading font-bold text-forest hover:underline flex items-center gap-1.5 cursor-pointer"
-              >
-                <span>View Healthcare Initiatives</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+            {/* Livelihoods Card */}
+            <div className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+              <div className="h-52 overflow-hidden bg-gray-100">
+                <img
+                  src="/images/hero-widows-clean-cooking-stoves.webp"
+                  alt="Support for widows and young people"
+                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/hero-community-empowerment.webp';
+                  }}
+                />
+              </div>
+              <div className="p-6 flex flex-col justify-between flex-1">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-ochre block mb-1">
+                    Livelihoods
+                  </span>
+                  <h3 className="font-heading font-bold text-lg text-[#1c1c1a] mb-2">
+                    Support for widows, women &amp; young people
+                  </h3>
+                  <p className="text-xs text-[#4a4a46] leading-relaxed mb-4">
+                    Eco-efficient cooking pots, micro-grants for widows, and vocational trade toolkits for youth.
+                  </p>
+                </div>
+                <button
+                  onClick={() => handleNav('programs')}
+                  className="text-xs font-semibold text-ochre hover:text-[#915610] inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <span>2 programmes →</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -499,140 +450,131 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
       {/* =========================================================
           LOWER FLOW: COMMUNITY VOICES & GIVING SIMULATOR
-          (Mirrored Left-Side Ambient Wave)
+          (Mirrored Left-Side Ambient Wave Line)
       ========================================================= */}
       <div className="relative overflow-hidden">
-        {/* Left-side subtle mirrored wave */}
+        {/* Left-side subtle mirrored wave line */}
         <CurvedWaveBackground side="left" />
 
-        {/* SECTION 4: COMMUNITY LETTERS */}
-        <section className="relative z-10 py-20 px-4 md:px-8 max-w-7xl mx-auto border-b border-[#e7e2d8]">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-              Community Letters
+        {/* 5. Section: In their words (Testimonials with Real Field Photos) */}
+        <section className="relative z-10 py-16 sm:py-20 max-w-[1200px] mx-auto px-4 sm:px-6">
+          <div className="mb-10">
+            <span className="text-xs uppercase font-bold tracking-widest text-maroon block mb-1">
+              COMMUNITY VOICES
             </span>
-            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
-              Words from the people who live the mission.
+            <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
+              In their words
             </h2>
           </div>
 
-
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((t, idx) => (
-              <div key={idx} className="p-8 rounded-3xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8] flex flex-col justify-between">
-                <div>
-                  <Quote className="w-6 h-6 text-primary/30 mb-4" />
-                  <p className="text-sm text-ink-light italic leading-relaxed mb-6">
-                    "{t.quote}"
-                  </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Testimonial 1 with Beckwin School Photo */}
+            <div className="bg-[#f5f1e8] rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] flex flex-col justify-between shadow-xs">
+              <div className="flex flex-col sm:flex-row gap-4 items-start mb-6">
+                <div className="w-full sm:w-32 h-24 shrink-0 rounded-2xl overflow-hidden bg-sand border border-[#e5e0d8]">
+                  <img
+                    src="/images/hero-digital-literacy-computer-lab.webp"
+                    alt="Beckwin School Computer Lab setup"
+                    className="w-full h-full object-cover object-center"
+                  />
                 </div>
+                <p className="text-sm sm:text-base text-[#1c1c1a] italic leading-relaxed font-serif">
+                  "...a well-equipped computer laboratory with nine computers... our children can now gain the digital skills they need to compete in today's world."
+                </p>
+              </div>
 
-                <div className="pt-4 border-t border-[#e0d9cc]">
-                  {t.author && t.author.trim() !== '.' && (
-                    <h4 className="text-sm font-heading font-bold text-ink">{t.author}</h4>
-                  )}
-                  <p className="text-xs text-ink-muted">
-                    {[t.role, t.institution].filter(Boolean).join(' • ')}
+              <div className="flex items-center gap-3 pt-4 border-t border-[#e5e0d8]">
+                <div className="w-11 h-11 rounded-full bg-maroon-tint text-maroon font-bold flex items-center justify-center font-heading text-sm shrink-0">
+                  BO
+                </div>
+                <div>
+                  <h4 className="font-heading font-bold text-sm text-[#1c1c1a]">
+                    Mrs. Becky Omegbogu
+                  </h4>
+                  <p className="text-xs text-[#706e68]">
+                    Proprietor, Beckwin International School · Plateau
                   </p>
-                  {t.location && (
-                    <span className="text-xs text-primary font-medium block mt-0.5">{t.location}</span>
-                  )}
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Testimonial 2 with Healthcare Outreach Photo */}
+            <div className="bg-[#f5f1e8] rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] flex flex-col justify-between shadow-xs">
+              <div className="flex flex-col sm:flex-row gap-4 items-start mb-6">
+                <div className="w-full sm:w-32 h-24 shrink-0 rounded-2xl overflow-hidden bg-sand border border-[#e5e0d8]">
+                  <img
+                    src="/images/hero-maternal-health-malaria-prevention.webp"
+                    alt="Abata community healthcare outreach"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+                <p className="text-sm sm:text-base text-[#1c1c1a] italic leading-relaxed font-serif">
+                  "We truly appreciate and love you for coming to our community to educate us about malaria, how to prevent it, and how to take better care of ourselves."
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 pt-4 border-t border-[#e5e0d8]">
+                <div className="w-11 h-11 rounded-full bg-forest-tint text-forest font-bold flex items-center justify-center font-heading text-sm shrink-0">
+                  AC
+                </div>
+                <div>
+                  <h4 className="font-heading font-bold text-sm text-[#1c1c1a]">
+                    Nursing mothers, Abata Community
+                  </h4>
+                  <p className="text-xs text-[#706e68]">
+                    Lagos State
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* SECTION 5: DIRECT GIVING SIMULATOR */}
-        <section className="relative z-10 py-14 sm:py-24 px-4 md:px-8 max-w-4xl mx-auto">
-          <div className="paper-card rounded-3xl p-5 sm:p-8 md:p-12 bg-white/95 backdrop-blur-xs">
-            <div className="text-center max-w-xl mx-auto mb-8">
-              <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-                Direct Impact Simulator
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-ink">
-                See what your contribution creates.
+
+        {/* 6. Maroon Banner: Give monthly. Plan outreaches with us. */}
+        <section className="relative z-10 bg-maroon text-white py-14 sm:py-16 mt-12">
+          <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="max-w-xl">
+              <h2 className="font-heading font-bold text-2xl sm:text-3xl text-white mb-2">
+                Give monthly. Plan outreaches with us.
               </h2>
-              <p className="text-xs text-ink-muted mt-1">
-                Adjust the slider to calculate the frontline deliverables funded by your gift.
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed">
+                Regular gifts let us plan each month's outreach in advance. ₦5,000 a month buys three pupils a full learning kit every term.
               </p>
             </div>
 
-            <div className="bg-sand p-4 sm:p-6 rounded-2xl border border-[#e7e2d8] mb-8">
-              <div className="flex justify-between items-center mb-3">
-                <span className="text-xs font-bold text-ink uppercase tracking-wide font-heading">Donation Amount:</span>
-                <span className="font-mono text-xl sm:text-3xl font-bold text-primary">
-                  ₦{calcAmount.toLocaleString()}
-                </span>
-              </div>
-
-              <input
-                type="range"
-                min="5000"
-                max="100000"
-                step="5000"
-                value={calcAmount}
-                onChange={(e) => setCalcAmount(Number(e.target.value))}
-                className="w-full h-2 bg-[#ded8cc] rounded-lg appearance-none cursor-pointer accent-primary"
-              />
-
-              <div className="flex justify-between text-[10px] sm:text-[11px] text-ink-muted font-medium mt-2">
-                <span>₦5,000</span>
-                <span className="hidden sm:inline">₦25,000</span>
-                <span>₦50,000</span>
-                <span className="hidden sm:inline">₦75,000</span>
-                <span>₦100,000</span>
-              </div>
-            </div>
-
-            {/* Generated Deliverables */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-4">
-              <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
-                <span className="font-mono text-xl sm:text-2xl font-bold text-primary block mb-0.5">
-                  {currentImpact.learningKits}
-                </span>
-                <span className="text-[11px] sm:text-xs text-ink-muted">Pupil Learning Kits</span>
-              </div>
-
-              <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
-                <span className="font-mono text-xl sm:text-2xl font-bold text-forest block mb-0.5">
-                  {currentImpact.clinicVisits}
-                </span>
-                <span className="text-[11px] sm:text-xs text-ink-muted">Clinic Consults</span>
-              </div>
-
-              <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
-                <span className="font-mono text-xl sm:text-2xl font-bold text-clay block mb-0.5">
-                  {currentImpact.booksSupplied}
-                </span>
-                <span className="text-[11px] sm:text-xs text-ink-muted">Textbook Sets</span>
-              </div>
-
-              <div className="p-3.5 sm:p-4 rounded-xl bg-sand border border-[#e7e2d8] text-center">
-                <span className="font-mono text-xl sm:text-2xl font-bold text-emerald-800 block mb-0.5">
-                  {currentImpact.safeWaterDays}
-                </span>
-                <span className="text-[11px] sm:text-xs text-ink-muted">Days Clean Water</span>
-              </div>
-            </div>
-
-            <p className="text-[11px] text-ink-muted text-center mb-6">
-              ₦5,000 supplies 1 pupil back-to-school learning kit (exercise books, writing materials &amp; supplies) • ₦50,000 sponsors a child's full-term school fees scholarship.
-            </p>
-
-            <div className="text-center">
-              <button
-                onClick={() => onOpenDonate(calcAmount)}
-                className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-6 sm:px-8 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
-              >
-                <span>Donate ₦{calcAmount.toLocaleString()} to Direct Impact</span>
-                <Heart className="w-4 h-4" />
-              </button>
-            </div>
+            <button
+              onClick={() => onOpenDonate()}
+              className="px-8 py-4 rounded-full bg-white text-maroon font-heading font-bold text-sm sm:text-base hover:bg-[#f5f1e8] transition-colors shadow-md cursor-pointer shrink-0"
+            >
+              Start a monthly gift
+            </button>
           </div>
         </section>
+
       </div>
+
+      {/* 7. Partner Strip */}
+      <section className="py-12 bg-white border-b border-[#e5e0d8]">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+          <div className="text-xs uppercase font-bold tracking-wider text-[#706e68] mb-6">
+            SCHOOLS, HOMES AND HOSPITALS WE HAVE WORKED WITH
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-sm font-heading font-semibold text-[#4a4a46]">
+            <span className="hover:text-maroon transition-colors">Beckwin International School</span>
+            <span className="text-[#d0c8bb]">•</span>
+            <span className="hover:text-maroon transition-colors">Karvron Montessori School</span>
+            <span className="text-[#d0c8bb]">•</span>
+            <span className="hover:text-maroon transition-colors">Jambells School</span>
+            <span className="text-[#d0c8bb]">•</span>
+            <span className="hover:text-maroon transition-colors">Oyiza Orphanage</span>
+            <span className="text-[#d0c8bb]">•</span>
+            <span className="hover:text-maroon transition-colors">Abuja Teaching Hospital</span>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
+

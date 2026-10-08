@@ -1,796 +1,750 @@
 import { useState, useEffect } from 'react';
-import { School, Stethoscope, BookOpen, Users, Laptop, HandHeart, ArrowRight, ArrowLeft, Heart, Quote, MapPin, CheckCircle2 } from '../components/Icons';
+import { School, Stethoscope, BookOpen, Users, Laptop, Heart, ArrowRight, ArrowLeft, Check, Quote } from '../components/Icons';
 import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
-const programsData = [
+const PROGRAMMES = [
   {
-    id: 'scholarship',
-    aliases: ['scholarships'],
-    number: '01',
-    pillar: 'Education',
-    badge: 'Education Pillar',
-    title: 'Scholarship',
-    tagline: 'Keeping eager learners in school, erasing financial barriers, and securing a bright future for all.',
-    states: 'FCT Abuja, Oyo, Lagos, Plateau, and Benue.',
-    leadStat: '340+ Students on Active Scholarship',
-    budgetGoal: '₦45,000 / Student / Term',
-    fundedPercent: 84,
-    icon: School,
-    color: 'text-primary',
-    whatThisAccomplishes: 'Removing the cost of staying in school. Equipping underprivileged children with everything they need to succeed: complete tuition, official exam registration, and custom school uniforms.',
-    whoWeReachAndEmpower: 'Students at risk of dropping out. We champion primary and secondary students at severe risk of leaving school due to financial strain, giving vulnerable children the safety net they deserve.',
-    howWeBringThisToLife: [
-      {
-        step: '01',
-        title: 'Finding the Right Partners',
-        desc: 'We team up with community leaders and school heads to find the children who need us most.'
-      },
-      {
-        step: '02',
-        title: 'Verifying Real Needs',
-        desc: 'We visit homes to verify needs firsthand and set a baseline for academic tracking.'
-      },
-      {
-        step: '03',
-        title: 'Direct Disbursement',
-        desc: 'We handle school fees, uniform fittings, and material costs directly through the institution.'
-      },
-      {
-        step: '04',
-        title: 'Regular Check-ins & Audits',
-        desc: 'We run regular check-ins, tracking report cards and attendance to keep students thriving term after term.'
-      }
+    id: 'scholarships',
+    pillar: 'education',
+    title: 'Scholarships',
+    shortDesc: 'School fees, exam registration and uniforms for primary and secondary pupils at risk of dropping out.',
+    latestOutreach: 'Aug 2026 · Speech-day scholarships, Jos',
+    image: '/images/hero-debate-competition-makurdi.webp',
+    unitCost: '₦45,000',
+    unitCostLabel: 'One term costs',
+    statBeneficiaries: '150+',
+    statBeneficiariesLabel: 'Scholars supported',
+    statesActive: '5 states',
+    statesList: 'FCT Abuja, Benue, Lagos, Oyo and Plateau',
+    monthlySuggested: 15000,
+    termSuggested: 45000,
+    fundedCount: 48,
+    targetCount: 60,
+    whoItsFor: 'Primary and secondary pupils at serious risk of dropping out because of money — often after a parent dies or loses their income. Active in FCT Abuja, Benue, Lagos, Oyo and Plateau.',
+    covers: [
+      'Tuition, paid straight to the school',
+      'Official exam registration',
+      'School uniform',
+      'Termly check-ins on attendance and report cards'
     ],
-    realStory: {
-      name: 'Halima Yusuf (Age 11)',
-      location: 'Zaria Rural, Kaduna',
-      story: 'Halima lost her father in 2022 and was out of school for two terms helping her mother sell groundnuts. In 2023, she received a TKH full scholarship. Today, she consistently ranks 1st in her primary 5 class and dreams of becoming a pediatric doctor.'
-    },
-    stats: [
-      { label: 'Scholarships Awarded', val: '340+' },
-      { label: 'Term Retention Rate', val: '98.5%' },
-      { label: 'Partner Schools Enrolled', val: '24' }
+    howItWorks: [
+      { step: 'Step 1', title: 'Referral', desc: 'Community leaders and head teachers tell us about children who need help.' },
+      { step: 'Step 2', title: 'Home visit', desc: 'We visit the family to confirm the need and record a starting point for the child\'s schoolwork.' },
+      { step: 'Step 3', title: 'Direct payment', desc: 'Fees, uniforms and materials are paid directly through the school.' },
+      { step: 'Step 4', title: 'Every term', desc: 'We track attendance and report cards to keep each scholar on course.' }
     ],
-    ctaText: 'Sponsor a Child\'s Scholarship',
-    testimonials: [
-      {
-        quote: "Without Ten Kind Hands paying my son's fees, he would have stopped at Primary 4. Today he is preparing for his secondary entrance exams with flying colors.",
-        author: 'Musa Ibrahim',
-        role: 'Father & Subsistence Farmer, Kaduna'
-      }
-    ]
+    story: {
+      quote: 'Before Ten Kind Hands stepped in, Amina had missed two consecutive terms after losing her guardian. With full tuition, books and uniform provided, she placed 2nd in her class this July.',
+      name: 'Amina (Age 11)',
+      location: 'Primary 5 Scholar, Plateau State'
+    }
   },
   {
-    id: 'youth-empowerment',
-    aliases: ['youth-development'],
-    number: '02',
-    pillar: 'Education',
-    badge: 'Vocational & Tech Pillar',
-    title: 'Youth Empowerment',
-    tagline: 'Equipping young minds with digital and practical vocational skills to shape their futures.',
-    states: 'FCT Abuja, Lagos, Ogun, and Rural Grassroots Settlements.',
-    leadStat: '1,100+ Youth Certified & Mentored',
-    budgetGoal: '₦1,800,000 / Tech Pod',
-    fundedPercent: 72,
-    icon: Laptop,
-    color: 'text-primary',
-    whatThisAccomplishes: 'Turning idle time into earning power. Keeping brilliant minds off the streets, giving them a head start with hands-on skills and dedicated mentorship.',
-    whoWeReachAndEmpower: 'Rural teenagers and young school leavers. We focus on adolescents in underserved communities who lack access to opportunities, technology, and technical training, equipping them with the tools to thrive and build sustainable careers.',
-    howWeBringThisToLife: [
-      {
-        step: '01',
-        title: 'Community Identification',
-        desc: 'Teaming up with local youth leaders and schools to spot adolescents eager to learn digital and vocational skills.'
-      },
-      {
-        step: '02',
-        title: 'Environment & Interest Mapping',
-        desc: "Identifying each young person's interests and understanding which vocational tracks actually work in their local environment."
-      },
-      {
-        step: '03',
-        title: 'Readiness Assessment',
-        desc: 'Evaluating local needs and setting up practical training tracks tailored to real-world market demand.'
-      },
-      {
-        step: '04',
-        title: 'Direct Skills Deployment',
-        desc: 'Providing hands-on classes, equipment access, and expert instructors straight to the grassroots level, with no barriers.'
-      },
-      {
-        step: '05',
-        title: 'Ongoing Progress & Mentorship',
-        desc: 'Tracking skill growth, project milestones, and career pathways to ensure long-term independence and success.'
-      },
-      {
-        step: '06',
-        title: 'Startup & Tool Support',
-        desc: 'Equipping outstanding graduates with essential startup tools and workspace resources once they have mastered their skills.'
-      }
+    id: 'school-supplies',
+    pillar: 'education',
+    title: 'School supplies & learning kits',
+    shortDesc: 'Exercise books, writing packs and stationery so no child starts the term empty-handed.',
+    latestOutreach: 'May 2026 · 300 pupils across 4 states',
+    image: '/images/hero-jambells-school-outreach.webp',
+    unitCost: '₦5,000',
+    unitCostLabel: 'One kit costs',
+    statBeneficiaries: '2,400+',
+    statBeneficiariesLabel: 'Pupils equipped',
+    statesActive: '5 states',
+    statesList: 'FCT Abuja, Benue, Lagos, Oyo and Plateau',
+    monthlySuggested: 5000,
+    termSuggested: 15000,
+    fundedCount: 240,
+    targetCount: 300,
+    whoItsFor: 'Primary school children in low-income community schools whose parents cannot afford essential stationery, preventing them from participating in daily classwork.',
+    covers: [
+      'Sets of 10 ruled exercise books',
+      'Complete writing pencil cases (biros, pencils, erasers, sharpeners)',
+      'Mathematical sets for junior secondary students',
+      'School backpacks and water bottles'
     ],
-    realStory: {
-      name: 'Emmanuel Chinedu (Age 17)',
-      location: 'Karmo Satellite, Abuja',
-      story: 'Emmanuel had never touched a physical laptop before attending TKH Youth Digital Bootcamps. Within six months, he learned data entry and graphic basics, and now freelances locally to support his tertiary polytechnic application.'
-    },
-    stats: [
-      { label: 'Youth Certified', val: '1,100+' },
-      { label: 'Vocational Tracks', val: '6 Tracks' },
-      { label: 'Startup Toolkits Awarded', val: '180+' }
+    howItWorks: [
+      { step: 'Step 1', title: 'School audit', desc: 'We audit partner community schools before term start to tally unsupplied pupils.' },
+      { step: 'Step 2', title: 'Bulk procurement', desc: 'Materials are purchased wholesale straight from manufacturers to maximize donor impact.' },
+      { step: 'Step 3', title: 'Assembly', desc: 'Volunteers assemble individualized packs for every registered child.' },
+      { step: 'Step 4', title: 'Direct distribution', desc: 'Packs are placed straight into children\'s hands in school assemblies.' }
     ],
-    ctaText: 'Fund Youth Skills & Startup Tools',
-    testimonials: [
-      {
-        quote: "The practical classes and tool grants opened a whole new future for our young people. They now build trade businesses with genuine pride.",
-        author: 'Pastor Samuel Udoh',
-        role: 'Youth Leader, Community Outreach'
-      }
-    ]
+    story: {
+      quote: 'Having his own exercise books and biros changed Joshua\'s whole demeanor in class. He no longer hides his workbook or hesitates to write notes.',
+      name: 'Mr. Emmanuel',
+      location: 'Class Teacher, Lagos State'
+    }
   },
   {
     id: 'orphanage-outreaches',
-    aliases: ['orphanages-outreaches'],
-    number: '03',
-    pillar: 'Healthcare',
-    badge: 'Community & Care Pillar',
-    title: 'Orphanage Outreaches',
-    tagline: 'Food items, school supplies, and heartfelt connection. Providing reliable nutrition, learning materials, craft workshops, and lasting memories for Nigerian children\'s homes.',
-    states: 'Enugu, Kaduna, FCT Abuja, and Registered Homes Nationwide.',
-    leadStat: '18 Children\'s Homes Supported',
-    budgetGoal: '₦600,000 / Home / Quarter',
-    fundedPercent: 91,
-    icon: HandHeart,
-    color: 'text-forest',
-    whatThisAccomplishes: 'Nurturing growth and creating memories. Delivering food items, school supplies, and hands-on workshops that prepare children for a brighter school year while building deep personal connections.',
-    whoWeReachAndEmpower: 'Vulnerable children in care. Reaching registered children\'s homes across Nigeria to ensure every child gets essential care, learning resources, and encouragement.',
-    howWeBringThisToLife: [
-      {
-        step: '01',
-        title: 'Home Identification',
-        desc: 'Partnering with registered homes to assess immediate needs for nutrition, hygiene, and education.'
-      },
-      {
-        step: '02',
-        title: 'Supply Mobilization',
-        desc: 'Gathering food packages, school bags, writing materials, and hygiene essentials.'
-      },
-      {
-        step: '03',
-        title: 'Direct Delivery & Engagement',
-        desc: 'Bringing supplies directly to the homes while spending quality time connecting with the children.'
-      },
-      {
-        step: '04',
-        title: 'Workshops & Memories',
-        desc: 'Hosting craft sessions such as bead-making to spark joy, build talents, and create lasting memories.'
-      },
-      {
-        step: '05',
-        title: 'Ongoing Follow-Up',
-        desc: 'Maintaining regular touchpoints with care home management to sustain long-term support.'
-      }
+    pillar: 'education',
+    title: 'Orphanage outreaches',
+    shortDesc: 'Food relief, nutritional staples and learning materials for registered children\'s homes.',
+    latestOutreach: 'June 2026 · Oyiza Orphanage',
+    image: '/images/hero-orphanage-food-educational-support.webp',
+    unitCost: '₦25,000',
+    unitCostLabel: 'Monthly food basket',
+    statBeneficiaries: '4 homes',
+    statBeneficiariesLabel: 'Homes supported',
+    statesActive: '3 states',
+    statesList: 'FCT Abuja, Benue and Lagos',
+    monthlySuggested: 25000,
+    termSuggested: 75000,
+    fundedCount: 32,
+    targetCount: 40,
+    whoItsFor: 'Vulnerable children living in licensed non-profit orphanage homes that rely on public generosity for daily sustenance and basic schooling.',
+    covers: [
+      'Essential grains: rice, beans, garri, and cooking oils',
+      'Baby formula and pediatric multivitamins',
+      'School supplies and exercise books for school-age resident children',
+      'Hygiene soap, detergents, and beddings'
     ],
-    realStory: {
-      name: 'Hope Sanctuary Children\'s Home',
-      location: 'Enugu State',
-      story: 'Home to 42 children, Hope Sanctuary faced severe food shortages during soaring inflation. TKH stepped in with quarterly food consignments and medical screenings, eliminating childhood malnutrition in the sanctuary.'
-    },
-    stats: [
-      { label: 'Care Homes Supported', val: '18' },
-      { label: 'Food Consignments Delivered', val: '72+' },
-      { label: 'Children Reached', val: '680+' }
+    howItWorks: [
+      { step: 'Step 1', title: 'Needs assessment', desc: 'We consult the home administrators for their exact pantry and medical shortages.' },
+      { step: 'Step 2', title: 'Food market dispatch', desc: 'Volunteers buy fresh food supplies from local wholesale agricultural markets.' },
+      { step: 'Step 3', title: 'Delivery & inspection', desc: 'We deliver all provisions on-site with full delivery receipts.' },
+      { step: 'Step 4', title: 'Mentorship hour', desc: 'Our team spends time reading and playing games with the children.' }
     ],
-    ctaText: 'Sponsor an Orphanage Outreach Package',
-    testimonials: [
-      {
-        quote: "Ten Kind Hands supplies are the most consistent blessing our sanctuary has ever had. Their staff come with genuine love, not for photo stunts.",
-        author: 'Sister Mary Theresa',
-        role: 'Director, Little Angels Orphanage, Enugu'
-      }
-    ]
-  },
-  {
-    id: 'school-donations',
-    aliases: ['school-donation'],
-    number: '04',
-    pillar: 'Education',
-    badge: 'Infrastructure Pillar',
-    title: 'School Donations',
-    tagline: 'Equipping rural schools for success. Upgrading classrooms with durable infrastructure, modern teaching tools, and essential learning materials to give rural students the best foundation to learn and thrive.',
-    states: 'Kaduna, Niger, Benue, and Plateau Rural Districts.',
-    leadStat: '45 Classrooms Equipped & Upgraded',
-    budgetGoal: '₦4,500,000 / School Block',
-    fundedPercent: 88,
-    icon: BookOpen,
-    color: 'text-primary',
-    whatThisAccomplishes: 'Building better learning environments. Delivering classroom essentials and educational materials that empower teachers and inspire students to excel.',
-    whoWeReachAndEmpower: 'Students in underserved areas. Focusing on under-resourced rural schools across Nigeria to ensure every child has a safe, well-equipped place to learn.',
-    howWeBringThisToLife: [
-      {
-        step: '01',
-        title: 'School Assessment',
-        desc: 'Identifying under-resourced schools and evaluating critical infrastructure and material needs.'
-      },
-      {
-        step: '02',
-        title: 'Resource Mobilization',
-        desc: 'Gathering classroom furniture, teaching aids, books, and learning supplies.'
-      },
-      {
-        step: '03',
-        title: 'Delivery & Setup',
-        desc: 'Transporting and installing donations on-site to upgrade learning spaces instantly.'
-      },
-      {
-        step: '04',
-        title: 'Tool Integration',
-        desc: 'Helping teachers and students use new resources effectively for maximum engagement.'
-      },
-      {
-        step: '05',
-        title: 'Ongoing Monitoring',
-        desc: 'Maintaining touchpoints with school leaders to ensure long-term sustainability.'
-      }
-    ],
-    realStory: {
-      name: 'L.E.A. Primary School, Kufana',
-      location: 'Kaduna State',
-      story: 'Pupils previously sat on raw mud blocks under cracked asbestos sheets. TKH rebuilt a 3-classroom block with solar roof lighting, modern desks, and a 500-book reading box. Pupil enrollment increased by 65% in one academic year.'
-    },
-    stats: [
-      { label: 'Classroom Blocks Upgraded', val: '45' },
-      { label: 'Books & Toolkits Donated', val: '1,000+' },
-      { label: 'Desks Handcrafted', val: '1,850' }
-    ],
-    ctaText: 'Fund a School Classroom Upgrade',
-    testimonials: [
-      {
-        quote: "Before this donation, teachers had no textbooks to teach from. Today every pupil shares a modern reader and sits comfortably on a desk.",
-        author: 'Mallam Bello Abdullahi',
-        role: 'School Proprietor & Education Secretary'
-      }
-    ]
+    story: {
+      quote: 'Ten Kind Hands has been a dependable rock for our home. The children look forward to every visit with immense gratitude.',
+      name: 'Matron Comfort',
+      location: 'Oyiza Orphanage'
+    }
   },
   {
     id: 'medical-outreaches',
-    aliases: ['medical-outreach'],
-    number: '05',
-    pillar: 'Healthcare',
-    badge: 'Frontline Healthcare',
-    title: 'Medical Outreaches',
-    tagline: 'Bringing healthcare to remote villages. Providing free medical checks, prescribed drugs, mosquito nets, and health education to villages with little or no hospital access.',
-    states: 'Kaduna, Enugu, Ogun, and Benue Remote Hamlets.',
-    leadStat: '8,200+ Patients Treated at Zero Cost',
-    budgetGoal: '₦1,200,000 / Medical Mission',
-    fundedPercent: 94,
-    icon: Stethoscope,
-    color: 'text-forest',
-    whatThisAccomplishes: 'Healing and health education. Delivering doctors, diagnostic tests, and pharmaceuticals directly to underserved communities while teaching them how to prevent illness in their environment.',
-    whoWeReachAndEmpower: 'Remote and vulnerable communities. Reaching rural villages across Nigeria with little to no access to medical facilities, ensuring families receive life-saving care and health education.',
-    howWeBringThisToLife: [
-      {
-        step: '01',
-        title: 'Community Scouting',
-        desc: 'Identifying remote villages with restricted or no hospital access to plan targeted healthcare interventions.'
-      },
-      {
-        step: '02',
-        title: 'Medical Team Mobilization',
-        desc: 'Assembling volunteer doctors, nurses, and specialists equipped with diagnostic tools and essential pharmaceuticals.'
-      },
-      {
-        step: '03',
-        title: 'Triage & Diagnostics',
-        desc: 'Conducting vital signs checks and rapid malaria or blood sugar testing on-site by certified nurses.'
-      },
-      {
-        step: '04',
-        title: 'Doctor Consultation & Pharmacy',
-        desc: 'Providing one-on-one medical examinations and free dispensing of prescribed drugs.'
-      },
-      {
-        step: '05',
-        title: 'Preventive Distributions',
-        desc: 'Handing out protective health essentials such as mosquito nets and sanitation supplies to households.'
-      },
-      {
-        step: '06',
-        title: 'Health Education',
-        desc: 'Teaching communities about wellness, hygiene, and how to identify and prevent local environmental causes of illness.'
-      },
-      {
-        step: '07',
-        title: 'Referral & Emergency Support',
-        desc: 'Providing emergency transport vouchers and support for patients requiring specialized hospital care.'
-      }
+    pillar: 'health',
+    title: 'Medical outreaches & malaria prevention',
+    shortDesc: 'Treated mosquito nets, rapid tests and supplements for pregnant and nursing mothers, with health education in English and Hausa.',
+    latestOutreach: 'Apr 2026 · 130 high-risk mothers, 3 states',
+    image: '/images/hero-maternal-health-malaria-prevention.webp',
+    unitCost: '₦7,500',
+    unitCostLabel: 'Per mother pack',
+    statBeneficiaries: '1,200+',
+    statBeneficiariesLabel: 'Mothers & infants',
+    statesActive: '4 states',
+    statesList: 'Abuja, Benue, Lagos, and Plateau',
+    monthlySuggested: 7500,
+    termSuggested: 22500,
+    fundedCount: 110,
+    targetCount: 130,
+    whoItsFor: 'Expectant mothers, infants, and vulnerable elders in rural settlements without functional primary healthcare centers.',
+    covers: [
+      'Long-lasting insecticide-treated mosquito nets (LLINs)',
+      'Rapid malaria diagnostic testing (RDT) and treatment therapies (ACT)',
+      'Prenatal vitamins, iron, and folic acid courses',
+      'Health & sanitation workshops in local languages'
     ],
-    realStory: {
-      name: 'Mama Rachael Obi',
-      location: 'Oji River District, Enugu',
-      story: 'Suffering from severe undiagnosed hypertension for two years, Mama Rachael collapsed during farming. The TKH mobile clinic stabilized her, provided three months of monitored antihypertensive therapy, and educated her family on preventative health.'
-    },
-    stats: [
-      { label: 'Patients Treated', val: '8,200+' },
-      { label: 'Mobile Missions Conducted', val: '38' },
-      { label: 'Malaria Tests Administered', val: '6,400+' }
+    howItWorks: [
+      { step: 'Step 1', title: 'Community mobilization', desc: 'Village criers and nurses invite mothers to the community dispensary.' },
+      { step: 'Step 2', title: 'Clinical screening', desc: 'Volunteer nurses run vitals, malaria tests, and health assessments.' },
+      { step: 'Step 3', title: 'Prescription & nets', desc: 'Free medication regimens and treated nets distributed on the spot.' },
+      { step: 'Step 4', title: 'Follow-up checks', desc: 'Community health workers check back after 30 days.' }
     ],
-    ctaText: 'Sponsor a Mobile Medical Clinic',
-    testimonials: [
-      {
-        quote: "The doctors came right to our village square. I received eye checks and medicine for my arthritis without paying a single kobo.",
-        author: 'Pa Gabriel Nwosu (Age 68)',
-        role: 'Community Elder, Enugu'
-      }
-    ]
+    story: {
+      quote: 'Learning how to properly hang the mosquito net and getting tested on the spot saved my 2-year-old from recurring malaria bouts.',
+      name: 'Amina',
+      location: 'Nursing Mother, Abata'
+    }
   },
   {
-    id: 'women-widows',
-    aliases: ['women-and-widows', 'women-widows-impact'],
-    number: '06',
-    pillar: 'Healthcare',
-    badge: 'Women Empowerment',
-    title: 'Women & Widows Impact',
-    tagline: 'Dignity, livelihoods, and household relief. Equipping vulnerable widows and women with practical skills, startup resources, and safer household solutions such as modern coal stoves to build steady livelihoods.',
-    states: 'Ogun, Enugu, Kano, and Plateau States.',
-    leadStat: '3,400 Mothers & Widows Supported',
-    budgetGoal: '₦35,000 / Micro-Grant & Pack',
-    fundedPercent: 82,
-    icon: Users,
-    color: 'text-forest',
-    whatThisAccomplishes: 'Lessening the daily burdens on women and widows. Providing economic empowerment, safe maternal healthcare access, and eco-friendly household alternatives to help women build stable, independent homes.',
-    whoWeReachAndEmpower: 'Hardworking women and widows. Reaching mothers and widows who are willing and able to work but lack the financial agency, tools, or opportunities to support their families independently.',
-    howWeBringThisToLife: [
-      {
-        step: '01',
-        title: 'Community Identification',
-        desc: 'Partnering with local leaders to identify vulnerable widows and women who need economic and livelihood support.'
-      },
-      {
-        step: '02',
-        title: 'Skills Training',
-        desc: 'Providing practical vocational training tailored to each participant\'s interests and local market viability.'
-      },
-      {
-        step: '03',
-        title: 'Startup & Tool Support',
-        desc: 'Equipping women with the essential tools and resources needed to launch independent ventures.'
-      },
-      {
-        step: '04',
-        title: 'Safe Household Solutions',
-        desc: 'Distributing economical, modern alternatives such as improved coal stoves to ease daily living and reduce household burdens.'
-      },
-      {
-        step: '05',
-        title: 'Maternal Health & Support',
-        desc: 'Connecting women with safe maternal healthcare resources and community support networks for long-term well-being.'
-      }
+    id: 'widows-empowerment',
+    pillar: 'livelihoods',
+    title: 'Widows & women empowerment',
+    shortDesc: 'Fuel-efficient cooking pots, small cash grants and welfare support for widows.',
+    latestOutreach: 'Jun 2026 · 80 widows, 20 in each of 4 states',
+    image: '/images/hero-widows-clean-cooking-stoves.webp',
+    unitCost: '₦20,000',
+    unitCostLabel: 'Pot & seed grant',
+    statBeneficiaries: '280+',
+    statBeneficiariesLabel: 'Widows supported',
+    statesActive: '4 states',
+    statesList: 'Abuja, Benue, Oyo, and Lagos',
+    monthlySuggested: 10000,
+    termSuggested: 30000,
+    fundedCount: 72,
+    targetCount: 80,
+    whoItsFor: 'Widows in rural communities caring for children alone, relying on open firewood cooking that harms their lungs and costs precious daily earnings.',
+    covers: [
+      'Durable, fuel-efficient eco-cooking coal stoves',
+      'Direct small livelihood cash grants for micro-trading',
+      'Respiratory health and fire-safety home education',
+      'Nutritional food welfare bags'
     ],
-    realStory: {
-      name: 'Comfort Adeleke',
-      location: 'Abeokuta Rural, Ogun State',
-      story: 'After losing her husband, Comfort had no capital to sustain her four young children. Through the TKH Widows Empowerment Grant of ₦35,000, she started a cassava processing micro-business and now pays her children’s school levies comfortably.'
-    },
-    stats: [
-      { label: 'Mothers & Widows Empowered', val: '3,400+' },
-      { label: 'Micro-Grants Disbursed', val: '450+' },
-      { label: 'Improved Stoves & Packs Distributed', val: '2,200+' }
+    howItWorks: [
+      { step: 'Step 1', title: 'Women leader referral', desc: 'Local widow welfare associations nominate the most vulnerable families.' },
+      { step: 'Step 2', title: 'Home confirmation', desc: 'Our state coordinators visit to confirm domestic situation.' },
+      { step: 'Step 3', title: 'Live demonstration', desc: 'Hands-on demonstration on operating and maintaining eco-stoves.' },
+      { step: 'Step 4', title: 'Seed disbursement', desc: 'Cash grants provided with clear enterprise targets.' }
     ],
-    ctaText: 'Fund a Widow\'s Enterprise & Stoves',
-    testimonials: [
-      {
-        quote: "Ten Kind Hands didn't just give me fish; they taught me how to fish and gave me the net. I can now feed my children with dignity.",
-        author: 'Mrs. Folashade Bakare',
-        role: 'Micro-Grant Beneficiary & Cassava Trader'
-      }
-    ]
+    story: {
+      quote: 'I used to spend ₦1,200 every day on wood that filled our room with smoke. The new stove uses one small tin of coal and cooks for two days.',
+      name: 'Mama Grace',
+      location: 'Widow, Benue State'
+    }
+  },
+  {
+    id: 'youth-skills',
+    pillar: 'livelihoods',
+    title: 'Youth skills & empowerment',
+    shortDesc: 'Digital literacy bootcamps and apprenticeships that end in a toolkit — and a shop of their own.',
+    latestOutreach: 'Jul 2026 · 2 trained barbers set up with their own shops',
+    image: '/images/hero-youth-vocational-shoemaking.webp',
+    unitCost: '₦60,000',
+    unitCostLabel: 'Training & tool set',
+    statBeneficiaries: '345',
+    statBeneficiariesLabel: 'Youths trained',
+    statesActive: '3 states',
+    statesList: 'Lagos, Plateau, and Benue',
+    monthlySuggested: 20000,
+    termSuggested: 60000,
+    fundedCount: 22,
+    targetCount: 25,
+    whoItsFor: 'Unemployed youths and school leavers without resources for tertiary tuition or trade apprenticeships.',
+    covers: [
+      'Tuition in 5-week practical bootcamps (Digital skills, shoemaking, barbering, hairdressing)',
+      'Starter artisan toolkits (clippers, sewing awls, styling sets)',
+      'Business basics and micro-enterprise mentoring',
+      'Shop rent support for high-performing graduates'
+    ],
+    howItWorks: [
+      { step: 'Step 1', title: 'Enrollment & vetting', desc: 'Vetting motivated youths with passion for practical enterprise.' },
+      { step: 'Step 2', title: 'Hands-on training', desc: 'Intensive practical training led by certified master craftsmen.' },
+      { step: 'Step 3', title: 'Toolkit handover', desc: 'Graduates receive brand-new professional equipment.' },
+      { step: 'Step 4', title: 'Shop launch', desc: 'We assist with finding and setting up their independent shop space.' }
+    ],
+    story: {
+      quote: 'From being an unpaid apprentice to holding the keys to my own barbershop in Jos — Ten Kind Hands changed my family\'s story forever.',
+      name: 'Sunday Peter',
+      location: 'Barbershop Owner, Plateau State'
+    }
   }
 ];
 
-export default function Programs({ onOpenDonate, initialProgramId = null }) {
-  const [selectedProgramId, setSelectedProgramId] = useState(initialProgramId);
-  const [prevProgramId, setPrevProgramId] = useState(initialProgramId);
-  const [pillarFilter, setPillarFilter] = useState('all');
-
-  if (prevProgramId !== initialProgramId) {
-    setPrevProgramId(initialProgramId);
-    setSelectedProgramId(initialProgramId);
-  }
+export default function Programs({ selectedProgramId, onSelectProgram, onOpenDonate, setCurrentPage }) {
+  const [activeTab, setActiveTab] = useState('all');
+  const [currentProgId, setCurrentProgId] = useState(selectedProgramId || null);
 
   useEffect(() => {
-    if (initialProgramId) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (selectedProgramId) {
+      setCurrentProgId(selectedProgramId);
     }
-  }, [initialProgramId]);
+  }, [selectedProgramId]);
 
-  // Support both exact ID and aliases
-  const activeProgram = programsData.find(
-    (p) =>
-      p.id === selectedProgramId ||
-      (p.aliases && p.aliases.includes(selectedProgramId)) ||
-      (selectedProgramId === 'scholarships' && p.id === 'scholarship') ||
-      (selectedProgramId === 'youth-development' && p.id === 'youth-empowerment') ||
-      (selectedProgramId === 'orphanages-outreaches' && p.id === 'orphanage-outreaches')
-  );
+  const selectedProgram = PROGRAMMES.find((p) => p.id === currentProgId);
 
-  const filteredPrograms =
-    pillarFilter === 'all'
-      ? programsData
-      : programsData.filter((p) => p.pillar.toLowerCase().includes(pillarFilter.toLowerCase()));
+  const filteredProgrammes = PROGRAMMES.filter((p) => {
+    if (activeTab === 'all') return true;
+    return p.pillar === activeTab;
+  });
 
-  // =========================================================
-  // PROGRAM DETAIL VIEW
-  // =========================================================
-  if (activeProgram) {
-    const IconComponent = activeProgram.icon;
+  const handleOpenDetail = (id) => {
+    setCurrentProgId(id);
+    if (onSelectProgram) onSelectProgram(id);
+    window.location.hash = `programs/${id}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBackToHub = () => {
+    setCurrentProgId(null);
+    if (onSelectProgram) onSelectProgram(null);
+    window.location.hash = 'programs';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNav = (pageId) => {
+    if (setCurrentPage) setCurrentPage(pageId);
+    window.location.hash = pageId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // DETAIL VIEW (Artboard 03a Programme Template)
+  if (selectedProgram) {
+    const fundedPct = Math.min(100, Math.round((selectedProgram.fundedCount / selectedProgram.targetCount) * 100));
 
     return (
-      <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-        <div className="relative max-w-4xl mx-auto px-4 md:px-8 py-6 overflow-hidden">
-          <CurvedWaveBackground side="right" />
-
-          <div className="relative z-10">
-            {/* Back button */}
-            <a
-              href="#programs"
-              onClick={() => {
-                setSelectedProgramId(null);
-                window.location.hash = 'programs';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="inline-flex items-center gap-2 text-xs font-semibold text-ink-light hover:text-ink mb-8 cursor-pointer font-heading group"
+      <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-12 overflow-hidden">
+        <CurvedWaveBackground side="right" />
+        <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
+          
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-sm text-[#706e68] mb-6">
+            <button
+              onClick={handleBackToHub}
+              className="hover:text-maroon transition-colors cursor-pointer flex items-center gap-1"
             >
-              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-              <span>Back to All Programmes</span>
-            </a>
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Our work</span>
+            </button>
+            <span>/</span>
+            <span className="text-[#1c1c1a] font-medium">{selectedProgram.title}</span>
+          </div>
 
-            {/* Program Header */}
-            <div className="border-b border-[#e7e2d8] pb-10 mb-10">
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="text-[11px] uppercase tracking-widest text-primary font-bold font-heading bg-primary/10 px-3 py-1 rounded-full">
-                  Programme {activeProgram.number} • {activeProgram.badge}
-                </span>
-              </div>
-
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-ink tracking-tight">
-                  {activeProgram.title}
-                </h1>
-                <div className="w-12 h-12 rounded-2xl bg-sand flex items-center justify-center text-primary shrink-0 border border-[#e7e2d8]">
-                  <IconComponent className="w-6 h-6" />
-                </div>
-              </div>
-
-              <p className="text-base sm:text-lg text-ink font-medium leading-relaxed mb-6">
-                {activeProgram.tagline}
+          {/* Hero Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-16">
+            <div className="lg:col-span-7 flex flex-col items-start gap-4">
+              <span className="text-xs uppercase font-bold tracking-widest text-maroon">
+                {selectedProgram.pillar.toUpperCase()} PROGRAMME
+              </span>
+              <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1c1c1a] leading-tight">
+                {selectedProgram.title}
+              </h1>
+              <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
+                {selectedProgram.shortDesc}
               </p>
 
-              {/* State Coverage Pill */}
-              <div className="flex items-start sm:items-center gap-2.5 p-3.5 sm:p-4 rounded-xl bg-sand/80 border border-[#e7e2d8] mb-8 text-xs text-ink font-medium">
-                <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5 sm:mt-0" />
-                <div>
-                  <span className="font-bold text-ink-muted uppercase tracking-wider text-[11px] mr-1.5 font-heading">
-                    Active States:
-                  </span>
-                  <span className="text-ink font-semibold">{activeProgram.states}</span>
-                </div>
-              </div>
-
-              {/* Program Milestone Bar */}
-              <div className="p-4 sm:p-6 rounded-2xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8] shadow-xs">
-                <div className="flex justify-between text-xs font-bold mb-2 font-heading">
-                  <span className="text-ink">2025–2026 Initiative Deployment</span>
-                  <span className="text-primary">{activeProgram.fundedPercent}% Goal Reached</span>
-                </div>
-                <div className="w-full h-2.5 bg-[#ded8cc] rounded-full overflow-hidden mb-2">
-                  <div
-                    className="h-full bg-primary rounded-full transition-all duration-700"
-                    style={{ width: `${activeProgram.fundedPercent}%` }}
-                  />
-                </div>
-                <div className="flex flex-col sm:flex-row justify-between text-[11px] text-ink-muted gap-1">
-                  <span>Benchmark: {activeProgram.budgetGoal}</span>
-                  <span className="text-forest font-semibold">Active Field Deployment</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Two-Column Overview */}
-            <div className="grid md:grid-cols-2 gap-6 sm:gap-8 mb-12">
-              <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#e7e2d8] shadow-xs hover:border-primary/40 transition-colors">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="w-2 h-2 rounded-full bg-primary"></span>
-                  <span className="text-xs uppercase tracking-wider font-bold text-primary font-heading">
-                    What This Initiative Accomplishes
-                  </span>
-                </div>
-                <p className="text-sm text-ink-light leading-relaxed font-normal">
-                  {activeProgram.whatThisAccomplishes}
-                </p>
-              </div>
-
-              <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#e7e2d8] shadow-xs hover:border-forest/40 transition-colors">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="w-2 h-2 rounded-full bg-forest"></span>
-                  <span className="text-xs uppercase tracking-wider font-bold text-forest font-heading">
-                    Who We Reach &amp; Empower
-                  </span>
-                </div>
-                <p className="text-sm text-ink-light leading-relaxed font-normal">
-                  {activeProgram.whoWeReachAndEmpower}
-                </p>
-              </div>
-            </div>
-
-            {/* How We Bring This To Life (Stepper) */}
-            <div className="mb-14">
-              <div className="mb-6">
-                <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
-                  Theory of Action &amp; Execution
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-heading font-bold text-ink">
-                  How We Bring This to Life
-                </h3>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                {activeProgram.howWeBringThisToLife.map((step) => (
-                  <div
-                    key={step.step}
-                    className="p-5 sm:p-6 rounded-2xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8] flex flex-col justify-between hover:bg-sand transition-all"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-white border border-[#e7e2d8] text-primary">
-                          {step.step}
-                        </span>
-                        <CheckCircle2 className="w-4 h-4 text-forest/70" />
-                      </div>
-                      <h4 className="text-sm font-heading font-bold text-ink mb-1.5">
-                        {step.title}
-                      </h4>
-                      <p className="text-xs text-ink-light leading-relaxed font-normal">
-                        {step.desc}
-                      </p>
-                    </div>
+              {/* Stats Bar */}
+              <div className="grid grid-cols-3 gap-4 w-full max-w-md pt-2 pb-2">
+                <div className="bg-white rounded-2xl p-4 border border-[#e5e0d8] shadow-sm">
+                  <div className="font-heading font-bold text-xl sm:text-2xl text-maroon">
+                    {selectedProgram.unitCost}
                   </div>
-                ))}
+                  <div className="text-xs text-[#706e68] mt-0.5">{selectedProgram.unitCostLabel}</div>
+                </div>
+                <div className="bg-white rounded-2xl p-4 border border-[#e5e0d8] shadow-sm">
+                  <div className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a]">
+                    {selectedProgram.statBeneficiaries}
+                  </div>
+                  <div className="text-xs text-[#706e68] mt-0.5">{selectedProgram.statBeneficiariesLabel}</div>
+                </div>
+                <div className="bg-white rounded-2xl p-4 border border-[#e5e0d8] shadow-sm">
+                  <div className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a]">
+                    {selectedProgram.statesActive}
+                  </div>
+                  <div className="text-xs text-[#706e68] mt-0.5">Active in</div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button
+                  onClick={() => onOpenDonate(selectedProgram.termSuggested)}
+                  className="btn-primary px-7 py-3.5 text-base shadow-sm"
+                >
+                  Sponsor a unit ({selectedProgram.unitCost})
+                </button>
+                <button
+                  onClick={() => onOpenDonate(selectedProgram.monthlySuggested)}
+                  className="btn-secondary px-6 py-3.5 text-base"
+                >
+                  Give ₦{selectedProgram.monthlySuggested.toLocaleString()} a month
+                </button>
               </div>
             </div>
 
-            {/* Real Field Case Study & Key Metrics */}
-            <div className="grid md:grid-cols-12 gap-6 sm:gap-8 mb-12 items-start">
-              <div className="md:col-span-7 p-6 sm:p-8 rounded-2xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8]">
-                <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
-                  Field Case Study
-                </span>
-                <h4 className="text-xl sm:text-2xl font-heading font-bold text-ink mb-1">
-                  {activeProgram.realStory.name}
-                </h4>
-                <span className="text-xs text-ink-muted block mb-3">
-                  {activeProgram.realStory.location}
-                </span>
-                <p className="text-xs sm:text-sm text-ink-light italic leading-relaxed">
-                  "{activeProgram.realStory.story}"
-                </p>
+            {/* Hero Image */}
+            <div className="lg:col-span-5">
+              <div className="rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md bg-white">
+                <img
+                  src={selectedProgram.image}
+                  alt={selectedProgram.title}
+                  className="w-full h-[320px] sm:h-[380px] object-cover object-center"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/IMG_0294.JPG';
+                  }}
+                />
               </div>
-
-              <div className="md:col-span-5 p-6 sm:p-8 rounded-2xl bg-white border border-[#e7e2d8] shadow-xs">
-                <span className="text-xs uppercase tracking-widest text-ink font-bold block mb-4 font-heading">
-                  KEY STATS
-                </span>
-                <div className="space-y-4">
-                  {activeProgram.stats.map((st, i) => (
-                    <div key={i} className="border-b border-[#f0ece8] pb-3 last:border-none">
-                      <span className="font-mono text-2xl font-bold text-primary block">
-                        {st.val}
-                      </span>
-                      <span className="text-xs text-ink-muted">{st.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial Quote */}
-            {activeProgram.testimonials.length > 0 && (
-              <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#e7e2d8] mb-12 shadow-xs">
-                <Quote className="w-6 h-6 text-primary/30 mb-3" />
-                <p className="text-sm text-ink-light italic leading-relaxed mb-4">
-                  "{activeProgram.testimonials[0].quote}"
-                </p>
-                <div className="text-xs font-bold text-ink">
-                  {activeProgram.testimonials[0].author} •{' '}
-                  <span className="font-normal text-ink-muted">
-                    {activeProgram.testimonials[0].role}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {/* Dedicated Support CTA */}
-            <div className="p-6 sm:p-10 rounded-3xl bg-sand/90 backdrop-blur-xs border border-[#e7e2d8] text-center">
-              <h3 className="text-2xl sm:text-3xl font-heading font-bold text-ink mb-2">
-                Support the {activeProgram.title} Initiative
-              </h3>
-              <p className="text-xs sm:text-sm text-ink-light max-w-md mx-auto mb-6 leading-relaxed">
-                Your donation directly funds {activeProgram.title.toLowerCase()} with 100% transparent audit reporting.
-              </p>
-              <button
-                onClick={onOpenDonate}
-                className="btn-primary w-full sm:w-auto text-xs sm:text-sm px-7 sm:px-9 py-3.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
-              >
-                <span>{activeProgram.ctaText}</span>
-                <Heart className="w-4 h-4" />
-              </button>
             </div>
           </div>
+
+          {/* Who it's for vs What it covers */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 pt-10 border-t border-[#e5e0d8]">
+            <div className="bg-white rounded-3xl p-8 border border-[#e5e0d8] shadow-sm">
+              <h3 className="font-heading font-bold text-xl text-[#1c1c1a] mb-3">
+                Who it's for
+              </h3>
+              <p className="text-sm sm:text-base text-[#4a4a46] leading-relaxed">
+                {selectedProgram.whoItsFor}
+              </p>
+            </div>
+
+            <div className="bg-white rounded-3xl p-8 border border-[#e5e0d8] shadow-sm">
+              <h3 className="font-heading font-bold text-xl text-[#1c1c1a] mb-4">
+                What it covers
+              </h3>
+              <ul className="space-y-3">
+                {selectedProgram.covers.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-sm sm:text-base text-[#4a4a46]">
+                    <div className="w-5 h-5 rounded-full bg-forest-tint text-forest flex items-center justify-center shrink-0 mt-0.5">
+                      <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                    </div>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* How it works (4 steps) */}
+          <div className="mb-16">
+            <h3 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-6">
+              How this programme works
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {selectedProgram.howItWorks.map((st, idx) => (
+                <div key={idx} className="bg-white rounded-2xl p-6 border border-[#e5e0d8] shadow-sm flex flex-col justify-between">
+                  <div>
+                    <span className="text-xs uppercase font-bold tracking-wider text-maroon block mb-2">
+                      {st.step}
+                    </span>
+                    <h4 className="font-heading font-bold text-base text-[#1c1c1a] mb-2">
+                      {st.title}
+                    </h4>
+                    <p className="text-sm text-[#4a4a46] leading-relaxed">
+                      {st.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Goal Tracker Bar & Scholar Story Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-stretch">
+            {/* Goal Bar Widget (Dark Forest Card) */}
+            <div className="lg:col-span-5 bg-forest text-white rounded-3xl p-8 flex flex-col justify-between shadow-sm">
+              <div>
+                <span className="text-xs uppercase tracking-widest text-[#a8d5c4] font-bold block mb-2">
+                  2026/27 SCHOOL YEAR
+                </span>
+                <h4 className="font-heading font-bold text-2xl mb-1">
+                  {selectedProgram.fundedCount} of {selectedProgram.targetCount} units funded
+                </h4>
+                <p className="text-xs text-white/80 mb-6">
+                  Updated directly by our field operations desk each month.
+                </p>
+
+                {/* Progress Bar */}
+                <div className="w-full bg-black/30 rounded-full h-3 overflow-hidden mb-2">
+                  <div
+                    className="bg-[#34d399] h-full rounded-full transition-all duration-700"
+                    style={{ width: `${fundedPct}%` }}
+                  />
+                </div>
+                <div className="text-xs text-white/70 text-right font-medium">
+                  {fundedPct}% of goal achieved
+                </div>
+              </div>
+
+              <button
+                onClick={() => onOpenDonate()}
+                className="mt-6 w-full py-3.5 px-6 rounded-full bg-white text-forest font-heading font-bold text-sm hover:bg-[#f5f1e8] transition-colors cursor-pointer text-center"
+              >
+                Help fund remaining {selectedProgram.targetCount - selectedProgram.fundedCount} units
+              </button>
+            </div>
+
+            {/* Real Story Box */}
+            <div className="lg:col-span-7 bg-[#f5f1e8] rounded-3xl p-8 border border-[#e5e0d8] flex flex-col justify-between">
+              <div>
+                <span className="text-xs uppercase tracking-widest text-maroon font-bold block mb-3">
+                  A BENEFICIARY'S STORY
+                </span>
+                <p className="text-base sm:text-lg text-[#1c1c1a] italic leading-relaxed mb-6 font-serif">
+                  "{selectedProgram.story.quote}"
+                </p>
+              </div>
+              <div className="pt-4 border-t border-[#e5e0d8] flex items-center justify-between">
+                <div>
+                  <h5 className="font-heading font-bold text-sm text-[#1c1c1a]">
+                    {selectedProgram.story.name}
+                  </h5>
+                  <p className="text-xs text-[#706e68]">
+                    {selectedProgram.story.location}
+                  </p>
+                </div>
+                <span className="text-[11px] text-[#706e68] italic">
+                  Shared with guardian consent
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Back Button */}
+          <div className="pt-6 border-t border-[#e5e0d8] flex justify-between items-center">
+            <button
+              onClick={handleBackToHub}
+              className="btn-secondary px-6 py-2.5 text-sm inline-flex items-center gap-1.5"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to all programmes</span>
+            </button>
+            <button
+              onClick={() => handleNav('outreaches')}
+              className="text-sm font-semibold text-maroon hover:underline"
+            >
+              View field reports for this programme →
+            </button>
+          </div>
+
         </div>
       </div>
     );
   }
 
-  // =========================================================
-  // PROGRAMMES HUB (MAIN VIEW)
-  // =========================================================
+  // HUB VIEW (Artboard 03 · Our work)
   return (
-    <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-      {/* Header with Ambient Wave */}
-      <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-5xl mx-auto text-center overflow-hidden">
-        <CurvedWaveBackground side="right" />
+    <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-10 sm:py-16 overflow-hidden">
+      <CurvedWaveBackground side="right" />
 
-        <div className="relative z-10">
-          <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-3 font-heading">
-            TenKindHands • Programmes &amp; Initiatives
+      <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
+
+        {/* Header */}
+        <div className="max-w-3xl mb-10">
+          <span className="text-xs uppercase font-bold tracking-widest text-maroon block mb-2">
+            OUR WORK
           </span>
-
-          {/* Headline Option B */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-ink max-w-4xl mx-auto mb-5 tracking-tight leading-tight">
-            Bridging Gaps in Health and Education{' '}
-            <span className="text-primary">for a Brighter Tomorrow.</span>
+          <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1c1c1a] mb-3">
+            Six programmes. Three goals.
           </h1>
-
-          {/* Sub-headline (Option A) */}
-          <p className="text-base sm:text-lg text-ink-light max-w-3xl mx-auto mb-8 leading-relaxed font-normal">
-            Real impact, real stories. Browse our active programmes across education and healthcare to see how your support changes lives every single day.
+          <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed">
+            Children who learn, mothers and children who stay healthy, and families who can earn a living. Each programme lists its most recent outreach, pulled directly from our field dispatches.
           </p>
 
-          {/* Pillar Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
+          {/* Filter Pills */}
+          <div className="flex flex-wrap items-center gap-2 pt-6">
             <button
-              onClick={() => setPillarFilter('all')}
-              className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
-                pillarFilter === 'all'
-                  ? 'bg-ink text-white shadow-xs'
-                  : 'bg-sand text-ink-light hover:text-ink border border-[#e7e2d8]'
+              onClick={() => setActiveTab('all')}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'all'
+                  ? 'bg-maroon text-white shadow-sm'
+                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
               }`}
             >
-              All 6 Programmes
+              All programmes
             </button>
             <button
-              onClick={() => setPillarFilter('education')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
-                pillarFilter === 'education'
-                  ? 'bg-primary text-white shadow-xs'
-                  : 'bg-sand text-ink-light hover:text-ink border border-[#e7e2d8]'
+              onClick={() => setActiveTab('education')}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'education'
+                  ? 'bg-maroon text-white shadow-sm'
+                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
               }`}
             >
-              Education (3)
+              Education
             </button>
             <button
-              onClick={() => setPillarFilter('healthcare')}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
-                pillarFilter === 'healthcare'
-                  ? 'bg-forest text-white shadow-xs'
-                  : 'bg-sand text-ink-light hover:text-ink border border-[#e7e2d8]'
+              onClick={() => setActiveTab('health')}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'health'
+                  ? 'bg-forest text-white shadow-sm'
+                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
               }`}
             >
-              Healthcare &amp; Community (3)
+              Health
+            </button>
+            <button
+              onClick={() => setActiveTab('livelihoods')}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'livelihoods'
+                  ? 'bg-ochre text-white shadow-sm'
+                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
+              }`}
+            >
+              Livelihoods
             </button>
           </div>
         </div>
-      </section>
 
-      {/* 6 Program Cards Grid with Mirrored Wave */}
-      <section className="relative px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
-        <CurvedWaveBackground side="left" />
+        {/* 1. Education Section */}
+        {(activeTab === 'all' || activeTab === 'education') && (
+          <div className="mb-14">
+            <div className="mb-6">
+              <h2 className="font-heading font-bold text-2xl text-[#1c1c1a]">
+                Education
+              </h2>
+              <p className="text-sm text-[#706e68]">
+                Getting children into school and keeping them there.
+              </p>
+            </div>
 
-        <div className="relative z-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredPrograms.map((prog) => {
-            const IconComponent = prog.icon;
-            return (
-              <div
-                key={prog.id}
-                className="paper-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between bg-white/95 backdrop-blur-xs border border-[#e7e2d8] shadow-xs hover:shadow-md hover:border-primary/30 transition-all"
-              >
-                <div>
-                  {/* Card Header & Badges */}
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="text-[11px] uppercase tracking-wider font-bold text-primary font-heading bg-primary/10 px-2.5 py-0.5 rounded-full">
-                      {prog.badge}
-                    </span>
-                    <span className="text-[11px] font-mono font-bold text-ink-muted">
-                      {prog.number}
-                    </span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {PROGRAMMES.filter((p) => p.pillar === 'education').map((prog) => (
+                <div
+                  key={prog.id}
+                  className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                >
+                  <div className="h-48 overflow-hidden bg-gray-100">
+                    <img
+                      src={prog.image}
+                      alt={prog.title}
+                      className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/images/IMG_0294.JPG';
+                      }}
+                    />
                   </div>
-
-                  {/* Title & Icon */}
-                  <div className="flex items-start justify-between gap-3 mb-2">
-                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-ink">
-                      {prog.title}
-                    </h3>
-                    <div className="w-9 h-9 rounded-xl bg-sand flex items-center justify-center text-primary shrink-0 border border-[#e7e2d8]">
-                      <IconComponent className="w-4 h-4" />
-                    </div>
-                  </div>
-
-                  {/* Tagline */}
-                  <p className="text-xs text-ink-light leading-relaxed mb-4 font-normal">
-                    {prog.tagline}
-                  </p>
-
-                  {/* States / Locations */}
-                  <div className="flex items-center gap-1.5 text-[11px] text-ink-muted mb-5 bg-sand/70 px-3 py-1.5 rounded-lg border border-[#e7e2d8]">
-                    <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
-                    <span className="truncate">{prog.states}</span>
-                  </div>
-
-                  {/* Accomplishment & Beneficiary Highlights */}
-                  <div className="space-y-3 mb-6">
-                    <div className="p-3.5 rounded-xl bg-white border border-[#e7e2d8]">
-                      <span className="text-[10px] uppercase font-bold text-primary block font-heading mb-1">
-                        What This Accomplishes
-                      </span>
-                      <p className="text-xs text-ink-light line-clamp-2 leading-relaxed">
-                        {prog.whatThisAccomplishes}
+                  <div className="p-6 flex flex-col justify-between flex-1">
+                    <div>
+                      <h3 className="font-heading font-bold text-lg text-[#1c1c1a] mb-2">
+                        {prog.title}
+                      </h3>
+                      <p className="text-sm text-[#4a4a46] leading-relaxed mb-4">
+                        {prog.shortDesc}
                       </p>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-white border border-[#e7e2d8]">
-                      <span className="text-[10px] uppercase font-bold text-forest block font-heading mb-1">
-                        Who We Reach &amp; Empower
-                      </span>
-                      <p className="text-xs text-ink-light line-clamp-2 leading-relaxed">
-                        {prog.whoWeReachAndEmpower}
-                      </p>
+                    <div className="pt-4 border-t border-[#e5e0d8]">
+                      <div className="text-xs text-[#706e68] mb-3">
+                        <span className="font-semibold text-[#1c1c1a]">LATEST OUTREACH:</span> {prog.latestOutreach}
+                      </div>
+                      <button
+                        onClick={() => handleOpenDetail(prog.id)}
+                        className="text-sm font-semibold text-maroon hover:text-maroon-dark inline-flex items-center gap-1 cursor-pointer"
+                      >
+                        <span>See how it works</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-                  {/* Delivery Stepper Count */}
-                  <div className="flex items-center gap-2 text-[11px] text-ink-muted font-medium pb-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-forest" />
-                    <span>{prog.howWeBringThisToLife.length} Structured Field Execution Steps</span>
+        {/* 2. Health Section */}
+        {(activeTab === 'all' || activeTab === 'health') && (
+          <div className="mb-14">
+            <div className="mb-6">
+              <h2 className="font-heading font-bold text-2xl text-[#1c1c1a]">
+                Health
+              </h2>
+              <p className="text-sm text-[#706e68]">
+                Healthy mothers and children who can stay in school.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {PROGRAMMES.filter((p) => p.pillar === 'health').map((prog) => (
+                <div
+                  key={prog.id}
+                  className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between md:col-span-2"
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+                    <div className="lg:col-span-7 h-64 sm:h-80 overflow-hidden bg-gray-100">
+                      <img
+                        src={prog.image}
+                        alt={prog.title}
+                        className="w-full h-full object-cover object-center"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/images/11222.webp';
+                        }}
+                      />
+                    </div>
+                    <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between">
+                      <div>
+                        <span className="text-xs uppercase font-bold tracking-widest text-forest block mb-2">
+                          Maternal &amp; Pediatric Care
+                        </span>
+                        <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-3">
+                          {prog.title}
+                        </h3>
+                        <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
+                          {prog.shortDesc}
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t border-[#e5e0d8]">
+                        <div className="text-xs text-[#706e68] mb-3">
+                          <span className="font-semibold text-[#1c1c1a]">LATEST OUTREACH:</span> {prog.latestOutreach}
+                        </div>
+                        <button
+                          onClick={() => handleOpenDetail(prog.id)}
+                          className="btn-primary px-6 py-2.5 text-sm inline-flex items-center gap-1.5"
+                        >
+                          <span>Explore programme</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-                {/* Card Footer Actions */}
-                <div className="pt-4 mt-2 border-t border-[#f0ece8] flex items-center justify-between">
-                  <a
-                    href={`#programs/${prog.id}`}
-                    onClick={() => {
-                      setSelectedProgramId(prog.id);
-                      window.location.hash = `programs/${prog.id}`;
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    className="text-xs font-heading font-bold text-ink hover:text-primary flex items-center gap-1.5 cursor-pointer py-1.5 transition-colors"
-                  >
-                    <span>View Detail</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
+        {/* 3. Livelihoods Section */}
+        {(activeTab === 'all' || activeTab === 'livelihoods') && (
+          <div className="mb-14">
+            <div className="mb-6">
+              <h2 className="font-heading font-bold text-2xl text-[#1c1c1a]">
+                Livelihoods
+              </h2>
+              <p className="text-sm text-[#706e68]">
+                Skills and tools so families can earn.
+              </p>
+            </div>
 
-                  <button
-                    onClick={onOpenDonate}
-                    className="btn-primary text-xs px-4 py-2 flex items-center gap-1.5 cursor-pointer font-heading font-semibold shadow-xs"
-                  >
-                    <span>Donate</span>
-                    <Heart className="w-3 h-3" />
-                  </button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {PROGRAMMES.filter((p) => p.pillar === 'livelihoods').map((prog) => (
+                <div
+                  key={prog.id}
+                  className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                >
+                  <div className="h-56 overflow-hidden bg-gray-100">
+                    <img
+                      src={prog.image}
+                      alt={prog.title}
+                      className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/images/IMG_0995.webp';
+                      }}
+                    />
+                  </div>
+                  <div className="p-6 flex flex-col justify-between flex-1">
+                    <div>
+                      <h3 className="font-heading font-bold text-lg text-[#1c1c1a] mb-2">
+                        {prog.title}
+                      </h3>
+                      <p className="text-sm text-[#4a4a46] leading-relaxed mb-4">
+                        {prog.shortDesc}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-[#e5e0d8]">
+                      <div className="text-xs text-[#706e68] mb-3">
+                        <span className="font-semibold text-[#1c1c1a]">LATEST OUTREACH:</span> {prog.latestOutreach}
+                      </div>
+                      <button
+                        onClick={() => handleOpenDetail(prog.id)}
+                        className="text-sm font-semibold text-ochre hover:text-[#915610] inline-flex items-center gap-1 cursor-pointer"
+                      >
+                        <span>See how it works</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Callout Band: Not sure which to support? */}
+        <div className="bg-[#1c1c1a] text-white rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+          <div>
+            <h3 className="font-heading font-bold text-xl sm:text-2xl text-white mb-1">
+              Not sure which to support?
+            </h3>
+            <p className="text-sm text-white/70">
+              Give to "where it's needed most" and we put it into the next planned outreach.
+            </p>
+          </div>
+          <button
+            onClick={() => onOpenDonate()}
+            className="px-7 py-3.5 rounded-full bg-white text-[#1c1c1a] font-heading font-bold text-sm hover:bg-[#f5f1e8] transition-colors cursor-pointer shrink-0 shadow-sm"
+          >
+            Give where it's needed most
+          </button>
         </div>
-      </section>
+
+      </div>
     </div>
   );
 }

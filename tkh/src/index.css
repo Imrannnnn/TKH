@@ -1,9 +1,18 @@
 :root {
-  --primary: #8f2830;
-  --forest: #1f3b34;
-  --clay: #c27d38;
-  --sand: #f8f6f2;
-  --ink: #1e1b1b;
+  --maroon: #7a1b1b;
+  --maroon-dark: #5a1212;
+  --maroon-tint: #f9ebeb;
+  --forest: #1b4d3e;
+  --forest-dark: #12382c;
+  --forest-tint: #e8f2ee;
+  --ochre: #b87319;
+  --ochre-tint: #fef7ed;
+  --ink: #1c1c1a;
+  --body: #4a4a46;
+  --sand: #f5f1e8;
+  --ground: #fdfbf7;
+  --border: #e5e0d8;
+  --primary: #7a1b1b;
 }
 
 * {
@@ -22,8 +31,8 @@ html, body {
 
 body {
   margin: 0;
-  background-color: #ffffff;
-  color: #1e1b1b;
+  background-color: #fdfbf7;
+  color: #1c1c1a;
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -32,11 +41,18 @@ body {
 }
 
 /* Headings: Poppins with auto text wrapping to prevent any overflow on phones */
-h1, h2, h3, h4, h5, h6, .editorial-title, .font-heading {
+h1, h2, h3, h4, h5, h6, .editorial-title {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: #1c1c1a;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.font-heading {
+  font-family: 'Poppins', sans-serif;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -51,42 +67,46 @@ h1, h2, h3, h4, h5, h6, .editorial-title, .font-heading {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #fafafa;
+  background: #fdfbf7;
 }
 ::-webkit-scrollbar-thumb {
   background: #d4cdc3;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8f2830;
+  background: #7a1b1b;
 }
 
-/* Clean Card Styles */
+/* Clean Card Styles conforming to Redesign 20px-24px radius and soft border */
 .paper-card {
   background-color: #ffffff;
-  border: 1px solid #e7e2d8;
+  border: 1px solid #e5e0d8;
+  border-radius: 20px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .paper-card:hover {
-  border-color: #c8c0b2;
-  box-shadow: 0 10px 30px -10px rgba(24, 20, 20, 0.07);
+  border-color: #d0c8bb;
+  box-shadow: 0 10px 30px -10px rgba(28, 28, 26, 0.08);
 }
 
-/* Tactile Solid Buttons */
+/* Tactile Solid Buttons (52px height or compact, fully rounded pills) */
 .btn-primary {
-  background-color: #8f2830;
+  background-color: #7a1b1b;
   color: #ffffff;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   border-radius: 9999px;
   transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-primary:hover {
-  background-color: #721c23;
+  background-color: #5a1212;
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(143, 40, 48, 0.25);
+  box-shadow: 0 4px 14px rgba(122, 27, 27, 0.25);
 }
 
 .btn-primary:active {
@@ -95,17 +115,20 @@ h1, h2, h3, h4, h5, h6, .editorial-title, .font-heading {
 
 .btn-secondary {
   background-color: #ffffff;
-  color: #1e1b1b;
+  color: #1c1c1a;
   font-family: 'Poppins', sans-serif;
-  border: 1px solid #dcd5c9;
+  border: 1px solid #e5e0d8;
   font-weight: 600;
   border-radius: 9999px;
   transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-secondary:hover {
-  background-color: #fcfbf9;
-  border-color: #1e1b1b;
+  background-color: #f5f1e8;
+  border-color: #1c1c1a;
   transform: translateY(-1px);
 }
 
@@ -185,9 +208,5 @@ h1, h2, h3, h4, h5, h6, .editorial-title, .font-heading {
   display: flex;
   width: max-content;
   animation: marqueeScroll 12s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
 }
 
