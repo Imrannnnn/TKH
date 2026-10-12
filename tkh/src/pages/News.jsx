@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { youtubeChannel, youtubePlaylists } from '../data/youtubeData';
 import { Play, Youtube, ExternalLink, X, Search, Heart, ArrowRight } from '../components/Icons';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function News({ onOpenDonate }) {
   const [activePlaylistId, setActivePlaylistId] = useState('all');
@@ -53,10 +52,8 @@ export default function News({ onOpenDonate }) {
 
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-      {/* Header with Ambient Wave */}
+      {/* Header */}
       <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-6xl mx-auto text-center overflow-hidden">
-        <CurvedWaveBackground side="right" />
-
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f9ecee] text-[#801426] text-xs font-bold font-heading mb-3 border border-[#801426]/20">
             <Youtube className="w-3.5 h-3.5 text-[#cc0000]" />

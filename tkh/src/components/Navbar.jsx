@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Heart, Menu, X } from './Icons';
+import { Heart, Menu, X, Instagram, Facebook, Youtube, TikTok } from './Icons';
 
 export default function Navbar({
   currentPage,
@@ -151,6 +151,44 @@ export default function Navbar({
                 <Heart className="w-5 h-5 fill-white" />
                 <span>Donate Now</span>
               </button>
+              <div className="flex items-center justify-center gap-3 pt-2 text-[#4a4a46]">
+                <a
+                  href="https://www.instagram.com/tenkindhands"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-9 h-9 rounded-full border border-[#e5e0d8] bg-white flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://web.facebook.com/tenkindhandss/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-9 h-9 rounded-full border border-[#e5e0d8] bg-white flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.youtube.com/@TenkindhandsFoundation"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-9 h-9 rounded-full border border-[#e5e0d8] bg-white flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  aria-label="YouTube"
+                >
+                  <Youtube className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@tenkindhandsfoundation"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-9 h-9 rounded-full border border-[#e5e0d8] bg-white flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  aria-label="TikTok"
+                >
+                  <TikTok className="w-4 h-4" />
+                </a>
+              </div>
               <div className="text-center text-xs text-[#706e68] pt-1">
                 CAC Registered Non-Profit · RC 7015705
               </div>

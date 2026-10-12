@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
-import { Heart, Check, Copy, ArrowRight, MessageCircle, ShieldCheck } from '../components/Icons';
+import { Heart, Check, Copy, ArrowRight, MessageCircle, ShieldCheck, Lock } from '../components/Icons';
 
 export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
   const { addInquiry } = useData();
@@ -458,8 +458,9 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       )}
                     </button>
 
-                    <div className="text-center text-[11px] text-[#706e68] mt-1">
-                      🔒 Secure payment by Paystack · NGN, USD or GBP cards
+                    <div className="flex items-center justify-center gap-1.5 text-center text-[11px] text-[#706e68] mt-1">
+                      <Lock className="w-3.5 h-3.5 text-[#706e68] shrink-0" />
+                      <span>Secure payment by Paystack · NGN, USD or GBP cards</span>
                     </div>
                   </form>
                 </div>
@@ -485,7 +486,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                     <ul className="space-y-3 text-xs text-[#4a4a46]">
                       <li className="flex items-start gap-2.5">
                         <span className="text-forest text-sm font-bold mt-0.5">⬡</span>
-                        <span><strong>Registered with CAC (RC 7015705).</strong> Fully accountable Nigerian charitable trust.</span>
+                        <span><strong>Registered with CAC (RC 7015705).</strong> TEN KIND HANDS FOUNDATION.</span>
                       </li>
                       <li className="flex items-start gap-2.5">
                         <span className="text-forest text-sm font-bold mt-0.5">⬡</span>
@@ -553,7 +554,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                 Join our nationwide volunteer team
               </h2>
               <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
-                We organize on-the-ground outreaches in schools, clinics, and villages across FCT Abuja, Benue, Lagos, Oyo, and Plateau.
+                We organize on-the-ground outreaches in schools, clinics, and villages across 7 States (FCT Abuja, Benue, Katsina, Plateau, Lagos, Oyo, and Enugu).
               </p>
 
               {volSuccess ? (
@@ -591,7 +592,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                         required
                         value={volForm.email}
                         onChange={(e) => setVolForm({ ...volForm, email: e.target.value })}
-                        placeholder="samuel@example.com"
+                        placeholder="yourname@domain.com"
                         className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
                       />
                     </div>
@@ -638,9 +639,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       >
                         <option value="FCT Abuja">FCT Abuja</option>
                         <option value="Benue State">Benue State</option>
+                        <option value="Katsina State">Katsina State</option>
+                        <option value="Plateau State">Plateau State</option>
                         <option value="Lagos State">Lagos State</option>
                         <option value="Oyo State">Oyo State</option>
-                        <option value="Plateau State">Plateau State</option>
+                        <option value="Enugu State">Enugu State</option>
                         <option value="Other State">Other State</option>
                       </select>
                     </div>
@@ -765,7 +768,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       required
                       value={partForm.email}
                       onChange={(e) => setPartForm({ ...partForm, email: e.target.value })}
-                      placeholder="csr@apexenergy.com"
+                      placeholder="official@company.com"
                       className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
                     />
                   </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Heart, Instagram, Facebook, Youtube } from './Icons';
+import { Heart, Instagram, Facebook, Youtube, TikTok } from './Icons';
 
 export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgram, onSelectGetInvolvedTab }) {
   const [email, setEmail] = useState('');
@@ -104,7 +104,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2 text-[#4a4a46]">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/tenkindhands"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full border border-[#e5e0d8] bg-white flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
@@ -113,7 +113,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
                 <Instagram className="w-4 h-4" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://web.facebook.com/tenkindhandss/"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full border border-[#e5e0d8] bg-white flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
@@ -122,13 +122,22 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
                 <Facebook className="w-4 h-4" />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@TenkindhandsFoundation"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full border border-[#e5e0d8] bg-white flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
                 aria-label="YouTube"
               >
                 <Youtube className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@tenkindhandsfoundation"
+                target="_blank"
+                rel="noreferrer"
+                className="w-8 h-8 rounded-full border border-[#e5e0d8] bg-white flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                aria-label="TikTok"
+              >
+                <TikTok className="w-4 h-4" />
               </a>
             </div>
           </div>

@@ -1,5 +1,4 @@
 import { ArrowLeft, Globe, ShieldCheck } from '../components/Icons';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function NotFound({ setCurrentPage }) {
   const handleGoHome = (e) => {
@@ -11,8 +10,6 @@ export default function NotFound({ setCurrentPage }) {
 
   return (
     <div className="pt-28 md:pt-36 pb-24 px-4 min-h-[75vh] flex items-center justify-center bg-sand relative overflow-hidden animate-fade-in">
-      <CurvedWaveBackground side="right" />
-
       <div className="max-w-xl mx-auto text-center relative z-10 bg-white/95 backdrop-blur-xs p-8 sm:p-12 rounded-3xl border border-[#e7e2d8] shadow-sm">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-mono font-bold uppercase tracking-wider mb-4 border border-primary/20">
           <Globe className="w-3.5 h-3.5" />

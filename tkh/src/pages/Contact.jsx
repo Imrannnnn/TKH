@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { MessageCircle, Mail, MapPin, ArrowRight, Check } from '../components/Icons';
+import { MessageCircle, Mail, MapPin, ArrowRight, Check, Instagram, Facebook, Youtube, TikTok } from '../components/Icons';
 
 export default function Contact() {
   const { addInquiry } = useData();
@@ -46,7 +46,7 @@ export default function Contact() {
             Talk to a real person.
           </h1>
           <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed">
-            WhatsApp first, two dedicated emails, our national office in Abuja, and one short form below.
+            WhatsApp first, our official email, our national office in Abuja, and one short form below.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export default function Contact() {
             {/* Email Channels Card */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm flex flex-col gap-5">
               <h3 className="font-heading font-bold text-base text-[#1c1c1a]">
-                Direct Email Channels
+                Official Email
               </h3>
 
               <div className="flex items-start gap-3">
@@ -97,7 +97,7 @@ export default function Contact() {
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs text-[#706e68]">General &amp; Donor Support</div>
+                  <div className="text-xs text-[#706e68]">General Inquiries, Partnerships &amp; Support</div>
                   <a
                     href="mailto:info@tenkindhands.org"
                     className="font-heading font-semibold text-sm text-[#1c1c1a] hover:text-maroon transition-colors"
@@ -106,20 +106,53 @@ export default function Contact() {
                   </a>
                 </div>
               </div>
+            </div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-sand text-[#1c1c1a] flex items-center justify-center shrink-0 mt-0.5">
-                  <Mail className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs text-[#706e68]">Corporate CSR &amp; Partnerships</div>
-                  <a
-                    href="mailto:partnerships@tenkindhands.org"
-                    className="font-heading font-semibold text-sm text-[#1c1c1a] hover:text-maroon transition-colors"
-                  >
-                    partnerships@tenkindhands.org
-                  </a>
-                </div>
+            {/* Social Media Channels Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm flex flex-col gap-4">
+              <h3 className="font-heading font-bold text-base text-[#1c1c1a]">
+                Connect on Social Media
+              </h3>
+              <p className="text-xs text-[#706e68]">
+                Follow our official accounts for regular field dispatches and stories:
+              </p>
+              <div className="flex items-center gap-3 pt-1 text-[#4a4a46]">
+                <a
+                  href="https://www.instagram.com/tenkindhands"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://web.facebook.com/tenkindhandss/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.youtube.com/@TenkindhandsFoundation"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  aria-label="YouTube"
+                >
+                  <Youtube className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@tenkindhandsfoundation"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  aria-label="TikTok"
+                >
+                  <TikTok className="w-4 h-4" />
+                </a>
               </div>
             </div>
 
@@ -191,7 +224,7 @@ export default function Contact() {
                     required
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    placeholder="maryam@example.com"
+                    placeholder="yourname@domain.com"
                     className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
                   />
                 </div>

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Legal({ initialSection = 'privacy', initialTab }) {
   const [activeTab, setActiveTab] = useState(initialTab || initialSection);
@@ -15,8 +14,6 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
       <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-5xl mx-auto text-center overflow-hidden">
-        <CurvedWaveBackground side="right" />
-
         <div className="relative z-10">
           <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
             Governance &amp; Compliance
@@ -60,10 +57,8 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
         </div>
       </section>
 
-      {/* Content Section with Mirrored Wave */}
+      {/* Content Section */}
       <section className="relative max-w-4xl mx-auto px-4 md:px-8 overflow-hidden">
-        <CurvedWaveBackground side="left" />
-
         <div className="relative z-10 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
           {activeTab === 'privacy' && (
             <div className="prose text-xs sm:text-sm text-ink-light leading-relaxed space-y-6">
@@ -84,7 +79,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
 
               <h3 className="text-lg font-heading font-bold text-ink">3. Your Data Rights</h3>
               <p>
-                You retain the right to request a full copy of your stored records or ask for permanent data erasure at any time by emailing our Data Protection Officer at <a href="mailto:privacy@tenkindhands.org" className="text-primary underline">privacy@tenkindhands.org</a>.
+                You retain the right to request a full copy of your stored records or ask for permanent data erasure at any time by emailing our Data Protection Officer at <a href="mailto:info@tenkindhands.org" className="text-primary underline">info@tenkindhands.org</a>.
               </p>
             </div>
           )}
@@ -126,7 +121,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
 
               <h3 className="text-lg font-heading font-bold text-ink">3. Reporting Violations</h3>
               <p>
-                Any suspected breach of child safeguarding protocols can be reported directly and anonymously to our confidential Ethics Committee at <a href="mailto:safeguarding@tenkindhands.org" className="text-primary underline">safeguarding@tenkindhands.org</a>.
+                Any suspected breach of child safeguarding protocols can be reported directly and anonymously to our confidential Ethics Committee at <a href="mailto:info@tenkindhands.org" className="text-primary underline">info@tenkindhands.org</a>.
               </p>
             </div>
           )}

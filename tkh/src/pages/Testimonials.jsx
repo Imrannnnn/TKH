@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { Quote, Heart } from '../components/Icons';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Testimonials({ onOpenDonate }) {
   const { testimonialsList } = useData();
@@ -66,10 +65,8 @@ export default function Testimonials({ onOpenDonate }) {
 
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-      {/* Header with Ambient Wave */}
+      {/* Header */}
       <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-5xl mx-auto text-center overflow-hidden">
-        <CurvedWaveBackground side="right" />
-
         <div className="relative z-10">
           <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
             Authentic Voices
@@ -130,10 +127,8 @@ export default function Testimonials({ onOpenDonate }) {
         </div>
       </section>
 
-      {/* Testimonials Bento Cards with Mirrored Wave */}
+      {/* Testimonials Bento Cards */}
       <section className="relative px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
-        <CurvedWaveBackground side="left" />
-
         <div className="relative z-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filtered.map((t, idx) => (
             <div

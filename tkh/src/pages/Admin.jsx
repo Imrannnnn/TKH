@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { useData, getApiBase } from '../context/DataContext';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 import HomePageEditor from './admin/HomePageEditor';
 import StoryPageEditor from './admin/StoryPageEditor';
 import TestimonialsPageEditor from './admin/TestimonialsPageEditor';
@@ -422,8 +421,6 @@ export default function Admin({ setCurrentPage }) {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[#142722] text-[#f8f6f2] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden antialiased">
-        <CurvedWaveBackground side="right" className="opacity-25" />
-        <CurvedWaveBackground side="left" className="opacity-15" />
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-forest/30 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -728,10 +725,6 @@ export default function Admin({ setCurrentPage }) {
           MAIN WORKSPACE CANVAS
       ===================================================================== */}
       <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden relative">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
-          <CurvedWaveBackground side="right" />
-          <CurvedWaveBackground side="left" className="opacity-30" />
-        </div>
 
         {/* Top Application Header */}
         <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e7e2d8] px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
@@ -808,7 +801,6 @@ export default function Admin({ setCurrentPage }) {
           {activeTab === 'overview' && (
             <div className="space-y-8 animate-fade-in">
               <div className="bg-gradient-to-br from-[#142722] via-[#1f3b34] to-[#25473e] text-white rounded-3xl p-6 sm:p-8 shadow-sm relative overflow-hidden border border-[#2a4d44]">
-                <CurvedWaveBackground side="right" className="opacity-25" />
                 <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-clay/15 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="max-w-2xl relative z-10">
                   <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-xs text-[#f7c899] border border-white/20 text-xs font-semibold mb-3 font-heading">

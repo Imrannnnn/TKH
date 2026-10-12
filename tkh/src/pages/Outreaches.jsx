@@ -346,25 +346,25 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-white rounded-3xl border border-[#e5e0d8] shadow-sm mb-10">
           <div>
             <div className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
-              857
+              1,206
             </div>
-            <div className="text-xs text-[#706e68] mt-0.5">people reached, Apr–Aug 2026</div>
+            <div className="text-xs text-[#706e68] mt-0.5">people reached, Jan–Sep 2026</div>
           </div>
           <div>
             <div className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
-              5
+              9
             </div>
             <div className="text-xs text-[#706e68] mt-0.5">outreaches reported</div>
           </div>
           <div>
             <div className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
-              5
+              7
             </div>
             <div className="text-xs text-[#706e68] mt-0.5">states active</div>
           </div>
           <div>
             <div className="font-heading font-bold text-2xl sm:text-3xl text-maroon">
-              ₦15,450,000
+              ₦13,597,575
             </div>
             <div className="text-xs text-[#706e68] mt-0.5">spent on delivery (100% direct)</div>
           </div>

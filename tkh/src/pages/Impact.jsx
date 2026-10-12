@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { School, Stethoscope, Droplets, BookOpen, TrendingUp, ShieldCheck, Globe, Heart, MapPin, HandHeart, Users, Building2, Sparkles } from '../components/Icons';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 const iconMap = {
   School,
@@ -40,7 +39,7 @@ export default function Impact({ onOpenDonate }) {
       icon: School,
       iconName: 'School',
       label: 'Scholarships Awarded',
-      stat: '150+',
+      stat: '200+',
       description: 'Scholarships Awarded',
       growth: '+40 New in 2026',
       color: 'text-ink',
@@ -51,9 +50,9 @@ export default function Impact({ onOpenDonate }) {
       category: 'transparency',
       icon: HandHeart,
       iconName: 'HandHeart',
-      label: 'Women & Girls Reached',
-      stat: '2,100+',
-      description: 'Women & Girls Reached',
+      label: 'Women & Girls Supported',
+      stat: '2,500+',
+      description: 'Women & Girls Supported',
       growth: '+45% YoY',
       color: 'text-forest',
       detail: 'Women and girls supported through education, healthcare, empowerment, and community outreach initiatives.'
@@ -87,9 +86,9 @@ export default function Impact({ onOpenDonate }) {
       category: 'transparency',
       icon: Sparkles,
       iconName: 'Sparkles',
-      label: 'Children & Youths Reached',
-      stat: '3,312+',
-      description: 'Children & Youths Reached',
+      label: 'Children & Young People Reached',
+      stat: '3,500+',
+      description: 'Children & Young People Reached',
       growth: '+1,300',
       color: 'text-primary',
       detail: 'Children and young people supported through education, skills development, healthcare, and empowerment initiative...'
@@ -97,11 +96,13 @@ export default function Impact({ onOpenDonate }) {
   ];
 
   const regionalReach = [
-    { state: 'Abuja', education: 18, health: 6, women: 12, children: 16, orphanage: 4 },
+    { state: 'Abuja (FCT)', education: 18, health: 6, women: 12, children: 16, orphanage: 4 },
     { state: 'Benue', education: 14, health: 4, women: 10, children: 12, orphanage: 3 },
     { state: 'Plateau', education: 12, health: 3, women: 8, children: 11, orphanage: 3 },
     { state: 'Oyo', education: 10, health: 5, women: 9, children: 10, orphanage: 4 },
     { state: 'Lagos', education: 16, health: 7, women: 14, children: 18, orphanage: 4 },
+    { state: 'Katsina', education: 8, health: 4, women: 7, children: 9, orphanage: 2 },
+    { state: 'Enugu', education: 10, health: 6, women: 8, children: 11, orphanage: 3 },
   ];
 
   const currentMetrics = dynamicMetrics && dynamicMetrics.length > 0 ? dynamicMetrics : defaultMetricCards;
@@ -123,10 +124,8 @@ export default function Impact({ onOpenDonate }) {
 
   return (
     <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-      {/* Hero Section with Ambient Wave */}
+      {/* Hero Section */}
       <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
-        <CurvedWaveBackground side="right" />
-
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6 flex flex-col gap-5">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sand text-primary font-bold text-xs uppercase tracking-widest w-fit border border-[#e7e2d8] font-heading">
@@ -167,10 +166,8 @@ export default function Impact({ onOpenDonate }) {
         </div>
       </section>
 
-      {/* Metrics Bento Section with Mirrored Wave */}
+      {/* Metrics Bento Section */}
       <section className="relative py-16 px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
-        <CurvedWaveBackground side="left" />
-
         <div className="relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">

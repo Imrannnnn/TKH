@@ -1,5 +1,4 @@
 import { Heart, ArrowRight, ShieldCheck, Check } from '../components/Icons';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function OurStory({ onOpenDonate, setCurrentPage }) {
   const handleNav = (pageId, hash = '') => {
@@ -98,8 +97,8 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
     },
     {
       year: '2026',
-      title: '5-State Coordination Network',
-      detail: 'Monthly outreaches supported by on-the-ground state coordinators across FCT Abuja, Benue, Lagos, Oyo, and Plateau.',
+      title: '7-State Coordination Network',
+      detail: 'Monthly outreaches supported by on-the-ground state coordinators across 7 States (FCT, Benue, Katsina, Plateau, Lagos, Oyo, and Enugu).',
       image: '/images/hero-debate-competition-makurdi.webp',
       caption: 'Makurdi Inter-Secondary debate & scholarship prizes'
     },
@@ -138,10 +137,8 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
   return (
     <div className="w-full bg-[#fdfbf7] text-[#1c1c1a]">
 
-      {/* 1. Hero with Curved Wave Background */}
+      {/* 1. Hero */}
       <section className="relative pt-10 sm:pt-16 pb-14 max-w-[1200px] mx-auto px-4 sm:px-6 overflow-hidden">
-        <CurvedWaveBackground side="right" />
-
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7 flex flex-col items-start gap-4">
             <span className="text-xs uppercase font-bold tracking-widest text-maroon">
@@ -321,8 +318,6 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
 
       {/* 5. Team Grid: The people behind every outreach (WITH REAL HEADSHOTS) */}
       <section className="relative py-16 sm:py-20 bg-[#f5f1e8] border-t border-[#e5e0d8] overflow-hidden">
-        <CurvedWaveBackground side="left" />
-
         <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>

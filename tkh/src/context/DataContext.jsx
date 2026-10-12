@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const STORAGE_KEY = 'tkh_platform_data_v3';
+const STORAGE_KEY = 'tkh_platform_data_v4';
 
 const initialNewsArticles = [
   {
@@ -270,17 +270,17 @@ const initialOutreaches = [
   {
     id: 'outreach-nov-2026',
     month: 'November 2026',
-    date: 'November 6–8, 2026',
+    date: 'November 2026',
     status: 'upcoming',
-    title: 'Rural Maternal Health & Malaria Screening Mission',
+    title: 'Medical Aid Outreach',
     pillar: 'Healthcare',
-    theme: 'Antenatal Care • Malaria Diagnostics • Infant Care',
-    location: 'Kajuru & Kachia Hamlets, Southern Kaduna',
-    beneficiariesTarget: '800+ Mothers & Infants Target',
-    description: 'Free rapid malaria testing, antenatal checks, distribution of 300 Mama Kits (sterile birth packs), and pediatric deworming treatments.',
-    needs: 'Volunteer doctors, registered nurses, pharmacist assistants.',
+    theme: 'Essential Healthcare • Medical Support • Health Education',
+    location: 'Plateau, Katsina, Lagos, Oyo, and Enugu States',
+    beneficiariesTarget: 'Underserved Individuals & Families',
+    description: 'Medical aid outreach across rural communities in Plateau, Katsina, Lagos, Oyo, and Enugu States, providing essential healthcare services, medical support, and health education to underserved individuals and families with limited access to quality healthcare.',
+    needs: 'Volunteer doctors, registered nurses, pharmacist assistants, health educators.',
     image: '/images/IMG_0995.JPG',
-    focusAreas: ['Antenatal Triage', 'Mama Kits (Sterile Birth Packs)', 'Rapid Malaria Diagnostics', 'Pediatric Deworming']
+    focusAreas: ['Primary Healthcare', 'Essential Medications', 'Health Education', 'Medical Support']
   }
 ];
 
@@ -301,7 +301,7 @@ const initialMetrics = [
     category: 'education',
     iconName: 'School',
     label: 'Scholarships Awarded',
-    stat: '150+',
+    stat: '200+',
     description: 'Scholarships Awarded',
     growth: '+40 New in 2026',
     color: 'text-ink',
@@ -311,9 +311,9 @@ const initialMetrics = [
     id: 'patients',
     category: 'transparency',
     iconName: 'HandHeart',
-    label: 'Women & Girls Reached',
-    stat: '2,100+',
-    description: 'Women & Girls Reached',
+    label: 'Women & Girls Supported',
+    stat: '2,500+',
+    description: 'Women & Girls Supported',
     growth: '+45% YoY',
     color: 'text-forest',
     detail: 'Women and girls supported through education, healthcare, empowerment, and community outreach initiatives.'
@@ -344,9 +344,9 @@ const initialMetrics = [
     id: 'metric-1790695260926',
     category: 'transparency',
     iconName: 'Sparkles',
-    label: 'Children & Youths Reached',
-    stat: '3,312+',
-    description: 'Children & Youths Reached',
+    label: 'Children & Young People Reached',
+    stat: '3,500+',
+    description: 'Children & Young People Reached',
     growth: '+1,300',
     color: 'text-primary',
     detail: 'Children and young people supported through education, skills development, healthcare, and empowerment initiative...'
@@ -615,8 +615,8 @@ const initialContactInfo = {
   headquarters: 'Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria',
   rcNumber: 'RC: 7015705',
   cacStatus: 'CAC RC: 7015705 (Incorporated Non-Profit)',
-  email: 'contact@tenkindhands.org',
-  partnershipsEmail: 'partners@tenkindhands.org',
+  email: 'info@tenkindhands.org',
+  partnershipsEmail: 'info@tenkindhands.org',
   phone: '+234 818 099 4301',
   whatsapp: '+234 818 099 4301',
   emergencyDesk: '+234 818 099 4301',
@@ -723,11 +723,11 @@ const sanitizeData = (raw) => {
     const exactOrder = ['students', 'schools', 'patients', 'giving-model', 'clinics', 'metric-1790695260926'];
     const exactStats = {
       'students': '5,500+',
-      'schools': '150+',
-      'patients': '2,100+',
+      'schools': '200+',
+      'patients': '2,500+',
       'giving-model': '100%',
       'clinics': '130+',
-      'metric-1790695260926': '3,312+'
+      'metric-1790695260926': '3,500+'
     };
     const matchesOrder =
       cleaned.metrics.length === 6 &&

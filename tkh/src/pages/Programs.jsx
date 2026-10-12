@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { School, Stethoscope, BookOpen, Users, Laptop, Heart, ArrowRight, ArrowLeft, Check, Quote } from '../components/Icons';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 const PROGRAMMES = [
   {
@@ -12,15 +11,15 @@ const PROGRAMMES = [
     image: '/images/hero-debate-competition-makurdi.webp',
     unitCost: '₦45,000',
     unitCostLabel: 'One term costs',
-    statBeneficiaries: '150+',
+    statBeneficiaries: '200+',
     statBeneficiariesLabel: 'Scholars supported',
-    statesActive: '5 states',
-    statesList: 'FCT Abuja, Benue, Lagos, Oyo and Plateau',
+    statesActive: '7 states',
+    statesList: 'FCT, Benue, Katsina, Plateau, Lagos, Oyo and Enugu',
     monthlySuggested: 15000,
     termSuggested: 45000,
     fundedCount: 48,
     targetCount: 60,
-    whoItsFor: 'Primary and secondary pupils at serious risk of dropping out because of money — often after a parent dies or loses their income. Active in FCT Abuja, Benue, Lagos, Oyo and Plateau.',
+    whoItsFor: 'Primary and secondary pupils at serious risk of dropping out because of money — often after a parent dies or loses their income. Active in 7 states (FCT, Benue, Katsina, Plateau, Lagos, Oyo, Enugu).',
     covers: [
       'Tuition, paid straight to the school',
       'Official exam registration',
@@ -50,8 +49,8 @@ const PROGRAMMES = [
     unitCostLabel: 'One kit costs',
     statBeneficiaries: '2,400+',
     statBeneficiariesLabel: 'Pupils equipped',
-    statesActive: '5 states',
-    statesList: 'FCT Abuja, Benue, Lagos, Oyo and Plateau',
+    statesActive: '7 states',
+    statesList: 'FCT, Benue, Katsina, Plateau, Lagos, Oyo and Enugu',
     monthlySuggested: 5000,
     termSuggested: 15000,
     fundedCount: 240,
@@ -264,7 +263,6 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
     return (
       <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-12 overflow-hidden">
-        <CurvedWaveBackground side="right" />
         <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
           
           {/* Breadcrumb */}
@@ -486,8 +484,6 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
   // HUB VIEW (Artboard 03 · Our work)
   return (
     <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-10 sm:py-16 overflow-hidden">
-      <CurvedWaveBackground side="right" />
-
       <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
 
         {/* Header */}

@@ -37,7 +37,7 @@ export default function ContactPageEditor({
   const [phone, setPhone] = useState(contactInfo?.phone || '+234 818 099 4301');
   const [email, setEmail] = useState(contactInfo?.email || 'info@tenkindhands.org');
   const [partnershipsEmail, setPartnershipsEmail] = useState(
-    contactInfo?.partnershipsEmail || 'partnerships@tenkindhands.org'
+    contactInfo?.partnershipsEmail || 'info@tenkindhands.org'
   );
   const [visitingHours, setVisitingHours] = useState(
     contactInfo?.visitingHours || 'Monday – Friday: 8:30 AM – 5:00 PM (WAT)'

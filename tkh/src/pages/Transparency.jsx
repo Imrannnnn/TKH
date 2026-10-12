@@ -1,48 +1,74 @@
 import { ShieldCheck, Check, Heart, ArrowRight } from '../components/Icons';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Transparency({ onOpenDonate, setCurrentPage }) {
   const outreachesSpent = [
     {
-      month: 'August 2026',
-      title: 'Youth skills, digital literacy & academic outreach',
-      location: 'Lagos, Plateau, Benue & FCT',
-      beneficiaries: '345 youths & students',
-      spent: '₦4,850,000'
+      month: 'January 2026',
+      title: 'Less privilege and widows outreach',
+      location: 'Abuja & Makurdi',
+      beneficiaries: '33 individuals',
+      spent: '₦626,000'
     },
     {
-      month: 'July 2026',
-      title: 'From apprentice to owner: two barbershops opened',
-      location: 'Jos & Makurdi',
-      beneficiaries: '2 young people in business',
-      spent: '₦1,920,000'
+      month: 'February 2026',
+      title: 'Academic outreach: Inter-school quiz and debate',
+      location: 'Abuja, Jos, Makurdi & Ibadan',
+      beneficiaries: '37 students',
+      spent: '₦1,061,000'
     },
     {
-      month: 'June 2026',
-      title: 'Clean cooking and welfare support for 80 widows',
-      location: 'Abuja, Benue, Oyo & Lagos',
-      beneficiaries: '80 widows (20 per state)',
-      spent: '₦3,850,000'
-    },
-    {
-      month: 'May 2026',
-      title: 'Child empowerment: learning materials & retention',
-      location: 'Benue, Lagos, Plateau & Oyo',
-      beneficiaries: '300 pupils',
-      spent: '₦2,450,000'
+      month: 'March 2026',
+      title: 'Women Empowerment',
+      location: 'Abuja, Jos, Lagos, Oyo & Makurdi',
+      beneficiaries: '179 women',
+      spent: '₦1,645,900'
     },
     {
       month: 'April 2026',
-      title: 'Maternal healthcare & malaria prevention',
-      location: 'Abuja, Benue & Lagos',
-      beneficiaries: '130 high-risk mothers',
-      spent: '₦2,380,000'
+      title: 'Maternal health care and Malaria Prevention',
+      location: 'Lagos, Jos & Abuja',
+      beneficiaries: '130 individuals',
+      spent: '₦1,145,500'
+    },
+    {
+      month: 'May 2026',
+      title: 'Child empowerment: Learning materials and retention',
+      location: 'Makurdi, Lagos, Jos & Oyo',
+      beneficiaries: '300 children',
+      spent: '₦1,563,775'
+    },
+    {
+      month: 'June 2026',
+      title: 'Clean cooking and welfare support for 80 Widow',
+      location: 'Makurdi, Oyo, Abuja & Lagos',
+      beneficiaries: '80 widows',
+      spent: '₦2,639,900'
+    },
+    {
+      month: 'June 2026',
+      title: 'From apprentice to owner: two barber shop opened',
+      location: 'Jos & Benue',
+      beneficiaries: '2 young people in business',
+      spent: '₦943,300'
+    },
+    {
+      month: 'August 2026',
+      title: 'Youth skills, Digital literacy, Academic outreach',
+      location: 'Lagos, Plateau & Benue',
+      beneficiaries: '345 youths and Children',
+      spent: '₦2,912,800'
+    },
+    {
+      month: 'September 2026',
+      title: 'Orphanage Outreach',
+      location: 'Abuja, Oyo, Jos & Lagos',
+      beneficiaries: '100 orphans',
+      spent: '₦1,059,400'
     }
   ];
 
   return (
     <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-10 sm:py-16 overflow-hidden">
-      <CurvedWaveBackground side="right" />
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
 
@@ -138,9 +164,9 @@ export default function Transparency({ onOpenDonate, setCurrentPage }) {
                   </tr>
                 ))}
                 <tr className="bg-[#fdfbf7] font-heading font-bold text-[#1c1c1a]">
-                  <td colSpan={2} className="py-4 px-6 text-base">Total Delivered (Apr–Aug 2026)</td>
-                  <td className="py-4 px-6 text-xs hidden sm:table-cell text-[#706e68]">857 direct beneficiaries</td>
-                  <td className="py-4 px-6 text-right text-base text-maroon">₦15,450,000</td>
+                  <td colSpan={2} className="py-4 px-6 text-base">Total Delivered (Jan–Sep 2026)</td>
+                  <td className="py-4 px-6 text-xs hidden sm:table-cell text-[#706e68]">1,206 direct beneficiaries</td>
+                  <td className="py-4 px-6 text-right text-base text-maroon">₦13,597,575</td>
                 </tr>
               </tbody>
             </table>

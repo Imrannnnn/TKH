@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { Heart, ArrowRight, Check, MapPin, Quote } from '../components/Icons';
-import CurvedWaveBackground from '../components/CurvedWaveBackground';
 
 export default function Home({ onOpenDonate, setCurrentPage }) {
   const { metrics, outreaches } = useData();
@@ -67,13 +66,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
   return (
     <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] overflow-x-hidden">
 
-      {/* 1. Hero Section with Ambient Wave Line */}
+      {/* 1. Hero Section */}
       <section className="relative pt-10 sm:pt-16 pb-14 sm:pb-20 max-w-[1200px] mx-auto px-4 sm:px-6 overflow-hidden">
-        {/* Right-side subtle sweeping wave line */}
-        <CurvedWaveBackground side="right" />
-
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          
+
           {/* Left Column: Copy & Actions */}
           <div className="lg:col-span-7 flex flex-col items-start gap-5">
             {/* Registered Non-Profit Pill */}
@@ -120,9 +116,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                     key={idx}
                     src={slide.img}
                     alt={slide.caption}
-                    className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-in-out ${
-                      idx === heroSlideIdx ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
-                    }`}
+                    className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-in-out ${idx === heroSlideIdx ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
+                      }`}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = '/images/IMG_0303.JPG';
@@ -150,9 +145,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                       key={i}
                       onClick={() => setHeroSlideIdx(i)}
                       aria-label={`Go to photo ${i + 1}`}
-                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                        i === heroSlideIdx ? 'w-6 bg-white shadow-xs' : 'w-2 bg-white/40 hover:bg-white/70'
-                      }`}
+                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${i === heroSlideIdx ? 'w-6 bg-white shadow-xs' : 'w-2 bg-white/40 hover:bg-white/70'
+                        }`}
                     />
                   ))}
                 </div>
@@ -169,7 +163,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 !text-white" style={{ color: '#ffffff' }}>
             <div>
               <div className="font-heading font-bold text-3xl sm:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
-                {metrics?.totalBeneficiaries ? `${metrics.totalBeneficiaries.toLocaleString()}+` : '3,312+'}
+                {metrics?.totalBeneficiaries && metrics.totalBeneficiaries > 3500 ? `${metrics.totalBeneficiaries.toLocaleString()}+` : '3,500+'}
               </div>
               <div className="text-sm sm:text-base !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
                 children &amp; young people reached
@@ -178,28 +172,28 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
             <div>
               <div className="font-heading font-bold text-3xl sm:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
-                150+
+                200+
               </div>
               <div className="text-sm sm:text-base !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
-                scholarships awarded
+                Scholarships awarded
               </div>
             </div>
 
             <div>
               <div className="font-heading font-bold text-3xl sm:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
-                2,100+
+                2,500+
               </div>
               <div className="text-sm sm:text-base !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
-                women &amp; girls supported
+                Women &amp; girls supported
               </div>
             </div>
 
             <div>
               <div className="font-heading font-bold text-3xl sm:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
-                5 states
+                7 States
               </div>
               <div className="text-sm sm:text-base !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
-                FCT, Benue, Lagos, Oyo &amp; Plateau
+                (FCT, Benue, Katsina, Plateau, Lagos, Oyo, Enugu)
               </div>
             </div>
           </div>
@@ -240,7 +234,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
+
           {/* Latest Outreach Card (7 Cols) */}
           <div className="lg:col-span-7 bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:border-[#cfc7b9] transition-all flex flex-col justify-between">
             <div className="relative h-60 sm:h-72 overflow-hidden bg-gray-100">
@@ -304,10 +298,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 NEXT OUTREACH
               </div>
               <h3 className="font-heading font-bold text-2xl text-white mb-3 leading-snug">
-                October 2026 outreach — Primary School Retention &amp; Learning Kits
+                November 2026 Outreach — Medical Aid Outreach
               </h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Rural communities in Plateau &amp; Benue State. Distributing uniforms, exercise books, pencils and essential desks for primary school pupils at risk of dropping out.
+                Medical aid outreach across rural communities in Plateau, Katsina, Lagos, Oyo, and Enugu States, providing essential healthcare services, medical support, and health education to underserved individuals and families with limited access to quality healthcare.
               </p>
             </div>
 
@@ -450,12 +444,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
       {/* =========================================================
           LOWER FLOW: COMMUNITY VOICES & GIVING SIMULATOR
-          (Mirrored Left-Side Ambient Wave Line)
       ========================================================= */}
       <div className="relative overflow-hidden">
-        {/* Left-side subtle mirrored wave line */}
-        <CurvedWaveBackground side="left" />
-
         {/* 5. Section: In their words (Testimonials with Real Field Photos) */}
         <section className="relative z-10 py-16 sm:py-20 max-w-[1200px] mx-auto px-4 sm:px-6">
           <div className="mb-10">
@@ -489,7 +479,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                 </div>
                 <div>
                   <h4 className="font-heading font-bold text-sm text-[#1c1c1a]">
-                    Mrs. Becky Omegbogu
+                    Mrs. Becky Omagbogu
                   </h4>
                   <p className="text-xs text-[#706e68]">
                     Proprietor, Beckwin International School · Plateau
@@ -560,7 +550,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           <div className="text-xs uppercase font-bold tracking-wider text-[#706e68] mb-6">
             SCHOOLS, HOMES AND HOSPITALS WE HAVE WORKED WITH
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-sm font-heading font-semibold text-[#4a4a46]">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-x-8 sm:gap-y-4 text-sm font-heading font-semibold text-[#4a4a46] leading-relaxed max-w-5xl mx-auto">
             <span className="hover:text-maroon transition-colors">Beckwin International School</span>
             <span className="text-[#d0c8bb]">•</span>
             <span className="hover:text-maroon transition-colors">Karvron Montessori School</span>
@@ -570,6 +560,14 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             <span className="hover:text-maroon transition-colors">Oyiza Orphanage</span>
             <span className="text-[#d0c8bb]">•</span>
             <span className="hover:text-maroon transition-colors">Abuja Teaching Hospital</span>
+            <span className="text-[#d0c8bb]">•</span>
+            <span className="hover:text-maroon transition-colors">ABBA FATHER RICH ORPHANAGE HOME</span>
+            <span className="text-[#d0c8bb]">•</span>
+            <span className="hover:text-maroon transition-colors">Compassionate Heart Orphanage</span>
+            <span className="text-[#d0c8bb]">•</span>
+            <span className="hover:text-maroon transition-colors">OLUODE Community Primary School Oke-Alaro, Apata Ibadan</span>
+            <span className="text-[#d0c8bb]">•</span>
+            <span className="hover:text-maroon transition-colors">Deeper Life Church, Abattoir</span>
           </div>
         </div>
       </section>

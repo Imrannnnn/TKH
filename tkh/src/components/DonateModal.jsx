@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Copy, Check, Heart, ShieldCheck, ArrowRight, MessageCircle } from './Icons';
+import { X, Copy, Check, Heart, ShieldCheck, ArrowRight, MessageCircle, Lock } from './Icons';
 import { useData } from '../context/DataContext';
 
 export default function DonateModal({ isOpen, onClose, initialAmount }) {
@@ -417,8 +417,9 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                     )}
                   </button>
 
-                  <div className="text-center text-[11px] text-[#706e68] mt-1">
-                    🔒 Secure payment by Paystack · NGN, USD or GBP cards
+                  <div className="flex items-center justify-center gap-1.5 text-center text-[11px] text-[#706e68] mt-1">
+                    <Lock className="w-3.5 h-3.5 text-[#706e68] shrink-0" />
+                    <span>Secure payment by Paystack · NGN, USD or GBP cards</span>
                   </div>
                 </form>
               </div>
@@ -447,7 +448,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                   <ul className="space-y-3 text-xs text-[#4a4a46]">
                     <li className="flex items-start gap-2.5">
                       <span className="text-forest text-sm font-bold mt-0.5">⬡</span>
-                      <span><strong>Registered with CAC (RC 7015705).</strong> Fully accountable Nigerian charitable trust.</span>
+                      <span><strong>Registered with CAC (RC 7015705).</strong> TEN KIND HANDS FOUNDATION.</span>
                     </li>
                     <li className="flex items-start gap-2.5">
                       <span className="text-forest text-sm font-bold mt-0.5">⬡</span>
