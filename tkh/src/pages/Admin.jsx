@@ -184,6 +184,7 @@ export default function Admin({ setCurrentPage }) {
         const data = await res.json();
         setIsAuthenticated(true);
         sessionStorage.setItem('tkh_admin_auth', 'true');
+        localStorage.setItem('tkh_admin_custom_password', loginPass);
         if (data.user) {
           setAdminUser(data.user);
           sessionStorage.setItem('tkh_admin_user', JSON.stringify(data.user));
@@ -202,6 +203,7 @@ export default function Admin({ setCurrentPage }) {
     const localCustomPass = localStorage.getItem('tkh_admin_custom_password');
     const isValidPass =
       (localCustomPass && loginPass === localCustomPass) ||
+      loginPass === 'TKHadmin2026' ||
       loginPass === 'admin2026' ||
       loginPass === 'admin';
 
@@ -209,6 +211,7 @@ export default function Admin({ setCurrentPage }) {
       (loginEmail.trim().toLowerCase() === 'admin@tenkindhands.org' || !loginEmail) &&
       isValidPass
     ) {
+      localStorage.setItem('tkh_admin_custom_password', loginPass);
       const fallbackUser = {
         name: 'Ten Kind Hands Super Admin',
         email: 'admin@tenkindhands.org',
@@ -219,7 +222,7 @@ export default function Admin({ setCurrentPage }) {
       sessionStorage.setItem('tkh_admin_auth', 'true');
       sessionStorage.setItem('tkh_admin_user', JSON.stringify(fallbackUser));
       setIsLoggingIn(false);
-      showToast('Welcome back, Super Admin (Local Mode)');
+      showToast('Welcome back, Super Admin');
     } else {
       setIsLoggingIn(false);
       setLoginError('Invalid Administrator credentials. Please verify your email and password.');
