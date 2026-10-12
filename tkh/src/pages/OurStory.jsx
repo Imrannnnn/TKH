@@ -1,13 +1,16 @@
+import { useData } from '../context/DataContext';
 import { Heart, ArrowRight, ShieldCheck, Check } from '../components/Icons';
 
 export default function OurStory({ onOpenDonate, setCurrentPage }) {
+  const { storyContent } = useData() || {};
+
   const handleNav = (pageId, hash = '') => {
     if (setCurrentPage) setCurrentPage(pageId);
     window.location.hash = hash || pageId;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const team = [
+  const defaultTeam = [
     {
       initials: 'SA',
       name: 'Suotonye Augustine Arthur',
@@ -79,6 +82,16 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       badge: 'Plateau State'
     },
   ];
+
+  const leadership =
+    storyContent?.leadership && storyContent.leadership.length > 0
+      ? storyContent.leadership
+      : defaultTeam.slice(0, 5);
+  const stateCoordinators =
+    storyContent?.stateCoordinators && storyContent.stateCoordinators.length > 0
+      ? storyContent.stateCoordinators
+      : defaultTeam.slice(5);
+  const team = [...leadership, ...stateCoordinators];
 
   const timeline = [
     {

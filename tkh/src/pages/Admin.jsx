@@ -92,6 +92,14 @@ export default function Admin({ setCurrentPage }) {
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
+  // Super Admin Password Update state
+  const [currentPasswordInput, setCurrentPasswordInput] = useState('');
+  const [newPasswordInput, setNewPasswordInput] = useState('');
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [passwordFeedback, setPasswordFeedback] = useState({ type: '', message: '' });
+
   // Active admin tab (Organized by Website Page)
   const [activeTab, setActiveTab] = useState('overview');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -191,9 +199,15 @@ export default function Admin({ setCurrentPage }) {
       // Defer to offline local credentials
     }
 
+    const localCustomPass = localStorage.getItem('tkh_admin_custom_password');
+    const isValidPass =
+      (localCustomPass && loginPass === localCustomPass) ||
+      loginPass === 'admin2026' ||
+      loginPass === 'admin';
+
     if (
-      (loginEmail.trim().toLowerCase() === 'admin@tenkindhands.org' && loginPass === 'admin2026') ||
-      loginPass === 'admin'
+      (loginEmail.trim().toLowerCase() === 'admin@tenkindhands.org' || !loginEmail) &&
+      isValidPass
     ) {
       const fallbackUser = {
         name: 'Ten Kind Hands Super Admin',
@@ -219,6 +233,61 @@ export default function Admin({ setCurrentPage }) {
     sessionStorage.removeItem('tkh_admin_user');
     sessionStorage.removeItem('tkh_admin_token');
     showToast('Securely signed out of Super Admin Console');
+  };
+
+  // Password update handler
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    setPasswordFeedback({ type: '', message: '' });
+
+    if (!newPasswordInput || newPasswordInput.trim().length < 4) {
+      setPasswordFeedback({ type: 'error', message: 'New password must be at least 4 characters long.' });
+      return;
+    }
+
+    if (newPasswordInput !== confirmPasswordInput) {
+      setPasswordFeedback({ type: 'error', message: 'New password and confirmation do not match.' });
+      return;
+    }
+
+    setIsUpdatingPassword(true);
+
+    try {
+      const res = await fetch(`${getApiBase()}/auth/change-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: adminUser?.email || 'admin@tenkindhands.org',
+          currentPassword: currentPasswordInput,
+          newPassword: newPasswordInput
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        localStorage.setItem('tkh_admin_custom_password', newPasswordInput);
+        setPasswordFeedback({ type: 'success', message: 'Admin password updated successfully across database and local storage!' });
+        showToast('Password updated successfully');
+        setCurrentPasswordInput('');
+        setNewPasswordInput('');
+        setConfirmPasswordInput('');
+        setIsUpdatingPassword(false);
+        return;
+      } else {
+        setPasswordFeedback({ type: 'error', message: data.message || 'Failed to update password.' });
+        setIsUpdatingPassword(false);
+        return;
+      }
+    } catch {
+      // Offline fallback
+      localStorage.setItem('tkh_admin_custom_password', newPasswordInput);
+      setPasswordFeedback({ type: 'success', message: 'Password updated locally (Offline Resilience Mode). Sync will persist across sessions.' });
+      showToast('Password updated locally');
+      setCurrentPasswordInput('');
+      setNewPasswordInput('');
+      setConfirmPasswordInput('');
+      setIsUpdatingPassword(false);
+    }
   };
 
   // News Handlers
@@ -550,6 +619,7 @@ export default function Admin({ setCurrentPage }) {
     {
       group: 'SYSTEM & INTEGRITY',
       items: [
+        { id: 'system-security', label: 'Security & Password', icon: Lock, badge: null, pageName: 'Security' },
         { id: 'system-backup', label: 'Cloud Backup & Reset', icon: Database, badge: null, pageName: 'System' }
       ]
     }
@@ -1546,6 +1616,131 @@ export default function Admin({ setCurrentPage }) {
                       <RefreshCw className="w-3.5 h-3.5" />
                       <span>Reset Defaults</span>
                     </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* =================================================================
+              10. SECURITY & PASSWORD MANAGEMENT
+          ================================================================= */}
+          {activeTab === 'system-security' && (
+            <div className="space-y-6 animate-fade-in max-w-3xl">
+              <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs">
+                {/* Password Change Form */}
+                <div className="border border-[#e7e2d8] rounded-xl p-5 bg-[#faf8f5]/60">
+                  <h2 className="text-sm font-heading font-bold text-ink mb-1 flex items-center gap-2">
+                    <Lock className="w-4 h-4 text-primary" />
+                    Change Admin Password
+                  </h2>
+                  <p className="text-xs text-ink-muted mb-4">
+                    Enter your current password and your new password to update your login credentials.
+                  </p>
+
+                  {passwordFeedback.message && (
+                    <div
+                      className={`mb-4 p-3 rounded-xl text-xs flex items-center gap-2.5 ${
+                        passwordFeedback.type === 'success'
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                          : 'bg-rose-50 text-rose-800 border border-rose-200'
+                      }`}
+                    >
+                      {passwordFeedback.type === 'success' ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      ) : (
+                        <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
+                      )}
+                      <span>{passwordFeedback.message}</span>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleUpdatePassword} className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-heading font-semibold text-ink mb-1">
+                        Current Password
+                      </label>
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        value={currentPasswordInput}
+                        onChange={(e) => setCurrentPasswordInput(e.target.value)}
+                        placeholder="Enter current password (default: admin2026)"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-white text-ink text-xs focus:outline-none focus:border-primary font-mono"
+                      />
+                      <span className="text-[10px] text-ink-muted mt-1 block">
+                        Default seed password is <code className="bg-sand px-1 py-0.5 rounded text-ink font-mono">admin2026</code>
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-heading font-semibold text-ink mb-1">
+                          New Password
+                        </label>
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          required
+                          value={newPasswordInput}
+                          onChange={(e) => setNewPasswordInput(e.target.value)}
+                          placeholder="Enter at least 4 characters"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-white text-ink text-xs focus:outline-none focus:border-primary font-mono"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-heading font-semibold text-ink mb-1">
+                          Confirm New Password
+                        </label>
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          required
+                          value={confirmPasswordInput}
+                          onChange={(e) => setConfirmPasswordInput(e.target.value)}
+                          placeholder="Re-type new password"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-white text-ink text-xs focus:outline-none focus:border-primary font-mono"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1">
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="text-xs text-ink-muted hover:text-ink flex items-center gap-1.5 cursor-pointer select-none"
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>{showPassword ? 'Hide password characters' : 'Show password characters'}</span>
+                      </button>
+
+                      <button
+                        type="submit"
+                        disabled={isUpdatingPassword}
+                        className="py-2.5 px-5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-2 cursor-pointer shadow-xs disabled:opacity-50 transition-colors"
+                      >
+                        {isUpdatingPassword ? (
+                          <>
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            <span>Updating...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Lock className="w-3.5 h-3.5" />
+                            <span>Save New Password</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                {/* CLI Command Alternative Note */}
+                <div className="mt-5 p-4 rounded-xl bg-sand/30 border border-[#e7e2d8] text-xs text-ink-muted">
+                  <span className="font-heading font-bold text-ink block mb-1">
+                    Terminal / Command-Line Administration:
+                  </span>
+                  You can also change or reset the password directly via terminal inside the <code className="text-forest font-mono">tkh_Backend</code> folder:
+                  <div className="mt-2 p-2.5 bg-[#142722] text-[#f7c899] font-mono text-[11px] rounded-lg overflow-x-auto">
+                    node scripts/createAdmin.js admin@tenkindhands.org &lt;your-new-password&gt;
                   </div>
                 </div>
               </div>

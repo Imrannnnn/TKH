@@ -29,29 +29,57 @@ export default function HomePageEditor({
 
   // Local state for Hero Section
   const [heroHeadline, setHeroHeadline] = useState(
-    homeContent?.heroHeadline || 'Empowering the lives of African Women and Children through Healthcare & Educational initiatives.'
+    homeContent?.heroHeadline || 'Keeping Nigerian children in school and families healthy.'
   );
   const [heroSubtitle, setHeroSubtitle] = useState(
-    homeContent?.heroSubtitle || 'Every act of kindness shapes a brighter future.'
+    homeContent?.heroSubtitle ||
+      'We fund scholarships, school supplies and community health outreaches for vulnerable children, women and widows across Nigeria — and publish a field report after every one.'
   );
   const [registeredBadge, setRegisteredBadge] = useState(
-    homeContent?.registeredBadge || 'Registered Non-Profit • CAC RC: 7015705'
+    homeContent?.registeredBadge || 'Registered non-profit · CAC RC 7015705 · Abuja'
   );
   const [slides, setSlides] = useState(
     homeContent?.heroSlides || [
-      { img: '/images/hero-debate-competition-makurdi.webp', caption: 'Inter-Secondary School Debate Competition (₦50,000 • ₦30,000 • ₦20,000 Awards) • Makurdi' },
-      { img: '/images/hero-digital-literacy-computer-lab.webp', caption: 'Youth Digital Literacy & Computer Lab Setup • Plateau State' },
-      { img: '/images/hero-orphanage-food-educational-support.webp', caption: 'Food Relief & Educational Supplies Donation • Oyiza Orphanage' },
-      { img: '/images/hero-widows-clean-cooking-stoves.webp', caption: 'Widows Clean Energy & Eco-Cooking Stove Distribution • Dafara' },
-      { img: '/images/hero-jambells-school-outreach.webp', caption: 'Educational Materials & School Supplies Distribution • JAMBELLS School, Lagos' },
-      { img: '/images/hero-maternal-health-malaria-prevention.webp', caption: 'Maternal Healthcare & Malaria Prevention Outreach • Lagos' },
-      { img: '/images/hero-youth-vocational-shoemaking.webp', caption: 'Youth Vocational Skills & Shoemaking Apprenticeship • Abuja' },
-      { img: '/images/hero-visually-impaired-education.webp', caption: 'Special Education & Inclusive Learning for Visually Impaired Students' },
-      { img: '/images/hero-digital-skills-youth-training.webp', caption: 'Youth Digital Skills & Computer Training Lab • Lagos' },
-      { img: '/images/hero-community-empowerment.webp', caption: 'Sustainable Community Livelihood & Family Empowerment Outreach' },
-      { img: '/images/IMG_0294.webp', caption: 'Child empowerment Program • Makurdi' },
-      { img: '/images/11222.webp', caption: 'Medical outreach to children at Abuja Teaching Hospital' },
-      { img: '/images/IMG_0995.webp', caption: 'Women Empowerment Outreach • Dafara' }
+      {
+        img: '/images/hero-orphanage-food-educational-support.webp',
+        caption: 'Food relief & school supplies donation · Oyiza Orphanage',
+        state: 'FCT Abuja'
+      },
+      {
+        img: '/images/hero-debate-competition-makurdi.webp',
+        caption: 'Inter-Secondary School Debate Competition & Cash Prizes',
+        state: 'Makurdi, Benue State'
+      },
+      {
+        img: '/images/hero-digital-literacy-computer-lab.webp',
+        caption: '9-Computer Laboratory Commissioning · Beckwin International',
+        state: 'Plateau State'
+      },
+      {
+        img: '/images/hero-widows-clean-cooking-stoves.webp',
+        caption: 'Widows Clean Energy & Eco-Cooking Stove Distribution',
+        state: 'Dafara Community'
+      },
+      {
+        img: '/images/hero-maternal-health-malaria-prevention.webp',
+        caption: 'Maternal Healthcare, Mosquito Nets & Malaria Screening',
+        state: 'Lagos State'
+      },
+      {
+        img: '/images/hero-jambells-school-outreach.webp',
+        caption: 'Educational Materials & Stationery Distribution',
+        state: 'JAMBELLS School, Lagos'
+      },
+      {
+        img: '/images/hero-youth-vocational-shoemaking.webp',
+        caption: 'Youth Vocational Skills & Shoemaking Apprenticeship',
+        state: 'Abuja'
+      },
+      {
+        img: '/images/11222.webp',
+        caption: 'Pediatric Healthcare Support & Clinical Aid',
+        state: 'Abuja Teaching Hospital'
+      }
     ]
   );
 

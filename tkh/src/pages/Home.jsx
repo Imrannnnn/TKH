@@ -3,10 +3,10 @@ import { useData } from '../context/DataContext';
 import { Heart, ArrowRight, Check, MapPin, Quote } from '../components/Icons';
 
 export default function Home({ onOpenDonate, setCurrentPage }) {
-  const { metrics, outreaches } = useData();
+  const { metrics, outreaches, homeContent } = useData();
   const [heroSlideIdx, setHeroSlideIdx] = useState(0);
 
-  const heroSlides = [
+  const defaultHeroSlides = [
     {
       img: '/images/hero-orphanage-food-educational-support.webp',
       caption: 'Food relief & school supplies donation · Oyiza Orphanage',
@@ -49,6 +49,18 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
     }
   ];
 
+  const heroSlides =
+    homeContent?.heroSlides && homeContent.heroSlides.length > 0
+      ? homeContent.heroSlides
+      : defaultHeroSlides;
+  const heroHeadline =
+    homeContent?.heroHeadline || 'Keeping Nigerian children in school and families healthy.';
+  const heroSubtitle =
+    homeContent?.heroSubtitle ||
+    'We fund scholarships, school supplies and community health outreaches for vulnerable children, women and widows across Nigeria — and publish a field report after every one.';
+  const registeredBadge =
+    homeContent?.registeredBadge || 'Registered non-profit · CAC RC 7015705 · Abuja';
+
   // Auto-cycle through real field photos every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
@@ -75,17 +87,17 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             {/* Registered Non-Profit Pill */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#e5e0d8] text-xs text-[#4a4a46] font-medium shadow-sm">
               <span className="w-2 h-2 rounded-full bg-forest animate-pulse" />
-              <span>Registered non-profit · CAC RC 7015705 · Abuja</span>
+              <span>{registeredBadge}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="font-heading font-bold text-3xl sm:text-5xl lg:text-[52px] leading-[1.12] tracking-tight text-[#1c1c1a]">
-              Keeping Nigerian children in school and families healthy.
+              {heroHeadline}
             </h1>
 
             {/* Subtext */}
             <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
-              We fund scholarships, school supplies and community health outreaches for vulnerable children, women and widows across Nigeria — and publish a field report after every one.
+              {heroSubtitle}
             </p>
 
             {/* CTAs */}
@@ -130,11 +142,11 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col gap-2">
                 <div className="flex items-center justify-between gap-2">
                   <div className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-sm border border-white/40 text-xs font-semibold text-[#1c1c1a] shadow-sm truncate">
-                    {heroSlides[heroSlideIdx].caption}
+                    {heroSlides[heroSlideIdx]?.caption || 'Ten Kind Hands Field Outreach'}
                   </div>
                   <span className="shrink-0 px-2.5 py-1 rounded-full bg-black/60 text-white/90 text-[11px] font-medium border border-white/20 backdrop-blur-sm flex items-center gap-1">
                     <MapPin className="w-3 h-3 text-[#f7c899]" />
-                    {heroSlides[heroSlideIdx].state}
+                    {heroSlides[heroSlideIdx]?.state || 'Field Mission'}
                   </span>
                 </div>
 

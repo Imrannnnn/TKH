@@ -98,7 +98,7 @@
       "category": "education",
       "iconName": "School",
       "label": "Scholarships Awarded",
-      "stat": "150+",
+      "stat": "200+",
       "description": "Scholarships Awarded",
       "growth": "+40 New in 2026",
       "color": "text-ink",
@@ -108,9 +108,9 @@
       "id": "patients",
       "category": "transparency",
       "iconName": "HandHeart",
-      "label": "Women & Girls Reached",
-      "stat": "2,100+",
-      "description": "Women & Girls Reached",
+      "label": "Women & Girls Supported",
+      "stat": "2,500+",
+      "description": "Women & Girls Supported",
       "growth": "+45% YoY",
       "color": "text-forest",
       "detail": "Women and girls supported through education, healthcare, empowerment, and community outreach initiatives."
@@ -141,9 +141,9 @@
       "id": "metric-1790695260926",
       "category": "transparency",
       "iconName": "Sparkles",
-      "label": "Children & Youths Reached",
-      "stat": "3,312+",
-      "description": "Children & Youths Reached",
+      "label": "Children & Young People Reached",
+      "stat": "3,500+",
+      "description": "Children & Young People Reached",
       "growth": "+1,300",
       "color": "text-primary",
       "detail": "Children and young people supported through education, skills development, healthcare, and empowerment initiative..."
@@ -209,12 +209,59 @@
       "source": "Partner Portal"
     }
   ],
+  "homeContent": {
+    "heroHeadline": "Keeping Nigerian children in school and families healthy.",
+    "heroSubtitle": "We fund scholarships, school supplies and community health outreaches for vulnerable children, women and widows across Nigeria — and publish a field report after every one.",
+    "registeredBadge": "Registered non-profit · CAC RC 7015705 · Abuja",
+    "heroSlides": [
+      {
+        "img": "/images/hero-orphanage-food-educational-support.webp",
+        "caption": "Food relief & school supplies donation · Oyiza Orphanage",
+        "state": "FCT Abuja"
+      },
+      {
+        "img": "/images/hero-debate-competition-makurdi.webp",
+        "caption": "Inter-Secondary School Debate Competition & Cash Prizes",
+        "state": "Makurdi, Benue State"
+      },
+      {
+        "img": "/images/hero-digital-literacy-computer-lab.webp",
+        "caption": "9-Computer Laboratory Commissioning · Beckwin International",
+        "state": "Plateau State"
+      },
+      {
+        "img": "/images/hero-widows-clean-cooking-stoves.webp",
+        "caption": "Widows Clean Energy & Eco-Cooking Stove Distribution",
+        "state": "Dafara Community"
+      },
+      {
+        "img": "/images/hero-maternal-health-malaria-prevention.webp",
+        "caption": "Maternal Healthcare, Mosquito Nets & Malaria Screening",
+        "state": "Lagos State"
+      },
+      {
+        "img": "/images/hero-jambells-school-outreach.webp",
+        "caption": "Educational Materials & Stationery Distribution",
+        "state": "JAMBELLS School, Lagos"
+      },
+      {
+        "img": "/images/hero-youth-vocational-shoemaking.webp",
+        "caption": "Youth Vocational Skills & Shoemaking Apprenticeship",
+        "state": "Abuja"
+      },
+      {
+        "img": "/images/11222.webp",
+        "caption": "Pediatric Healthcare Support & Clinical Aid",
+        "state": "Abuja Teaching Hospital"
+      }
+    ]
+  },
   "contactInfo": {
     "headquarters": "Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria",
     "rcNumber": "RC: 7015705",
     "cacStatus": "CAC RC: 7015705 (Incorporated Non-Profit)",
-    "email": "contact@tenkindhands.org",
-    "partnershipsEmail": "partners@tenkindhands.org",
+    "email": "info@tenkindhands.org",
+    "partnershipsEmail": "info@tenkindhands.org",
     "phone": "+234 818 099 4301",
     "whatsapp": "+234 818 099 4301",
     "emergencyDesk": "+234 818 099 4301",

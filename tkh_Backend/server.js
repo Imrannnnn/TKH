@@ -69,7 +69,8 @@ app.get('/', (req, res) => {
       '/api/transparency',
       '/api/announcement',
       '/api/inquiries',
-      '/api/auth/login'
+      '/api/auth/login',
+      '/api/auth/change-password'
     ]
   });
 });
