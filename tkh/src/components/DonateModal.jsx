@@ -152,13 +152,13 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
-      <div className="relative w-full max-w-4xl bg-[#fdfbf7] rounded-3xl border border-[#e5e0d8] shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
+      <div className="relative w-full max-w-4xl bg-[#fdfbf7] rounded-2xl sm:rounded-3xl border border-[#e5e0d8] shadow-2xl overflow-hidden my-auto max-h-[94vh] sm:max-h-[92vh] flex flex-col">
         
         {/* Top Header */}
-        <div className="px-6 py-4 border-b border-[#e5e0d8] flex items-center justify-between bg-white shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-white border border-[#e5e0d8] flex items-center justify-center p-0.5 shadow-xs">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#e5e0d8] flex items-center justify-between bg-white shrink-0 gap-3">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white border border-[#e5e0d8] flex items-center justify-center p-0.5 shadow-xs shrink-0">
               <img
                 src="/logo.png"
                 alt="Ten Kind Hands Logo"
@@ -169,13 +169,13 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                 }}
               />
             </div>
-            <span className="font-heading font-bold text-base text-[#1c1c1a]">
+            <span className="font-heading font-bold text-xs sm:text-base text-[#1c1c1a] truncate">
               Ten Kind Hands · Support Our Frontline Work
             </span>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-[#f5f1e8] text-[#706e68] hover:text-[#1c1c1a] transition-colors cursor-pointer"
+            className="p-1.5 rounded-full hover:bg-[#f5f1e8] text-[#706e68] hover:text-[#1c1c1a] transition-colors cursor-pointer shrink-0"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -183,7 +183,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-8 overflow-y-auto">
+        <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto">
           {submittedSuccess ? (
             <div className="py-12 text-center max-w-md mx-auto">
               <div className="w-16 h-16 rounded-full bg-forest-tint text-forest flex items-center justify-center mx-auto mb-4">
@@ -313,11 +313,11 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                   <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1.5">
                     How would you like to pay?
                   </label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('card')}
-                      className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${
+                      className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer text-center ${
                         paymentMethod === 'card'
                           ? 'bg-white text-maroon border-maroon shadow-sm'
                           : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
@@ -328,7 +328,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod('transfer')}
-                      className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${
+                      className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer text-center ${
                         paymentMethod === 'transfer'
                           ? 'bg-white text-maroon border-maroon shadow-sm'
                           : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'

@@ -263,50 +263,50 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
     return (
       <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-12 overflow-hidden">
-        <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
+        <div className="relative z-10 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm text-[#706e68] mb-6">
+          <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-[#706e68] mb-6">
             <button
               onClick={handleBackToHub}
-              className="hover:text-maroon transition-colors cursor-pointer flex items-center gap-1"
+              className="hover:text-maroon transition-colors cursor-pointer flex items-center gap-1 min-h-[44px] sm:min-h-0"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Our work</span>
             </button>
             <span>/</span>
-            <span className="text-[#1c1c1a] font-medium">{selectedProgram.title}</span>
+            <span className="text-[#1c1c1a] font-medium truncate max-w-[200px] sm:max-w-none">{selectedProgram.title}</span>
           </div>
 
           {/* Hero Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-16">
-            <div className="lg:col-span-7 flex flex-col items-start gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-12 sm:mb-16">
+            <div className="lg:col-span-7 flex flex-col items-start gap-3 sm:gap-4">
               <span className="text-xs uppercase font-bold tracking-widest text-maroon">
                 {selectedProgram.pillar.toUpperCase()} PROGRAMME
               </span>
-              <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1c1c1a] leading-tight">
+              <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 2xl:text-[54px] text-[#1c1c1a] leading-tight">
                 {selectedProgram.title}
               </h1>
-              <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base lg:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
                 {selectedProgram.shortDesc}
               </p>
 
               {/* Stats Bar */}
-              <div className="grid grid-cols-3 gap-4 w-full max-w-md pt-2 pb-2">
-                <div className="bg-white rounded-2xl p-4 border border-[#e5e0d8] shadow-sm">
-                  <div className="font-heading font-bold text-xl sm:text-2xl text-maroon">
+              <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 sm:gap-4 w-full max-w-md pt-2 pb-2">
+                <div className="bg-white rounded-2xl p-3.5 sm:p-4 border border-[#e5e0d8] shadow-sm">
+                  <div className="font-heading font-bold text-lg xs:text-xl sm:text-2xl text-maroon break-words">
                     {selectedProgram.unitCost}
                   </div>
                   <div className="text-xs text-[#706e68] mt-0.5">{selectedProgram.unitCostLabel}</div>
                 </div>
-                <div className="bg-white rounded-2xl p-4 border border-[#e5e0d8] shadow-sm">
-                  <div className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a]">
+                <div className="bg-white rounded-2xl p-3.5 sm:p-4 border border-[#e5e0d8] shadow-sm">
+                  <div className="font-heading font-bold text-lg xs:text-xl sm:text-2xl text-[#1c1c1a]">
                     {selectedProgram.statBeneficiaries}
                   </div>
                   <div className="text-xs text-[#706e68] mt-0.5">{selectedProgram.statBeneficiariesLabel}</div>
                 </div>
-                <div className="bg-white rounded-2xl p-4 border border-[#e5e0d8] shadow-sm">
-                  <div className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a]">
+                <div className="bg-white rounded-2xl p-3.5 sm:p-4 border border-[#e5e0d8] shadow-sm">
+                  <div className="font-heading font-bold text-lg xs:text-xl sm:text-2xl text-[#1c1c1a]">
                     {selectedProgram.statesActive}
                   </div>
                   <div className="text-xs text-[#706e68] mt-0.5">Active in</div>
@@ -314,16 +314,16 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2 w-full sm:w-auto">
                 <button
                   onClick={() => onOpenDonate(selectedProgram.termSuggested)}
-                  className="btn-primary px-7 py-3.5 text-base shadow-sm"
+                  className="btn-primary w-full sm:w-auto px-6 sm:px-7 py-3.5 text-sm sm:text-base shadow-sm text-center justify-center min-h-[44px]"
                 >
                   Sponsor a unit ({selectedProgram.unitCost})
                 </button>
                 <button
                   onClick={() => onOpenDonate(selectedProgram.monthlySuggested)}
-                  className="btn-secondary px-6 py-3.5 text-base"
+                  className="btn-secondary w-full sm:w-auto px-5 sm:px-6 py-3.5 text-sm sm:text-base text-center justify-center min-h-[44px]"
                 >
                   Give ₦{selectedProgram.monthlySuggested.toLocaleString()} a month
                 </button>
@@ -331,12 +331,12 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
             </div>
 
             {/* Hero Image */}
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 w-full">
               <div className="rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md bg-white">
                 <img
                   src={selectedProgram.image}
                   alt={selectedProgram.title}
-                  className="w-full h-[320px] sm:h-[380px] object-cover object-center"
+                  className="w-full h-[240px] xs:h-[280px] sm:h-[340px] lg:h-[380px] object-cover object-center"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = '/images/IMG_0294.JPG';
@@ -347,9 +347,9 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
           </div>
 
           {/* Who it's for vs What it covers */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 pt-10 border-t border-[#e5e0d8]">
-            <div className="bg-white rounded-3xl p-8 border border-[#e5e0d8] shadow-sm">
-              <h3 className="font-heading font-bold text-xl text-[#1c1c1a] mb-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16 pt-8 sm:pt-10 border-t border-[#e5e0d8]">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm">
+              <h3 className="font-heading font-bold text-lg sm:text-xl text-[#1c1c1a] mb-3">
                 Who it's for
               </h3>
               <p className="text-sm sm:text-base text-[#4a4a46] leading-relaxed">
@@ -357,8 +357,8 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
               </p>
             </div>
 
-            <div className="bg-white rounded-3xl p-8 border border-[#e5e0d8] shadow-sm">
-              <h3 className="font-heading font-bold text-xl text-[#1c1c1a] mb-4">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm">
+              <h3 className="font-heading font-bold text-lg sm:text-xl text-[#1c1c1a] mb-4">
                 What it covers
               </h3>
               <ul className="space-y-3">
@@ -375,13 +375,13 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
           </div>
 
           {/* How it works (4 steps) */}
-          <div className="mb-16">
-            <h3 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-6">
+          <div className="mb-12 sm:mb-16">
+            <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-6">
               How this programme works
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {selectedProgram.howItWorks.map((st, idx) => (
-                <div key={idx} className="bg-white rounded-2xl p-6 border border-[#e5e0d8] shadow-sm flex flex-col justify-between">
+                <div key={idx} className="bg-white rounded-2xl p-5 sm:p-6 border border-[#e5e0d8] shadow-sm flex flex-col justify-between">
                   <div>
                     <span className="text-xs uppercase font-bold tracking-wider text-maroon block mb-2">
                       {st.step}
@@ -389,7 +389,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
                     <h4 className="font-heading font-bold text-base text-[#1c1c1a] mb-2">
                       {st.title}
                     </h4>
-                    <p className="text-sm text-[#4a4a46] leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed">
                       {st.desc}
                     </p>
                   </div>
@@ -399,14 +399,14 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
           </div>
 
           {/* Goal Tracker Bar & Scholar Story Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 mb-12 sm:mb-16 items-stretch">
             {/* Goal Bar Widget (Dark Forest Card) */}
-            <div className="lg:col-span-5 bg-forest text-white rounded-3xl p-8 flex flex-col justify-between shadow-sm">
+            <div className="lg:col-span-5 bg-forest text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-sm">
               <div>
                 <span className="text-xs uppercase tracking-widest text-[#a8d5c4] font-bold block mb-2">
                   2026/27 SCHOOL YEAR
                 </span>
-                <h4 className="font-heading font-bold text-2xl mb-1">
+                <h4 className="font-heading font-bold text-xl sm:text-2xl mb-1">
                   {selectedProgram.fundedCount} of {selectedProgram.targetCount} units funded
                 </h4>
                 <p className="text-xs text-white/80 mb-6">
@@ -427,23 +427,23 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
               <button
                 onClick={() => onOpenDonate()}
-                className="mt-6 w-full py-3.5 px-6 rounded-full bg-white text-forest font-heading font-bold text-sm hover:bg-[#f5f1e8] transition-colors cursor-pointer text-center"
+                className="mt-6 w-full py-3.5 px-6 rounded-full bg-white text-forest font-heading font-bold text-sm hover:bg-[#f5f1e8] transition-colors cursor-pointer text-center min-h-[44px]"
               >
                 Help fund remaining {selectedProgram.targetCount - selectedProgram.fundedCount} units
               </button>
             </div>
 
             {/* Real Story Box */}
-            <div className="lg:col-span-7 bg-[#f5f1e8] rounded-3xl p-8 border border-[#e5e0d8] flex flex-col justify-between">
+            <div className="lg:col-span-7 bg-[#f5f1e8] rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] flex flex-col justify-between">
               <div>
                 <span className="text-xs uppercase tracking-widest text-maroon font-bold block mb-3">
                   A BENEFICIARY'S STORY
                 </span>
-                <p className="text-base sm:text-lg text-[#1c1c1a] italic leading-relaxed mb-6 font-serif">
+                <p className="text-sm sm:text-base lg:text-lg text-[#1c1c1a] italic leading-relaxed mb-6 font-serif">
                   "{selectedProgram.story.quote}"
                 </p>
               </div>
-              <div className="pt-4 border-t border-[#e5e0d8] flex items-center justify-between">
+              <div className="pt-4 border-t border-[#e5e0d8] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2">
                 <div>
                   <h5 className="font-heading font-bold text-sm text-[#1c1c1a]">
                     {selectedProgram.story.name}
@@ -460,17 +460,17 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
           </div>
 
           {/* Bottom Back Button */}
-          <div className="pt-6 border-t border-[#e5e0d8] flex justify-between items-center">
+          <div className="pt-6 border-t border-[#e5e0d8] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <button
               onClick={handleBackToHub}
-              className="btn-secondary px-6 py-2.5 text-sm inline-flex items-center gap-1.5"
+              className="btn-secondary w-full sm:w-auto px-6 py-2.5 text-sm inline-flex items-center justify-center gap-1.5 min-h-[44px]"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to all programmes</span>
             </button>
             <button
               onClick={() => handleNav('outreaches')}
-              className="text-sm font-semibold text-maroon hover:underline"
+              className="text-sm font-semibold text-maroon hover:underline min-h-[44px] sm:min-h-0 flex items-center"
             >
               View field reports for this programme →
             </button>
@@ -483,18 +483,18 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
   // HUB VIEW (Artboard 03 · Our work)
   return (
-    <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-10 sm:py-16 overflow-hidden">
-      <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
+    <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16 overflow-hidden">
+      <div className="relative z-10 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="max-w-3xl mb-10">
+        <div className="max-w-3xl mb-8 sm:mb-12">
           <span className="text-xs uppercase font-bold tracking-widest text-maroon block mb-2">
             OUR WORK
           </span>
-          <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1c1c1a] mb-3">
+          <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-[#1c1c1a] mb-3 leading-tight">
             Six programmes. Three goals.
           </h1>
-          <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4a4a46] leading-relaxed">
             Children who learn, mothers and children who stay healthy, and families who can earn a living. Each programme lists its most recent outreach, pulled directly from our field dispatches.
           </p>
 
@@ -502,7 +502,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
           <div className="flex flex-wrap items-center gap-2 pt-6">
             <button
               onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
                 activeTab === 'all'
                   ? 'bg-maroon text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -512,7 +512,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
             </button>
             <button
               onClick={() => setActiveTab('education')}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
                 activeTab === 'education'
                   ? 'bg-maroon text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -522,7 +522,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
             </button>
             <button
               onClick={() => setActiveTab('health')}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
                 activeTab === 'health'
                   ? 'bg-forest text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -532,7 +532,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
             </button>
             <button
               onClick={() => setActiveTab('livelihoods')}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
                 activeTab === 'livelihoods'
                   ? 'bg-ochre text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -545,23 +545,23 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
         {/* 1. Education Section */}
         {(activeTab === 'all' || activeTab === 'education') && (
-          <div className="mb-14">
+          <div className="mb-12 sm:mb-16">
             <div className="mb-6">
-              <h2 className="font-heading font-bold text-2xl text-[#1c1c1a]">
+              <h2 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a]">
                 Education
               </h2>
-              <p className="text-sm text-[#706e68]">
+              <p className="text-xs sm:text-sm text-[#706e68]">
                 Getting children into school and keeping them there.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {PROGRAMMES.filter((p) => p.pillar === 'education').map((prog) => (
                 <div
                   key={prog.id}
                   className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
                 >
-                  <div className="h-48 overflow-hidden bg-gray-100">
+                  <div className="h-44 sm:h-48 overflow-hidden bg-gray-100">
                     <img
                       src={prog.image}
                       alt={prog.title}
@@ -572,12 +572,12 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
                       }}
                     />
                   </div>
-                  <div className="p-6 flex flex-col justify-between flex-1">
+                  <div className="p-5 sm:p-6 flex flex-col justify-between flex-1">
                     <div>
-                      <h3 className="font-heading font-bold text-lg text-[#1c1c1a] mb-2">
+                      <h3 className="font-heading font-bold text-base sm:text-lg text-[#1c1c1a] mb-2">
                         {prog.title}
                       </h3>
-                      <p className="text-sm text-[#4a4a46] leading-relaxed mb-4">
+                      <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4">
                         {prog.shortDesc}
                       </p>
                     </div>
@@ -588,7 +588,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
                       </div>
                       <button
                         onClick={() => handleOpenDetail(prog.id)}
-                        className="text-sm font-semibold text-maroon hover:text-maroon-dark inline-flex items-center gap-1 cursor-pointer"
+                        className="text-xs sm:text-sm font-semibold text-maroon hover:text-maroon-dark inline-flex items-center gap-1 cursor-pointer min-h-[44px] sm:min-h-0"
                       >
                         <span>See how it works</span>
                         <ArrowRight className="w-4 h-4" />
@@ -603,12 +603,12 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
         {/* 2. Health Section */}
         {(activeTab === 'all' || activeTab === 'health') && (
-          <div className="mb-14">
+          <div className="mb-12 sm:mb-16">
             <div className="mb-6">
-              <h2 className="font-heading font-bold text-2xl text-[#1c1c1a]">
+              <h2 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a]">
                 Health
               </h2>
-              <p className="text-sm text-[#706e68]">
+              <p className="text-xs sm:text-sm text-[#706e68]">
                 Healthy mothers and children who can stay in school.
               </p>
             </div>
@@ -620,7 +620,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
                   className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between md:col-span-2"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-                    <div className="lg:col-span-7 h-64 sm:h-80 overflow-hidden bg-gray-100">
+                    <div className="lg:col-span-7 h-52 sm:h-72 lg:h-80 overflow-hidden bg-gray-100">
                       <img
                         src={prog.image}
                         alt={prog.title}
@@ -631,15 +631,15 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
                         }}
                       />
                     </div>
-                    <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between">
+                    <div className="lg:col-span-5 p-5 sm:p-8 flex flex-col justify-between">
                       <div>
                         <span className="text-xs uppercase font-bold tracking-widest text-forest block mb-2">
                           Maternal &amp; Pediatric Care
                         </span>
-                        <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-3">
+                        <h3 className="font-heading font-bold text-lg sm:text-2xl text-[#1c1c1a] mb-2 sm:mb-3">
                           {prog.title}
                         </h3>
-                        <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
+                        <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4 sm:mb-6">
                           {prog.shortDesc}
                         </p>
                       </div>
@@ -650,7 +650,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
                         </div>
                         <button
                           onClick={() => handleOpenDetail(prog.id)}
-                          className="btn-primary px-6 py-2.5 text-sm inline-flex items-center gap-1.5"
+                          className="btn-primary w-full sm:w-auto px-6 py-2.5 text-sm inline-flex items-center justify-center gap-1.5 min-h-[44px]"
                         >
                           <span>Explore programme</span>
                           <ArrowRight className="w-4 h-4" />
@@ -666,23 +666,23 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
         {/* 3. Livelihoods Section */}
         {(activeTab === 'all' || activeTab === 'livelihoods') && (
-          <div className="mb-14">
+          <div className="mb-12 sm:mb-16">
             <div className="mb-6">
-              <h2 className="font-heading font-bold text-2xl text-[#1c1c1a]">
+              <h2 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a]">
                 Livelihoods
               </h2>
-              <p className="text-sm text-[#706e68]">
+              <p className="text-xs sm:text-sm text-[#706e68]">
                 Skills and tools so families can earn.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {PROGRAMMES.filter((p) => p.pillar === 'livelihoods').map((prog) => (
                 <div
                   key={prog.id}
                   className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
                 >
-                  <div className="h-56 overflow-hidden bg-gray-100">
+                  <div className="h-48 sm:h-56 overflow-hidden bg-gray-100">
                     <img
                       src={prog.image}
                       alt={prog.title}
@@ -693,12 +693,12 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
                       }}
                     />
                   </div>
-                  <div className="p-6 flex flex-col justify-between flex-1">
+                  <div className="p-5 sm:p-6 flex flex-col justify-between flex-1">
                     <div>
-                      <h3 className="font-heading font-bold text-lg text-[#1c1c1a] mb-2">
+                      <h3 className="font-heading font-bold text-base sm:text-lg text-[#1c1c1a] mb-2">
                         {prog.title}
                       </h3>
-                      <p className="text-sm text-[#4a4a46] leading-relaxed mb-4">
+                      <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4">
                         {prog.shortDesc}
                       </p>
                     </div>
@@ -709,7 +709,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
                       </div>
                       <button
                         onClick={() => handleOpenDetail(prog.id)}
-                        className="text-sm font-semibold text-ochre hover:text-[#915610] inline-flex items-center gap-1 cursor-pointer"
+                        className="text-xs sm:text-sm font-semibold text-ochre hover:text-[#915610] inline-flex items-center gap-1 cursor-pointer min-h-[44px] sm:min-h-0"
                       >
                         <span>See how it works</span>
                         <ArrowRight className="w-4 h-4" />
@@ -723,18 +723,18 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
         )}
 
         {/* Callout Band: Not sure which to support? */}
-        <div className="bg-[#1c1c1a] text-white rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+        <div className="bg-[#1c1c1a] text-white rounded-3xl p-6 sm:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-lg">
           <div>
-            <h3 className="font-heading font-bold text-xl sm:text-2xl text-white mb-1">
+            <h3 className="font-heading font-bold text-lg sm:text-2xl text-white mb-1">
               Not sure which to support?
             </h3>
-            <p className="text-sm text-white/70">
+            <p className="text-xs sm:text-sm text-white/70">
               Give to "where it's needed most" and we put it into the next planned outreach.
             </p>
           </div>
           <button
             onClick={() => onOpenDonate()}
-            className="px-7 py-3.5 rounded-full bg-white text-[#1c1c1a] font-heading font-bold text-sm hover:bg-[#f5f1e8] transition-colors cursor-pointer shrink-0 shadow-sm"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white text-[#1c1c1a] font-heading font-bold text-sm hover:bg-[#f5f1e8] transition-colors cursor-pointer shrink-0 shadow-sm text-center min-h-[44px]"
           >
             Give where it's needed most
           </button>

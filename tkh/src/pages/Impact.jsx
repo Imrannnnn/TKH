@@ -123,29 +123,29 @@ export default function Impact({ onOpenDonate }) {
 
 
   return (
-    <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
+    <div className="pt-8 sm:pt-14 animate-fade-in bg-white pb-16 sm:pb-20">
       {/* Hero Section */}
-      <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
+      <section className="relative py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl 2xl:max-w-[1440px] mx-auto overflow-hidden">
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-6 flex flex-col gap-5">
+          <div className="lg:col-span-6 flex flex-col gap-4 sm:gap-5">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sand text-primary font-bold text-xs uppercase tracking-widest w-fit border border-[#e7e2d8] font-heading">
               <ShieldCheck className="w-4 h-4" />
               <span>Accountability in Action</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-ink leading-[1.15] tracking-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-ink leading-[1.15] tracking-tight">
               Transparency in Practice. <br />
               <span className="text-primary">Measurable Impact.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-ink-light leading-relaxed font-normal">
+            <p className="text-sm sm:text-base lg:text-lg text-ink-light leading-relaxed font-normal">
               Every naira donated and every volunteer hour supports measurable, verifiable outcomes for children, women, and vulnerable communities. Explore our impact metrics across Nigeria below.
             </p>
 
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
               <button
                 onClick={onOpenDonate}
-                className="btn-primary w-full sm:w-auto text-xs md:text-sm px-6 sm:px-8 py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold"
+                className="btn-primary w-full sm:w-auto text-xs md:text-sm px-6 sm:px-8 py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold min-h-[44px]"
               >
                 <span>Back Our Next Milestone</span>
                 <Heart className="w-4 h-4" />
@@ -154,7 +154,7 @@ export default function Impact({ onOpenDonate }) {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="h-[340px] sm:h-[400px] rounded-3xl overflow-hidden bg-white p-2 border border-[#e7e2d8] shadow-xs">
+            <div className="h-[240px] xs:h-[300px] sm:h-[380px] lg:h-[400px] rounded-3xl overflow-hidden bg-white p-2 border border-[#e7e2d8] shadow-xs">
               <div
                 className="w-full h-full rounded-2xl bg-cover bg-center"
                 style={{
@@ -167,35 +167,35 @@ export default function Impact({ onOpenDonate }) {
       </section>
 
       {/* Metrics Bento Section */}
-      <section className="relative py-16 px-4 md:px-8 max-w-7xl mx-auto overflow-hidden">
+      <section className="relative py-10 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl 2xl:max-w-[1440px] mx-auto overflow-hidden">
         <div className="relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
             <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
               Proven Performance
             </span>
-            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-ink">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-heading font-bold text-ink">
               Core Headline Indicators
             </h2>
 
             {/* Filter Pills */}
-            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto mt-6">
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto mt-6">
               <button
                 onClick={() => setActiveTab('all')}
-                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${activeTab === 'all' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${activeTab === 'all' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
                   }`}
               >
                 All Metrics
               </button>
               <button
                 onClick={() => setActiveTab('education')}
-                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${activeTab === 'education' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${activeTab === 'education' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
                   }`}
               >
                 Education
               </button>
               <button
                 onClick={() => setActiveTab('healthcare')}
-                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${activeTab === 'healthcare' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${activeTab === 'healthcare' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
                   }`}
               >
                 Healthcare
@@ -204,7 +204,7 @@ export default function Impact({ onOpenDonate }) {
           </div>
 
           {/* Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredMetrics.map((item) => {
               const IconComponent = typeof item.icon === 'function'
                 ? item.icon
@@ -253,14 +253,14 @@ export default function Impact({ onOpenDonate }) {
       </section>
 
       {/* Regional Reach Distribution Table */}
-      <section className="py-10 px-4 md:px-8 max-w-7xl mx-auto">
+      <section className="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl 2xl:max-w-[1440px] mx-auto">
         <div className="bg-white p-5 sm:p-8 md:p-10 rounded-3xl border border-[#e7e2d8] shadow-xs">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
             <div>
               <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
                 Geographic Reach
               </span>
-              <h3 className="text-2xl md:text-3xl font-heading font-bold text-ink">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold text-ink">
                 Impact by Nigerian Region
               </h3>
               <p className="text-xs sm:text-sm font-semibold text-primary mt-1 font-heading">

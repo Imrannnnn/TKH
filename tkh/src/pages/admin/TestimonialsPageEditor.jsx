@@ -138,7 +138,7 @@ export default function TestimonialsPageEditor({
 
       {/* Section Navigation Pills (Category Filter) */}
       <div className="bg-white p-2 rounded-2xl border border-[#e7e2d8] shadow-xs">
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
           {categories.map((cat) => {
             const count =
               cat.id === 'all'
@@ -182,7 +182,7 @@ export default function TestimonialsPageEditor({
       </div>
 
       {/* Testimonials Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {filtered.length === 0 ? (
           <div className="col-span-full py-16 text-center bg-white rounded-2xl border border-[#e7e2d8] p-8">
             <Quote className="w-8 h-8 text-ink-muted mx-auto mb-2 opacity-40" />
@@ -250,15 +250,16 @@ export default function TestimonialsPageEditor({
 
       {/* Modal: Add / Edit Testimonial */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8]">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e7e2d8]">
-              <h2 className="text-lg font-heading font-bold text-ink">
+        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
+              <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingItem ? 'Edit Testimonial' : 'Add New Testimonial'}
               </h2>
               <button
                 onClick={() => setModalOpen(false)}
-                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand"
+                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand cursor-pointer"
+                aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -295,7 +296,7 @@ export default function TestimonialsPageEditor({
                 ></textarea>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-heading font-semibold text-ink mb-1">
                     Author Name
@@ -325,32 +326,30 @@ export default function TestimonialsPageEditor({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-heading font-semibold text-ink mb-1">
-                    Institution / Community
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.institution}
-                    onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                    placeholder="Gidan Community School, Kaduna"
-                    className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
-                  />
-                </div>
+              <div>
+                <label className="block text-xs font-heading font-semibold text-ink mb-1">
+                  Institution / Community
+                </label>
+                <input
+                  type="text"
+                  value={formData.institution}
+                  onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
+                  placeholder="Gidan Community School, Kaduna"
+                  className="w-full px-3 py-2 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary"
+                />
               </div>
 
-              <div className="pt-4 border-t border-[#e7e2d8] flex items-center justify-end gap-2.5">
+              <div className="pt-4 border-t border-[#e7e2d8] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer"
+                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer text-center min-h-[40px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs transition-colors"
+                  className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs transition-colors text-center min-h-[40px]"
                 >
                   Save Testimonial
                 </button>

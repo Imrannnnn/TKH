@@ -201,11 +201,10 @@ export default function Admin({ setCurrentPage }) {
     }
 
     const localCustomPass = localStorage.getItem('tkh_admin_custom_password');
+    const envDefaultPass = import.meta.env.VITE_ADMIN_DEFAULT_PASSWORD;
     const isValidPass =
       (localCustomPass && loginPass === localCustomPass) ||
-      loginPass === 'TKHadmin2026' ||
-      loginPass === 'admin2026' ||
-      loginPass === 'admin';
+      (envDefaultPass && loginPass === envDefaultPass);
 
     if (
       (loginEmail.trim().toLowerCase() === 'admin@tenkindhands.org' || !loginEmail) &&
@@ -492,14 +491,14 @@ export default function Admin({ setCurrentPage }) {
   // =========================================================================
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#142722] text-[#f8f6f2] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden antialiased">
+      <div className="min-h-screen bg-[#142722] text-[#f8f6f2] flex items-center justify-center p-3 sm:p-6 relative overflow-hidden antialiased">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-forest/30 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-md w-full relative z-10">
-          <div className="bg-[#1a332c]/90 backdrop-blur-xl border border-[#2a4d44] rounded-3xl p-8 sm:p-10 shadow-2xl">
-            <div className="flex flex-col items-center text-center mb-8">
-              <div className="w-16 h-16 rounded-2xl bg-[#1f3b34] border border-[#2e564c] p-2 flex items-center justify-center shadow-inner mb-4">
+          <div className="bg-[#1a332c]/90 backdrop-blur-xl border border-[#2a4d44] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl">
+            <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#1f3b34] border border-[#2e564c] p-2 flex items-center justify-center shadow-inner mb-3.5 sm:mb-4">
                 <img
                   alt="Ten Kind Hands Official Logo"
                   className="w-full h-full object-contain"
@@ -507,10 +506,10 @@ export default function Admin({ setCurrentPage }) {
                 />
               </div>
 
-              <span className="text-[11px] uppercase tracking-widest font-bold text-[#f7c899] font-heading mb-1">
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-widest font-bold text-[#f7c899] font-heading mb-1">
                 Ten Kind Hands Foundation
               </span>
-              <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-extrabold text-white tracking-tight">
                 Super Admin Console
               </h1>
               <p className="text-xs text-[#d4cdc3] mt-2 leading-relaxed">
@@ -563,7 +562,7 @@ export default function Admin({ setCurrentPage }) {
               <button
                 type="submit"
                 disabled={isLoggingIn}
-                className="w-full py-3 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white font-heading font-bold text-xs shadow-lg shadow-primary/30 active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2 disabled:opacity-50"
+                className="w-full min-h-[44px] py-3 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white font-heading font-bold text-xs shadow-lg shadow-primary/30 active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2 disabled:opacity-50"
               >
                 {isLoggingIn ? (
                   <>
@@ -579,13 +578,13 @@ export default function Admin({ setCurrentPage }) {
               </button>
             </form>
 
-            <div className="mt-8 pt-6 border-t border-[#2a4d44]/60 text-center">
+            <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-[#2a4d44]/60 text-center">
               <button
                 onClick={() => {
                   if (setCurrentPage) setCurrentPage('home');
                   window.location.hash = 'home';
                 }}
-                className="text-xs text-[#f7c899] hover:underline font-heading font-semibold flex items-center justify-center gap-1.5 mx-auto cursor-pointer"
+                className="text-xs text-[#f7c899] hover:underline font-heading font-semibold flex items-center justify-center gap-1.5 mx-auto cursor-pointer min-h-[36px]"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Return to Public Website</span>
@@ -671,12 +670,12 @@ export default function Admin({ setCurrentPage }) {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 bg-[#142722] text-[#d4cdc3] flex flex-col border-r border-[#1f3b34] transition-transform duration-300 ease-in-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 shrink-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#142722] text-[#d4cdc3] flex flex-col border-r border-[#1f3b34] transition-transform duration-300 ease-in-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 shrink-0 ${
           mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Brand Header */}
-        <div className="px-6 py-5 border-b border-[#1f3b34] flex items-center justify-between">
+        <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-[#1f3b34] flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#1f3b34] border border-[#2a4d44] p-1 flex items-center justify-center shrink-0">
               <img
@@ -685,11 +684,11 @@ export default function Admin({ setCurrentPage }) {
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmbaMRmoVzqGDmSGEoX0XoPFIdN6UYrwile-1Gt1d37VzrQ2PeaP9G7MITiOYlV5Mlma8OlajwkWA3r7O1u4I69Sez16xvET1fYSAP8dl7zhMj1M0gMuXfZYOCWyuePctpR97q8v72-LHjIYFUf8CgqilRAMMM-D-G-S-sJToMqi-nhfADpBN1MUQEsECDNokFRkKAoeuKy8OqR7LAReSeIGPvsSwv08HUP9RVs-2uxRF2z55chm270O5kDJRiqFAmMg"
               />
             </div>
-            <div>
-              <span className="font-heading text-base font-bold text-white tracking-tight block leading-tight">
+            <div className="min-w-0">
+              <span className="font-heading text-sm sm:text-base font-bold text-white tracking-tight block leading-tight truncate">
                 Ten Kind Hands
               </span>
-              <span className="text-[10px] uppercase tracking-wider text-[#f7c899] font-bold block font-heading">
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#f7c899] font-bold block font-heading truncate">
                 Super Admin Console
               </span>
             </div>
@@ -697,7 +696,8 @@ export default function Admin({ setCurrentPage }) {
 
           <button
             onClick={() => setMobileSidebarOpen(false)}
-            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5"
+            className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 cursor-pointer"
+            aria-label="Close admin menu"
           >
             <X className="w-5 h-5" />
           </button>
@@ -721,23 +721,23 @@ export default function Admin({ setCurrentPage }) {
                         setActiveTab(item.id);
                         setMobileSidebarOpen(false);
                       }}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                      className={`w-full min-h-[40px] flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                         isActive
                           ? 'bg-primary text-white shadow-md shadow-primary/30 font-bold'
                           : 'text-[#d4cdc3] hover:text-white hover:bg-white/5'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 min-w-0">
                         <Icon
                           className={`w-4 h-4 shrink-0 ${
                             isActive ? 'text-white' : 'text-[#a2b5b0]'
                           }`}
                         />
-                        <span className="font-heading">{item.label}</span>
+                        <span className="font-heading truncate">{item.label}</span>
                       </div>
                       {item.badge !== null && (
                         <span
-                          className={`px-1.5 py-0.5 text-[10px] font-bold rounded-md ${
+                          className={`px-1.5 py-0.5 text-[10px] font-bold rounded-md shrink-0 ml-1.5 ${
                             isActive
                               ? 'bg-white/20 text-white'
                               : 'bg-[#1f3b34] text-[#f7c899] border border-[#2a4d44]'
@@ -757,8 +757,8 @@ export default function Admin({ setCurrentPage }) {
         {/* Sidebar Footer: Super Admin Profile & Quick Links */}
         <div className="p-4 border-t border-[#1f3b34] space-y-3 bg-[#11201c]">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-primary font-bold text-xs font-heading">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-primary font-bold text-xs font-heading shrink-0">
                 SA
               </div>
               <div className="min-w-0">
@@ -774,7 +774,8 @@ export default function Admin({ setCurrentPage }) {
             <button
               onClick={handleLogout}
               title="Sign Out"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/40 transition-colors cursor-pointer"
+              className="p-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/40 transition-colors cursor-pointer shrink-0"
+              aria-label="Sign out"
             >
               <LogOut className="w-4 h-4" />
             </button>
@@ -786,7 +787,7 @@ export default function Admin({ setCurrentPage }) {
               if (setCurrentPage) setCurrentPage(route);
               window.location.hash = route;
             }}
-            className="w-full py-2 px-3 rounded-xl bg-[#1f3b34] hover:bg-[#25443c] text-[#f8f6f2] hover:text-white text-xs font-heading font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all border border-[#2a4d44]"
+            className="w-full min-h-[38px] py-2 px-3 rounded-xl bg-[#1f3b34] hover:bg-[#25443c] text-[#f8f6f2] hover:text-white text-xs font-heading font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all border border-[#2a4d44]"
           >
             <ExternalLink className="w-3.5 h-3.5 text-[#f7c899]" />
             <span>Preview Live Site</span>
@@ -800,31 +801,32 @@ export default function Admin({ setCurrentPage }) {
       <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden relative">
 
         {/* Top Application Header */}
-        <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e7e2d8] px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
-          <div className="flex items-center gap-3">
+        <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e7e2d8] px-3 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => setMobileSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-xl text-ink-light hover:bg-sand cursor-pointer"
+              className="lg:hidden p-2 rounded-xl text-ink-light hover:bg-sand cursor-pointer shrink-0"
+              aria-label="Open navigation menu"
             >
               <Menu className="w-5 h-5" />
             </button>
 
             {/* Breadcrumb Navigation */}
-            <div className="flex items-center gap-2 text-xs">
-              <span className="text-ink-muted font-medium">Console</span>
-              <ChevronRight className="w-3 h-3 text-[#d4cdc3]" />
-              <span className="font-heading font-bold text-ink">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-xs min-w-0">
+              <span className="text-ink-muted font-medium hidden xs:inline">Console</span>
+              <ChevronRight className="w-3 h-3 text-[#d4cdc3] hidden xs:inline shrink-0" />
+              <span className="font-heading font-bold text-ink truncate">
                 {getActiveTabTitle()}
               </span>
             </div>
           </div>
 
           {/* Right Header Quick Controls */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {activeTab === 'page-news' && (
               <button
                 onClick={handleOpenNewNews}
-                className="px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
+                className="px-3 sm:px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all min-h-[36px]"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">New Dispatch</span>
@@ -834,7 +836,7 @@ export default function Admin({ setCurrentPage }) {
             {activeTab === 'page-outreaches' && (
               <button
                 onClick={handleOpenNewOutreach}
-                className="px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all"
+                className="px-3 sm:px-3.5 py-1.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-all min-h-[36px]"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Schedule Mission</span>
@@ -845,7 +847,7 @@ export default function Admin({ setCurrentPage }) {
             <button
               onClick={exportDataBackup}
               title="Download backup JSON"
-              className="p-2 rounded-xl text-ink-light hover:text-ink hover:bg-sand border border-[#e7e2d8] text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
+              className="p-2 rounded-xl text-ink-light hover:text-ink hover:bg-sand border border-[#e7e2d8] text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors min-h-[36px]"
             >
               <Download className="w-3.5 h-3.5 text-ink-muted" />
               <span className="hidden md:inline">Export JSON</span>
@@ -858,7 +860,7 @@ export default function Admin({ setCurrentPage }) {
                 if (setCurrentPage) setCurrentPage(route);
                 window.location.hash = route;
               }}
-              className="px-3 py-1.5 rounded-xl bg-sand hover:bg-sand-dark text-ink text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer transition-colors border border-[#e7e2d8]"
+              className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-sand hover:bg-sand-dark text-ink text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer transition-colors border border-[#e7e2d8] min-h-[36px]"
             >
               <Eye className="w-3.5 h-3.5 text-primary" />
               <span className="hidden sm:inline">Preview Page</span>
@@ -867,20 +869,20 @@ export default function Admin({ setCurrentPage }) {
         </header>
 
         {/* Dynamic Tab Body */}
-        <main className="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto space-y-8 relative z-10">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl 2xl:max-w-[1440px] w-full mx-auto space-y-6 sm:space-y-8 relative z-10">
           {/* =================================================================
               1. DASHBOARD OVERVIEW
           ================================================================= */}
           {activeTab === 'overview' && (
-            <div className="space-y-8 animate-fade-in">
-              <div className="bg-gradient-to-br from-[#142722] via-[#1f3b34] to-[#25473e] text-white rounded-3xl p-6 sm:p-8 shadow-sm relative overflow-hidden border border-[#2a4d44]">
+            <div className="space-y-6 sm:space-y-8 animate-fade-in">
+              <div className="bg-gradient-to-br from-[#142722] via-[#1f3b34] to-[#25473e] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm relative overflow-hidden border border-[#2a4d44]">
                 <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-clay/15 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="max-w-2xl relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-xs text-[#f7c899] border border-white/20 text-xs font-semibold mb-3 font-heading">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-xs text-[#f7c899] border border-white/20 text-[11px] sm:text-xs font-semibold mb-3 font-heading">
                     <span className="w-2 h-2 rounded-full bg-[#f7c899] animate-pulse"></span>
                     <span>Operational Desk Active &amp; Page-Organized</span>
                   </div>
-                  <h1 className="text-2xl sm:text-3xl font-heading font-extrabold tracking-tight">
+                  <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-extrabold tracking-tight">
                     Welcome to the <span className="text-[#f7c899]">Super Admin Console</span>
                   </h1>
                   <p className="text-xs sm:text-sm text-white/85 mt-2 leading-relaxed font-normal">
@@ -894,7 +896,7 @@ export default function Admin({ setCurrentPage }) {
                 <h2 className="text-xs font-heading font-bold uppercase tracking-wider text-ink-muted mb-3">
                   Website Page Editors Quick Access
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 gap-4">
                   {/* Home Page Card */}
                   <div
                     onClick={() => setActiveTab('page-home')}
@@ -1120,21 +1122,21 @@ export default function Admin({ setCurrentPage }) {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <div className="relative">
+                <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+                  <div className="relative flex-1 sm:flex-none">
                     <Search className="w-3.5 h-3.5 text-ink-muted absolute left-3 top-2.5" />
                     <input
                       type="text"
                       placeholder="Search missions..."
                       value={outreachSearch}
                       onChange={(e) => setOutreachSearch(e.target.value)}
-                      className="pl-9 pr-3 py-1.5 rounded-xl border border-[#e7e2d8] bg-sand/40 text-ink text-xs focus:outline-none focus:border-primary w-44 sm:w-56"
+                      className="pl-9 pr-3 py-1.5 rounded-xl border border-[#e7e2d8] bg-sand/40 text-ink text-xs focus:outline-none focus:border-primary w-full xs:w-48 sm:w-56"
                     />
                   </div>
 
                   <button
                     onClick={handleOpenNewOutreach}
-                    className="py-1.5 px-3.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                    className="py-1.5 px-3.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors shrink-0"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Schedule Mission</span>
@@ -1144,7 +1146,7 @@ export default function Admin({ setCurrentPage }) {
 
               {/* Sub-Section Pills */}
               <div className="bg-white p-2 rounded-2xl border border-[#e7e2d8] shadow-xs">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 overflow-x-auto pb-0.5">
                   {[
                     { id: 'All', label: `All Missions (${outreaches.length})` },
                     { id: 'upcoming', label: `Upcoming (${outreaches.filter((o) => o.status === 'upcoming').length})` },
@@ -1153,7 +1155,7 @@ export default function Admin({ setCurrentPage }) {
                     <button
                       key={filter.id}
                       onClick={() => setOutreachStatusFilter(filter.id)}
-                      className={`px-3.5 py-1.5 rounded-xl text-xs font-heading font-bold cursor-pointer transition-colors ${
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-heading font-bold cursor-pointer transition-colors whitespace-nowrap ${
                         outreachStatusFilter === filter.id
                           ? 'bg-primary text-white shadow-xs'
                           : 'bg-sand/40 hover:bg-sand text-ink-muted hover:text-ink'
@@ -1230,14 +1232,14 @@ export default function Admin({ setCurrentPage }) {
                         </p>
                       </div>
 
-                      <div className="pt-3 border-t border-[#e7e2d8] flex items-center justify-between">
+                      <div className="pt-3 border-t border-[#e7e2d8] flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
                         <div className="text-[11px] text-ink-muted truncate max-w-[200px]">
                           Needs: {item.needs || 'None specified'}
                         </div>
 
                         <button
                           onClick={() => handleToggleOutreachStatus(item)}
-                          className={`px-3 py-1 rounded-lg text-xs font-heading font-semibold cursor-pointer transition-colors ${
+                          className={`px-3 py-1 rounded-lg text-xs font-heading font-semibold cursor-pointer transition-colors shrink-0 ${
                             isUpcoming
                               ? 'bg-sand hover:bg-sand-dark text-ink border border-[#e7e2d8]'
                               : 'bg-forest/10 text-forest hover:bg-forest/20 border border-forest/20'
@@ -1272,21 +1274,21 @@ export default function Admin({ setCurrentPage }) {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <div className="relative">
+                <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+                  <div className="relative flex-1 sm:flex-none">
                     <Search className="w-3.5 h-3.5 text-ink-muted absolute left-3 top-2.5" />
                     <input
                       type="text"
                       placeholder="Search dispatches..."
                       value={newsSearch}
                       onChange={(e) => setNewsSearch(e.target.value)}
-                      className="pl-9 pr-3 py-1.5 rounded-xl border border-[#e7e2d8] bg-sand/40 text-ink text-xs focus:outline-none focus:border-primary w-44 sm:w-56"
+                      className="pl-9 pr-3 py-1.5 rounded-xl border border-[#e7e2d8] bg-sand/40 text-ink text-xs focus:outline-none focus:border-primary w-full xs:w-48 sm:w-56"
                     />
                   </div>
 
                   <button
                     onClick={handleOpenNewNews}
-                    className="py-1.5 px-3.5 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                    className="py-1.5 px-3.5 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors shrink-0"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>New Dispatch</span>
@@ -1296,7 +1298,7 @@ export default function Admin({ setCurrentPage }) {
 
               {/* Sub-Section Categories */}
               <div className="bg-white p-2 rounded-2xl border border-[#e7e2d8] shadow-xs">
-                <div className="flex items-center gap-2 overflow-x-auto">
+                <div className="flex items-center gap-2 overflow-x-auto pb-0.5">
                   {['All', 'Field Milestone', 'Medical Mission', 'Transparency'].map((cat) => (
                     <button
                       key={cat}
@@ -1314,7 +1316,7 @@ export default function Admin({ setCurrentPage }) {
               </div>
 
               {/* Dispatches Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filteredNews.map((item) => (
                   <div
                     key={item.id}
@@ -1576,7 +1578,7 @@ export default function Admin({ setCurrentPage }) {
 
                 {/* Export & Reset Actions */}
                 <div className="space-y-4">
-                  <div className="p-4 rounded-xl bg-sand/50 border border-[#e7e2d8] flex items-center justify-between gap-4">
+                  <div className="p-4 rounded-xl bg-sand/50 border border-[#e7e2d8] flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                     <div>
                       <strong className="block text-xs font-heading font-bold text-ink">
                         Export Full JSON Snapshot
@@ -1587,14 +1589,14 @@ export default function Admin({ setCurrentPage }) {
                     </div>
                     <button
                       onClick={exportDataBackup}
-                      className="py-2 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shrink-0 transition-colors shadow-xs"
+                      className="py-2.5 px-4 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center justify-center gap-1.5 cursor-pointer shrink-0 transition-colors shadow-xs w-full sm:w-auto min-h-[38px]"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Download JSON</span>
                     </button>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-rose-50/50 border border-rose-200 flex items-center justify-between gap-4">
+                  <div className="p-4 rounded-xl bg-rose-50/50 border border-rose-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                     <div>
                       <strong className="block text-xs font-heading font-bold text-rose-900">
                         Reset Platform to Default Records
@@ -1614,7 +1616,7 @@ export default function Admin({ setCurrentPage }) {
                           showToast('Restored default starter data');
                         }
                       }}
-                      className="py-2 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shrink-0 transition-colors"
+                      className="py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-heading font-semibold flex items-center justify-center gap-1.5 cursor-pointer shrink-0 transition-colors w-full sm:w-auto min-h-[38px]"
                     >
                       <RefreshCw className="w-3.5 h-3.5" />
                       <span>Reset Defaults</span>
@@ -1630,9 +1632,9 @@ export default function Admin({ setCurrentPage }) {
           ================================================================= */}
           {activeTab === 'system-security' && (
             <div className="space-y-6 animate-fade-in max-w-3xl">
-              <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs">
+              <div className="bg-white rounded-2xl border border-[#e7e2d8] p-5 sm:p-8 shadow-xs">
                 {/* Password Change Form */}
-                <div className="border border-[#e7e2d8] rounded-xl p-5 bg-[#faf8f5]/60">
+                <div className="border border-[#e7e2d8] rounded-xl p-4 sm:p-5 bg-[#faf8f5]/60">
                   <h2 className="text-sm font-heading font-bold text-ink mb-1 flex items-center gap-2">
                     <Lock className="w-4 h-4 text-primary" />
                     Change Admin Password
@@ -1667,12 +1669,9 @@ export default function Admin({ setCurrentPage }) {
                         type={showPassword ? 'text' : 'password'}
                         value={currentPasswordInput}
                         onChange={(e) => setCurrentPasswordInput(e.target.value)}
-                        placeholder="Enter current password (default: admin2026)"
+                        placeholder="Enter current password"
                         className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-white text-ink text-xs focus:outline-none focus:border-primary font-mono"
                       />
-                      <span className="text-[10px] text-ink-muted mt-1 block">
-                        Default seed password is <code className="bg-sand px-1 py-0.5 rounded text-ink font-mono">admin2026</code>
-                      </span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1705,11 +1704,11 @@ export default function Admin({ setCurrentPage }) {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="text-xs text-ink-muted hover:text-ink flex items-center gap-1.5 cursor-pointer select-none"
+                        className="text-xs text-ink-muted hover:text-ink flex items-center gap-1.5 cursor-pointer select-none py-1"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>{showPassword ? 'Hide password characters' : 'Show password characters'}</span>
@@ -1718,7 +1717,7 @@ export default function Admin({ setCurrentPage }) {
                       <button
                         type="submit"
                         disabled={isUpdatingPassword}
-                        className="py-2.5 px-5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center gap-2 cursor-pointer shadow-xs disabled:opacity-50 transition-colors"
+                        className="py-2.5 px-5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs disabled:opacity-50 transition-colors w-full sm:w-auto min-h-[40px]"
                       >
                         {isUpdatingPassword ? (
                           <>
@@ -1756,15 +1755,16 @@ export default function Admin({ setCurrentPage }) {
           MODAL 1: CREATE / EDIT NEWS DISPATCH
       ===================================================================== */}
       {newsModalOpen && (
-        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8] max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e7e2d8]">
-              <h2 className="text-lg font-heading font-bold text-ink">
+        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
+              <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingNews ? 'Edit Field Dispatch' : 'Publish New Field Dispatch'}
               </h2>
               <button
                 onClick={() => setNewsModalOpen(false)}
-                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand"
+                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand cursor-pointer"
+                aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1862,17 +1862,17 @@ export default function Admin({ setCurrentPage }) {
                 ></textarea>
               </div>
 
-              <div className="pt-4 border-t border-[#e7e2d8] flex items-center justify-end gap-2.5">
+              <div className="pt-4 border-t border-[#e7e2d8] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setNewsModalOpen(false)}
-                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer"
+                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer text-center min-h-[40px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="py-2.5 px-6 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold cursor-pointer shadow-xs"
+                  className="py-2.5 px-6 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold cursor-pointer shadow-xs text-center min-h-[40px]"
                 >
                   {editingNews ? 'Save Changes' : 'Publish Dispatch'}
                 </button>
@@ -1886,15 +1886,16 @@ export default function Admin({ setCurrentPage }) {
           MODAL 2: SCHEDULE / EDIT MISSION & OUTREACH
       ===================================================================== */}
       {outreachModalOpen && (
-        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8] max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e7e2d8]">
-              <h2 className="text-lg font-heading font-bold text-ink">
+        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
+              <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingOutreach ? 'Edit Outreach Mission' : 'Schedule New Field Mission'}
               </h2>
               <button
                 onClick={() => setOutreachModalOpen(false)}
-                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand"
+                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand cursor-pointer"
+                aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -2049,17 +2050,17 @@ export default function Admin({ setCurrentPage }) {
                 />
               </div>
 
-              <div className="pt-4 border-t border-[#e7e2d8] flex items-center justify-end gap-2.5">
+              <div className="pt-4 border-t border-[#e7e2d8] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setOutreachModalOpen(false)}
-                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer"
+                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer text-center min-h-[40px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs"
+                  className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs text-center min-h-[40px]"
                 >
                   {editingOutreach ? 'Save Changes' : 'Schedule Mission'}
                 </button>
@@ -2073,22 +2074,23 @@ export default function Admin({ setCurrentPage }) {
           MODAL 3: ADD / EDIT IMPACT FIGURE
       ===================================================================== */}
       {metricModalOpen && (
-        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8]">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e7e2d8]">
-              <h2 className="text-lg font-heading font-bold text-ink">
+        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-md w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
+              <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingMetric ? 'Edit Impact Counter' : 'Add Impact Counter'}
               </h2>
               <button
                 onClick={() => setMetricModalOpen(false)}
-                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand"
+                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand cursor-pointer"
+                aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handleSaveMetric} className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-heading font-semibold text-ink mb-1">
                     Stat Figure
@@ -2170,17 +2172,17 @@ export default function Admin({ setCurrentPage }) {
                 ></textarea>
               </div>
 
-              <div className="pt-4 border-t border-[#e7e2d8] flex items-center justify-end gap-2.5">
+              <div className="pt-4 border-t border-[#e7e2d8] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setMetricModalOpen(false)}
-                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer"
+                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer text-center min-h-[40px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs"
+                  className="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold cursor-pointer shadow-xs text-center min-h-[40px]"
                 >
                   Save Figure
                 </button>

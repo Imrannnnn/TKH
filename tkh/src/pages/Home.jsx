@@ -79,39 +79,39 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
     <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] overflow-x-hidden">
 
       {/* 1. Hero Section */}
-      <section className="relative pt-10 sm:pt-16 pb-14 sm:pb-20 max-w-[1200px] mx-auto px-4 sm:px-6 overflow-hidden">
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <section className="relative pt-8 sm:pt-14 lg:pt-16 pb-12 sm:pb-16 lg:pb-20 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
           {/* Left Column: Copy & Actions */}
-          <div className="lg:col-span-7 flex flex-col items-start gap-5">
+          <div className="lg:col-span-7 flex flex-col items-start gap-4 sm:gap-5">
             {/* Registered Non-Profit Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#e5e0d8] text-xs text-[#4a4a46] font-medium shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-forest animate-pulse" />
-              <span>{registeredBadge}</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-3.5 rounded-full bg-white border border-[#e5e0d8] text-[11px] sm:text-xs text-[#4a4a46] font-medium shadow-xs max-w-full">
+              <span className="w-2 h-2 rounded-full bg-forest animate-pulse shrink-0" />
+              <span className="truncate">{registeredBadge}</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="font-heading font-bold text-3xl sm:text-5xl lg:text-[52px] leading-[1.12] tracking-tight text-[#1c1c1a]">
+            <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 2xl:text-[54px] leading-[1.15] tracking-tight text-[#1c1c1a]">
               {heroHeadline}
             </h1>
 
             {/* Subtext */}
-            <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
+            <p className="text-sm sm:text-base lg:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
               {heroSubtitle}
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2 w-full sm:w-auto">
               <button
                 onClick={() => onOpenDonate()}
-                className="btn-primary px-7 py-3.5 text-base shadow-sm flex items-center gap-2"
+                className="btn-primary w-full sm:w-auto px-6 sm:px-7 py-3.5 text-sm sm:text-base shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Donate now</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleNav('outreaches')}
-                className="btn-secondary px-7 py-3.5 text-base"
+                className="btn-secondary w-full sm:w-auto px-6 sm:px-7 py-3.5 text-sm sm:text-base text-center cursor-pointer"
               >
                 See our field reports
               </button>
@@ -119,10 +119,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           </div>
 
           {/* Right Column: Real Outreach Photo Showcase with Slide Controls */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 w-full">
             <div className="relative rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md bg-white group">
               {/* Photo Display */}
-              <div className="relative w-full h-[320px] sm:h-[400px] overflow-hidden bg-sand">
+              <div className="relative w-full h-[260px] xs:h-[300px] sm:h-[380px] lg:h-[400px] overflow-hidden bg-sand">
                 {heroSlides.map((slide, idx) => (
                   <img
                     key={idx}
@@ -170,9 +170,9 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 2. Full-Width Deep Forest Stats Banner */}
-      <section className="bg-forest !text-white py-12 sm:py-14 border-y border-forest-dark" style={{ color: '#ffffff' }}>
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 !text-white" style={{ color: '#ffffff' }}>
+      <section className="bg-forest !text-white py-10 sm:py-14 border-y border-forest-dark" style={{ color: '#ffffff' }}>
+        <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 !text-white" style={{ color: '#ffffff' }}>
             <div>
               <div className="font-heading font-bold text-3xl sm:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
                 {metrics?.totalBeneficiaries && metrics.totalBeneficiaries > 3500 ? `${metrics.totalBeneficiaries.toLocaleString()}+` : '3,500+'}
@@ -226,7 +226,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 3. THIS MONTH IN THE FIELD: Side-by-Side Latest Report + Next Outreach */}
-      <section className="py-16 sm:py-20 max-w-[1200px] mx-auto px-4 sm:px-6">
+      <section className="py-14 sm:py-20 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
           <div>
             <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1.5">
@@ -337,9 +337,9 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 4. OUR WORK: Children who learn. Mothers who stay healthy. Families who earn. */}
-      <section className="py-16 sm:py-20 bg-[#f5f1e8] border-y border-[#e5e0d8]">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <div className="mb-12">
+      <section className="py-14 sm:py-20 bg-[#f5f1e8] border-y border-[#e5e0d8]">
+        <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 sm:mb-12">
             <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1.5">
               OUR WORK
             </div>
@@ -348,7 +348,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Education Card */}
             <div className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
               <div className="h-52 overflow-hidden bg-gray-100">
@@ -459,8 +459,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       ========================================================= */}
       <div className="relative overflow-hidden">
         {/* 5. Section: In their words (Testimonials with Real Field Photos) */}
-        <section className="relative z-10 py-16 sm:py-20 max-w-[1200px] mx-auto px-4 sm:px-6">
-          <div className="mb-10">
+        <section className="relative z-10 py-14 sm:py-20 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 sm:mb-10">
             <span className="text-xs uppercase font-bold tracking-widest text-maroon block mb-1">
               COMMUNITY VOICES
             </span>
@@ -469,7 +469,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Testimonial 1 with Beckwin School Photo */}
             <div className="bg-[#f5f1e8] rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] flex flex-col justify-between shadow-xs">
               <div className="flex flex-col sm:flex-row gap-4 items-start mb-6">
@@ -534,8 +534,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
 
         {/* 6. Maroon Banner: Give monthly. Plan outreaches with us. */}
-        <section className="relative z-10 bg-maroon text-white py-14 sm:py-16 mt-12">
-          <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+        <section className="relative z-10 bg-maroon text-white py-12 sm:py-16 mt-10 sm:mt-12">
+          <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6 sm:gap-8">
             <div className="max-w-xl">
               <h2 className="font-heading font-bold text-2xl sm:text-3xl text-white mb-2">
                 Give monthly. Plan outreaches with us.
@@ -547,7 +547,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
             <button
               onClick={() => onOpenDonate()}
-              className="px-8 py-4 rounded-full bg-white text-maroon font-heading font-bold text-sm sm:text-base hover:bg-[#f5f1e8] transition-colors shadow-md cursor-pointer shrink-0"
+              className="w-full md:w-auto px-8 py-4 rounded-full bg-white text-maroon font-heading font-bold text-sm sm:text-base hover:bg-[#f5f1e8] transition-colors shadow-md cursor-pointer shrink-0 text-center"
             >
               Start a monthly gift
             </button>
@@ -557,8 +557,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       </div>
 
       {/* 7. Partner Strip */}
-      <section className="py-12 bg-white border-b border-[#e5e0d8]">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+      <section className="py-10 sm:py-12 bg-white border-b border-[#e5e0d8]">
+        <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="text-xs uppercase font-bold tracking-wider text-[#706e68] mb-6">
             SCHOOLS, HOMES AND HOSPITALS WE HAVE WORKED WITH
           </div>

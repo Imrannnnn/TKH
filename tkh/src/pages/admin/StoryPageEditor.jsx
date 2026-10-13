@@ -409,8 +409,8 @@ export default function StoryPageEditor({
           SECTION 3: MISSION & VISION STATEMENTS
       ===================================================================== */}
       {activeSection === 'vision' && (
-        <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-[#e7e2d8]">
+        <div className="bg-white rounded-2xl border border-[#e7e2d8] p-5 sm:p-8 shadow-xs space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#e7e2d8]">
             <div>
               <h2 className="text-base font-heading font-bold text-ink">
                 Foundational Mission, Vision &amp; Values
@@ -421,7 +421,7 @@ export default function StoryPageEditor({
             </div>
             <button
               onClick={handleSaveVision}
-              className="py-2 px-4 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+              className="py-2.5 px-4 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-colors w-full sm:w-auto min-h-[40px]"
             >
               <Save className="w-3.5 h-3.5" />
               <span>Save Changes</span>
@@ -484,15 +484,16 @@ export default function StoryPageEditor({
           MODAL: ADD / EDIT STATE COORDINATOR
       ===================================================================== */}
       {coordModalOpen && (
-        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8]">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e7e2d8]">
-              <h2 className="text-lg font-heading font-bold text-ink">
+        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
+              <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingCoordIdx !== null ? 'Edit State Coordinator' : 'Add New State Coordinator'}
               </h2>
               <button
                 onClick={() => setCoordModalOpen(false)}
-                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand"
+                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand cursor-pointer"
+                aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -513,7 +514,7 @@ export default function StoryPageEditor({
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-heading font-semibold text-ink mb-1">
                     Official Role
@@ -543,8 +544,8 @@ export default function StoryPageEditor({
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
-                <div className="col-span-2">
+              <div className="grid grid-cols-1 xs:grid-cols-3 gap-3">
+                <div className="xs:col-span-2">
                   <label className="block text-xs font-heading font-semibold text-ink mb-1">
                     Image File Path
                   </label>
@@ -586,17 +587,17 @@ export default function StoryPageEditor({
                 ></textarea>
               </div>
 
-              <div className="pt-4 border-t border-[#e7e2d8] flex items-center justify-end gap-2.5">
+              <div className="pt-4 border-t border-[#e7e2d8] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setCoordModalOpen(false)}
-                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer"
+                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer text-center min-h-[40px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="py-2.5 px-6 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold cursor-pointer shadow-xs transition-colors"
+                  className="py-2.5 px-6 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold cursor-pointer shadow-xs transition-colors text-center min-h-[40px]"
                 >
                   Save Coordinator
                 </button>
@@ -610,13 +611,14 @@ export default function StoryPageEditor({
           MODAL: EDIT EXECUTIVE LEADER
       ===================================================================== */}
       {leaderModalOpen && (
-        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-[#e7e2d8]">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e7e2d8]">
-              <h2 className="text-lg font-heading font-bold text-ink">Edit Executive Leader</h2>
+        <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
+              <h2 className="text-base sm:text-lg font-heading font-bold text-ink">Edit Executive Leader</h2>
               <button
                 onClick={() => setLeaderModalOpen(false)}
-                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand"
+                className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-sand cursor-pointer"
+                aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -636,7 +638,7 @@ export default function StoryPageEditor({
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-heading font-semibold text-ink mb-1">Role</label>
                   <input
@@ -686,17 +688,17 @@ export default function StoryPageEditor({
                 ></textarea>
               </div>
 
-              <div className="pt-4 border-t border-[#e7e2d8] flex items-center justify-end gap-2.5">
+              <div className="pt-4 border-t border-[#e7e2d8] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setLeaderModalOpen(false)}
-                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer"
+                  className="py-2.5 px-4 rounded-xl border border-[#e7e2d8] text-xs font-heading font-semibold text-ink-light hover:bg-sand cursor-pointer text-center min-h-[40px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="py-2.5 px-6 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold cursor-pointer shadow-xs transition-colors"
+                  className="py-2.5 px-6 rounded-xl bg-forest hover:bg-forest/90 text-white text-xs font-heading font-semibold cursor-pointer shadow-xs transition-colors text-center min-h-[40px]"
                 >
                   Save Leader
                 </button>

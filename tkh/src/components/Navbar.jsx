@@ -51,14 +51,14 @@ export default function Navbar({
     <header className={`sticky top-0 z-50 bg-[#fdfbf7]/95 backdrop-blur-md transition-all duration-200 border-b ${
       isScrolled ? 'border-[#e5e0d8] shadow-sm' : 'border-[#e5e0d8]/70'
     }`}>
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between gap-4">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-[72px] flex items-center justify-between gap-2 sm:gap-4">
         {/* Logo */}
         <button
           onClick={() => handleNavClick('home')}
-          className="flex items-center gap-3 group text-left cursor-pointer transition-transform active:scale-[0.98] shrink-0"
+          className="flex items-center gap-2 sm:gap-3 group text-left cursor-pointer transition-transform active:scale-[0.98] shrink-0 min-w-0"
           aria-label="Ten Kind Hands Home"
         >
-          <div className="w-10 h-10 rounded-xl bg-white border border-[#e5e0d8] flex items-center justify-center p-1 group-hover:border-maroon transition-colors shadow-xs">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-[#e5e0d8] flex items-center justify-center p-1 group-hover:border-maroon transition-colors shadow-xs shrink-0">
             <img
               alt="Ten Kind Hands Logo"
               className="w-full h-full object-contain"
@@ -69,25 +69,25 @@ export default function Navbar({
               }}
             />
           </div>
-          <div>
-            <span className="font-heading font-bold text-lg sm:text-xl tracking-tight text-[#1c1c1a] block leading-none group-hover:text-maroon transition-colors">
+          <div className="min-w-0">
+            <span className="font-heading font-bold text-base sm:text-xl tracking-tight text-[#1c1c1a] block leading-none group-hover:text-maroon transition-colors truncate">
               Ten Kind Hands
             </span>
-            <span className="text-[10px] uppercase tracking-widest text-[#706e68] font-medium mt-0.5 block">
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-[#706e68] font-medium mt-0.5 block truncate">
               Initiative • Africa
             </span>
           </div>
         </button>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1.5 lg:gap-2">
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
           {navItems.map((item) => {
             const active = isItemActive(item);
             return (
               <button
                 key={item.pageId}
                 onClick={() => handleNavClick(item.pageId)}
-                className={`px-3.5 py-1.5 rounded-full text-[14.5px] transition-all cursor-pointer ${
+                className={`px-3 lg:px-3.5 py-1.5 rounded-full text-[13.5px] lg:text-[14.5px] transition-all cursor-pointer whitespace-nowrap ${
                   active
                     ? 'bg-maroon-tint text-maroon font-semibold'
                     : 'text-[#4a4a46] hover:text-[#1c1c1a] hover:bg-[#f5f1e8] font-medium'
@@ -100,29 +100,29 @@ export default function Navbar({
         </nav>
 
         {/* Right Action & Mobile Toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           <button
             onClick={() => onOpenDonate()}
-            className="btn-primary px-5 sm:px-6 py-2.5 text-sm sm:text-[15px] shadow-sm flex items-center gap-2"
+            className="btn-primary px-3.5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-[15px] shadow-sm flex items-center gap-1.5 sm:gap-2 shrink-0 cursor-pointer"
           >
-            <Heart className="w-4 h-4 fill-white" />
+            <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white" />
             <span>Donate</span>
           </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-[#1c1c1a] hover:bg-[#f5f1e8] transition-colors"
+            className="md:hidden p-2 rounded-xl text-[#1c1c1a] hover:bg-[#f5f1e8] transition-colors cursor-pointer"
             aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-[72px] bg-[#fdfbf7] border-b border-[#e5e0d8] shadow-2xl animate-fade-in px-4 py-6 max-h-[calc(100vh-72px)] overflow-y-auto">
-          <div className="flex flex-col gap-2">
+        <div className="md:hidden fixed inset-x-0 top-16 sm:top-[72px] bg-[#fdfbf7] border-b border-[#e5e0d8] shadow-2xl animate-fade-in px-4 py-5 sm:py-6 max-h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-4.5rem)] overflow-y-auto safe-bottom">
+          <div className="flex flex-col gap-1.5 sm:gap-2">
             {navItems.map((item) => {
               const active = isItemActive(item);
               return (

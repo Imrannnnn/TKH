@@ -151,26 +151,26 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
     <div className="w-full bg-[#fdfbf7] text-[#1c1c1a]">
 
       {/* 1. Hero */}
-      <section className="relative pt-10 sm:pt-16 pb-14 max-w-[1200px] mx-auto px-4 sm:px-6 overflow-hidden">
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <section className="relative pt-8 sm:pt-14 lg:pt-16 pb-12 sm:pb-16 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           <div className="lg:col-span-7 flex flex-col items-start gap-4">
             <span className="text-xs uppercase font-bold tracking-widest text-maroon">
               ABOUT US
             </span>
-            <h1 className="font-heading font-bold text-3xl sm:text-5xl leading-[1.15] text-[#1c1c1a]">
+            <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl leading-[1.15] text-[#1c1c1a]">
               Every child should be able to learn and stay healthy, whatever their family can afford.
             </h1>
-            <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
+            <p className="text-sm sm:text-base lg:text-lg text-[#4a4a46] leading-relaxed max-w-xl">
               Ten Kind Hands is a Nigerian non-profit working with schools, communities and volunteers to help disadvantaged children, women and families break the cycle of poverty.
             </p>
           </div>
 
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 w-full">
             <div className="relative rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md bg-white group">
               <img
                 src="/images/food-distribution.jpg"
                 alt="Ten Kind Hands team and community families"
-                className="w-full h-[320px] sm:h-[380px] object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-[260px] xs:h-[320px] sm:h-[380px] object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = '/images/IMG_0303.JPG';
@@ -187,10 +187,10 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 2. Mission & Vision */}
-      <section className="py-10 max-w-[1200px] mx-auto px-4 sm:px-6">
+      <section className="py-8 sm:py-10 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {/* Mission: Deep Forest Card */}
-          <div className="bg-forest text-white rounded-3xl p-8 sm:p-10 shadow-sm flex flex-col justify-between">
+          <div className="bg-forest text-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-sm flex flex-col justify-between">
             <div>
               <span className="text-xs uppercase tracking-widest text-[#a8d5c4] font-bold block mb-3">
                 OUR MISSION
@@ -205,7 +205,7 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
           </div>
 
           {/* Vision: Clean Light Card */}
-          <div className="bg-white border border-[#e5e0d8] rounded-3xl p-8 sm:p-10 shadow-sm flex flex-col justify-between">
+          <div className="bg-white border border-[#e5e0d8] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-sm flex flex-col justify-between">
             <div>
               <span className="text-xs uppercase tracking-widest text-maroon font-bold block mb-3">
                 OUR VISION
@@ -222,8 +222,8 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 3. How We Started (Story + Timeline with Documentary Photos) */}
-      <section className="py-16 sm:py-20 bg-[#f5f1e8] border-y border-[#e5e0d8]">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <section className="py-14 sm:py-20 bg-[#f5f1e8] border-y border-[#e5e0d8]">
+        <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
             {/* Left Story Column */}
@@ -300,7 +300,7 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 4. How We Work (4-Step Way of Working) */}
-      <section className="py-16 sm:py-20 max-w-[1200px] mx-auto px-4 sm:px-6">
+      <section className="py-14 sm:py-20 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mb-12">
           <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1.5">
             HOW WE WORK
@@ -330,9 +330,9 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 5. Team Grid: The people behind every outreach (WITH REAL HEADSHOTS) */}
-      <section className="relative py-16 sm:py-20 bg-[#f5f1e8] border-t border-[#e5e0d8] overflow-hidden">
-        <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+      <section className="relative py-14 sm:py-20 bg-[#f5f1e8] border-t border-[#e5e0d8] overflow-hidden">
+        <div className="relative z-10 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
             <div>
               <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1.5">
                 OUR TEAM
@@ -350,11 +350,11 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-5 lg:gap-6">
             {team.map((m, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-4 sm:p-5 border border-[#e5e0d8] text-center flex flex-col items-center shadow-xs hover:shadow-md hover:border-[#cfc7b9] transition-all">
+              <div key={idx} className="bg-white rounded-2xl p-3 sm:p-5 border border-[#e5e0d8] text-center flex flex-col items-center shadow-xs hover:shadow-md hover:border-[#cfc7b9] transition-all">
                 {/* Real Team Photo Avatar */}
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden mb-3 border-2 border-white shadow-sm bg-sand relative shrink-0">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden mb-2.5 sm:mb-3 border-2 border-white shadow-sm bg-sand relative shrink-0">
                   {m.image ? (
                     <img
                       src={m.image}
@@ -392,8 +392,8 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 6. Board of Trustees & Registration Box */}
-      <section className="py-14 max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-[#e5e0d8] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+      <section className="py-12 sm:py-16 max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#e5e0d8] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8">
           <div className="max-w-xl">
             <h3 className="font-heading font-bold text-xl text-[#1c1c1a] mb-2">
               Board of Trustees &amp; Governance

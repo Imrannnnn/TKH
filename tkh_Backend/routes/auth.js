@@ -1,4 +1,5 @@
 import express from 'express';
+import bcrypt from 'bcryptjs';
 import Admin from '../models/Admin.js';
 import { getDatabase, saveDatabase } from '../storage.js';
 
@@ -41,26 +42,37 @@ router.post('/login', async (req, res) => {
       }
     }
   } catch (err) {
-    console.warn('MongoDB query deferred during auth, falling back to local storage:', err.message);
+    console.warn('MongoDB query deferred during auth, falling back to secure local storage:', err.message);
   }
 
-  // 2. Fallback to local db.json storage / demo credentials
+  // 2. Fallback to local db.json storage / environment variables
   const db = getDatabase();
-  const fallbackEmail = (db?.admin?.email || 'admin@tenkindhands.org').toLowerCase();
-  const fallbackPassword = db?.admin?.password || 'admin2026';
+  const fallbackEmail = (process.env.ADMIN_EMAIL || db?.admin?.email || 'admin@tenkindhands.org').toLowerCase();
+  const fallbackPassword = process.env.ADMIN_PASSWORD;
+  const fallbackHash = db?.admin?.passwordHash;
   const fallbackName = db?.admin?.name || 'Ten Kind Hands Super Admin';
 
-  if (
-    (cleanEmail === fallbackEmail && password === fallbackPassword) ||
-    password === 'admin'
-  ) {
+  let isMatch = false;
+  if (cleanEmail === fallbackEmail) {
+    if (fallbackHash) {
+      try {
+        isMatch = await bcrypt.compare(password, fallbackHash);
+      } catch {
+        isMatch = false;
+      }
+    } else if (fallbackPassword) {
+      isMatch = password === fallbackPassword;
+    }
+  }
+
+  if (isMatch) {
     return res.json({
       success: true,
       token: `tkh_token_local_${Date.now()}`,
       user: {
         email: fallbackEmail,
         name: fallbackName,
-        role: 'superadmin'
+        role: db?.admin?.role || 'superadmin'
       },
       source: 'local_storage_fallback'
     });
@@ -87,7 +99,7 @@ router.get('/me', async (req, res) => {
   return res.json({
     success: true,
     admin: {
-      email: db?.admin?.email || 'admin@tenkindhands.org',
+      email: db?.admin?.email || process.env.ADMIN_EMAIL || 'admin@tenkindhands.org',
       name: db?.admin?.name || 'Super Admin',
       role: 'superadmin'
     }
@@ -107,7 +119,6 @@ router.post('/change-password', async (req, res) => {
 
   const cleanEmail = (email || 'admin@tenkindhands.org').trim().toLowerCase();
   const db = getDatabase() || {};
-  const currentFallbackPassword = db?.admin?.password || 'admin2026';
   let validatedCurrent = false;
 
   // 1. Try finding admin in MongoDB
@@ -116,7 +127,7 @@ router.post('/change-password', async (req, res) => {
     if (adminUser) {
       if (currentPassword) {
         const isMatch = await adminUser.comparePassword(currentPassword);
-        if (isMatch || currentPassword === currentFallbackPassword || currentPassword === 'admin') {
+        if (isMatch) {
           validatedCurrent = true;
         } else {
           return res.status(401).json({
@@ -137,7 +148,21 @@ router.post('/change-password', async (req, res) => {
 
   // 2. Validate current password against local db fallback if provided & not validated in Mongo
   if (currentPassword && !validatedCurrent) {
-    if (currentPassword !== currentFallbackPassword && currentPassword !== 'admin') {
+    const fallbackHash = db?.admin?.passwordHash;
+    const fallbackEnv = process.env.ADMIN_PASSWORD;
+    let validCurrent = false;
+
+    if (fallbackHash) {
+      try {
+        validCurrent = await bcrypt.compare(currentPassword, fallbackHash);
+      } catch {
+        validCurrent = false;
+      }
+    } else if (fallbackEnv) {
+      validCurrent = currentPassword === fallbackEnv;
+    }
+
+    if (!validCurrent) {
       return res.status(401).json({
         success: false,
         message: 'Current password does not match.'
@@ -145,7 +170,7 @@ router.post('/change-password', async (req, res) => {
     }
   }
 
-  // 3. Update local db.json storage
+  // 3. Update local db.json storage with bcrypt hash (never plaintext)
   try {
     if (!db.admin) {
       db.admin = {
@@ -154,7 +179,9 @@ router.post('/change-password', async (req, res) => {
         role: 'superadmin'
       };
     }
-    db.admin.password = newPassword.trim();
+    const salt = await bcrypt.genSalt(10);
+    db.admin.passwordHash = await bcrypt.hash(newPassword.trim(), salt);
+    delete db.admin.password;
     db.admin.updatedAt = new Date().toISOString();
     saveDatabase(db);
   } catch (err) {

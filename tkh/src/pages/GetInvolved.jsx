@@ -165,18 +165,18 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
   ];
 
   return (
-    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-10 sm:py-16">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Page Tag & Main Tabs */}
-        <div className="max-w-3xl mb-8">
+        <div className="max-w-3xl mb-8 sm:mb-10">
           <span className="text-xs uppercase font-bold tracking-widest text-maroon block mb-2">
             GET INVOLVED
           </span>
-          <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1c1c1a] mb-3">
+          <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-[#1c1c1a] mb-3 leading-tight">
             Give time, skills or goods — not just money.
           </h1>
-          <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4a4a46] leading-relaxed">
             Our outreaches are powered by community members, volunteer teachers, medical staff and partner schools working together.
           </p>
 
@@ -184,7 +184,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
           <div className="flex flex-wrap items-center gap-2 pt-6">
             <button
               onClick={() => setActiveTab('donate')}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
                 activeTab === 'donate'
                   ? 'bg-maroon text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -194,7 +194,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             </button>
             <button
               onClick={() => setActiveTab('volunteer')}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
                 activeTab === 'volunteer'
                   ? 'bg-maroon text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -204,7 +204,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             </button>
             <button
               onClick={() => setActiveTab('partner')}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
                 activeTab === 'partner'
                   ? 'bg-maroon text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -355,11 +355,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                     <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1.5">
                       How would you like to pay?
                     </label>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('card')}
-                        className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${
+                        className={`py-3 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer min-h-[44px] flex items-center justify-center text-center ${
                           paymentMethod === 'card'
                             ? 'bg-[#fdfbf7] text-maroon border-maroon shadow-sm'
                             : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
@@ -370,7 +370,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('transfer')}
-                        className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${
+                        className={`py-3 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer min-h-[44px] flex items-center justify-center text-center ${
                           paymentMethod === 'transfer'
                             ? 'bg-[#fdfbf7] text-maroon border-maroon shadow-sm'
                             : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
@@ -712,11 +712,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
         {/* 3. PARTNER TAB */}
         {activeTab === 'partner' && (
-          <div className="pt-4 max-w-2xl bg-white rounded-3xl p-6 sm:p-10 border border-[#e5e0d8] shadow-sm">
-            <h2 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-2">
+          <div className="pt-4 max-w-3xl bg-white rounded-3xl p-6 sm:p-10 border border-[#e5e0d8] shadow-sm">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-2">
               Partner with Ten Kind Hands
             </h2>
-            <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
+            <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-6">
               Corporate CSR programs, faith-based institutions, and diaspora associations partner with us for 100% direct-delivery humanitarian missions with audited photo dispatches.
             </p>
 

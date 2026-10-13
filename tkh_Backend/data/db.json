@@ -269,7 +269,6 @@
   },
   "admin": {
     "email": "admin@tenkindhands.org",
-    "password": "TKHadmin2026",
     "name": "Ten Kind Hands Super Admin",
     "role": "superadmin",
     "updatedAt": "2026-10-12T11:11:36.514Z"

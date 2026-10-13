@@ -34,29 +34,29 @@ export default function Contact() {
   };
 
   return (
-    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-10 sm:py-16">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="max-w-3xl mb-12">
+        <div className="max-w-3xl mb-8 sm:mb-12">
           <span className="text-xs uppercase font-bold tracking-widest text-maroon block mb-2">
             CONTACT
           </span>
-          <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1c1c1a] mb-4">
+          <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-[#1c1c1a] mb-3 leading-tight">
             Talk to a real person.
           </h1>
-          <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4a4a46] leading-relaxed">
             WhatsApp first, our official email, our national office in Abuja, and one short form below.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
           {/* Left Column: Direct Channels */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             
             {/* WhatsApp Featured Box */}
-            <div className="bg-forest text-white rounded-3xl p-6 sm:p-8 shadow-sm">
+            <div className="bg-forest text-white rounded-3xl p-5 sm:p-8 shadow-sm">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
                   <MessageCircle className="w-5 h-5 fill-current" />
@@ -65,13 +65,13 @@ export default function Contact() {
                   <span className="text-xs uppercase font-bold tracking-widest text-[#a8d5c4] block">
                     FASTEST RESPONSE
                   </span>
-                  <h3 className="font-heading font-bold text-lg text-white">
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-white">
                     WhatsApp Desk
                   </h3>
                 </div>
               </div>
 
-              <p className="text-sm text-white/80 leading-relaxed mb-6">
+              <p className="text-xs sm:text-sm text-white/80 leading-relaxed mb-6">
                 Our operations team answers messages directly. Ideal for quick questions, donor receipts, or volunteering queries.
               </p>
 
@@ -79,15 +79,15 @@ export default function Contact() {
                 href="https://wa.me/2348180994301"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3.5 px-6 rounded-full bg-white text-forest font-heading font-bold text-sm hover:bg-[#f5f1e8] transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3.5 px-5 sm:px-6 rounded-full bg-white text-forest font-heading font-bold text-xs sm:text-sm hover:bg-[#f5f1e8] transition-colors flex items-center justify-center gap-2 text-center min-h-[44px]"
               >
                 <span>Chat on WhatsApp (+234 818 099 4301)</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 shrink-0" />
               </a>
             </div>
 
             {/* Email Channels Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm flex flex-col gap-5">
+            <div className="bg-white rounded-3xl p-5 sm:p-8 border border-[#e5e0d8] shadow-sm flex flex-col gap-4">
               <h3 className="font-heading font-bold text-base text-[#1c1c1a]">
                 Official Email
               </h3>
@@ -100,7 +100,7 @@ export default function Contact() {
                   <div className="text-xs text-[#706e68]">General Inquiries, Partnerships &amp; Support</div>
                   <a
                     href="mailto:info@tenkindhands.org"
-                    className="font-heading font-semibold text-sm text-[#1c1c1a] hover:text-maroon transition-colors"
+                    className="font-heading font-semibold text-xs sm:text-sm text-[#1c1c1a] hover:text-maroon transition-colors break-all"
                   >
                     info@tenkindhands.org
                   </a>
@@ -109,7 +109,7 @@ export default function Contact() {
             </div>
 
             {/* Social Media Channels Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm flex flex-col gap-4">
+            <div className="bg-white rounded-3xl p-5 sm:p-8 border border-[#e5e0d8] shadow-sm flex flex-col gap-4">
               <h3 className="font-heading font-bold text-base text-[#1c1c1a]">
                 Connect on Social Media
               </h3>
@@ -121,7 +121,7 @@ export default function Contact() {
                   href="https://www.instagram.com/tenkindhands"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors min-h-[40px] min-w-[40px]"
                   aria-label="Instagram"
                 >
                   <Instagram className="w-4 h-4" />
@@ -130,7 +130,7 @@ export default function Contact() {
                   href="https://web.facebook.com/tenkindhandss/"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors min-h-[40px] min-w-[40px]"
                   aria-label="Facebook"
                 >
                   <Facebook className="w-4 h-4" />
@@ -139,7 +139,7 @@ export default function Contact() {
                   href="https://www.youtube.com/@TenkindhandsFoundation"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors min-h-[40px] min-w-[40px]"
                   aria-label="YouTube"
                 >
                   <Youtube className="w-4 h-4" />
@@ -148,7 +148,7 @@ export default function Contact() {
                   href="https://www.tiktok.com/@tenkindhandsfoundation"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors"
+                  className="w-10 h-10 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors min-h-[40px] min-w-[40px]"
                   aria-label="TikTok"
                 >
                   <TikTok className="w-4 h-4" />
@@ -157,7 +157,7 @@ export default function Contact() {
             </div>
 
             {/* National Secretariat Office Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm">
+            <div className="bg-white rounded-3xl p-5 sm:p-8 border border-[#e5e0d8] shadow-sm">
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-sand text-[#1c1c1a] flex items-center justify-center shrink-0 mt-0.5">
                   <MapPin className="w-4 h-4" />
@@ -166,7 +166,7 @@ export default function Contact() {
                   <div className="text-xs uppercase font-bold tracking-wider text-[#706e68] mb-1">
                     National Secretariat
                   </div>
-                  <p className="text-sm font-heading font-semibold text-[#1c1c1a] leading-snug">
+                  <p className="text-xs sm:text-sm font-heading font-semibold text-[#1c1c1a] leading-snug">
                     Danglo Plaza 204, 6th Avenue, Gwarinpa, Abuja, Nigeria
                   </p>
                   <p className="text-xs text-[#706e68] mt-2">
@@ -179,11 +179,11 @@ export default function Contact() {
           </div>
 
           {/* Right Column: One Short Form */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 border border-[#e5e0d8] shadow-sm">
-            <h2 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-2">
+          <div className="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-8 lg:p-10 border border-[#e5e0d8] shadow-sm">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-2">
               Send us a direct message
             </h2>
-            <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
+            <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-6">
               Fill in your details below and a team coordinator will respond within 24 hours.
             </p>
 
@@ -192,10 +192,10 @@ export default function Contact() {
                 <div className="w-12 h-12 rounded-full bg-white text-forest flex items-center justify-center mx-auto mb-3 shadow-xs">
                   <Check className="w-6 h-6 stroke-[2.5]" />
                 </div>
-                <h3 className="font-heading font-bold text-xl mb-1">
+                <h3 className="font-heading font-bold text-lg sm:text-xl mb-1">
                   Message Sent!
                 </h3>
-                <p className="text-sm">
+                <p className="text-xs sm:text-sm">
                   Thank you, {form.name}. We have received your message and will reply to {form.email} promptly.
                 </p>
               </div>
@@ -211,7 +211,7 @@ export default function Contact() {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="e.g. Maryam Bello"
-                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon min-h-[44px]"
                   />
                 </div>
 
@@ -225,7 +225,7 @@ export default function Contact() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="yourname@domain.com"
-                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon min-h-[44px]"
                   />
                 </div>
 
@@ -236,7 +236,7 @@ export default function Contact() {
                   <select
                     value={form.topic}
                     onChange={(e) => setForm({ ...form, topic: e.target.value })}
-                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon min-h-[44px]"
                   >
                     <option value="General Question">General Question</option>
                     <option value="Donation or Receipt Inquiry">Donation or Receipt Inquiry</option>
@@ -263,7 +263,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary w-full py-4 text-base font-semibold shadow-md mt-2 flex items-center justify-center gap-2"
+                  className="btn-primary w-full py-4 text-sm sm:text-base font-semibold shadow-md mt-2 flex items-center justify-center gap-2 min-h-[48px]"
                 >
                   {isSubmitting ? (
                     <span>Sending message...</span>

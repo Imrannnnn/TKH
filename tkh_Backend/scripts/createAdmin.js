@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import Admin from '../models/Admin.js';
 import { getDatabase, saveDatabase } from '../storage.js';
 
@@ -12,12 +13,19 @@ async function createOrUpdateAdmin() {
     process.exit(1);
   }
 
-  // Get credentials from command line args or use defaults
+  // Get credentials from command line args or environment variables
   const args = process.argv.slice(2);
   const email = (args[0] || process.env.ADMIN_EMAIL || 'admin@tenkindhands.org').trim().toLowerCase();
-  const password = args[1] || process.env.ADMIN_PASSWORD || 'admin2026';
+  const password = args[1] || process.env.ADMIN_PASSWORD;
   const name = args[2] || process.env.ADMIN_NAME || 'Ten Kind Hands Super Admin';
   const role = 'superadmin';
+
+  if (!password) {
+    console.error('❌ Error: Admin password must be provided.');
+    console.error('Usage: node scripts/createAdmin.js [email] <password> [name]');
+    console.error('Or set ADMIN_PASSWORD in your .env file.');
+    process.exit(1);
+  }
 
   console.log('====================================================');
   console.log('🌱 Ten Kind Hands — Super Admin Creation Script');
@@ -52,18 +60,20 @@ async function createOrUpdateAdmin() {
       console.log('✅ Super Admin account created successfully in MongoDB!');
     }
 
-    // Synchronize data/db.json storage for offline resilience
+    // Synchronize data/db.json storage for offline resilience (with hashed password)
     try {
       const db = getDatabase() || {};
+      const salt = await bcrypt.genSalt(10);
       db.admin = {
         email,
-        password,
+        passwordHash: await bcrypt.hash(password, salt),
         name,
         role,
         updatedAt: new Date().toISOString()
       };
+      delete db.admin.password;
       saveDatabase(db);
-      console.log('✅ Synced credentials to local storage fallback.');
+      console.log('✅ Synced credentials to local storage fallback (bcrypt hashed).');
     } catch (e) {
       console.warn('⚠️  Could not update local storage backup:', e.message);
     }

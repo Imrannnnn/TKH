@@ -12,26 +12,26 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
   }
 
   return (
-    <div className="pt-24 md:pt-28 animate-fade-in bg-white pb-20">
-      <section className="relative py-12 md:py-16 px-4 md:px-8 max-w-5xl mx-auto text-center overflow-hidden">
+    <div className="pt-8 sm:pt-14 animate-fade-in bg-white pb-16 sm:pb-20">
+      <section className="relative py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-5xl 2xl:max-w-6xl mx-auto text-center overflow-hidden">
         <div className="relative z-10">
           <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-2 font-heading">
             Governance &amp; Compliance
           </span>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-6 tracking-tight">
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-heading font-extrabold text-ink max-w-3xl mx-auto mb-4 tracking-tight leading-tight">
             Legal, Privacy &amp; <br />
             <span className="text-primary">Safeguarding Policies.</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-ink-light max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+          <p className="text-sm sm:text-base md:text-lg text-ink-light max-w-2xl mx-auto mb-6 leading-relaxed font-normal">
             Operating with strict adherence to Nigerian Non-Profit laws, NDPR data privacy, and UNICEF child safeguarding protocols.
           </p>
 
           <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto">
             <button
               onClick={() => setActiveTab('privacy')}
-              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${
                 activeTab === 'privacy' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
               }`}
             >
@@ -39,7 +39,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
             </button>
             <button
               onClick={() => setActiveTab('terms')}
-              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${
                 activeTab === 'terms' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
               }`}
             >
@@ -47,7 +47,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
             </button>
             <button
               onClick={() => setActiveTab('safeguarding')}
-              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading ${
+              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${
                 activeTab === 'safeguarding' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
               }`}
             >
@@ -58,7 +58,7 @@ export default function Legal({ initialSection = 'privacy', initialTab }) {
       </section>
 
       {/* Content Section */}
-      <section className="relative max-w-4xl mx-auto px-4 md:px-8 overflow-hidden">
+      <section className="relative max-w-4xl 2xl:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="relative z-10 bg-white/95 backdrop-blur-xs p-5 sm:p-8 md:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
           {activeTab === 'privacy' && (
             <div className="prose text-xs sm:text-sm text-ink-light leading-relaxed space-y-6">

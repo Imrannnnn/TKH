@@ -164,19 +164,19 @@ export default function ContactPageEditor({
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="relative">
+            <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+              <div className="relative flex-1 sm:flex-none">
                 <Search className="w-3.5 h-3.5 text-ink-muted absolute left-3 top-2.5" />
                 <input
                   type="text"
                   placeholder="Search messages..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="pl-9 pr-3 py-1.5 rounded-xl border border-[#e7e2d8] bg-sand/40 text-ink text-xs focus:outline-none focus:border-primary w-44 sm:w-56"
+                  className="pl-9 pr-3 py-1.5 rounded-xl border border-[#e7e2d8] bg-sand/40 text-ink text-xs focus:outline-none focus:border-primary w-full xs:w-48 sm:w-56"
                 />
               </div>
 
-              <div className="flex items-center bg-sand p-1 rounded-xl text-xs border border-[#e7e2d8]">
+              <div className="flex items-center bg-sand p-1 rounded-xl text-xs border border-[#e7e2d8] shrink-0">
                 {['All', 'Unread', 'Reviewed'].map((st) => (
                   <button
                     key={st}
@@ -196,7 +196,7 @@ export default function ContactPageEditor({
 
           <div className="bg-white rounded-2xl border border-[#e7e2d8] overflow-hidden shadow-xs">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs min-w-[640px]">
                 <thead className="bg-sand/70 text-[11px] font-heading font-bold text-ink-muted uppercase tracking-wider border-b border-[#e7e2d8]">
                   <tr>
                     <th className="py-3 px-4">Contact</th>
@@ -281,7 +281,7 @@ export default function ContactPageEditor({
       ===================================================================== */}
       {activeSection === 'secretariat' && (
         <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-[#e7e2d8]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#e7e2d8]">
             <div>
               <h2 className="text-base font-heading font-bold text-ink">
                 National Secretariat Contact Channels
@@ -292,7 +292,7 @@ export default function ContactPageEditor({
             </div>
             <button
               onClick={handleSaveContactInfo}
-              className="py-2 px-4 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+              className="py-2.5 px-4 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-heading font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-colors w-full sm:w-auto min-h-[40px]"
             >
               <Save className="w-3.5 h-3.5" />
               <span>Save Contact Info</span>
@@ -367,7 +367,7 @@ export default function ContactPageEditor({
             <div className="pt-4 border-t border-[#e7e2d8] flex justify-end">
               <button
                 type="submit"
-                className="py-2.5 px-6 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-heading font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                className="py-2.5 px-6 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-heading font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-colors w-full sm:w-auto min-h-[40px]"
               >
                 <Save className="w-3.5 h-3.5" />
                 <span>Save Changes</span>

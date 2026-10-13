@@ -170,19 +170,19 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
   if (selectedReport) {
     return (
       <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-12">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm text-[#706e68] mb-6">
+          <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-[#706e68] mb-6">
             <button
               onClick={handleBackToList}
-              className="hover:text-maroon transition-colors cursor-pointer flex items-center gap-1"
+              className="hover:text-maroon transition-colors cursor-pointer flex items-center gap-1 min-h-[44px] sm:min-h-0"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Field reports</span>
             </button>
             <span>/</span>
-            <span className="text-[#1c1c1a] font-medium">{selectedReport.month}</span>
+            <span className="text-[#1c1c1a] font-medium truncate max-w-[200px] sm:max-w-none">{selectedReport.month}</span>
           </div>
 
           {/* Header Badges & Title */}
@@ -195,37 +195,37 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
                 Report published: {selectedReport.month}
               </span>
             </div>
-            <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1c1c1a] leading-tight mb-4">
+            <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-[#1c1c1a] leading-tight mb-4">
               {selectedReport.title}
             </h1>
           </div>
 
           {/* Key Facts Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 sm:p-6 bg-white rounded-3xl border border-[#e5e0d8] shadow-sm mb-10">
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 p-4 sm:p-6 bg-white rounded-3xl border border-[#e5e0d8] shadow-sm mb-8 sm:mb-10">
             <div>
               <span className="text-xs uppercase font-bold text-[#706e68] block mb-0.5">When</span>
-              <span className="font-heading font-semibold text-sm sm:text-base text-[#1c1c1a]">{selectedReport.dateRange}</span>
+              <span className="font-heading font-semibold text-xs sm:text-sm md:text-base text-[#1c1c1a]">{selectedReport.dateRange}</span>
             </div>
             <div>
               <span className="text-xs uppercase font-bold text-[#706e68] block mb-0.5">Where</span>
-              <span className="font-heading font-semibold text-sm sm:text-base text-[#1c1c1a]">{selectedReport.location}</span>
+              <span className="font-heading font-semibold text-xs sm:text-sm md:text-base text-[#1c1c1a]">{selectedReport.location}</span>
             </div>
             <div>
               <span className="text-xs uppercase font-bold text-[#706e68] block mb-0.5">Reached</span>
-              <span className="font-heading font-semibold text-sm sm:text-base text-[#1c1c1a]">{selectedReport.beneficiaries}</span>
+              <span className="font-heading font-semibold text-xs sm:text-sm md:text-base text-[#1c1c1a]">{selectedReport.beneficiaries}</span>
             </div>
             <div>
               <span className="text-xs uppercase font-bold text-[#706e68] block mb-0.5">Total cost</span>
-              <span className="font-heading font-bold text-sm sm:text-base text-maroon">{selectedReport.totalCost}</span>
+              <span className="font-heading font-bold text-xs sm:text-sm md:text-base text-maroon">{selectedReport.totalCost}</span>
             </div>
           </div>
 
           {/* Full Banner Photo */}
-          <div className="rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md mb-12 bg-white">
+          <div className="rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md mb-8 sm:mb-12 bg-white">
             <img
               src={selectedReport.image}
               alt={selectedReport.title}
-              className="w-full h-[360px] sm:h-[480px] object-cover object-center"
+              className="w-full h-[220px] xs:h-[280px] sm:h-[380px] lg:h-[480px] object-cover object-center"
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = '/images/IMG_0303.JPG';
@@ -234,28 +234,28 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
           </div>
 
           {/* Why We Did It */}
-          <div className="max-w-3xl mb-12">
-            <h2 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-3">
+          <div className="max-w-3xl mb-8 sm:mb-12">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-3">
               Why we did it
             </h2>
-            <p className="text-base text-[#4a4a46] leading-relaxed">
+            <p className="text-sm sm:text-base text-[#4a4a46] leading-relaxed">
               {selectedReport.whyWeDidIt}
             </p>
           </div>
 
           {/* What We Delivered */}
-          <div className="mb-14">
-            <h2 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-6">
+          <div className="mb-10 sm:mb-14">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-6">
               What we delivered
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {selectedReport.deliverables.map((d, idx) => (
-                <div key={idx} className="bg-white rounded-2xl p-6 border border-[#e5e0d8] shadow-sm flex flex-col justify-between">
+                <div key={idx} className="bg-white rounded-2xl p-5 sm:p-6 border border-[#e5e0d8] shadow-sm flex flex-col justify-between">
                   <div>
                     <h3 className="font-heading font-bold text-base text-[#1c1c1a] mb-2">
                       {d.title}
                     </h3>
-                    <p className="text-sm text-[#4a4a46] leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed">
                       {d.desc}
                     </p>
                   </div>
@@ -265,9 +265,9 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
           </div>
 
           {/* Where the money went (Audit Table) */}
-          <div className="mb-16">
+          <div className="mb-12 sm:mb-16">
             <div className="mb-4">
-              <h2 className="font-heading font-bold text-2xl text-[#1c1c1a]">
+              <h2 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a]">
                 Where the money went
               </h2>
               <p className="text-xs sm:text-sm text-[#706e68]">
@@ -276,36 +276,38 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
             </div>
 
             <div className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm">
-              <table className="w-full text-left border-collapse text-sm">
-                <thead>
-                  <tr className="bg-[#f5f1e8] text-[#1c1c1a] font-heading font-semibold border-b border-[#e5e0d8]">
-                    <th className="py-4 px-6">Item</th>
-                    <th className="py-4 px-6">Qty</th>
-                    <th className="py-4 px-6 text-right">Cost</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#e5e0d8] text-[#4a4a46]">
-                  {selectedReport.costBreakdown.map((row, idx) => (
-                    <tr key={idx} className="hover:bg-[#fdfbf7] transition-colors">
-                      <td className="py-4 px-6 font-medium text-[#1c1c1a]">{row.item}</td>
-                      <td className="py-4 px-6">{row.qty}</td>
-                      <td className="py-4 px-6 text-right font-medium text-[#1c1c1a]">{row.cost}</td>
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[500px] text-left border-collapse text-xs sm:text-sm">
+                  <thead>
+                    <tr className="bg-[#f5f1e8] text-[#1c1c1a] font-heading font-semibold border-b border-[#e5e0d8]">
+                      <th className="py-3.5 sm:py-4 px-4 sm:px-6">Item</th>
+                      <th className="py-3.5 sm:py-4 px-3 sm:px-6">Qty</th>
+                      <th className="py-3.5 sm:py-4 px-4 sm:px-6 text-right">Cost</th>
                     </tr>
-                  ))}
-                  <tr className="bg-[#fdfbf7] font-heading font-bold text-[#1c1c1a]">
-                    <td colSpan="2" className="py-4 px-6 text-base">Total Delivered</td>
-                    <td className="py-4 px-6 text-right text-base text-maroon">{selectedReport.totalSpent}</td>
-                  </tr>
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-[#e5e0d8] text-[#4a4a46]">
+                    {selectedReport.costBreakdown.map((row, idx) => (
+                      <tr key={idx} className="hover:bg-[#fdfbf7] transition-colors">
+                        <td className="py-3.5 sm:py-4 px-4 sm:px-6 font-medium text-[#1c1c1a]">{row.item}</td>
+                        <td className="py-3.5 sm:py-4 px-3 sm:px-6">{row.qty}</td>
+                        <td className="py-3.5 sm:py-4 px-4 sm:px-6 text-right font-medium text-[#1c1c1a] whitespace-nowrap">{row.cost}</td>
+                      </tr>
+                    ))}
+                    <tr className="bg-[#fdfbf7] font-heading font-bold text-[#1c1c1a]">
+                      <td colSpan="2" className="py-3.5 sm:py-4 px-4 sm:px-6 text-sm sm:text-base">Total Delivered</td>
+                      <td className="py-3.5 sm:py-4 px-4 sm:px-6 text-right text-sm sm:text-base text-maroon whitespace-nowrap">{selectedReport.totalSpent}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
           {/* Bottom Actions */}
-          <div className="pt-6 border-t border-[#e5e0d8] flex flex-wrap items-center justify-between gap-4">
+          <div className="pt-6 border-t border-[#e5e0d8] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             <button
               onClick={handleBackToList}
-              className="btn-secondary px-6 py-2.5 text-sm inline-flex items-center gap-1.5"
+              className="btn-secondary w-full sm:w-auto px-6 py-2.5 text-sm inline-flex items-center justify-center gap-1.5 min-h-[44px]"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to all field reports</span>
@@ -313,7 +315,7 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
 
             <button
               onClick={() => onOpenDonate()}
-              className="btn-primary px-7 py-3 text-sm shadow-sm"
+              className="btn-primary w-full sm:w-auto px-7 py-3 text-sm shadow-sm text-center justify-center min-h-[44px]"
             >
               Fund an outreach like this
             </button>
@@ -326,44 +328,44 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
 
   // LIST VIEW (Artboard 04 Field reports)
   return (
-    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-10 sm:py-16">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="max-w-3xl mb-8">
           <span className="text-xs uppercase font-bold tracking-widest text-maroon block mb-2">
             FIELD REPORTS
           </span>
-          <h1 className="font-heading font-bold text-3xl sm:text-5xl text-[#1c1c1a] mb-3">
+          <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-[#1c1c1a] mb-3 leading-tight">
             Every outreach, reported in public.
           </h1>
-          <p className="text-base sm:text-lg text-[#4a4a46] leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4a4a46] leading-relaxed">
             What we delivered, where, for whom and what it cost — with photos from the day. A new report goes up within two weeks of each outreach.
           </p>
         </div>
 
         {/* Metrics Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-white rounded-3xl border border-[#e5e0d8] shadow-sm mb-10">
+        <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 p-4 sm:p-6 bg-white rounded-3xl border border-[#e5e0d8] shadow-sm mb-8 sm:mb-10">
           <div>
-            <div className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
+            <div className="font-heading font-bold text-xl sm:text-2xl lg:text-3xl text-[#1c1c1a]">
               1,206
             </div>
             <div className="text-xs text-[#706e68] mt-0.5">people reached, Jan–Sep 2026</div>
           </div>
           <div>
-            <div className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
+            <div className="font-heading font-bold text-xl sm:text-2xl lg:text-3xl text-[#1c1c1a]">
               9
             </div>
             <div className="text-xs text-[#706e68] mt-0.5">outreaches reported</div>
           </div>
           <div>
-            <div className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a]">
+            <div className="font-heading font-bold text-xl sm:text-2xl lg:text-3xl text-[#1c1c1a]">
               7
             </div>
             <div className="text-xs text-[#706e68] mt-0.5">states active</div>
           </div>
           <div>
-            <div className="font-heading font-bold text-2xl sm:text-3xl text-maroon">
+            <div className="font-heading font-bold text-xl sm:text-2xl lg:text-3xl text-maroon break-words">
               ₦13,597,575
             </div>
             <div className="text-xs text-[#706e68] mt-0.5">spent on delivery (100% direct)</div>
@@ -374,7 +376,7 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
         <div className="flex flex-wrap items-center gap-2 mb-8">
           <button
             onClick={() => setActiveFilter('all')}
-            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
               activeFilter === 'all'
                 ? 'bg-[#1c1c1a] text-white shadow-sm'
                 : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -384,7 +386,7 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
           </button>
           <button
             onClick={() => setActiveFilter('education')}
-            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
               activeFilter === 'education'
                 ? 'bg-maroon text-white shadow-sm'
                 : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -394,7 +396,7 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
           </button>
           <button
             onClick={() => setActiveFilter('health')}
-            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
               activeFilter === 'health'
                 ? 'bg-forest text-white shadow-sm'
                 : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -404,7 +406,7 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
           </button>
           <button
             onClick={() => setActiveFilter('livelihoods')}
-            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[40px] ${
               activeFilter === 'livelihoods'
                 ? 'bg-ochre text-white shadow-sm'
                 : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -422,7 +424,7 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
               className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:border-[#d0c8bb] hover:shadow-md transition-all flex flex-col md:flex-row items-stretch"
             >
               {/* Photo on left */}
-              <div className="md:w-80 h-52 md:h-auto overflow-hidden bg-gray-100 shrink-0">
+              <div className="w-full md:w-80 h-48 xs:h-56 md:h-auto overflow-hidden bg-gray-100 shrink-0">
                 <img
                   src={report.image}
                   alt={report.title}
@@ -435,9 +437,9 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
               </div>
 
               {/* Content on right */}
-              <div className="p-6 sm:p-8 flex flex-col justify-between flex-1">
+              <div className="p-5 sm:p-8 flex flex-col justify-between flex-1">
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
                     <span className="px-2.5 py-0.5 rounded-full bg-maroon-tint text-maroon text-xs font-semibold uppercase tracking-wider">
                       {report.pillar}
                     </span>
@@ -446,27 +448,27 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
                     </span>
                   </div>
 
-                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-1">
+                  <h3 className="font-heading font-bold text-lg sm:text-2xl text-[#1c1c1a] mb-1">
                     {report.title}
                   </h3>
                   <div className="text-xs text-[#706e68] mb-3">
                     {report.location} · {report.dateRange}
                   </div>
 
-                  <p className="text-sm text-[#4a4a46] leading-relaxed mb-4">
+                  <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4">
                     {report.summary}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#e5e0d8] flex items-center justify-between flex-wrap gap-4">
-                  <div className="inline-flex items-center gap-2 text-sm font-semibold text-[#1c1c1a]">
-                    <span className="w-2 h-2 rounded-full bg-forest" />
+                <div className="pt-4 border-t border-[#e5e0d8] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-3">
+                  <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#1c1c1a]">
+                    <span className="w-2 h-2 rounded-full bg-forest shrink-0" />
                     <span>{report.beneficiaries}</span>
                   </div>
 
                   <button
                     onClick={() => handleOpenReport(report.id)}
-                    className="font-semibold text-sm text-maroon hover:text-maroon-dark transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                    className="font-semibold text-xs sm:text-sm text-maroon hover:text-maroon-dark transition-colors inline-flex items-center gap-1.5 cursor-pointer min-h-[44px] sm:min-h-0"
                   >
                     <span>Read the report</span>
                     <ArrowRight className="w-4 h-4" />

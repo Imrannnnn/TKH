@@ -33,11 +33,11 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
   };
 
   return (
-    <footer className="w-full bg-[#fdfbf7] border-t border-[#e5e0d8] pt-12 pb-12">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+    <footer className="w-full bg-[#fdfbf7] border-t border-[#e5e0d8] pt-10 sm:pt-14 pb-12 safe-bottom">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* 1. Newsletter Band (from redesign spec) */}
-        <div className="bg-[#f5f1e8] rounded-2xl sm:rounded-3xl p-6 sm:p-8 mb-14 border border-[#e5e0d8] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="bg-[#f5f1e8] rounded-2xl sm:rounded-3xl p-5 sm:p-8 mb-10 sm:mb-14 border border-[#e5e0d8] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="max-w-md">
             <h3 className="font-heading font-bold text-lg sm:text-xl text-[#1c1c1a]">
               One email a month: the latest field report.
@@ -64,7 +64,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
                 />
                 <button
                   type="submit"
-                  className="px-6 py-3 rounded-full bg-[#1c1c1a] hover:bg-[#333330] text-white font-medium text-sm transition-colors cursor-pointer shrink-0"
+                  className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#1c1c1a] hover:bg-[#333330] text-white font-medium text-sm transition-colors cursor-pointer shrink-0 text-center"
                 >
                   Subscribe
                 </button>
@@ -74,7 +74,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
         </div>
 
         {/* 2. Four Columns Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-[#e5e0d8]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 pb-12 border-b border-[#e5e0d8]">
           {/* Brand Info */}
           <div className="flex flex-col gap-3.5">
             <div className="flex items-center gap-2.5 text-[#1c1c1a]">
@@ -201,11 +201,11 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
         </div>
 
         {/* 3. Bottom Legal Row */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#706e68]">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#706e68] text-center sm:text-left">
           <div>
             © 2026 Ten Kind Hands Initiative · CAC RC 7015705
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2">
             <a href="#legal/safeguarding" onClick={(e) => handleNav(e, 'legal', 'safeguarding')} className="hover:text-maroon transition-colors">
               Safeguarding
             </a>

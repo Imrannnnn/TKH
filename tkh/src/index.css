@@ -38,6 +38,28 @@ body {
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+img, picture, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+input, button, textarea, select {
+  font: inherit;
+  max-width: 100%;
+}
+
+/* Touch manipulation & safe area utilities */
+a, button {
+  touch-action: manipulation;
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
 }
 
 /* Headings: Poppins with auto text wrapping to prevent any overflow on phones */
