@@ -182,7 +182,7 @@ export default function TestimonialsPageEditor({
       </div>
 
       {/* Testimonials Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 uw:grid-cols-6 gap-5 3xl:gap-6">
         {filtered.length === 0 ? (
           <div className="col-span-full py-16 text-center bg-white rounded-2xl border border-[#e7e2d8] p-8">
             <Quote className="w-8 h-8 text-ink-muted mx-auto mb-2 opacity-40" />
@@ -251,7 +251,7 @@ export default function TestimonialsPageEditor({
       {/* Modal: Add / Edit Testimonial */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg 3xl:max-w-xl 4xl:max-w-2xl w-full p-4 sm:p-6 md:p-8 3xl:p-10 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
               <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingItem ? 'Edit Testimonial' : 'Add New Testimonial'}

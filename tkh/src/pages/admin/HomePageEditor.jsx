@@ -349,13 +349,13 @@ export default function HomePageEditor({
             )}
 
             {/* Existing Slides Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 uw:grid-cols-6 gap-4 3xl:gap-6">
               {slides.map((slide, idx) => (
                 <div
                   key={idx}
-                  className="bg-sand/30 rounded-2xl border border-[#e7e2d8] p-3 flex flex-col justify-between overflow-hidden shadow-xs group"
+                  className="bg-sand/30 rounded-2xl border border-[#e7e2d8] p-3 3xl:p-4 flex flex-col justify-between overflow-hidden shadow-xs group"
                 >
-                  <div className="h-32 rounded-xl overflow-hidden mb-3 bg-black relative">
+                  <div className="h-32 3xl:h-40 4xl:h-48 rounded-xl overflow-hidden mb-3 bg-black relative">
                     <img
                       src={encodeURI(slide.img)}
                       alt={slide.caption}
@@ -452,7 +452,7 @@ export default function HomePageEditor({
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 3xl:grid-cols-4 4xl:grid-cols-6 uw:grid-cols-8 gap-4 3xl:gap-6">
             {metrics.map((m) => (
               <div
                 key={m.id}

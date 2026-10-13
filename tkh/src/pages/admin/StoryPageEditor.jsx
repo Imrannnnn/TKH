@@ -274,14 +274,14 @@ export default function StoryPageEditor({
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 uw:grid-cols-6 suw:grid-cols-7 gap-6 3xl:gap-8">
             {coordinators.map((coord, idx) => (
               <div
                 key={coord.name + idx}
-                className="bg-white rounded-3xl border border-[#e7e2d8] p-5 flex flex-col items-center text-center shadow-xs hover:border-forest/40 hover:shadow-md transition-all group"
+                className="bg-white rounded-3xl border border-[#e7e2d8] p-5 3xl:p-6 flex flex-col items-center text-center shadow-xs hover:border-forest/40 hover:shadow-md transition-all group"
               >
                 {/* Photo or Initials */}
-                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-[#e7e2d8] group-hover:border-forest/40 shadow-xs mb-4 bg-sand relative shrink-0">
+                <div className="w-28 h-28 sm:w-32 sm:h-32 3xl:w-36 3xl:h-36 4xl:w-40 4xl:h-40 rounded-2xl overflow-hidden border-2 border-[#e7e2d8] group-hover:border-forest/40 shadow-xs mb-4 bg-sand relative shrink-0">
                   {coord.image ? (
                     <img
                       src={encodeURI(coord.image)}
@@ -354,13 +354,13 @@ export default function StoryPageEditor({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 uw:grid-cols-6 gap-6 3xl:gap-8">
             {leadership.map((member, idx) => (
               <div
                 key={member.name + idx}
-                className="bg-white rounded-3xl border border-[#e7e2d8] p-5 flex flex-col items-center text-center shadow-xs hover:border-forest/40 hover:shadow-md transition-all group"
+                className="bg-white rounded-3xl border border-[#e7e2d8] p-5 3xl:p-6 flex flex-col items-center text-center shadow-xs hover:border-forest/40 hover:shadow-md transition-all group"
               >
-                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-[#e7e2d8] group-hover:border-forest/40 shadow-xs mb-4 bg-sand relative shrink-0">
+                <div className="w-28 h-28 sm:w-32 sm:h-32 3xl:w-36 3xl:h-36 4xl:w-40 4xl:h-40 rounded-2xl overflow-hidden border-2 border-[#e7e2d8] group-hover:border-forest/40 shadow-xs mb-4 bg-sand relative shrink-0">
                   {member.image ? (
                     <img
                       src={encodeURI(member.image)}
@@ -485,7 +485,7 @@ export default function StoryPageEditor({
       ===================================================================== */}
       {coordModalOpen && (
         <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg 3xl:max-w-xl 4xl:max-w-2xl w-full p-4 sm:p-6 md:p-8 3xl:p-10 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
               <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingCoordIdx !== null ? 'Edit State Coordinator' : 'Add New State Coordinator'}
@@ -612,7 +612,7 @@ export default function StoryPageEditor({
       ===================================================================== */}
       {leaderModalOpen && (
         <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg 3xl:max-w-xl 4xl:max-w-2xl w-full p-4 sm:p-6 md:p-8 3xl:p-10 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
               <h2 className="text-base sm:text-lg font-heading font-bold text-ink">Edit Executive Leader</h2>
               <button

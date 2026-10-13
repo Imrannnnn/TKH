@@ -165,26 +165,26 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
   ];
 
   return (
-    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16 3xl:py-20 4xl:py-24">
+      <div className="max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 uw:px-20">
 
         {/* Page Tag & Main Tabs */}
-        <div className="max-w-3xl mb-8 sm:mb-10">
-          <span className="text-xs uppercase font-bold tracking-widest text-maroon block mb-2">
+        <div className="max-w-3xl 3xl:max-w-4xl 4xl:max-w-5xl mb-8 sm:mb-10 3xl:mb-14">
+          <span className="text-xs 3xl:text-sm uppercase font-bold tracking-widest text-maroon block mb-2">
             GET INVOLVED
           </span>
-          <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-[#1c1c1a] mb-3 leading-tight">
+          <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl text-[#1c1c1a] mb-3 leading-tight">
             Give time, skills or goods — not just money.
           </h1>
-          <p className="text-sm sm:text-base lg:text-lg text-[#4a4a46] leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg 3xl:text-xl text-[#4a4a46] leading-relaxed">
             Our outreaches are powered by community members, volunteer teachers, medical staff and partner schools working together.
           </p>
 
           {/* Navigation Tabs */}
-          <div className="flex flex-wrap items-center gap-2 pt-6">
+          <div className="flex flex-wrap items-center gap-2 3xl:gap-3 pt-6">
             <button
               onClick={() => setActiveTab('donate')}
-              className={`px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
+              className={`px-4 sm:px-5 3xl:px-7 py-2.5 3xl:py-3.5 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
                 activeTab === 'donate'
                   ? 'bg-maroon text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -194,7 +194,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             </button>
             <button
               onClick={() => setActiveTab('volunteer')}
-              className={`px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
+              className={`px-4 sm:px-5 3xl:px-7 py-2.5 3xl:py-3.5 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
                 activeTab === 'volunteer'
                   ? 'bg-maroon text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -204,7 +204,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             </button>
             <button
               onClick={() => setActiveTab('partner')}
-              className={`px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
+              className={`px-4 sm:px-5 3xl:px-7 py-2.5 3xl:py-3.5 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
                 activeTab === 'partner'
                   ? 'bg-maroon text-white shadow-sm'
                   : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
@@ -219,33 +219,33 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
         {activeTab === 'donate' && (
           <div className="pt-4">
             {donateSuccess ? (
-              <div className="bg-white rounded-3xl p-10 sm:p-14 border border-[#e5e0d8] shadow-sm text-center max-w-xl mx-auto">
-                <div className="w-16 h-16 rounded-full bg-forest-tint text-forest flex items-center justify-center mx-auto mb-4">
-                  <Check className="w-8 h-8 stroke-[2.5]" />
+              <div className="bg-white rounded-3xl p-10 sm:p-14 3xl:p-16 border border-[#e5e0d8] shadow-sm text-center max-w-xl 3xl:max-w-2xl mx-auto">
+                <div className="w-16 h-16 3xl:w-20 3xl:h-20 rounded-full bg-forest-tint text-forest flex items-center justify-center mx-auto mb-4">
+                  <Check className="w-8 h-8 3xl:w-10 3xl:h-10 stroke-[2.5]" />
                 </div>
-                <h3 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-2">
+                <h3 className="font-heading font-bold text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2">
                   Thank you for your generous gift!
                 </h3>
-                <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
+                <p className="text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-6">
                   Your gift of <strong>₦{currentAmount.toLocaleString()}</strong> has been recorded. An official receipt has been emailed to <strong>{email}</strong>. 100% goes directly to frontline beneficiaries.
                 </p>
                 <button
                   onClick={() => setDonateSuccess(false)}
-                  className="btn-secondary px-6 py-2.5 text-sm"
+                  className="btn-secondary px-6 3xl:px-8 py-2.5 3xl:py-3 text-sm 3xl:text-base"
                 >
                   Make another contribution
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 3xl:gap-16 4xl:gap-20 items-start">
                 
                 {/* Left Column: Form Widget */}
-                <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm flex flex-col gap-5">
+                <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 3xl:p-12 border border-[#e5e0d8] shadow-sm flex flex-col gap-5 3xl:gap-7">
                   <div>
-                    <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a] mb-1 leading-snug">
+                    <h2 className="font-heading font-bold text-2xl sm:text-3xl 3xl:text-4xl text-[#1c1c1a] mb-1 leading-snug">
                       Give a child the tools to stay in school.
                     </h2>
-                    <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed">
+                    <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed">
                       100% of public donations go to programmes. You get an email receipt, and a field report shows what your gift bought.
                     </p>
                   </div>
@@ -255,7 +255,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                     <button
                       type="button"
                       onClick={() => setFrequency('once')}
-                      className={`flex-1 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all cursor-pointer ${
+                      className={`flex-1 py-2 3xl:py-2.5 text-xs sm:text-sm 3xl:text-base font-semibold rounded-full transition-all cursor-pointer ${
                         frequency === 'once'
                           ? 'bg-white text-[#1c1c1a] shadow-sm'
                           : 'text-[#706e68] hover:text-[#1c1c1a]'
@@ -266,7 +266,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                     <button
                       type="button"
                       onClick={() => setFrequency('monthly')}
-                      className={`flex-1 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all cursor-pointer ${
+                      className={`flex-1 py-2 3xl:py-2.5 text-xs sm:text-sm 3xl:text-base font-semibold rounded-full transition-all cursor-pointer ${
                         frequency === 'monthly'
                           ? 'bg-white text-[#1c1c1a] shadow-sm'
                           : 'text-[#706e68] hover:text-[#1c1c1a]'
@@ -278,10 +278,10 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
                   {/* Amount Selection */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-2">
+                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-2">
                       Choose an amount
                     </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 3xl:gap-3 mb-3">
                       {[5000, 15000, 50000, 150000].map((amt) => {
                         const active = !isCustom && selectedAmount === amt;
                         return (
@@ -293,7 +293,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                               setIsCustom(false);
                               setCustomAmount('');
                             }}
-                            className={`py-3 px-2 rounded-2xl font-heading font-bold text-sm text-center transition-all cursor-pointer border ${
+                            className={`py-3 3xl:py-4 px-2 rounded-2xl font-heading font-bold text-sm 3xl:text-base text-center transition-all cursor-pointer border ${
                               active
                                 ? 'bg-maroon text-white border-maroon shadow-sm'
                                 : 'bg-[#fdfbf7] text-[#1c1c1a] border-[#e5e0d8] hover:bg-[#f5f1e8]'
@@ -307,7 +307,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
                     {/* Custom Amount */}
                     <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-bold text-[#706e68]">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm 3xl:text-base font-bold text-[#706e68]">
                         ₦
                       </span>
                       <input
@@ -319,7 +319,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                           setCustomAmount(val);
                           setIsCustom(true);
                         }}
-                        className={`w-full pl-8 pr-4 py-3 bg-[#fdfbf7] rounded-2xl border text-sm font-medium focus:outline-none focus:border-maroon focus:ring-1 focus:ring-maroon ${
+                        className={`w-full pl-8 pr-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border text-sm 3xl:text-base font-medium focus:outline-none focus:border-maroon focus:ring-1 focus:ring-maroon ${
                           isCustom ? 'border-maroon ring-1 ring-maroon' : 'border-[#e5e0d8]'
                         }`}
                       />
@@ -327,19 +327,19 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                   </div>
 
                   {/* Impact Line */}
-                  <div className="px-4 py-3 rounded-2xl bg-forest-tint text-forest border border-forest/20 text-xs sm:text-sm font-medium flex items-center gap-2">
+                  <div className="px-4 py-3 3xl:py-3.5 rounded-2xl bg-forest-tint text-forest border border-forest/20 text-xs sm:text-sm 3xl:text-base font-medium flex items-center gap-2">
                     <span>{getImpactText(currentAmount)}</span>
                   </div>
 
                   {/* Where should it go? */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1.5">
+                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1.5">
                       Where should it go?
                     </label>
                     <select
                       value={designation}
                       onChange={(e) => setDesignation(e.target.value)}
-                      className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                     >
                       <option value="Where it's needed most">Where it's needed most</option>
                       <option value="Scholarships">Scholarships</option>
@@ -352,14 +352,14 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
                   {/* Payment Method Toggle */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1.5">
+                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1.5">
                       How would you like to pay?
                     </label>
-                    <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 3xl:gap-3">
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('card')}
-                        className={`py-3 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer min-h-[44px] flex items-center justify-center text-center ${
+                        className={`py-3 3xl:py-4 px-3 rounded-2xl text-xs sm:text-sm 3xl:text-base font-semibold border transition-all cursor-pointer min-h-[44px] flex items-center justify-center text-center ${
                           paymentMethod === 'card'
                             ? 'bg-[#fdfbf7] text-maroon border-maroon shadow-sm'
                             : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
@@ -370,7 +370,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       <button
                         type="button"
                         onClick={() => setPaymentMethod('transfer')}
-                        className={`py-3 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer min-h-[44px] flex items-center justify-center text-center ${
+                        className={`py-3 3xl:py-4 px-3 rounded-2xl text-xs sm:text-sm 3xl:text-base font-semibold border transition-all cursor-pointer min-h-[44px] flex items-center justify-center text-center ${
                           paymentMethod === 'transfer'
                             ? 'bg-[#fdfbf7] text-maroon border-maroon shadow-sm'
                             : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
@@ -382,8 +382,8 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                   </div>
 
                   {paymentMethod === 'transfer' && (
-                    <div className="p-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-xs space-y-2">
-                      <div className="font-heading font-bold text-sm text-[#1c1c1a]">
+                    <div className="p-4 3xl:p-6 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-xs 3xl:text-sm space-y-2">
+                      <div className="font-heading font-bold text-sm 3xl:text-base text-[#1c1c1a]">
                         Official Donation Bank Account:
                       </div>
                       <div className="flex items-center justify-between">
@@ -397,7 +397,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       <div className="flex items-center justify-between">
                         <span className="text-[#706e68]">Account Number:</span>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-mono font-bold text-sm text-maroon">1309157309</span>
+                          <span className="font-mono font-bold text-sm 3xl:text-base text-maroon">1309157309</span>
                           <button
                             type="button"
                             onClick={handleCopyAccount}
@@ -412,14 +412,14 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                   )}
 
                   {/* Donor Details */}
-                  <form onSubmit={handleDonateSubmit} className="flex flex-col gap-3">
+                  <form onSubmit={handleDonateSubmit} className="flex flex-col gap-3 3xl:gap-4">
                     <div>
                       <input
                         type="text"
                         placeholder="Full name"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                       />
                     </div>
                     <div>
@@ -429,11 +429,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                         placeholder="Email (for your receipt)"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                       />
                     </div>
 
-                    <label className="flex items-center gap-2 text-xs text-[#706e68] cursor-pointer">
+                    <label className="flex items-center gap-2 text-xs 3xl:text-sm text-[#706e68] cursor-pointer">
                       <input
                         type="checkbox"
                         checked={isAnonymous}
@@ -446,7 +446,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                     <button
                       type="submit"
                       disabled={isDonating}
-                      className="btn-primary w-full py-4 text-base font-semibold shadow-md mt-2 flex items-center justify-center gap-2"
+                      className="btn-primary w-full py-4 3xl:py-5 text-base 3xl:text-lg font-semibold shadow-md mt-2 flex items-center justify-center gap-2"
                     >
                       {isDonating ? (
                         <span>Processing...</span>
@@ -458,7 +458,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       )}
                     </button>
 
-                    <div className="flex items-center justify-center gap-1.5 text-center text-[11px] text-[#706e68] mt-1">
+                    <div className="flex items-center justify-center gap-1.5 text-center text-[11px] 3xl:text-xs text-[#706e68] mt-1">
                       <Lock className="w-3.5 h-3.5 text-[#706e68] shrink-0" />
                       <span>Secure payment by Paystack · NGN, USD or GBP cards</span>
                     </div>
@@ -466,12 +466,12 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                 </div>
 
                 {/* Right Column: Reassurance & FAQ */}
-                <div className="lg:col-span-5 flex flex-col gap-6">
+                <div className="lg:col-span-5 flex flex-col gap-6 3xl:gap-8">
                   <div className="rounded-2xl overflow-hidden border border-[#e5e0d8] shadow-sm bg-white">
                     <img
                       src="/images/hero-debate-competition-makurdi.webp"
                       alt="Children in school uniform"
-                      className="w-full h-44 object-cover object-center"
+                      className="w-full h-44 3xl:h-56 4xl:h-64 object-cover object-center"
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = '/images/IMG_0294.JPG';
@@ -479,11 +479,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                     />
                   </div>
 
-                  <div className="bg-white rounded-3xl p-6 border border-[#e5e0d8] shadow-sm">
-                    <h4 className="font-heading font-bold text-sm text-[#1c1c1a] mb-3">
+                  <div className="bg-white rounded-3xl p-6 3xl:p-8 border border-[#e5e0d8] shadow-sm">
+                    <h4 className="font-heading font-bold text-sm 3xl:text-base text-[#1c1c1a] mb-3">
                       Why give through Ten Kind Hands
                     </h4>
-                    <ul className="space-y-3 text-xs text-[#4a4a46]">
+                    <ul className="space-y-3 3xl:space-y-4 text-xs 3xl:text-sm text-[#4a4a46]">
                       <li className="flex items-start gap-2.5">
                         <span className="text-forest text-sm font-bold mt-0.5">⬡</span>
                         <span><strong>Registered with CAC (RC 7015705).</strong> TEN KIND HANDS FOUNDATION.</span>
@@ -499,23 +499,23 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                     </ul>
                   </div>
 
-                  <div className="bg-white rounded-3xl p-6 border border-[#e5e0d8] shadow-sm">
-                    <h4 className="font-heading font-bold text-sm text-[#1c1c1a] mb-3">
+                  <div className="bg-white rounded-3xl p-6 3xl:p-8 border border-[#e5e0d8] shadow-sm">
+                    <h4 className="font-heading font-bold text-sm 3xl:text-base text-[#1c1c1a] mb-3">
                       Questions
                     </h4>
                     <div className="divide-y divide-[#e5e0d8]">
                       {faqs.map((faq, idx) => (
-                        <div key={idx} className="py-2.5">
+                        <div key={idx} className="py-2.5 3xl:py-3.5">
                           <button
                             type="button"
                             onClick={() => setFaqOpen(faqOpen === idx ? null : idx)}
-                            className="w-full flex items-center justify-between text-left text-xs font-semibold text-[#1c1c1a] hover:text-maroon transition-colors cursor-pointer"
+                            className="w-full flex items-center justify-between text-left text-xs 3xl:text-sm font-semibold text-[#1c1c1a] hover:text-maroon transition-colors cursor-pointer"
                           >
                             <span>{faq.q}</span>
-                            <span className="text-xs text-[#706e68] ml-2">{faqOpen === idx ? '−' : '+'}</span>
+                            <span className="text-xs 3xl:text-sm text-[#706e68] ml-2">{faqOpen === idx ? '−' : '+'}</span>
                           </button>
                           {faqOpen === idx && (
-                            <p className="text-xs text-[#4a4a46] mt-2 leading-relaxed animate-fade-in">
+                            <p className="text-xs 3xl:text-sm text-[#4a4a46] mt-2 leading-relaxed animate-fade-in">
                               {faq.a}
                             </p>
                           )}
@@ -523,7 +523,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       ))}
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-[#e5e0d8] text-xs text-[#4a4a46] flex items-center gap-2">
+                    <div className="mt-4 pt-3 border-t border-[#e5e0d8] text-xs 3xl:text-sm text-[#4a4a46] flex items-center gap-2">
                       <MessageCircle className="w-4 h-4 text-forest shrink-0" />
                       <span>
                         Prefer to talk first?{' '}
@@ -547,13 +547,13 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
         {/* 2. VOLUNTEER TAB (Artboard 06 Get involved) */}
         {activeTab === 'volunteer' && (
-          <div className="pt-4 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="pt-4 grid grid-cols-1 lg:grid-cols-12 gap-10 3xl:gap-16 4xl:gap-20 items-start">
             {/* Left: Volunteer Roles & Application Form */}
-            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-[#e5e0d8] shadow-sm">
-              <h2 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-2">
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 3xl:p-12 border border-[#e5e0d8] shadow-sm">
+              <h2 className="font-heading font-bold text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2">
                 Join our nationwide volunteer team
               </h2>
-              <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
+              <p className="text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-6">
                 We organize on-the-ground outreaches in schools, clinics, and villages across 7 States (FCT Abuja, Benue, Katsina, Plateau, Lagos, Oyo, and Enugu).
               </p>
 
@@ -567,9 +567,9 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleVolSubmit} className="space-y-4">
+                <form onSubmit={handleVolSubmit} className="space-y-4 3xl:space-y-6">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                       Full Name
                     </label>
                     <input
@@ -578,13 +578,13 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       value={volForm.name}
                       onChange={(e) => setVolForm({ ...volForm, name: e.target.value })}
                       placeholder="e.g. Samuel Adekunle"
-                      className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 3xl:gap-6">
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                      <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                         Email Address
                       </label>
                       <input
@@ -593,11 +593,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                         value={volForm.email}
                         onChange={(e) => setVolForm({ ...volForm, email: e.target.value })}
                         placeholder="yourname@domain.com"
-                        className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                      <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                         Phone / WhatsApp
                       </label>
                       <input
@@ -606,20 +606,20 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                         value={volForm.phone}
                         onChange={(e) => setVolForm({ ...volForm, phone: e.target.value })}
                         placeholder="+234 800 000 0000"
-                        className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 3xl:gap-6">
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                      <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                         Volunteer Role
                       </label>
                       <select
                         value={volForm.role}
                         onChange={(e) => setVolForm({ ...volForm, role: e.target.value })}
-                        className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                       >
                         <option value="Education tutor & mentor">Education tutor &amp; mentor</option>
                         <option value="Healthcare team / Nurse / Doctor">Healthcare team / Nurse / Doctor</option>
@@ -629,13 +629,13 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                      <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                         Primary Location
                       </label>
                       <select
                         value={volForm.state}
                         onChange={(e) => setVolForm({ ...volForm, state: e.target.value })}
-                        className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                       >
                         <option value="FCT Abuja">FCT Abuja</option>
                         <option value="Benue State">Benue State</option>
@@ -650,7 +650,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                       Skills &amp; Experience (Optional)
                     </label>
                     <textarea
@@ -658,14 +658,14 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       value={volForm.skills}
                       onChange={(e) => setVolForm({ ...volForm, skills: e.target.value })}
                       placeholder="Tell us briefly about your background or why you'd like to volunteer..."
-                      className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isVolSubmitting}
-                    className="btn-primary w-full py-4 text-base font-semibold shadow-md mt-2"
+                    className="btn-primary w-full py-4 3xl:py-5 text-base 3xl:text-lg font-semibold shadow-md mt-2"
                   >
                     {isVolSubmitting ? 'Submitting application...' : 'Submit volunteer application'}
                   </button>
@@ -674,16 +674,16 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
             </div>
 
             {/* Right: In-kind Wishlist */}
-            <div className="lg:col-span-5 flex flex-col gap-6">
-              <div className="bg-[#f5f1e8] rounded-3xl p-6 sm:p-8 border border-[#e5e0d8]">
-                <h3 className="font-heading font-bold text-xl text-[#1c1c1a] mb-2">
+            <div className="lg:col-span-5 flex flex-col gap-6 3xl:gap-8">
+              <div className="bg-[#f5f1e8] rounded-3xl p-6 sm:p-8 3xl:p-12 border border-[#e5e0d8]">
+                <h3 className="font-heading font-bold text-xl 3xl:text-2xl text-[#1c1c1a] mb-2">
                   In-kind supplies wishlist
                 </h3>
-                <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4">
+                <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-4">
                   We accept new and gently-used items directly from individuals, schools, and corporate sponsors:
                 </p>
 
-                <ul className="space-y-3 text-xs sm:text-sm text-[#4a4a46]">
+                <ul className="space-y-3 3xl:space-y-4 text-xs sm:text-sm 3xl:text-base text-[#4a4a46]">
                   <li className="flex items-start gap-2.5">
                     <span className="text-forest font-bold">✓</span>
                     <span><strong>School stationery:</strong> Exercise books, biros, pencils, math sets.</span>
@@ -702,7 +702,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                   </li>
                 </ul>
 
-                <div className="mt-6 pt-4 border-t border-[#e5e0d8] text-xs text-[#706e68]">
+                <div className="mt-6 pt-4 border-t border-[#e5e0d8] text-xs 3xl:text-sm text-[#706e68]">
                   Delivery to National Secretariat: Danglo Plaza 204, Gwarinpa, Abuja.
                 </div>
               </div>
@@ -712,11 +712,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
         {/* 3. PARTNER TAB */}
         {activeTab === 'partner' && (
-          <div className="pt-4 max-w-3xl bg-white rounded-3xl p-6 sm:p-10 border border-[#e5e0d8] shadow-sm">
-            <h2 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-2">
+          <div className="pt-4 max-w-3xl 3xl:max-w-4xl 4xl:max-w-5xl bg-white rounded-3xl p-6 sm:p-10 3xl:p-14 border border-[#e5e0d8] shadow-sm">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2">
               Partner with Ten Kind Hands
             </h2>
-            <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-6">
+            <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-6">
               Corporate CSR programs, faith-based institutions, and diaspora associations partner with us for 100% direct-delivery humanitarian missions with audited photo dispatches.
             </p>
 
@@ -730,9 +730,9 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handlePartSubmit} className="space-y-4">
+              <form onSubmit={handlePartSubmit} className="space-y-4 3xl:space-y-6">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                     Organization / Company Name
                   </label>
                   <input
@@ -741,13 +741,13 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                     value={partForm.orgName}
                     onChange={(e) => setPartForm({ ...partForm, orgName: e.target.value })}
                     placeholder="e.g. Apex Energy Ltd"
-                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 3xl:gap-6">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                       Contact Person
                     </label>
                     <input
@@ -756,11 +756,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       value={partForm.contactName}
                       onChange={(e) => setPartForm({ ...partForm, contactName: e.target.value })}
                       placeholder="e.g. Dr. Ngozi Okafor"
-                      className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                       Official Email
                     </label>
                     <input
@@ -769,19 +769,19 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                       value={partForm.email}
                       onChange={(e) => setPartForm({ ...partForm, email: e.target.value })}
                       placeholder="official@company.com"
-                      className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                     Partnership Focus
                   </label>
                   <select
                     value={partForm.type}
                     onChange={(e) => setPartForm({ ...partForm, type: e.target.value })}
-                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                   >
                     <option value="Corporate CSR Sponsorship">Corporate CSR Sponsorship</option>
                     <option value="School Computer Lab Commissioning">School Computer Lab Commissioning</option>
@@ -791,7 +791,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
                     Notes or Scope
                   </label>
                   <textarea
@@ -799,14 +799,14 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
                     value={partForm.notes}
                     onChange={(e) => setPartForm({ ...partForm, notes: e.target.value })}
                     placeholder="Briefly state intended states, budget scope, or specific goals..."
-                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isPartSubmitting}
-                  className="btn-primary w-full py-4 text-base font-semibold shadow-md mt-2"
+                  className="btn-primary w-full py-4 3xl:py-5 text-base 3xl:text-lg font-semibold shadow-md mt-2"
                 >
                   {isPartSubmitting ? 'Submitting proposal...' : 'Submit partnership inquiry'}
                 </button>

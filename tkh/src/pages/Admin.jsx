@@ -495,8 +495,8 @@ export default function Admin({ setCurrentPage }) {
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-forest/30 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="max-w-md w-full relative z-10">
-          <div className="bg-[#1a332c]/90 backdrop-blur-xl border border-[#2a4d44] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl">
+        <div className="max-w-md 3xl:max-w-lg 4xl:max-w-xl w-full relative z-10">
+          <div className="bg-[#1a332c]/90 backdrop-blur-xl border border-[#2a4d44] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 3xl:p-12 4xl:p-14 shadow-2xl">
             <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#1f3b34] border border-[#2e564c] p-2 flex items-center justify-center shadow-inner mb-3.5 sm:mb-4">
                 <img
@@ -670,12 +670,12 @@ export default function Admin({ setCurrentPage }) {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#142722] text-[#d4cdc3] flex flex-col border-r border-[#1f3b34] transition-transform duration-300 ease-in-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 shrink-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 3xl:w-80 4xl:w-96 max-w-[85vw] bg-[#142722] text-[#d4cdc3] flex flex-col border-r border-[#1f3b34] transition-transform duration-300 ease-in-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 shrink-0 ${
           mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Brand Header */}
-        <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-[#1f3b34] flex items-center justify-between">
+        <div className="px-5 sm:px-6 3xl:px-7 py-4 sm:py-5 3xl:py-6 border-b border-[#1f3b34] flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#1f3b34] border border-[#2a4d44] p-1 flex items-center justify-center shrink-0">
               <img
@@ -801,7 +801,7 @@ export default function Admin({ setCurrentPage }) {
       <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden relative">
 
         {/* Top Application Header */}
-        <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e7e2d8] px-3 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-16 3xl:h-20 bg-white/95 backdrop-blur-md border-b border-[#e7e2d8] px-3 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 flex items-center justify-between sticky top-0 z-30 shadow-xs">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => setMobileSidebarOpen(true)}
@@ -869,7 +869,7 @@ export default function Admin({ setCurrentPage }) {
         </header>
 
         {/* Dynamic Tab Body */}
-        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl 2xl:max-w-[1440px] w-full mx-auto space-y-6 sm:space-y-8 relative z-10">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 3xl:p-12 4xl:p-16 max-w-7xl 2xl:max-w-[1440px] 3xl:max-w-[1840px] 4xl:max-w-[2440px] uw:max-w-[3100px] suw:max-w-[4200px] w-full mx-auto space-y-6 sm:space-y-8 3xl:space-y-10 relative z-10">
           {/* =================================================================
               1. DASHBOARD OVERVIEW
           ================================================================= */}
@@ -896,7 +896,7 @@ export default function Admin({ setCurrentPage }) {
                 <h2 className="text-xs font-heading font-bold uppercase tracking-wider text-ink-muted mb-3">
                   Website Page Editors Quick Access
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 3xl:grid-cols-4 4xl:grid-cols-7 uw:grid-cols-7 gap-4 3xl:gap-6">
                   {/* Home Page Card */}
                   <div
                     onClick={() => setActiveTab('page-home')}
@@ -1168,7 +1168,7 @@ export default function Admin({ setCurrentPage }) {
               </div>
 
               {/* Outreaches Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 3xl:grid-cols-3 4xl:grid-cols-4 uw:grid-cols-5 gap-5 3xl:gap-6">
                 {filteredOutreaches.map((item) => {
                   const isUpcoming = item.status === 'upcoming';
                   return (
@@ -1316,14 +1316,14 @@ export default function Admin({ setCurrentPage }) {
               </div>
 
               {/* Dispatches Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 uw:grid-cols-6 gap-5 3xl:gap-6">
                 {filteredNews.map((item) => (
                   <div
                     key={item.id}
                     className="bg-white rounded-2xl border border-[#e7e2d8] overflow-hidden shadow-xs flex flex-col justify-between hover:border-forest/40 transition-all group"
                   >
                     <div>
-                      <div className="h-44 overflow-hidden relative bg-sand">
+                      <div className="h-44 3xl:h-52 4xl:h-60 overflow-hidden relative bg-sand">
                         <img
                           src={encodeURI(item.image)}
                           alt={item.title}
@@ -1518,7 +1518,7 @@ export default function Admin({ setCurrentPage }) {
               9. CLOUD BACKUP & DATABASE SYSTEM
           ================================================================= */}
           {activeTab === 'system-backup' && (
-            <div className="space-y-6 animate-fade-in max-w-3xl">
+            <div className="space-y-6 animate-fade-in max-w-3xl 3xl:max-w-4xl 4xl:max-w-5xl">
               <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs">
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -1631,7 +1631,7 @@ export default function Admin({ setCurrentPage }) {
               10. SECURITY & PASSWORD MANAGEMENT
           ================================================================= */}
           {activeTab === 'system-security' && (
-            <div className="space-y-6 animate-fade-in max-w-3xl">
+            <div className="space-y-6 animate-fade-in max-w-3xl 3xl:max-w-4xl 4xl:max-w-5xl">
               <div className="bg-white rounded-2xl border border-[#e7e2d8] p-5 sm:p-8 shadow-xs">
                 {/* Password Change Form */}
                 <div className="border border-[#e7e2d8] rounded-xl p-4 sm:p-5 bg-[#faf8f5]/60">
@@ -1756,7 +1756,7 @@ export default function Admin({ setCurrentPage }) {
       ===================================================================== */}
       {newsModalOpen && (
         <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl 3xl:max-w-3xl 4xl:max-w-4xl w-full p-4 sm:p-6 md:p-8 3xl:p-10 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
               <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingNews ? 'Edit Field Dispatch' : 'Publish New Field Dispatch'}
@@ -1887,7 +1887,7 @@ export default function Admin({ setCurrentPage }) {
       ===================================================================== */}
       {outreachModalOpen && (
         <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-2xl 3xl:max-w-3xl 4xl:max-w-4xl w-full p-4 sm:p-6 md:p-8 3xl:p-10 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
               <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingOutreach ? 'Edit Outreach Mission' : 'Schedule New Field Mission'}
@@ -2075,7 +2075,7 @@ export default function Admin({ setCurrentPage }) {
       ===================================================================== */}
       {metricModalOpen && (
         <div className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-y-auto animate-fade-in">
-          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-md w-full p-4 sm:p-6 md:p-8 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-md 3xl:max-w-xl 4xl:max-w-2xl w-full p-4 sm:p-6 md:p-8 3xl:p-10 shadow-2xl border border-[#e7e2d8] max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-[#e7e2d8]">
               <h2 className="text-base sm:text-lg font-heading font-bold text-ink">
                 {editingMetric ? 'Edit Impact Counter' : 'Add Impact Counter'}

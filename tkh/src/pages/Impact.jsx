@@ -123,38 +123,38 @@ export default function Impact({ onOpenDonate }) {
 
 
   return (
-    <div className="pt-8 sm:pt-14 animate-fade-in bg-white pb-16 sm:pb-20">
+    <div className="pt-8 sm:pt-14 3xl:pt-18 animate-fade-in bg-white pb-16 sm:pb-20 3xl:pb-28">
       {/* Hero Section */}
-      <section className="relative py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl 2xl:max-w-[1440px] mx-auto overflow-hidden">
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-6 flex flex-col gap-4 sm:gap-5">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sand text-primary font-bold text-xs uppercase tracking-widest w-fit border border-[#e7e2d8] font-heading">
-              <ShieldCheck className="w-4 h-4" />
+      <section className="relative py-8 sm:py-12 md:py-16 3xl:py-20 px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 uw:px-20 max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto overflow-hidden">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 3xl:gap-16 4xl:gap-20 items-center">
+          <div className="lg:col-span-6 flex flex-col gap-4 sm:gap-5 3xl:gap-7">
+            <div className="inline-flex items-center gap-2 px-3.5 3xl:px-5 py-1.5 3xl:py-2 rounded-full bg-sand text-primary font-bold text-xs 3xl:text-sm uppercase tracking-widest w-fit border border-[#e7e2d8] font-heading">
+              <ShieldCheck className="w-4 h-4 3xl:w-5 3xl:h-5" />
               <span>Accountability in Action</span>
             </div>
 
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-ink leading-[1.15] tracking-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl 4xl:text-7xl font-heading font-extrabold text-ink leading-[1.15] tracking-tight">
               Transparency in Practice. <br />
               <span className="text-primary">Measurable Impact.</span>
             </h1>
 
-            <p className="text-sm sm:text-base lg:text-lg text-ink-light leading-relaxed font-normal">
+            <p className="text-sm sm:text-base lg:text-lg 3xl:text-xl text-ink-light leading-relaxed font-normal max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl">
               Every naira donated and every volunteer hour supports measurable, verifiable outcomes for children, women, and vulnerable communities. Explore our impact metrics across Nigeria below.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
               <button
                 onClick={onOpenDonate}
-                className="btn-primary w-full sm:w-auto text-xs md:text-sm px-6 sm:px-8 py-3.5 flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold min-h-[44px]"
+                className="btn-primary w-full sm:w-auto text-xs md:text-sm 3xl:text-base px-6 sm:px-8 3xl:px-10 py-3.5 3xl:py-4 flex items-center justify-center gap-2 cursor-pointer shadow-md font-heading font-semibold min-h-[44px]"
               >
                 <span>Back Our Next Milestone</span>
-                <Heart className="w-4 h-4" />
+                <Heart className="w-4 h-4 3xl:w-5 3xl:h-5" />
               </button>
             </div>
           </div>
 
           <div className="lg:col-span-6">
-            <div className="h-[240px] xs:h-[300px] sm:h-[380px] lg:h-[400px] rounded-3xl overflow-hidden bg-white p-2 border border-[#e7e2d8] shadow-xs">
+            <div className="h-[240px] xs:h-[300px] sm:h-[380px] lg:h-[400px] 3xl:h-[500px] 4xl:h-[600px] rounded-3xl overflow-hidden bg-white p-2 border border-[#e7e2d8] shadow-xs">
               <div
                 className="w-full h-full rounded-2xl bg-cover bg-center"
                 style={{
@@ -167,35 +167,35 @@ export default function Impact({ onOpenDonate }) {
       </section>
 
       {/* Metrics Bento Section */}
-      <section className="relative py-10 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl 2xl:max-w-[1440px] mx-auto overflow-hidden">
+      <section className="relative py-10 sm:py-16 3xl:py-20 px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 uw:px-20 max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto overflow-hidden">
         <div className="relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-            <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
+          <div className="text-center max-w-2xl 3xl:max-w-3xl mx-auto mb-8 sm:mb-10 3xl:mb-14">
+            <span className="text-xs 3xl:text-sm uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
               Proven Performance
             </span>
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-heading font-bold text-ink">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl 3xl:text-5xl font-heading font-bold text-ink">
               Core Headline Indicators
             </h2>
 
             {/* Filter Pills */}
-            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg mx-auto mt-6">
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 3xl:gap-3 p-1.5 3xl:p-2 rounded-2xl sm:rounded-full bg-sand border border-[#e7e2d8] max-w-lg 3xl:max-w-xl mx-auto mt-6">
               <button
                 onClick={() => setActiveTab('all')}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${activeTab === 'all' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                className={`px-4 sm:px-5 3xl:px-6 py-2 3xl:py-2.5 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${activeTab === 'all' ? 'bg-ink text-white shadow-xs' : 'text-ink-light hover:text-ink'
                   }`}
               >
                 All Metrics
               </button>
               <button
                 onClick={() => setActiveTab('education')}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${activeTab === 'education' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                className={`px-4 sm:px-5 3xl:px-6 py-2 3xl:py-2.5 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${activeTab === 'education' ? 'bg-primary text-white shadow-xs' : 'text-ink-light hover:text-ink'
                   }`}
               >
                 Education
               </button>
               <button
                 onClick={() => setActiveTab('healthcare')}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${activeTab === 'healthcare' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
+                className={`px-4 sm:px-5 3xl:px-6 py-2 3xl:py-2.5 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer font-heading min-h-[40px] flex items-center justify-center ${activeTab === 'healthcare' ? 'bg-forest text-white shadow-xs' : 'text-ink-light hover:text-ink'
                   }`}
               >
                 Healthcare
@@ -203,8 +203,8 @@ export default function Impact({ onOpenDonate }) {
             </div>
           </div>
 
-          {/* Bento Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Bento Grid: expands intelligently on ultra-wide */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-3 uw:grid-cols-6 gap-6 3xl:gap-8 4xl:gap-10">
             {filteredMetrics.map((item) => {
               const IconComponent = typeof item.icon === 'function'
                 ? item.icon
@@ -216,32 +216,32 @@ export default function Impact({ onOpenDonate }) {
               return (
                 <div
                   key={item.id}
-                  className="p-5 sm:p-7 rounded-3xl bg-white/95 backdrop-blur-xs border border-[#e7e2d8] shadow-xs flex flex-col justify-between group hover:border-primary/40 transition-colors"
+                  className="p-5 sm:p-7 3xl:p-8 rounded-3xl bg-white/95 backdrop-blur-xs border border-[#e7e2d8] shadow-xs flex flex-col justify-between group hover:border-primary/40 transition-colors"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="w-11 h-11 rounded-2xl bg-sand border border-[#e7e2d8] flex items-center justify-center">
-                        <IconComponent className={`w-5 h-5 ${item.color}`} />
+                      <div className="w-11 h-11 3xl:w-14 3xl:h-14 rounded-2xl bg-sand border border-[#e7e2d8] flex items-center justify-center">
+                        <IconComponent className={`w-5 h-5 3xl:w-7 3xl:h-7 ${item.color}`} />
                       </div>
-                      <span className="px-3 py-1 rounded-full bg-sand border border-[#e7e2d8] text-[11px] font-bold text-emerald-800 flex items-center gap-1 font-heading">
+                      <span className="px-3 py-1 3xl:px-3.5 3xl:py-1.5 rounded-full bg-sand border border-[#e7e2d8] text-[11px] 3xl:text-xs font-bold text-emerald-800 flex items-center gap-1 font-heading">
                         <TrendingUp className="w-3.5 h-3.5 text-emerald-700" />
                         {item.growth}
                       </span>
                     </div>
 
-                    <span className="text-[11px] uppercase tracking-wider text-ink-muted font-bold block mb-1 font-heading">
+                    <span className="text-[11px] 3xl:text-xs uppercase tracking-wider text-ink-muted font-bold block mb-1 font-heading">
                       {item.label}
                     </span>
 
-                    <div className="font-mono text-4xl font-bold text-primary mb-1">
+                    <div className="font-mono text-4xl 3xl:text-5xl font-bold text-primary mb-1">
                       {item.stat}
                     </div>
 
-                    <h3 className="text-base font-heading font-bold text-ink mb-2">
+                    <h3 className="text-base 3xl:text-lg font-heading font-bold text-ink mb-2">
                       {item.description}
                     </h3>
 
-                    <p className="text-xs text-ink-light leading-relaxed">
+                    <p className="text-xs 3xl:text-sm text-ink-light leading-relaxed">
                       {item.detail}
                     </p>
                   </div>
@@ -253,50 +253,50 @@ export default function Impact({ onOpenDonate }) {
       </section>
 
       {/* Regional Reach Distribution Table */}
-      <section className="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl 2xl:max-w-[1440px] mx-auto">
-        <div className="bg-white p-5 sm:p-8 md:p-10 rounded-3xl border border-[#e7e2d8] shadow-xs">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+      <section className="py-10 3xl:py-16 px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 uw:px-20 max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto">
+        <div className="bg-white p-5 sm:p-8 md:p-10 3xl:p-12 rounded-3xl border border-[#e7e2d8] shadow-xs">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 3xl:mb-8">
             <div>
-              <span className="text-xs uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
+              <span className="text-xs 3xl:text-sm uppercase tracking-widest text-primary font-bold block mb-1 font-heading">
                 Geographic Reach
               </span>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold text-ink">
+              <h3 className="text-xl sm:text-2xl md:text-3xl 3xl:text-4xl font-heading font-bold text-ink">
                 Impact by Nigerian Region
               </h3>
-              <p className="text-xs sm:text-sm font-semibold text-primary mt-1 font-heading">
+              <p className="text-xs sm:text-sm 3xl:text-base font-semibold text-primary mt-1 font-heading">
                 STATES: Abuja | Benue | Plateau | Oyo | Lagos
               </p>
             </div>
-            <span className="px-4 py-2 rounded-xl bg-sand text-xs font-bold text-forest flex items-center gap-1.5 border border-[#e7e2d8] font-heading">
-              <Globe className="w-4 h-4" />
+            <span className="px-4 py-2 3xl:px-5 3xl:py-2.5 rounded-xl bg-sand text-xs 3xl:text-sm font-bold text-forest flex items-center gap-1.5 border border-[#e7e2d8] font-heading">
+              <Globe className="w-4 h-4 3xl:w-5 3xl:h-5" />
               over 200 communities reached
             </span>
           </div>
 
           <div className="overflow-x-auto -mx-1 px-1">
-            <table className="w-full text-left text-sm min-w-[680px]">
+            <table className="w-full text-left text-sm 3xl:text-base min-w-[680px]">
               <thead>
-                <tr className="border-b border-[#e7e2d8] text-xs font-heading text-ink-muted uppercase">
-                  <th className="pb-3 px-3">STATE</th>
-                  <th className="pb-3 px-3">EDUCATION</th>
-                  <th className="pb-3 px-3">HEALTH</th>
-                  <th className="pb-3 px-3">WOMEN</th>
-                  <th className="pb-3 px-3">CHILDREN</th>
-                  <th className="pb-3 px-3">ORPHANAGE</th>
+                <tr className="border-b border-[#e7e2d8] text-xs 3xl:text-sm font-heading text-ink-muted uppercase">
+                  <th className="pb-3 3xl:pb-4 px-3 3xl:px-5">STATE</th>
+                  <th className="pb-3 3xl:pb-4 px-3 3xl:px-5">EDUCATION</th>
+                  <th className="pb-3 3xl:pb-4 px-3 3xl:px-5">HEALTH</th>
+                  <th className="pb-3 3xl:pb-4 px-3 3xl:px-5">WOMEN</th>
+                  <th className="pb-3 3xl:pb-4 px-3 3xl:px-5">CHILDREN</th>
+                  <th className="pb-3 3xl:pb-4 px-3 3xl:px-5">ORPHANAGE</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#f8f6f2]">
                 {regionalReach.map((r, i) => (
                   <tr key={i} className="hover:bg-sand transition-colors">
-                    <td className="py-3.5 px-3 font-bold text-ink flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-primary shrink-0" />
+                    <td className="py-3.5 3xl:py-4 px-3 3xl:px-5 font-bold text-ink flex items-center gap-2">
+                      <MapPin className="w-4 h-4 3xl:w-5 3xl:h-5 text-primary shrink-0" />
                       <span>{r.state}</span>
                     </td>
-                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.education}</td>
-                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.health}</td>
-                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.women}</td>
-                    <td className="py-3.5 px-3 text-ink-light font-medium">{r.children}</td>
-                    <td className="py-3.5 px-3 font-bold text-primary font-mono">{r.orphanage}</td>
+                    <td className="py-3.5 3xl:py-4 px-3 3xl:px-5 text-ink-light font-medium">{r.education}</td>
+                    <td className="py-3.5 3xl:py-4 px-3 3xl:px-5 text-ink-light font-medium">{r.health}</td>
+                    <td className="py-3.5 3xl:py-4 px-3 3xl:px-5 text-ink-light font-medium">{r.women}</td>
+                    <td className="py-3.5 3xl:py-4 px-3 3xl:px-5 text-ink-light font-medium">{r.children}</td>
+                    <td className="py-3.5 3xl:py-4 px-3 3xl:px-5 font-bold text-primary font-mono">{r.orphanage}</td>
                   </tr>
                 ))}
               </tbody>

@@ -197,14 +197,14 @@ export default function ContactPageEditor({
           <div className="bg-white rounded-2xl border border-[#e7e2d8] overflow-hidden shadow-xs">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs min-w-[640px]">
-                <thead className="bg-sand/70 text-[11px] font-heading font-bold text-ink-muted uppercase tracking-wider border-b border-[#e7e2d8]">
+                <thead className="bg-sand/70 text-[11px] 3xl:text-xs font-heading font-bold text-ink-muted uppercase tracking-wider border-b border-[#e7e2d8]">
                   <tr>
-                    <th className="py-3 px-4">Contact</th>
-                    <th className="py-3 px-4">Category</th>
-                    <th className="py-3 px-4">Message</th>
-                    <th className="py-3 px-4">Date</th>
-                    <th className="py-3 px-4">Status</th>
-                    <th className="py-3 px-4 text-right">Actions</th>
+                    <th className="py-3 3xl:py-4 px-4 3xl:px-6">Contact</th>
+                    <th className="py-3 3xl:py-4 px-4 3xl:px-6">Category</th>
+                    <th className="py-3 3xl:py-4 px-4 3xl:px-6">Message</th>
+                    <th className="py-3 3xl:py-4 px-4 3xl:px-6">Date</th>
+                    <th className="py-3 3xl:py-4 px-4 3xl:px-6">Status</th>
+                    <th className="py-3 3xl:py-4 px-4 3xl:px-6 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#e7e2d8]/60">
@@ -280,7 +280,7 @@ export default function ContactPageEditor({
           SECTION 2: SECRETARIAT CONTACT DETAILS
       ===================================================================== */}
       {activeSection === 'secretariat' && (
-        <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 shadow-xs space-y-6">
+        <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 sm:p-8 3xl:p-10 shadow-xs space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#e7e2d8]">
             <div>
               <h2 className="text-base font-heading font-bold text-ink">

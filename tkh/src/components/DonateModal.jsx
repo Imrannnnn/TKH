@@ -152,13 +152,13 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
-      <div className="relative w-full max-w-4xl bg-[#fdfbf7] rounded-2xl sm:rounded-3xl border border-[#e5e0d8] shadow-2xl overflow-hidden my-auto max-h-[94vh] sm:max-h-[92vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 3xl:p-10 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fade-in">
+      <div className="relative w-full max-w-4xl 3xl:max-w-5xl 4xl:max-w-6xl bg-[#fdfbf7] rounded-2xl sm:rounded-3xl 3xl:rounded-4xl border border-[#e5e0d8] shadow-2xl overflow-hidden my-auto max-h-[94vh] sm:max-h-[92vh] flex flex-col">
         
         {/* Top Header */}
-        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#e5e0d8] flex items-center justify-between bg-white shrink-0 gap-3">
+        <div className="px-4 sm:px-6 3xl:px-8 py-3.5 sm:py-4 3xl:py-5 border-b border-[#e5e0d8] flex items-center justify-between bg-white shrink-0 gap-3">
           <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white border border-[#e5e0d8] flex items-center justify-center p-0.5 shadow-xs shrink-0">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 3xl:w-10 3xl:h-10 rounded-lg bg-white border border-[#e5e0d8] flex items-center justify-center p-0.5 shadow-xs shrink-0">
               <img
                 src="/logo.png"
                 alt="Ten Kind Hands Logo"
@@ -169,44 +169,44 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                 }}
               />
             </div>
-            <span className="font-heading font-bold text-xs sm:text-base text-[#1c1c1a] truncate">
+            <span className="font-heading font-bold text-xs sm:text-base 3xl:text-lg text-[#1c1c1a] truncate">
               Ten Kind Hands · Support Our Frontline Work
             </span>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-[#f5f1e8] text-[#706e68] hover:text-[#1c1c1a] transition-colors cursor-pointer shrink-0"
+            className="p-1.5 3xl:p-2 rounded-full hover:bg-[#f5f1e8] text-[#706e68] hover:text-[#1c1c1a] transition-colors cursor-pointer shrink-0"
             aria-label="Close"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 3xl:w-6 3xl:h-6" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto">
+        <div className="p-4 sm:p-6 lg:p-8 3xl:p-10 overflow-y-auto">
           {submittedSuccess ? (
-            <div className="py-12 text-center max-w-md mx-auto">
-              <div className="w-16 h-16 rounded-full bg-forest-tint text-forest flex items-center justify-center mx-auto mb-4">
-                <Check className="w-8 h-8 stroke-[2.5]" />
+            <div className="py-12 3xl:py-16 text-center max-w-md 3xl:max-w-lg mx-auto">
+              <div className="w-16 h-16 3xl:w-20 3xl:h-20 rounded-full bg-forest-tint text-forest flex items-center justify-center mx-auto mb-4">
+                <Check className="w-8 h-8 3xl:w-10 3xl:h-10 stroke-[2.5]" />
               </div>
-              <h3 className="font-heading font-bold text-2xl text-[#1c1c1a] mb-2">
+              <h3 className="font-heading font-bold text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2">
                 Thank you for your generous heart!
               </h3>
-              <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
+              <p className="text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-6">
                 Your contribution of <strong>₦{currentAmount.toLocaleString()}</strong> has been recorded. An official receipt has been sent to <strong>{email}</strong>. 100% of your gift will fund frontline deliverables.
               </p>
               <button
                 onClick={onClose}
-                className="btn-primary px-8 py-3 text-sm"
+                className="btn-primary px-8 3xl:px-10 py-3 3xl:py-3.5 text-sm 3xl:text-base"
               >
                 Return to website
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 3xl:gap-12 items-start">
               
               {/* Left Column: Form */}
-              <div className="lg:col-span-7 flex flex-col gap-5">
+              <div className="lg:col-span-7 flex flex-col gap-5 3xl:gap-6">
                 <div>
                   <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#1c1c1a] mb-1 leading-snug">
                     Give a child the tools to stay in school.

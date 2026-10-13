@@ -10,7 +10,7 @@ export default function NotFound({ setCurrentPage }) {
 
   return (
     <div className="pt-16 sm:pt-24 pb-16 sm:pb-24 px-4 sm:px-6 min-h-[75vh] flex items-center justify-center bg-sand relative overflow-hidden animate-fade-in">
-      <div className="max-w-xl mx-auto text-center relative z-10 bg-white/95 backdrop-blur-xs p-6 sm:p-12 rounded-3xl border border-[#e7e2d8] shadow-sm">
+      <div className="max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl mx-auto text-center relative z-10 bg-white/95 backdrop-blur-xs p-6 sm:p-12 3xl:p-16 rounded-3xl border border-[#e7e2d8] shadow-sm">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-mono font-bold uppercase tracking-wider mb-4 border border-primary/20">
           <Globe className="w-3.5 h-3.5" />
           <span>Error 404 • Page Not Found</span>
