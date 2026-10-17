@@ -232,6 +232,44 @@ h1, h2, h3, h4, h5, h6, .editorial-title {
   animation: marqueeScroll 12s linear infinite;
 }
 
+/* Institutional Partner Carousel Infinite Marquee */
+@keyframes partnerMarqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-partner-marquee {
+  display: flex;
+  width: max-content;
+  animation: partnerMarqueeScroll 50s linear infinite;
+  will-change: transform;
+}
+
+.partner-marquee-paused {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 640px) {
+  .animate-partner-marquee {
+    animation-duration: 38s;
+  }
+}
+
+/* Hide scrollbars utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
 /* =====================================================================
    ULTRA-WIDE, HIGH-DPI & 21:9 / 32:9 RESPONSIVE DISPLAY UTILITIES
    ===================================================================== */
@@ -239,7 +277,7 @@ h1, h2, h3, h4, h5, h6, .editorial-title {
 /* Fluid Ultra-Wide Page Container */
 .container-ultra {
   width: 100%;
-  max-width: 1280px;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
@@ -260,50 +298,103 @@ h1, h2, h3, h4, h5, h6, .editorial-title {
   }
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 1280px) {
   .container-ultra {
-    max-width: 1480px;
+    max-width: 1440px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1360px) {
+  .container-ultra {
+    max-width: 1520px;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
   }
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 1680px) {
   .container-ultra {
-    max-width: 1800px;
+    max-width: 100%;
     padding-left: 3rem;
     padding-right: 3rem;
   }
 }
 
+@media (min-width: 1920px) {
+  .container-ultra {
+    max-width: 100%;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+}
+
 @media (min-width: 2560px) {
   .container-ultra {
-    max-width: 2280px;
-    padding-left: 4rem;
-    padding-right: 4rem;
+    max-width: 100%;
+    padding-left: 4.5rem;
+    padding-right: 4.5rem;
   }
 }
 
 @media (min-width: 3440px) {
   .container-ultra {
-    max-width: 2880px;
+    max-width: 100%;
     padding-left: 5rem;
     padding-right: 5rem;
   }
 }
 
-@media (min-width: 5120px) {
-  .container-ultra {
-    max-width: 3800px;
-    padding-left: 6rem;
-    padding-right: 6rem;
+/* Responsive container max-width scaling to prevent arbitrary zoom bottlenecks */
+.max-w-7xl {
+  max-width: min(100%, 1440px);
+}
+
+@media (min-width: 1360px) {
+  .\32 xl\:max-w-\[1500px\] {
+    max-width: 1520px;
+  }
+}
+
+@media (min-width: 1680px) {
+  .\33 xl\:max-w-\[1800px\] {
+    max-width: 1840px;
+  }
+}
+
+/* 2560x1440 (QHD), 2K, 4K & Ultra-Wide: Fill 100% of available screen width without lateral empty space */
+@media (min-width: 1920px) {
+  .\34 xl\:max-w-\[2280px\],
+  .\34 xl\:max-w-\[2440px\],
+  .\34 xl\:max-w-\[1800px\],
+  .uw\:max-w-\[2880px\],
+  .uw\:max-w-\[2200px\],
+  .uw\:max-w-\[3100px\],
+  .suw\:max-w-\[3800px\],
+  .suw\:max-w-\[4200px\],
+  .container-ultra,
+  .container-canvas {
+    max-width: 100% !important;
+    width: 100%;
+  }
+
+  /* Full bleed scaling across all major section wrappers on 2560px and wide displays */
+  header > .max-w-7xl,
+  footer .max-w-7xl,
+  main .max-w-7xl,
+  section.max-w-7xl,
+  div.max-w-7xl,
+  .max-w-7xl {
+    max-width: 100% !important;
+    width: 100%;
   }
 }
 
 /* Fluid Canvas Container (For Admin, Data Dashboards, Financial Tables) */
 .container-canvas {
   width: 100%;
-  max-width: 1280px;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
@@ -324,41 +415,49 @@ h1, h2, h3, h4, h5, h6, .editorial-title {
   }
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 1280px) {
+  .container-canvas {
+    max-width: 1440px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1360px) {
   .container-canvas {
     max-width: 1540px;
   }
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 1680px) {
   .container-canvas {
-    max-width: 1880px;
+    max-width: 100%;
     padding-left: 3rem;
     padding-right: 3rem;
   }
 }
 
+@media (min-width: 1920px) {
+  .container-canvas {
+    max-width: 100%;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+}
+
 @media (min-width: 2560px) {
   .container-canvas {
-    max-width: 2440px;
-    padding-left: 4rem;
-    padding-right: 4rem;
+    max-width: 100%;
+    padding-left: 4.5rem;
+    padding-right: 4.5rem;
   }
 }
 
 @media (min-width: 3440px) {
   .container-canvas {
-    max-width: 3100px;
+    max-width: 100%;
     padding-left: 5rem;
     padding-right: 5rem;
-  }
-}
-
-@media (min-width: 5120px) {
-  .container-canvas {
-    max-width: 4400px;
-    padding-left: 6rem;
-    padding-right: 6rem;
   }
 }
 

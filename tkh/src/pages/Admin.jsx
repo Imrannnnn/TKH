@@ -1078,6 +1078,7 @@ export default function Admin({ setCurrentPage }) {
             <HomePageEditor
               homeContent={homeContent}
               updateHomeContent={updateHomeContent}
+              outreaches={outreaches}
               metrics={metrics}
               handleOpenEditMetric={handleOpenEditMetric}
               handleOpenNewMetric={handleOpenNewMetric}

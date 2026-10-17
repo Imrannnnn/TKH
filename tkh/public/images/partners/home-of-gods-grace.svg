@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <!-- Circular Rings -->
+  <circle cx="100" cy="100" r="94" fill="#fdfbf7" stroke="#047857" stroke-width="5"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#d97706" stroke-width="2"/>
+  <circle cx="100" cy="100" r="82" fill="#ecfdf5"/>
+
+  <!-- Compassionate Heart & Protective Hands -->
+  <path d="M64,82 C52,58 78,38 100,60 C122,38 148,58 136,82 C122,106 100,126 100,126 C100,126 78,106 64,82 Z" fill="#b91c1c" stroke="#d97706" stroke-width="2"/>
+
+  <!-- Child and Mother/Widow figures in Heart -->
+  <!-- Child -->
+  <circle cx="92" cy="74" r="8" fill="#ffffff"/>
+  <path d="M80,98 C80,87 104,87 104,98 Z" fill="#ffffff"/>
+  <!-- Guardian / Mother -->
+  <circle cx="110" cy="70" r="10" fill="#ffffff"/>
+  <path d="M96,98 C96,84 124,84 124,98 Z" fill="#ffffff"/>
+
+  <!-- Golden Rays of Hope -->
+  <polygon points="100,34 102,40 108,40 103,44 105,50 100,46 95,50 97,44 92,40 98,40" fill="#d97706"/>
+  <circle cx="50" cy="100" r="4" fill="#047857"/>
+  <circle cx="150" cy="100" r="4" fill="#047857"/>
+
+  <!-- Banner -->
+  <path d="M30,144 L170,144 L162,168 L38,168 Z" fill="#d97706"/>
+  <rect x="34" y="146" width="132" height="20" rx="3" fill="#047857"/>
+  <text x="100" y="160" font-family="'Segoe UI', 'Arial', sans-serif" font-weight="900" font-size="9" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">HOME OF GOD'S GRACE</text>
+  <text x="100" y="179" font-family="'Segoe UI', 'Arial', sans-serif" font-weight="700" font-size="7" fill="#047857" text-anchor="middle" letter-spacing="0.5">ORPHANS &amp; WIDOWS HOME</text>
+</svg>

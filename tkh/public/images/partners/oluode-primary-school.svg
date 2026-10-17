@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <circle cx="100" cy="100" r="92" fill="#f0fdf4" stroke="#16a34a" stroke-width="5"/>
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#ca8a04" stroke-width="2"/>
+  <!-- Primary School Shield -->
+  <path d="M55,52 L145,52 C145,90 135,116 100,138 C65,116 55,90 55,52 Z" fill="#15803d" stroke="#ca8a04" stroke-width="3"/>
+  <!-- Rising Sun & Open Book -->
+  <path d="M78,74 Q100,60 122,74 Z" fill="#facc15"/>
+  <!-- Open Book -->
+  <path d="M72,82 Q100,72 100,94 Q100,72 128,82 L124,104 Q100,94 100,116 Q100,94 76,104 Z" fill="#ffffff"/>
+  <path d="M100,94 L100,116" stroke="#15803d" stroke-width="2.5"/>
+  <!-- Banner -->
+  <rect x="52" y="142" width="96" height="24" rx="12" fill="#16a34a"/>
+  <text x="100" y="159" font-family="'Poppins', sans-serif" font-weight="800" font-size="12" fill="#ffffff" text-anchor="middle" letter-spacing="1">OLUODE</text>
+</svg>

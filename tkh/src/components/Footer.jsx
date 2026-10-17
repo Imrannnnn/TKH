@@ -93,13 +93,10 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
                 <span className="font-heading font-bold text-lg 3xl:text-xl 4xl:text-2xl text-[#1c1c1a] block leading-none">
                   Ten Kind Hands
                 </span>
-                <span className="text-[9px] 3xl:text-[11px] uppercase tracking-widest text-[#706e68] font-medium block mt-0.5">
-                  Initiative • Africa
-                </span>
               </div>
             </div>
             <p className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] leading-relaxed">
-              Education and healthcare for vulnerable children, women and families across Nigeria.
+              Education, healthcare, and sustainable livelihoods for vulnerable children, youth, women, and communities across Nigeria.
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-3 3xl:gap-4 pt-2 text-[#4a4a46]">
@@ -151,7 +148,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
               Home
             </a>
             <a href="#our-story" onClick={(e) => handleNav(e, 'our-story')} className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] hover:text-maroon transition-colors">
-              About us
+              About
             </a>
             <a href="#programs" onClick={(e) => handleNav(e, 'programs')} className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] hover:text-maroon transition-colors">
               Our work
@@ -160,7 +157,13 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
               Field reports
             </a>
             <a href="#transparency" onClick={(e) => handleNav(e, 'transparency')} className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] hover:text-maroon transition-colors">
-              Where the money goes
+              Transparency
+            </a>
+            <a href="#get-involved" onClick={(e) => handleNav(e, 'get-involved')} className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] hover:text-maroon transition-colors">
+              Get involved
+            </a>
+            <a href="#contact" onClick={(e) => handleNav(e, 'contact')} className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] hover:text-maroon transition-colors">
+              Contact
             </a>
           </div>
 
@@ -171,9 +174,6 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
             </h4>
             <a href="#get-involved/donate" onClick={(e) => handleNav(e, 'get-involved', 'donate')} className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] hover:text-maroon transition-colors">
               Donate
-            </a>
-            <a href="#get-involved/donate" onClick={(e) => handleNav(e, 'get-involved', 'donate')} className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] hover:text-maroon transition-colors">
-              Give monthly
             </a>
             <a href="#get-involved/volunteer" onClick={(e) => handleNav(e, 'get-involved', 'volunteer')} className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] hover:text-maroon transition-colors">
               Volunteer
@@ -194,16 +194,13 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
             <a href="https://wa.me/2348180994301" target="_blank" rel="noreferrer" className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] hover:text-maroon transition-colors">
               +234 818 099 4301 (WhatsApp)
             </a>
-            <p className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] leading-snug">
-              Danglo Plaza 204, 6th Avenue, Gwarinpa, Abuja
-            </p>
           </div>
         </div>
 
         {/* 3. Bottom Legal Row */}
         <div className="pt-8 3xl:pt-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs 3xl:text-sm 4xl:text-base text-[#706e68] text-center sm:text-left">
           <div>
-            © 2026 Ten Kind Hands Initiative · CAC RC 7015705
+            © 2026 Ten Kind Hands Initiative
           </div>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 3xl:gap-x-8 gap-y-2">
             <a href="#legal/safeguarding" onClick={(e) => handleNav(e, 'legal', 'safeguarding')} className="hover:text-maroon transition-colors">

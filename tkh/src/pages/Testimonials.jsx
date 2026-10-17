@@ -9,6 +9,78 @@ export default function Testimonials({ onOpenDonate }) {
   const defaultTestimonials = [
     {
       category: 'beneficiaries',
+      quote: "We Appreciate TKH’s scholarship support, it eased financial pressure on families and encouraged pupils to remain focused and committed to their education.",
+      author: "School Management",
+      role: "Beneficiary School Management",
+      institution: "Julimak Schools",
+      avatar: "/images/partners/julimak-schools.webp"
+    },
+    {
+      category: 'beneficiaries',
+      quote: "We Appreciate the donation of notebooks, water bottles, and writing materials. The items support students’ learning, academic motivation, and welfare.",
+      author: "School Administration",
+      role: "Beneficiary School Administration",
+      institution: "Jambells Schools, Ikorodu",
+      avatar: "/images/partners/jambells-school.webp"
+    },
+    {
+      category: 'beneficiaries',
+      quote: "we are grateful for the food donations, including rice, semovita, spaghetti, seasoning, and noodles. the support as a source of hope and joy for the children in our care.",
+      author: "Care Coordinator",
+      role: "Orphans & Widows Home Care Team",
+      institution: "Home of God’s Grace for Orphans and Widows",
+      avatar: "/images/partners/home-of-gods-grace.webp"
+    },
+    {
+      category: 'beneficiaries',
+      quote: "We thank TKH for its generous donations. the support brought smiles to the children and made a meaningful difference to the scholars and the school community.",
+      author: "School Management",
+      role: "Beneficiary School Community",
+      institution: "Phaozaan Private Schools",
+      avatar: "/images/partners/phaozaan-private-school.webp"
+    },
+    {
+      category: 'beneficiaries',
+      quote: "We sincerely appreciate Ten Kind Hands Foundation for providing scholarships to our children, supporting our school with a computer lab equipment and additional classrooms, and donating gift items during Children’s Day. Your generosity and commitment to education are making a lasting impact on our children and school. Thank you for being a blessing to us!",
+      author: "Becky Omagbogu",
+      role: "Proprietor",
+      institution: "Beckwin International School, Jos",
+      avatar: "/images/beckwin-international-school-scholarships.webp"
+    },
+    {
+      category: 'beneficiaries',
+      quote: "We express our sincere gratitude and acknowledges the received food items and writing materials to the Orphans/Vulnerable children in our ministry. The ministry will ever remain grateful to you for the love you have shown us. Our heavenly father will reward and bless you bountifully.",
+      author: "Rev. Dr. Elisha Akwai",
+      role: "Ministry Director",
+      institution: "City Ministry of EMS/ECWA (CME) - Gidan Bege Orphanage Home",
+      avatar: "/images/gidan-bege-orphanage-outreach.webp"
+    },
+    {
+      category: 'beneficiaries',
+      quote: "Ten kind hand foundation indeed is an organization that is really touching life in so many ramifications, the orphans and vulnerable ones in the society. Their visit to Abba father Rich orphanage is really a wonderfully moment spent, with gifts from the organization at a time they are needed, foodstuffs and educational materials etc. Pls keep up with your good work to humanity, Good bless you all.",
+      author: "Mr. Kingsley",
+      role: "Coordinator (07031160630)",
+      institution: "Abba Father Rich Orphanage Home",
+      avatar: "/images/abba-father-orphanage-food-distribution.webp"
+    },
+    {
+      category: 'beneficiaries',
+      quote: "We express our appreciation on behalf of the traditional council in GURA-LOH-GUT GIRING ABATTOIR, JOS for the exceptional community services you have rendered in our community through your empowerment program. We have recognize your efforts in developing our community and we pray that the good Lord will continue to strengthens you more in your activities in Jesus name.",
+      author: "Da Stephen Davou",
+      role: "Traditional Council Leader (07057558662)",
+      institution: "Gura-Loh-Gut Giring Abattoir, Jos",
+      avatar: "/images/giring-zawan-empowerment.webp"
+    },
+    {
+      category: 'beneficiaries',
+      quote: "I write on behalf of Management and Student of House of Recab Ministry International to express our heart felt appreciation for your donation(school materials) and partnership with our organization. Your assistance both now and in the future, will sustain the hope the children we have, and fuel in them the zeal for fulfilled dreams. Thanks for your love, may the good Lord continue to bless and keep you and your members in HIS love.",
+      author: "Tony Tonyin",
+      role: "Head of Admin/Finance (08035810389)",
+      institution: "House of Recab Ministry International",
+      avatar: "/images/house-of-recab-outreach.webp"
+    },
+    {
+      category: 'beneficiaries',
       quote: "Before Ten Kind Hands brought solar power and desks, our pupils learned on bare floors and had to go home whenever rain clouds gathered. Today, attendance has soared to over 98% and our children read aloud with pride.",
       author: "Mrs. Amina Danjuma",
       role: "Headmistress",
@@ -91,7 +163,7 @@ export default function Testimonials({ onOpenDonate }) {
                   : 'bg-sand text-ink-light hover:text-ink'
               }`}
             >
-              All Testimonials (6)
+              All Testimonials ({activeTestimonials.length})
             </button>
             <button
               onClick={() => setFilter('beneficiaries')}
@@ -101,7 +173,7 @@ export default function Testimonials({ onOpenDonate }) {
                   : 'bg-sand text-ink-light hover:text-ink'
               }`}
             >
-              Community Leaders &amp; Mothers (3)
+              Beneficiaries &amp; Schools ({activeTestimonials.filter((t) => t.category === 'beneficiaries').length})
             </button>
             <button
               onClick={() => setFilter('volunteers')}
@@ -111,7 +183,7 @@ export default function Testimonials({ onOpenDonate }) {
                   : 'bg-sand text-ink-light hover:text-ink'
               }`}
             >
-              Volunteer Doctors (1)
+              Volunteer Doctors ({activeTestimonials.filter((t) => t.category === 'volunteers').length})
             </button>
             <button
               onClick={() => setFilter('donors')}
@@ -121,7 +193,7 @@ export default function Testimonials({ onOpenDonate }) {
                   : 'bg-sand text-ink-light hover:text-ink'
               }`}
             >
-              Donors &amp; Partners (2)
+              Donors &amp; Partners ({activeTestimonials.filter((t) => t.category === 'donors' || t.category === 'partners').length})
             </button>
           </div>
         </div>
@@ -142,10 +214,24 @@ export default function Testimonials({ onOpenDonate }) {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#f0ece8]">
-                <h4 className="text-sm 3xl:text-base font-heading font-bold text-ink">{t.author}</h4>
-                <p className="text-xs 3xl:text-sm text-ink-muted">{t.role}</p>
-                <span className="text-[11px] 3xl:text-xs text-primary font-medium block mt-0.5">{t.institution}</span>
+              <div className="pt-4 border-t border-[#f0ece8] flex items-center gap-3">
+                {t.avatar && (
+                  <div className="w-12 h-12 rounded-full bg-[#f9f7f2] border border-[#e5e0d8] p-1 shrink-0 overflow-hidden shadow-2xs flex items-center justify-center">
+                    <img
+                      src={t.avatar}
+                      alt={t.institution || t.author}
+                      className="w-full h-full object-contain rounded-full"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="min-w-0 flex-1">
+                  <h4 className="text-sm 3xl:text-base font-heading font-bold text-ink truncate">{t.author}</h4>
+                  <p className="text-xs 3xl:text-sm text-ink-muted truncate">{t.role}</p>
+                  <span className="text-[11px] 3xl:text-xs text-primary font-medium block truncate mt-0.5">{t.institution}</span>
+                </div>
               </div>
             </div>
           ))}

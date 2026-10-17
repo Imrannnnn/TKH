@@ -16,6 +16,7 @@ import {
 export default function HomePageEditor({
   homeContent,
   updateHomeContent,
+  outreaches = [],
   metrics,
   handleOpenEditMetric,
   handleOpenNewMetric,
@@ -29,14 +30,22 @@ export default function HomePageEditor({
 
   // Local state for Hero Section
   const [heroHeadline, setHeroHeadline] = useState(
-    homeContent?.heroHeadline || 'Keeping Nigerian children in school and families healthy.'
+    (homeContent?.heroHeadline && homeContent.heroHeadline !== 'Empowering children, women, and communities through education, healthcare, and sustainable livelihoods.')
+      ? homeContent.heroHeadline
+      : 'Empowering children, women, and communities through education, healthcare, and livelihoods.'
   );
   const [heroSubtitle, setHeroSubtitle] = useState(
     homeContent?.heroSubtitle ||
-      'We fund scholarships, school supplies and community health outreaches for vulnerable children, women and widows across Nigeria — and publish a field report after every one.'
+      'We provide scholarships, learning materials, community medical outreaches, and sustainable livelihood support for vulnerable children, youth, women, and widows across Nigeria — and publish a field report after every one.'
   );
   const [registeredBadge, setRegisteredBadge] = useState(
-    homeContent?.registeredBadge || 'Registered non-profit · CAC RC 7015705 · Abuja'
+    homeContent?.registeredBadge || ''
+  );
+  const [featuredLatestOutreachId, setFeaturedLatestOutreachId] = useState(
+    homeContent?.featuredLatestOutreachId || 'auto'
+  );
+  const [featuredNextOutreachId, setFeaturedNextOutreachId] = useState(
+    homeContent?.featuredNextOutreachId || 'auto'
   );
   const [slides, setSlides] = useState(
     homeContent?.heroSlides || [
@@ -154,8 +163,18 @@ export default function HomePageEditor({
     showToast('Live Marquee Banner updated');
   };
 
+  const handleSaveFieldCards = (e) => {
+    e?.preventDefault();
+    updateHomeContent({
+      featuredLatestOutreachId,
+      featuredNextOutreachId
+    });
+    showToast('Field mission cards updated successfully on Home Page');
+  };
+
   const sections = [
     { id: 'hero', label: 'Hero & Carousel', desc: 'Headlines, taglines & background slides' },
+    { id: 'field', label: 'Field Cards (Latest & Next)', desc: 'Side-by-side latest report & next outreach' },
     { id: 'impact', label: 'Key Impact Counters', desc: 'Homepage live statistics & counters' },
     { id: 'reality', label: 'Field Reality & Stats', desc: 'Out-of-school numbers & narrative' },
     { id: 'marquee', label: 'Live Marquee Ribbon', desc: 'Top broadcast ticker on homepage' }
@@ -196,7 +215,7 @@ export default function HomePageEditor({
 
       {/* Section Navigation Pills */}
       <div className="bg-white p-2 rounded-2xl border border-[#e7e2d8] shadow-xs">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
           {sections.map((sec) => {
             const isActive = activeSection === sec.id;
             return (
@@ -423,6 +442,125 @@ export default function HomePageEditor({
                 <Save className="w-3.5 h-3.5" />
                 <span>Save Slide Changes</span>
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =====================================================================
+          SECTION: FIELD MISSIONS (LATEST & NEXT OUTREACH SIDE-BY-SIDE)
+      ===================================================================== */}
+      {activeSection === 'field' && (
+        <div className="space-y-6">
+          <div className="bg-white p-5 rounded-2xl border border-[#e7e2d8] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-base font-heading font-bold text-ink">
+                This Month in the Field (Side-by-Side Cards)
+              </h2>
+              <p className="text-xs text-ink-muted">
+                Left card shows the latest completed field report. Right card shows the next upcoming outreach. Both cards stay synchronized.
+              </p>
+            </div>
+            <button
+              onClick={handleSaveFieldCards}
+              className="py-2.5 px-5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-heading font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-colors shrink-0"
+            >
+              <Save className="w-3.5 h-3.5" />
+              <span>Save Field Cards</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Left Card Configuration: Latest Outreach Report */}
+            <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 shadow-xs flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wider bg-forest/10 text-forest border border-forest/20">
+                    Left Card • Latest Report
+                  </span>
+                  <span className="text-[11px] font-semibold text-ink-muted">Report published</span>
+                </div>
+
+                <h3 className="text-sm font-heading font-bold text-ink mb-1">
+                  Latest Outreach Report (Left Card)
+                </h3>
+                <p className="text-xs text-ink-muted mb-4">
+                  Select which outreach to highlight as the latest completed mission on the homepage, or keep on Automatic.
+                </p>
+
+                <div>
+                  <label className="block text-xs font-heading font-bold text-ink mb-1.5">
+                    Selected Outreach
+                  </label>
+                  <select
+                    value={featuredLatestOutreachId}
+                    onChange={(e) => setFeaturedLatestOutreachId(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary font-medium cursor-pointer"
+                  >
+                    <option value="auto">⚡ Automatic (Always Most Recent Completed Mission)</option>
+                    {outreaches.map((o) => (
+                      <option key={o.id} value={o.id}>
+                        {o.month ? `${o.month} — ` : ''}{o.title} ({o.status === 'completed' ? 'Completed' : 'Upcoming'})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-sand/30 border border-[#e7e2d8] text-xs text-ink-light space-y-1">
+                <span className="font-heading font-bold text-ink block text-[11px] uppercase tracking-wider text-forest">
+                  Automatic Behavior
+                </span>
+                <p className="text-[11px] leading-relaxed">
+                  Whenever an outreach is marked completed in Missions &amp; Outreaches, the Left card immediately updates to feature it as the latest report.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Card Configuration: Next Outreach */}
+            <div className="bg-white rounded-2xl border border-[#e7e2d8] p-6 shadow-xs flex flex-col justify-between space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-wider bg-[#1c1c1a] text-white">
+                    Right Card • Next Outreach
+                  </span>
+                  <span className="text-[11px] font-semibold text-ink-muted">Upcoming mission</span>
+                </div>
+
+                <h3 className="text-sm font-heading font-bold text-ink mb-1">
+                  Next Outreach (Right Card)
+                </h3>
+                <p className="text-xs text-ink-muted mb-4">
+                  Select which upcoming mission to feature for volunteer recruitment and donor support on the homepage.
+                </p>
+
+                <div>
+                  <label className="block text-xs font-heading font-bold text-ink mb-1.5">
+                    Selected Outreach
+                  </label>
+                  <select
+                    value={featuredNextOutreachId}
+                    onChange={(e) => setFeaturedNextOutreachId(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#e7e2d8] bg-sand/30 text-ink text-xs focus:outline-none focus:border-primary font-medium cursor-pointer"
+                  >
+                    <option value="auto">⚡ Automatic (Always Next Upcoming Mission)</option>
+                    {outreaches.map((o) => (
+                      <option key={o.id} value={o.id}>
+                        {o.month ? `${o.month} — ` : ''}{o.title} ({o.status === 'upcoming' ? 'Upcoming' : 'Completed'})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-sand/30 border border-[#e7e2d8] text-xs text-ink-light space-y-1">
+                <span className="font-heading font-bold text-ink block text-[11px] uppercase tracking-wider text-primary">
+                  Synchronized Pipeline
+                </span>
+                <p className="text-[11px] leading-relaxed">
+                  Both cards stay aligned with the field calendar. Updating or scheduling a mission immediately updates the homepage cards.
+                </p>
+              </div>
             </div>
           </div>
         </div>

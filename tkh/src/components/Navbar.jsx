@@ -73,9 +73,6 @@ export default function Navbar({
             <span className="font-heading font-bold text-base sm:text-xl 3xl:text-2xl 4xl:text-[26px] tracking-tight text-[#1c1c1a] block leading-none group-hover:text-maroon transition-colors truncate">
               Ten Kind Hands
             </span>
-            <span className="text-[9px] sm:text-[10px] 3xl:text-xs uppercase tracking-widest text-[#706e68] font-medium mt-0.5 block truncate">
-              Initiative • Africa
-            </span>
           </div>
         </button>
 

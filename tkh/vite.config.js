@@ -12,7 +12,7 @@ export default defineConfig({
       }
     },
     allowedHosts: [
-      'https://locks-ebook-airfare-pensions.trycloudflare.com'
+      'removed-tape-monitor-approve.trycloudflare.com'
     ]
   }
 })

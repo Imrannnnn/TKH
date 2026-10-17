@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <circle cx="100" cy="100" r="92" fill="#eff6ff" stroke="#1e40af" stroke-width="5"/>
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="6,4"/>
+  <!-- Montessori Shield -->
+  <path d="M60,45 L140,45 C140,45 142,98 100,138 C58,98 60,45 60,45 Z" fill="#1e3a8a" stroke="#d97706" stroke-width="3.5"/>
+  <!-- Tree of Knowledge -->
+  <path d="M100,120 L100,68 M88,96 L76,80 M112,96 L124,80 M90,80 L78,60 M110,80 L122,60" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="62" r="6" fill="#f59e0b"/>
+  <circle cx="76" cy="78" r="4.5" fill="#f59e0b"/>
+  <circle cx="124" cy="78" r="4.5" fill="#f59e0b"/>
+  <circle cx="78" cy="58" r="4" fill="#f59e0b"/>
+  <circle cx="122" cy="58" r="4" fill="#f59e0b"/>
+  <!-- Monogram Ribbon -->
+  <rect x="52" y="142" width="96" height="24" rx="12" fill="#1e40af"/>
+  <text x="100" y="159" font-family="'Poppins', sans-serif" font-weight="800" font-size="12" fill="#ffffff" text-anchor="middle" letter-spacing="1">KARVRON</text>
+</svg>

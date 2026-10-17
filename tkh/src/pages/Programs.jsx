@@ -492,7 +492,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
             OUR WORK
           </span>
           <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl text-[#1c1c1a] mb-3 leading-tight">
-            Six programmes. Three goals.
+            Our programmes. Three goals.
           </h1>
           <p className="text-sm sm:text-base lg:text-lg 3xl:text-xl text-[#4a4a46] leading-relaxed">
             Children who learn, mothers and children who stay healthy, and families who can earn a living. Each programme lists its most recent outreach, pulled directly from our field dispatches.

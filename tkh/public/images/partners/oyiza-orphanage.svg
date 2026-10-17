@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <circle cx="100" cy="100" r="92" fill="#fff1f2" stroke="#e11d48" stroke-width="5"/>
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#f43f5e" stroke-width="2" stroke-dasharray="6,4"/>
+  <!-- Caring Heart Symbol -->
+  <path d="M62,80 C50,56 75,34 100,56 C125,34 150,56 138,80 C124,106 100,126 100,126 C100,126 76,106 62,80 Z" fill="#e11d48"/>
+  <!-- Child in heart -->
+  <circle cx="100" cy="74" r="11" fill="#ffffff"/>
+  <path d="M84,105 C84,91 116,91 116,105 Z" fill="#ffffff"/>
+  <!-- Star above -->
+  <polygon points="100,32 103,40 111,40 105,45 107,53 100,48 93,53 95,45 89,40 97,40" fill="#fbbf24"/>
+  <!-- Banner -->
+  <rect x="54" y="142" width="92" height="24" rx="12" fill="#e11d48"/>
+  <text x="100" y="159" font-family="'Poppins', sans-serif" font-weight="800" font-size="13" fill="#ffffff" text-anchor="middle" letter-spacing="1">OYIZA</text>
+</svg>

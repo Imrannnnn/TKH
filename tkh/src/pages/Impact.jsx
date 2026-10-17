@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { School, Stethoscope, Droplets, BookOpen, TrendingUp, ShieldCheck, Globe, Heart, MapPin, HandHeart, Users, Building2, Sparkles } from '../components/Icons';
+import CommunityVoicesSection from '../components/CommunityVoicesSection';
 
 const iconMap = {
   School,
@@ -110,15 +111,15 @@ export default function Impact({ onOpenDonate }) {
   const filteredMetrics = activeTab === 'all'
     ? currentMetrics
     : currentMetrics.filter((m) => {
-        const cat = (m.category || '').toLowerCase();
-        if (activeTab === 'education') {
-          return cat === 'education' || m.id === 'schools' || m.id === 'students' || m.id === 'metric-1790695260926';
-        }
-        if (activeTab === 'healthcare') {
-          return cat === 'healthcare' || m.id === 'patients' || m.id === 'clinics';
-        }
-        return cat === activeTab.toLowerCase();
-      });
+      const cat = (m.category || '').toLowerCase();
+      if (activeTab === 'education') {
+        return cat === 'education' || m.id === 'schools' || m.id === 'students' || m.id === 'metric-1790695260926';
+      }
+      if (activeTab === 'healthcare') {
+        return cat === 'healthcare' || m.id === 'patients' || m.id === 'clinics';
+      }
+      return cat === activeTab.toLowerCase();
+    });
 
 
 
@@ -304,6 +305,9 @@ export default function Impact({ onOpenDonate }) {
           </div>
         </div>
       </section>
+
+      {/* Community Voices: In their words Section */}
+      <CommunityVoicesSection onOpenDonate={onOpenDonate} />
 
     </div>
   );

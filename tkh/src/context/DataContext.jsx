@@ -405,9 +405,11 @@ const initialInquiries = [
 ];
 
 const initialHomeContent = {
-  heroHeadline: 'Keeping Nigerian children in school and families healthy.',
-  heroSubtitle: 'We fund scholarships, school supplies and community health outreaches for vulnerable children, women and widows across Nigeria — and publish a field report after every one.',
-  registeredBadge: 'Registered non-profit · CAC RC 7015705 · Abuja',
+  heroHeadline: 'Empowering children, women, and communities through education, healthcare, and livelihoods.',
+  heroSubtitle: 'We provide scholarships, learning materials, community medical outreaches, and sustainable livelihood support for vulnerable children, youth, women, and widows across Nigeria — and publish a field report after every one.',
+  registeredBadge: '',
+  featuredLatestOutreachId: 'auto',
+  featuredNextOutreachId: 'auto',
   heroSlides: [
     {
       img: '/images/hero-orphanage-food-educational-support.webp',
@@ -550,12 +552,94 @@ const initialStoryContent = {
 
 const initialTestimonialsList = [
   {
+    id: 't-julimak',
+    category: 'beneficiaries',
+    quote: "We Appreciate TKH’s scholarship support, it eased financial pressure on families and encouraged pupils to remain focused and committed to their education.",
+    author: "School Management",
+    role: "Beneficiary School Management",
+    institution: "Julimak Schools",
+    avatar: "/images/partners/julimak-schools.webp"
+  },
+  {
+    id: 't-jambells',
+    category: 'beneficiaries',
+    quote: "We Appreciate the donation of notebooks, water bottles, and writing materials. The items support students’ learning, academic motivation, and welfare.",
+    author: "School Administration",
+    role: "Beneficiary School Administration",
+    institution: "Jambells Schools, Ikorodu",
+    avatar: "/images/partners/jambells-school.webp"
+  },
+  {
+    id: 't-home-of-gods-grace',
+    category: 'beneficiaries',
+    quote: "we are grateful for the food donations, including rice, semovita, spaghetti, seasoning, and noodles. the support as a source of hope and joy for the children in our care.",
+    author: "Care Coordinator",
+    role: "Orphans & Widows Home Care Team",
+    institution: "Home of God’s Grace for Orphans and Widows",
+    avatar: "/images/partners/home-of-gods-grace.webp"
+  },
+  {
+    id: 't-phaozaan',
+    category: 'beneficiaries',
+    quote: "We thank TKH for its generous donations. the support brought smiles to the children and made a meaningful difference to the scholars and the school community.",
+    author: "School Management",
+    role: "Beneficiary School Community",
+    institution: "Phaozaan Private Schools",
+    avatar: "/images/partners/phaozaan-private-school.webp"
+  },
+  {
+    id: 't-beckwin',
+    category: 'beneficiaries',
+    quote: "We sincerely appreciate Ten Kind Hands Foundation for providing scholarships to our children, supporting our school with a computer lab equipment and additional classrooms, and donating gift items during Children’s Day. Your generosity and commitment to education are making a lasting impact on our children and school. Thank you for being a blessing to us!",
+    author: "Becky Omagbogu",
+    role: "Proprietor",
+    institution: "Beckwin International School, Jos",
+    avatar: "/images/beckwin-international-school-scholarships.webp"
+  },
+  {
+    id: 't-gidan-bege',
+    category: 'beneficiaries',
+    quote: "We express our sincere gratitude and acknowledges the received food items and writing materials to the Orphans/Vulnerable children in our ministry. The ministry will ever remain grateful to you for the love you have shown us. Our heavenly father will reward and bless you bountifully.",
+    author: "Rev. Dr. Elisha Akwai",
+    role: "Ministry Director",
+    institution: "City Ministry of EMS/ECWA (CME) - Gidan Bege Orphanage Home",
+    avatar: "/images/gidan-bege-orphanage-outreach.webp"
+  },
+  {
+    id: 't-abba-father',
+    category: 'beneficiaries',
+    quote: "Ten kind hand foundation indeed is an organization that is really touching life in so many ramifications, the orphans and vulnerable ones in the society. Their visit to Abba father Rich orphanage is really a wonderfully moment spent, with gifts from the organization at a time they are needed, foodstuffs and educational materials etc. Pls keep up with your good work to humanity, Good bless you all.",
+    author: "Mr. Kingsley",
+    role: "Coordinator (07031160630)",
+    institution: "Abba Father Rich Orphanage Home",
+    avatar: "/images/abba-father-orphanage-food-distribution.webp"
+  },
+  {
+    id: 't-giring-zawan',
+    category: 'beneficiaries',
+    quote: "We express our appreciation on behalf of the traditional council in GURA-LOH-GUT GIRING ABATTOIR, JOS for the exceptional community services you have rendered in our community through your empowerment program. We have recognize your efforts in developing our community and we pray that the good Lord will continue to strengthens you more in your activities in Jesus name.",
+    author: "Da Stephen Davou",
+    role: "Traditional Council Leader (07057558662)",
+    institution: "Gura-Loh-Gut Giring Abattoir, Jos",
+    avatar: "/images/giring-zawan-empowerment.webp"
+  },
+  {
+    id: 't-house-of-recab',
+    category: 'beneficiaries',
+    quote: "I write on behalf of Management and Student of House of Recab Ministry International to express our heart felt appreciation for your donation(school materials) and partnership with our organization. Your assistance both now and in the future, will sustain the hope the children we have, and fuel in them the zeal for fulfilled dreams. Thanks for your love, may the good Lord continue to bless and keep you and your members in HIS love.",
+    author: "Tony Tonyin",
+    role: "Head of Admin/Finance (08035810389)",
+    institution: "House of Recab Ministry International",
+    avatar: "/images/house-of-recab-outreach.webp"
+  },
+  {
     id: 't-1',
     category: 'beneficiaries',
     quote: "Before Ten Kind Hands brought solar power and desks, our pupils learned on bare floors and had to go home whenever rain clouds gathered. Today, attendance has soared to over 98% and our children read aloud with pride.",
     author: "Mrs. Amina Danjuma",
     role: "Headmistress",
-    institution: "Gidan Community Primary School, Kaduna State"
+    institution: "Gidan Community Primary School, Kaduna State",
+    avatar: "/images/IMG_0300.JPG"
   },
   {
     id: 't-2',
@@ -563,7 +647,8 @@ const initialTestimonialsList = [
     quote: "The mobile health clinic detected my child's severe pneumonia in time and provided all treatments free of charge. Having caring medical staff reach our remote hamlet is a blessing I will never forget.",
     author: "Grace Adebayo",
     role: "Mother of 3 & Community Health Advocate",
-    institution: "Rural Women's Forum, Ogun State"
+    institution: "Rural Women's Forum, Ogun State",
+    avatar: "/images/IMG_0995.JPG"
   },
   {
     id: 't-3',
@@ -571,7 +656,8 @@ const initialTestimonialsList = [
     quote: "Ten Kind Hands does not dictate to us; they sit with village elders and ask what our youth need most. This is genuine dignity, respect for our culture, and true partnership.",
     author: "Chief Emeka Okafor",
     role: "Community Elder & Development Secretary",
-    institution: "Oji River Council, Enugu State"
+    institution: "Oji River Council, Enugu State",
+    avatar: "/images/IMG_0994.JPG"
   },
   {
     id: 't-4',
@@ -579,7 +665,8 @@ const initialTestimonialsList = [
     quote: "Serving as a volunteer doctor on the Kaduna medical mission was the most grounding experience of my clinical career. Seeing 100% of donated drugs reach patients directly restored my faith in grassroots charity.",
     author: "Dr. Chinedu Eze",
     role: "Volunteer Pediatrician",
-    institution: "Lagos University Teaching Hospital"
+    institution: "Lagos University Teaching Hospital",
+    avatar: "/images/IMG_0294.JPG"
   },
   {
     id: 't-5',
@@ -587,7 +674,8 @@ const initialTestimonialsList = [
     quote: "What sets TKH apart is their radical financial honesty. Getting an email with GPS coordinates and photos of the exact classroom block my monthly contribution helped build was deeply moving.",
     author: "Farida Mohammed",
     role: "Monthly Impact Sustainer",
-    institution: "Abuja, Nigeria"
+    institution: "Abuja, Nigeria",
+    avatar: "/images/IMG_0300.JPG"
   },
   {
     id: 't-6',
@@ -595,7 +683,8 @@ const initialTestimonialsList = [
     quote: "Our diaspora foundation has partnered with Ten Kind Hands across three Nigerian states. Their operational discipline and flawless accounting make them our most trusted on-ground implementation partner.",
     author: "Dr. Anthony Nwankwo",
     role: "Director of International Giving",
-    institution: "UK-Nigeria Diaspora Health Trust"
+    institution: "UK-Nigeria Diaspora Health Trust",
+    avatar: "/images/IMG_0994.JPG"
   }
 ];
 
@@ -662,6 +751,34 @@ const sanitizeData = (raw) => {
     }
   }
   if (cleaned.homeContent) {
+    if (
+      !cleaned.homeContent.heroHeadline ||
+      cleaned.homeContent.heroHeadline === 'Keeping Nigerian children in school and families healthy.' ||
+      cleaned.homeContent.heroHeadline.includes('Keeping Nigerian children in school')
+    ) {
+      cleaned.homeContent = {
+        ...cleaned.homeContent,
+        heroHeadline: initialHomeContent.heroHeadline
+      };
+    }
+    if (
+      !cleaned.homeContent.heroSubtitle ||
+      cleaned.homeContent.heroSubtitle.includes('We fund scholarships, school supplies and community health')
+    ) {
+      cleaned.homeContent = {
+        ...cleaned.homeContent,
+        heroSubtitle: initialHomeContent.heroSubtitle
+      };
+    }
+    if (
+      cleaned.homeContent.registeredBadge &&
+      cleaned.homeContent.registeredBadge.includes('Registered non-profit · CAC RC 7015705 · Abuja')
+    ) {
+      cleaned.homeContent = {
+        ...cleaned.homeContent,
+        registeredBadge: ''
+      };
+    }
     const slides = cleaned.homeContent.heroSlides;
     const hasValidSlides = Array.isArray(slides) && slides.length > 0 && slides.some((s) => s.img && s.img.includes('hero-orphanage'));
     if (!hasValidSlides) {
@@ -684,6 +801,36 @@ const sanitizeData = (raw) => {
         headquarters: 'Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria'
       };
     }
+  }
+  if (cleaned.homeContent) {
+    if (!cleaned.homeContent.heroHeadline || cleaned.homeContent.heroHeadline === 'Empowering children, women, and communities through education, healthcare, and sustainable livelihoods.') {
+      cleaned.homeContent.heroHeadline = 'Empowering children, women, and communities through education, healthcare, and livelihoods.';
+    }
+  }
+  if (Array.isArray(cleaned.testimonialsList)) {
+    cleaned.testimonialsList = cleaned.testimonialsList.map((t) => {
+      if (t.id === 't-jambells' || t.institution?.includes('Jambells')) {
+        return {
+          ...t,
+          avatar: '/images/partners/jambells-school.webp'
+        };
+      }
+      if (t.id === 't-home-of-gods-grace' || t.institution?.includes("God's Grace") || t.institution?.includes("God’s Grace")) {
+        return {
+          ...t,
+          avatar: '/images/partners/home-of-gods-grace.webp'
+        };
+      }
+      return t;
+    });
+    const existingIds = new Set(cleaned.testimonialsList.map((t) => t.id || t.institution));
+    initialTestimonialsList.forEach((it) => {
+      if (!existingIds.has(it.id) && !existingIds.has(it.institution)) {
+        cleaned.testimonialsList.unshift(it);
+      }
+    });
+  } else {
+    cleaned.testimonialsList = initialTestimonialsList;
   }
   if (Array.isArray(cleaned.metrics)) {
     const hasLegacy = cleaned.metrics.some(

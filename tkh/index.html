@@ -44,7 +44,22 @@
       tailwind.config = {
         darkMode: "class",
         theme: {
+          screens: {
+            "xs": "420px",
+            "sm": "640px",
+            "md": "768px",
+            "lg": "1024px",
+            "xl": "1280px",
+            "2xl": "1360px",
+            "3xl": "1680px",
+            "4xl": "1920px",
+            "uw": "3000px",
+            "suw": "4200px"
+          },
           extend: {
+            maxWidth: {
+              "7xl": "1440px",
+            },
             colors: {
               "maroon": "#7a1b1b",
               "maroon-dark": "#5a1212",
@@ -68,13 +83,6 @@
               "ink-muted": "#706e68",
               "body-text": "#4a4a46",
               "secondary": "#1b4d3e"
-            },
-            screens: {
-              "xs": "420px",
-              "3xl": "1920px",
-              "4xl": "2560px",
-              "uw": "3440px",
-              "suw": "5120px"
             },
             fontFamily: {
               "sans": ["'Open Sans'", "sans-serif"],

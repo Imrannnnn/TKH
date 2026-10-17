@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <!-- Background Circles -->
+  <circle cx="100" cy="100" r="94" fill="#f8fafc" stroke="#1e3a8a" stroke-width="5"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#d97706" stroke-width="2"/>
+  <circle cx="100" cy="100" r="82" fill="#eff6ff"/>
+
+  <!-- Academic Crest Shield -->
+  <path d="M60,54 L140,54 C140,94 130,122 100,140 C70,122 60,94 60,54 Z" fill="#1e3a8a" stroke="#d97706" stroke-width="3"/>
+  <path d="M66,59 L134,59 C134,93 126,117 100,133 C74,117 66,93 66,59 Z" fill="#1d4ed8"/>
+
+  <!-- Open Book of Knowledge -->
+  <path d="M78,82 C88,78 98,80 100,84 C102,80 112,78 122,82 L122,106 C112,102 102,104 100,108 C98,104 88,102 78,106 Z" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+  <line x1="100" y1="84" x2="100" y2="108" stroke="#d97706" stroke-width="2"/>
+  <line x1="83" y1="88" x2="95" y2="86" stroke="#93c5fd" stroke-width="1.5"/>
+  <line x1="83" y1="94" x2="95" y2="92" stroke="#93c5fd" stroke-width="1.5"/>
+  <line x1="83" y1="100" x2="95" y2="98" stroke="#93c5fd" stroke-width="1.5"/>
+  <line x1="105" y1="86" x2="117" y2="88" stroke="#93c5fd" stroke-width="1.5"/>
+  <line x1="105" y1="92" x2="117" y2="94" stroke="#93c5fd" stroke-width="1.5"/>
+  <line x1="105" y1="98" x2="117" y2="100" stroke="#93c5fd" stroke-width="1.5"/>
+
+  <!-- Torch / Flame of Wisdom -->
+  <path d="M100,52 Q94,62 100,72 Q106,62 100,52 Z" fill="#f59e0b"/>
+  <path d="M100,56 Q97,63 100,69 Q103,63 100,56 Z" fill="#fef08a"/>
+
+  <!-- Laurel Stars -->
+  <polygon points="100,32 102,37 107,37 103,40 105,45 100,42 95,45 97,40 93,37 98,37" fill="#d97706"/>
+  <circle cx="50" cy="100" r="4" fill="#d97706"/>
+  <circle cx="150" cy="100" r="4" fill="#d97706"/>
+
+  <!-- Ribbon Banner -->
+  <path d="M38,144 L162,144 L154,168 L46,168 Z" fill="#d97706"/>
+  <rect x="42" y="146" width="116" height="20" rx="3" fill="#1e3a8a"/>
+  <text x="100" y="160" font-family="'Segoe UI', 'Arial', sans-serif" font-weight="900" font-size="10.5" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">JULIMAK SCHOOLS</text>
+  <text x="100" y="179" font-family="'Segoe UI', 'Arial', sans-serif" font-weight="700" font-size="7" fill="#1e3a8a" text-anchor="middle" letter-spacing="1">SCHOLARSHIP &amp; EXCELLENCE</text>
+</svg>
