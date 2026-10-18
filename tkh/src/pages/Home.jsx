@@ -541,12 +541,9 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
         <section className="relative z-10 bg-maroon text-white py-12 sm:py-16 3xl:py-20 4xl:py-24 mt-10 sm:mt-12">
           <div className="max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6 sm:gap-8 3xl:gap-12">
             <div className="max-w-xl 3xl:max-w-3xl 4xl:max-w-4xl">
-              <h2 className="font-heading font-bold text-2xl sm:text-3xl 3xl:text-4xl 4xl:text-5xl text-white mb-2 3xl:mb-4">
+              <h2 className="font-heading font-bold text-2xl sm:text-3xl 3xl:text-4xl 4xl:text-5xl text-white">
                 Give monthly. Plan outreaches with us.
               </h2>
-              <p className="text-sm sm:text-base 3xl:text-lg 4xl:text-xl text-white/90 leading-relaxed">
-                Regular gifts let us plan each month's outreach in advance. ₦5,000 a month buys three pupils a full learning kit every term.
-              </p>
             </div>
 
             <button
