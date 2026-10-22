@@ -82,6 +82,8 @@ const VALID_PAGES = new Set([
   'home',
   'our-story',
   'programs',
+  'programmes',
+  'our-work',
   'impact',
   'get-involved',
   'news',
@@ -122,8 +124,36 @@ export default function App() {
         return;
       }
 
+      // Check for anchor target in the hash (e.g., our-work#education, programs#health, #livelihoods)
+      const rawFullHash = window.location.hash || '';
+      const anchorMatch = rawFullHash.match(/(?:education|health|livelihoods)/i);
+      const targetAnchor = anchorMatch ? anchorMatch[0].toLowerCase() : null;
+
+      if (targetAnchor) {
+        setCurrentPage('programs');
+        setSelectedProgramId(null);
+        setTimeout(() => {
+          const el = document.getElementById(targetAnchor);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 150);
+        return;
+      }
+
+      if (hash === 'our-work' || hash === 'programmes') {
+        setCurrentPage('programs');
+        setSelectedProgramId(null);
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        return;
+      }
+
       if (hash.startsWith('programs/')) {
         const progId = hash.replace('programs/', '');
+        setCurrentPage('programs');
+        setSelectedProgramId(progId);
+      } else if (hash.startsWith('our-work/')) {
+        const progId = hash.replace('our-work/', '');
         setCurrentPage('programs');
         setSelectedProgramId(progId);
       } else if (hash.startsWith('outreaches/')) {

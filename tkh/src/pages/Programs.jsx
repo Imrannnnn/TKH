@@ -230,6 +230,26 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
     }
   }, [selectedProgramId]);
 
+  useEffect(() => {
+    const handleAnchor = () => {
+      const fullHash = window.location.hash || '';
+      const match = fullHash.match(/(?:education|health|livelihoods)/i);
+      if (match) {
+        const targetId = match[0].toLowerCase();
+        setActiveTab('all');
+        setTimeout(() => {
+          const el = document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 150);
+      }
+    };
+    handleAnchor();
+    window.addEventListener('hashchange', handleAnchor);
+    return () => window.removeEventListener('hashchange', handleAnchor);
+  }, []);
+
   const selectedProgram = PROGRAMMES.find((p) => p.id === currentProgId);
 
   const filteredProgrammes = PROGRAMMES.filter((p) => {
@@ -545,7 +565,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
         {/* 1. Education Section */}
         {(activeTab === 'all' || activeTab === 'education') && (
-          <div className="mb-12 sm:mb-16 3xl:mb-20">
+          <div id="education" className="scroll-mt-24 sm:scroll-mt-28 mb-12 sm:mb-16 3xl:mb-20">
             <div className="mb-6 3xl:mb-8">
               <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a]">
                 Education
@@ -603,7 +623,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
         {/* 2. Health Section */}
         {(activeTab === 'all' || activeTab === 'health') && (
-          <div className="mb-12 sm:mb-16 3xl:mb-20">
+          <div id="health" className="scroll-mt-24 sm:scroll-mt-28 mb-12 sm:mb-16 3xl:mb-20">
             <div className="mb-6 3xl:mb-8">
               <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a]">
                 Health
@@ -666,7 +686,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
 
         {/* 3. Livelihoods Section */}
         {(activeTab === 'all' || activeTab === 'livelihoods') && (
-          <div className="mb-12 sm:mb-16 3xl:mb-20">
+          <div id="livelihoods" className="scroll-mt-24 sm:scroll-mt-28 mb-12 sm:mb-16 3xl:mb-20">
             <div className="mb-6 3xl:mb-8">
               <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a]">
                 Livelihoods

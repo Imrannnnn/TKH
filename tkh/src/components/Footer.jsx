@@ -96,7 +96,7 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
               </div>
             </div>
             <p className="text-sm 3xl:text-base 4xl:text-lg text-[#4a4a46] leading-relaxed">
-              Empowering children, women, and communities through education, healthcare, and livelihoods.
+              Helping Nigerian families learn, heal and thrive.
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-3 3xl:gap-4 pt-2 text-[#4a4a46]">

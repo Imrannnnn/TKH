@@ -33,6 +33,28 @@
   ],
   "outreaches": [
     {
+      "id": "outreach-sep-2026-pad-bank",
+      "status": "completed",
+      "title": "Pad A Girl Child Outreach & Pad Bank Launch",
+      "location": "GGSS Dutse Alhaji, Abuja",
+      "date": "September 20, 2026",
+      "pillar": "Healthcare",
+      "beneficiariesTarget": "456 Sanitary Pads (384 Reached + 72 Bank)",
+      "description": "The FCT team successfully carried out the pad a girl child outreach and mounting the “PAD BANK” in the school clinic which will be well managed and controlled by the Health mistress to avoid abuse of the pad bank. We took few minutes to educate the students on their Menstrual hygiene which majority of them are ignorant of, questions were asked by the students which were all answered, it was indeed an interactive section and we all enjoyed the moment. At the end of the outreach, we were able to reach out to students with 384 sanitary pads and 72 pieces were reserved in the pad bank.",
+      "image": "/images/pad-a-girl-child-outreach-abuja.jpg"
+    },
+    {
+      "id": "outreach-sep-2026-orphanage",
+      "status": "completed",
+      "title": "Abba Father Rich Orphanage Home Outreach",
+      "location": "Plateau State",
+      "date": "September 15, 2026",
+      "pillar": "Education",
+      "beneficiariesTarget": "100+ Children & Orphans",
+      "description": "On the 15th of September, 2026, our team embarked on an outreach visit to Abba Father Rich Orphanage Home located in Plateau State. The purpose of the outreach was to show love, encourage the children, and provide support with essential materials for their welfare and education.",
+      "image": "/images/abba-father-orphanage-sep-2026.jpg"
+    },
+    {
       "id": "outreach-1",
       "status": "upcoming",
       "title": "Q4 2026 Primary School Book & Uniform Distribution Drive",
@@ -210,9 +232,11 @@
     }
   ],
   "homeContent": {
-    "heroHeadline": "Keeping Nigerian children in school and families healthy.",
-    "heroSubtitle": "We fund scholarships, school supplies and community health outreaches for vulnerable children, women and widows across Nigeria — and publish a field report after every one.",
-    "registeredBadge": "Registered non-profit · CAC RC 7015705 · Abuja",
+    "heroHeadline": "Helping Nigerian families learn, heal and thrive.",
+    "heroSubtitle": "Scholarships, learning materials, medical outreaches and livelihood support for vulnerable children, youth, women and widows across Nigeria — with a public field report after every outreach.",
+    "registeredBadge": "",
+    "featuredLatestOutreachId": "auto",
+    "featuredNextOutreachId": "auto",
     "heroSlides": [
       {
         "img": "/images/hero-orphanage-food-educational-support.webp",

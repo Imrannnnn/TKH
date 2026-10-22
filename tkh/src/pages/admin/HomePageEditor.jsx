@@ -30,13 +30,14 @@ export default function HomePageEditor({
 
   // Local state for Hero Section
   const [heroHeadline, setHeroHeadline] = useState(
-    (homeContent?.heroHeadline && homeContent.heroHeadline !== 'Empowering children, women, and communities through education, healthcare, and sustainable livelihoods.')
+    (homeContent?.heroHeadline && !homeContent.heroHeadline.includes('Empowering children') && !homeContent.heroHeadline.includes('Keeping Nigerian'))
       ? homeContent.heroHeadline
-      : 'Empowering children, women, and communities through education, healthcare, and livelihoods.'
+      : 'Helping Nigerian families learn, heal and thrive.'
   );
   const [heroSubtitle, setHeroSubtitle] = useState(
-    homeContent?.heroSubtitle ||
-      'We provide scholarships, learning materials, community medical outreaches, and sustainable livelihood support for vulnerable children, youth, women, and widows across Nigeria — and publish a field report after every one.'
+    (homeContent?.heroSubtitle && !homeContent.heroSubtitle.includes('We provide scholarships') && !homeContent.heroSubtitle.includes('We fund scholarships'))
+      ? homeContent.heroSubtitle
+      : 'Scholarships, learning materials, medical outreaches and livelihood support for vulnerable children, youth, women and widows across Nigeria — with a public field report after every outreach.'
   );
   const [registeredBadge, setRegisteredBadge] = useState(
     homeContent?.registeredBadge || ''

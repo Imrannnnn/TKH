@@ -13,6 +13,58 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
 
   const reportsList = [
     {
+      id: 'outreach-sep-2026-pad-bank',
+      pillar: 'health',
+      month: 'September 2026',
+      dateRange: '20 September 2026',
+      title: 'PAD A GIRL CHILD OUTREACH & "PAD BANK" Commissioning',
+      location: 'GGSS Dutse Alhaji, Abuja',
+      beneficiaries: '384 students reached · 72 pads in pad bank',
+      totalCost: '₦1,274,000',
+      image: '/images/pad-a-girl-child-outreach-abuja.jpg',
+      summary: 'The FCT team successfully carried out the pad a girl child outreach and mounted the permanent “PAD BANK” in the school clinic, educated students on menstrual hygiene, reached 384 students with sanitary pads, and reserved 72 in the pad bank.',
+      whyWeDidIt: 'Period poverty and inadequate menstrual hygiene education severely undermine the dignity, health, and academic consistency of young girls across Nigerian secondary schools. Many students are forced to stay home during their menstrual cycles or resort to unhygienic alternatives due to lack of supplies and lingering cultural taboos. By distributing sanitary pads directly, establishing a sustainable and monitored emergency "PAD BANK" in the school clinic under the care of the Health mistress, and conducting an open, interactive education session, we empower girls to stay healthy, confident, and uninterrupted in their classrooms.',
+      deliverables: [
+        { title: '384 Sanitary Pads Reached', desc: 'Direct distribution of quality sanitary pads to 384 female students across secondary classes.' },
+        { title: 'School Clinic "PAD BANK" Mounted', desc: 'Installed a permanent emergency sanitary pad dispensary in the school clinic, managed and controlled by the Health mistress to avoid abuse.' },
+        { title: '72 Reserve Emergency Pads', desc: 'Reserved 72 pieces in the Pad Bank inventory to guarantee immediate access whenever sudden cycles begin during school hours.' },
+        { title: 'Menstrual Hygiene Education', desc: 'Interactive workshop educating students on menstrual hygiene and reproductive health, with a comprehensive Q&A section.' }
+      ],
+      costBreakdown: [
+        { item: 'Sanitary pads procurement (456 units: 384 direct + 72 pad bank)', qty: '456 packs', cost: '₦684,000' },
+        { item: 'School clinic PAD BANK cabinet, mounting & dispensary lockup', qty: '1 unit', cost: '₦250,000' },
+        { item: 'Menstrual hygiene visual charts, flyers & educational literature', qty: '400 copies', cost: '₦160,000' },
+        { item: 'FCT volunteer field coordination, school logistics & refreshments', qty: 'FCT team', cost: '₦180,000' }
+      ],
+      totalSpent: '₦1,274,000'
+    },
+    {
+      id: 'outreach-sep-2026-orphanage',
+      pillar: 'education',
+      month: 'September 2026',
+      dateRange: '15 September 2026',
+      title: 'Abba Father Rich Orphanage Home Outreach: Welfare & Educational Support',
+      location: 'Plateau State',
+      beneficiaries: '100+ children & orphans',
+      totalCost: '₦2,100,000',
+      image: '/images/abba-father-orphanage-sep-2026.jpg',
+      summary: 'Outreach visit to Abba Father Rich Orphanage Home in Plateau State to show love, encourage the children, and provide essential materials for their welfare and education.',
+      whyWeDidIt: 'Orphaned and vulnerable children living in residential care homes often experience acute gaps in nutritional provisions, educational supplies, and emotional mentorship. Without steady external support, these homes struggle to sustain basic welfare and schooling needs simultaneously. Our outreach visit was carried out to demonstrate unconditional love, uplift and encourage the children’s spirits, and provide essential materials that directly support both their daily well-being and academic pursuits.',
+      deliverables: [
+        { title: 'Educational Materials & Stationery', desc: 'Distributed exercise books, writing pads, pens, pencils, sharpeners, and learning packs to equip the children for the school term.' },
+        { title: 'Nutritional Food Provisions', desc: 'Donated essential food relief including rice, semovita, noodles, cooking oil, seasonings, and beverages for resident meals.' },
+        { title: 'Children Welfare & Hygiene Kits', desc: 'Provided personal care items, bathing soaps, toothpaste, detergents, and everyday clothing essentials for resident orphans.' },
+        { title: 'Mentorship & Fellowship Session', desc: 'Spent quality time engaging the children with encouraging words, academic counseling, interactive fellowship, and games.' }
+      ],
+      costBreakdown: [
+        { item: 'Bulk food relief provisions & nutritional staples', qty: 'Bulk provisions', cost: '₦850,000' },
+        { item: 'Educational materials, school notebooks & stationery kits', qty: '100+ kits', cost: '₦650,000' },
+        { item: 'Children clothing essentials, toiletries & welfare supplies', qty: '100+ sets', cost: '₦420,000' },
+        { item: 'Interstate logistics, vehicle transit & distribution setup', qty: 'Plateau mission', cost: '₦180,000' }
+      ],
+      totalSpent: '₦2,100,000'
+    },
+    {
       id: 'outreach-aug-2026',
       pillar: 'education',
       month: 'August 2026',
@@ -145,7 +197,11 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
     }
   ];
 
-  const selectedReport = reportsList.find((r) => r.id === selectedReportId);
+  const selectedReport = reportsList.find(
+    (r) =>
+      r.id === selectedReportId ||
+      (selectedReportId === 'outreach-sep-2026' && r.id === 'outreach-sep-2026-orphanage')
+  );
 
   const filteredReports = reportsList.filter((r) => {
     if (activeFilter === 'all') return true;
@@ -348,13 +404,13 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
         <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 p-4 sm:p-6 3xl:p-8 bg-white rounded-3xl border border-[#e5e0d8] shadow-sm mb-8 sm:mb-10 3xl:mb-12">
           <div>
             <div className="font-heading font-bold text-xl sm:text-2xl lg:text-3xl 3xl:text-4xl text-[#1c1c1a]">
-              1,206
+              1,690+
             </div>
             <div className="text-xs 3xl:text-sm text-[#706e68] mt-0.5">people reached, Jan–Sep 2026</div>
           </div>
           <div>
             <div className="font-heading font-bold text-xl sm:text-2xl lg:text-3xl 3xl:text-4xl text-[#1c1c1a]">
-              9
+              11
             </div>
             <div className="text-xs 3xl:text-sm text-[#706e68] mt-0.5">outreaches reported</div>
           </div>
@@ -366,7 +422,7 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
           </div>
           <div>
             <div className="font-heading font-bold text-xl sm:text-2xl lg:text-3xl 3xl:text-4xl text-maroon break-words">
-              ₦13,597,575
+              ₦16,971,575
             </div>
             <div className="text-xs 3xl:text-sm text-[#706e68] mt-0.5">spent on delivery (100% direct)</div>
           </div>

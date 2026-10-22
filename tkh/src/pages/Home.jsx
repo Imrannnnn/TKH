@@ -10,6 +10,16 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
   const defaultHeroSlides = [
     {
+      img: '/images/pad-a-girl-child-outreach-abuja.jpg',
+      caption: 'Pad A Girl Child Outreach & Pad Bank Launch · GGSS Dutse Alhaji',
+      state: 'FCT Abuja'
+    },
+    {
+      img: '/images/abba-father-orphanage-sep-2026.jpg',
+      caption: 'Welfare & Educational Support · Abba Father Rich Orphanage Home',
+      state: 'Plateau State'
+    },
+    {
       img: '/images/hero-orphanage-food-educational-support.webp',
       caption: 'Food relief & school supplies donation · Oyiza Orphanage',
       state: 'FCT Abuja'
@@ -56,29 +66,43 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       ? homeContent.heroSlides
       : defaultHeroSlides;
   const heroHeadline =
-    (homeContent?.heroHeadline && homeContent.heroHeadline !== 'Empowering children, women, and communities through education, healthcare, and sustainable livelihoods.')
+    (homeContent?.heroHeadline && !homeContent.heroHeadline.includes('Empowering children') && !homeContent.heroHeadline.includes('Keeping Nigerian'))
       ? homeContent.heroHeadline
-      : 'Empowering children, women, and communities through education, healthcare, and livelihoods.';
+      : 'Helping Nigerian families learn, heal and thrive.';
   const heroSubtitle =
-    homeContent?.heroSubtitle ||
-    'We provide scholarships, learning materials, community medical outreaches, and sustainable livelihood support for vulnerable children, youth, women, and widows across Nigeria — and publish a field report after every one.';
+    (homeContent?.heroSubtitle && !homeContent.heroSubtitle.includes('We provide scholarships') && !homeContent.heroSubtitle.includes('We fund scholarships'))
+      ? homeContent.heroSubtitle
+      : 'Scholarships, learning materials, medical outreaches and livelihood support for vulnerable children, youth, women and widows across Nigeria — with a public field report after every outreach.';
 
-  const defaultLatestOutreach = {
-    id: 'outreach-aug-2026',
-    month: 'August 2026',
-    title: 'Youth skills, digital literacy & academic outreach',
+  const defaultPadGirlOutreach = {
+    id: 'outreach-sep-2026-pad-bank',
+    month: 'September 2026',
+    title: 'Pad A Girl Child Outreach & Pad Bank Launch',
     summary:
-      'A 5-week youth tech lab in Ikorodu, speech-day scholarships in Jos, primary school learning kits, and shoemaking and hairdressing toolkits.',
+      'The FCT team carried out the Pad A Girl Child outreach and mounted the “PAD BANK” in the GGSS Dutse Alhaji clinic. We educated students on menstrual hygiene, reached 384 students with pads, and reserved 72 pieces in the pad bank.',
     description:
-      'A 5-week youth tech lab in Ikorodu, speech-day scholarships in Jos, primary school learning kits, and shoemaking and hairdressing toolkits.',
-    beneficiariesTarget: '345 youths & students',
-    image: '/images/IMG_0294.webp',
-    location: 'Lagos, Plateau, Benue & FCT Abuja',
+      'The FCT team successfully carried out the pad a girl child outreach and mounting the “PAD BANK” in the school clinic which will be well managed and controlled by the Health mistress to avoid abuse of the pad bank. We took few minutes to educate the students on their Menstrual hygiene which majority of them are ignorant of, questions were asked by the students which were all answered, it was indeed an interactive section and we all enjoyed the moment. At the end of the outreach, we were able to reach out to students with 384 sanitary pads and 72 pieces were reserved in the pad bank.',
+    beneficiariesTarget: '456 sanitary pads',
+    image: '/images/pad-a-girl-child-outreach-abuja.jpg',
+    location: 'GGSS Dutse Alhaji, Abuja',
     deployments: [
-      { state: 'Lagos State' },
-      { state: 'Plateau State' },
-      { state: 'Benue State' },
-      { state: 'FCT Abuja' }
+      { state: 'FCT Abuja', location: 'GGSS Dutse Alhaji, Abuja' }
+    ]
+  };
+
+  const defaultAbbaFatherOutreach = {
+    id: 'outreach-sep-2026-orphanage',
+    month: 'September 2026',
+    title: 'Abba Father Rich Orphanage Home Outreach',
+    summary:
+      'Outreach visit to Abba Father Rich Orphanage Home in Plateau State to show love, encourage the children, and provide support with essential materials for their welfare and education.',
+    description:
+      'On the 15th of September, 2026, our team embarked on an outreach visit to Abba Father Rich Orphanage Home located in Plateau State. The purpose of the outreach was to show love, encourage the children, and provide support with essential materials for their welfare and education.',
+    beneficiariesTarget: '100+ children & orphans',
+    image: '/images/abba-father-orphanage-sep-2026.jpg',
+    location: 'Plateau State',
+    deployments: [
+      { state: 'Plateau State', location: 'Abba Father Rich Orphanage Home, Plateau State' }
     ]
   };
 
@@ -93,19 +117,37 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
   const completedOutreaches = (outreaches || []).filter((o) => o.status === 'completed');
   const upcomingOutreaches = (outreaches || []).filter((o) => o.status === 'upcoming');
 
-  const latestOutreach =
-    (homeContent?.featuredLatestOutreachId &&
-      homeContent.featuredLatestOutreachId !== 'auto' &&
-      (outreaches || []).find((o) => o.id === homeContent.featuredLatestOutreachId)) ||
-    completedOutreaches[0] ||
-    defaultLatestOutreach;
-
-  const nextOutreach =
-    (homeContent?.featuredNextOutreachId &&
-      homeContent.featuredNextOutreachId !== 'auto' &&
-      (outreaches || []).find((o) => o.id === homeContent.featuredNextOutreachId)) ||
-    (upcomingOutreaches.find((o) => o.id === 'outreach-nov-2026') || upcomingOutreaches[0]) ||
-    defaultNextOutreach;
+  const fallbackPastReports = [
+    defaultPadGirlOutreach,
+    defaultAbbaFatherOutreach,
+    {
+      id: 'outreach-aug-2026',
+      month: 'August 2026',
+      title: 'Youth skills, digital literacy & academic outreach',
+      summary:
+        'A 5-week youth tech lab in Ikorodu, speech-day scholarships in Jos, primary school learning kits, and shoemaking and hairdressing toolkits.',
+      beneficiariesTarget: '345 youths & students',
+      image: '/images/IMG_0294.webp',
+      location: 'Lagos, Plateau, Benue & FCT Abuja',
+      deployments: [
+        { state: 'Lagos State' },
+        { state: 'Plateau State' },
+        { state: 'Benue State' },
+        { state: 'FCT Abuja' }
+      ]
+    },
+    {
+      id: 'outreach-jul-2026',
+      month: 'July 2026',
+      title: 'Empower 1 Initiative: Sustainable Youth Entrepreneurship',
+      summary:
+        'Transitioned trained youths from 2025 vocational apprenticeships to full commercial barbershop business ownership in Jos and Makurdi.',
+      beneficiariesTarget: '2 youths in business',
+      image: '/images/IMG_0300.webp',
+      location: 'Plateau & Benue',
+      deployments: [{ state: 'Plateau State' }, { state: 'Benue State' }]
+    }
+  ];
 
   const extractBeneficiaries = (item) => {
     if (!item) return { count: '345', label: 'youths & students' };
@@ -132,8 +174,29 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
     return 4;
   };
 
-  const latestBen = extractBeneficiaries(latestOutreach);
-  const latestStates = extractStatesCount(latestOutreach);
+  const featuredLatest =
+    homeContent?.featuredLatestOutreachId &&
+    homeContent.featuredLatestOutreachId !== 'auto' &&
+    (outreaches || []).find((o) => o.id === homeContent.featuredLatestOutreachId);
+
+  const reportPool = completedOutreaches.length > 0 ? completedOutreaches : fallbackPastReports;
+
+  // Top 3 reports with the latest month placed last (closest to the next outreach card)
+  // reportPool is ordered newest first: [PadBank (Sep 20), AbbaFather (Sep 15), August, July]
+  // Taking top 3 and reversing so chronological flow leads right into Next Outreach:
+  // [August 2026, September 2026 (Abba Father), September 2026 (Pad Bank - Latest)] -> [Next Outreach (Nov)]
+  const top3 = (featuredLatest
+    ? [featuredLatest, ...reportPool.filter((r) => r.id !== featuredLatest.id)]
+    : reportPool
+  ).slice(0, 3);
+  const lastThreeReports = [...top3].reverse();
+
+  const nextOutreach =
+    (homeContent?.featuredNextOutreachId &&
+      homeContent.featuredNextOutreachId !== 'auto' &&
+      (outreaches || []).find((o) => o.id === homeContent.featuredNextOutreachId)) ||
+    (upcomingOutreaches.find((o) => o.id === 'outreach-nov-2026') || upcomingOutreaches[0]) ||
+    defaultNextOutreach;
 
   // Auto-cycle through real field photos every 5 seconds
   useEffect(() => {
@@ -146,40 +209,50 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
   const handleNav = (pageId, hash = '') => {
     setCurrentPage(pageId);
     window.location.hash = hash || pageId;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (hash && hash.includes('#')) {
+      const anchorId = hash.split('#').pop();
+      setTimeout(() => {
+        const el = document.getElementById(anchorId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
     <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] overflow-x-hidden">
 
       {/* 1. Hero Section */}
-      <section className="relative pt-8 sm:pt-14 lg:pt-16 3xl:pt-20 4xl:pt-24 pb-12 sm:pb-16 lg:pb-20 3xl:pb-24 4xl:pb-32 max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 overflow-hidden">
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 3xl:gap-16 4xl:gap-24 items-center">
+      <section className="relative pt-5 sm:pt-7 lg:pt-9 pb-8 sm:pb-10 lg:pb-12 max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
 
           {/* Left Column: Copy & Actions */}
-          <div className="lg:col-span-7 3xl:col-span-6 flex flex-col items-start gap-4 sm:gap-5 3xl:gap-7">
+          <div className="lg:col-span-7 flex flex-col items-start gap-3 sm:gap-4">
             {/* Main Headline */}
-            <h1 className="font-heading font-bold text-xl xs:text-2xl sm:text-3xl lg:text-4xl 2xl:text-[44px] 3xl:text-5xl 4xl:text-6xl uw:text-7xl leading-[1.18] tracking-tight text-[#1c1c1a]">
+            <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-[40px] 2xl:text-[44px] leading-[1.18] tracking-tight text-[#1c1c1a]">
               {heroHeadline}
             </h1>
 
             {/* Subtext */}
-            <p className="text-sm sm:text-base lg:text-lg 3xl:text-xl 4xl:text-2xl text-[#4a4a46] leading-relaxed max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl">
+            <p className="text-sm sm:text-base text-[#4a4a46] leading-relaxed max-w-xl">
               {heroSubtitle}
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 3xl:gap-4 pt-2 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1.5 w-full sm:w-auto">
               <button
                 onClick={() => onOpenDonate()}
-                className="btn-primary w-full sm:w-auto px-6 sm:px-7 3xl:px-8 4xl:px-10 py-3.5 3xl:py-4 4xl:py-5 text-sm sm:text-base 3xl:text-lg shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                className="btn-primary w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Donate now</span>
-                <ArrowRight className="w-4 h-4 3xl:w-5 3xl:h-5" />
+                <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleNav('outreaches')}
-                className="btn-secondary w-full sm:w-auto px-6 sm:px-7 3xl:px-8 4xl:px-10 py-3.5 3xl:py-4 4xl:py-5 text-sm sm:text-base 3xl:text-lg text-center cursor-pointer"
+                className="btn-secondary w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base text-center cursor-pointer"
               >
                 See our field reports
               </button>
@@ -187,10 +260,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           </div>
 
           {/* Right Column: Real Outreach Photo Showcase with Slide Controls */}
-          <div className="lg:col-span-5 3xl:col-span-6 w-full">
-            <div className="relative rounded-3xl 3xl:rounded-4xl overflow-hidden border border-[#e5e0d8] shadow-md bg-white group">
+          <div className="lg:col-span-5 w-full">
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-sm bg-white group">
               {/* Photo Display */}
-              <div className="relative w-full h-[260px] xs:h-[300px] sm:h-[380px] lg:h-[400px] 3xl:h-[520px] 4xl:h-[620px] uw:h-[720px] overflow-hidden bg-sand">
+              <div className="relative w-full h-[210px] xs:h-[240px] sm:h-[270px] lg:h-[300px] xl:h-[320px] overflow-hidden bg-sand">
                 {heroSlides.map((slide, idx) => (
                   <img
                     key={idx}
@@ -207,25 +280,25 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               </div>
 
               {/* Bottom Caption Pill & Location */}
-              <div className="absolute inset-x-0 bottom-0 p-4 3xl:p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col gap-2">
+              <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col gap-1.5">
                 <div className="flex items-center justify-between gap-2">
-                  <div className="px-3 py-1.5 3xl:px-4 3xl:py-2 rounded-full bg-white/95 backdrop-blur-sm border border-white/40 text-xs 3xl:text-sm font-semibold text-[#1c1c1a] shadow-sm truncate">
+                  <div className="px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm border border-white/40 text-xs font-semibold text-[#1c1c1a] shadow-sm truncate">
                     {heroSlides[heroSlideIdx]?.caption || 'Ten Kind Hands Field Outreach'}
                   </div>
-                  <span className="shrink-0 px-2.5 py-1 3xl:px-3 3xl:py-1.5 rounded-full bg-black/60 text-white/90 text-[11px] 3xl:text-xs font-medium border border-white/20 backdrop-blur-sm flex items-center gap-1">
+                  <span className="shrink-0 px-2.5 py-0.5 rounded-full bg-black/60 text-white/90 text-[11px] font-medium border border-white/20 backdrop-blur-sm flex items-center gap-1">
                     <MapPin className="w-3 h-3 text-[#f7c899]" />
                     {heroSlides[heroSlideIdx]?.state || 'Field Mission'}
                   </span>
                 </div>
 
                 {/* Slide Indicator Dots */}
-                <div className="flex items-center gap-1.5 pt-1">
+                <div className="flex items-center gap-1.5 pt-0.5">
                   {heroSlides.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setHeroSlideIdx(i)}
                       aria-label={`Go to photo ${i + 1}`}
-                      className={`h-1.5 3xl:h-2 rounded-full transition-all duration-300 cursor-pointer ${i === heroSlideIdx ? 'w-6 3xl:w-8 bg-white shadow-xs' : 'w-2 3xl:w-3 bg-white/40 hover:bg-white/70'
+                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${i === heroSlideIdx ? 'w-5 bg-white shadow-xs' : 'w-2 bg-white/40 hover:bg-white/70'
                         }`}
                     />
                   ))}
@@ -238,50 +311,50 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 2. Full-Width Deep Forest Stats Banner */}
-      <section className="bg-forest !text-white py-10 sm:py-14 3xl:py-16 4xl:py-20 border-y border-forest-dark" style={{ color: '#ffffff' }}>
-        <div className="max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 3xl:gap-12 4xl:gap-16 !text-white" style={{ color: '#ffffff' }}>
+      <section className="bg-forest !text-white py-6 sm:py-7 lg:py-8 border-y border-forest-dark" style={{ color: '#ffffff' }}>
+        <div className="max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 !text-white" style={{ color: '#ffffff' }}>
             <div>
-              <div className="font-heading font-bold text-3xl sm:text-4xl 3xl:text-5xl 4xl:text-6xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
+              <div className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
                 {metrics?.totalBeneficiaries && metrics.totalBeneficiaries > 3500 ? `${metrics.totalBeneficiaries.toLocaleString()}+` : '3,500+'}
               </div>
-              <div className="text-sm sm:text-base 3xl:text-lg 4xl:text-xl !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-0.5 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
                 children &amp; young people reached
               </div>
             </div>
 
             <div>
-              <div className="font-heading font-bold text-3xl sm:text-4xl 3xl:text-5xl 4xl:text-6xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
+              <div className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
                 200+
               </div>
-              <div className="text-sm sm:text-base 3xl:text-lg 4xl:text-xl !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-0.5 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
                 Scholarships awarded
               </div>
             </div>
 
             <div>
-              <div className="font-heading font-bold text-3xl sm:text-4xl 3xl:text-5xl 4xl:text-6xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
+              <div className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
                 2,500+
               </div>
-              <div className="text-sm sm:text-base 3xl:text-lg 4xl:text-xl !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-0.5 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
                 Women &amp; girls supported
               </div>
             </div>
 
             <div>
-              <div className="font-heading font-bold text-3xl sm:text-4xl 3xl:text-5xl 4xl:text-6xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
+              <div className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
                 7 States
               </div>
-              <div className="text-sm sm:text-base 3xl:text-lg 4xl:text-xl !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-0.5 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
                 (FCT, Benue, Katsina, Plateau, Lagos, Oyo, Enugu)
               </div>
             </div>
           </div>
 
-          <div className="mt-8 3xl:mt-10 pt-6 3xl:pt-8 border-t border-white/15 flex items-center justify-end flex-wrap gap-3">
+          <div className="mt-4 pt-3 border-t border-white/15 flex items-center justify-end flex-wrap gap-2">
             <button
               onClick={() => handleNav('transparency')}
-              className="text-xs sm:text-sm 3xl:text-base !text-white underline hover:opacity-80 transition-opacity cursor-pointer"
+              className="text-xs sm:text-sm !text-white underline hover:opacity-80 transition-opacity cursor-pointer"
               style={{ color: '#ffffff' }}
             >
               How we count and spend →
@@ -290,121 +363,162 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
         </div>
       </section>
 
-      {/* 3. THIS MONTH IN THE FIELD: Side-by-Side Latest Report + Next Outreach */}
-      <section className="py-14 sm:py-20 3xl:py-24 4xl:py-32 max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8 3xl:mb-12">
+      {/* 3. THIS MONTH IN THE FIELD: 4 Cards (3 Reports + 1 Next Outreach, with latest month closest to next outreach) */}
+      <section className="py-10 sm:py-14 lg:py-16 max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-6 sm:mb-8">
           <div>
-            <div className="text-xs 3xl:text-sm uppercase font-bold tracking-widest text-maroon mb-1.5">
+            <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1">
               THIS MONTH IN THE FIELD
             </div>
-            <h2 className="font-heading font-bold text-2xl sm:text-3xl 3xl:text-4xl 4xl:text-5xl text-[#1c1c1a]">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl lg:text-3xl text-[#1c1c1a]">
               Every outreach gets a public report
             </h2>
           </div>
           <button
             onClick={() => handleNav('outreaches')}
-            className="text-sm 3xl:text-base font-semibold text-maroon hover:text-maroon-dark transition-colors inline-flex items-center gap-1.5"
+            className="text-xs sm:text-sm font-semibold text-maroon hover:text-maroon-dark transition-colors inline-flex items-center gap-1.5"
           >
             <span>All field reports</span>
-            <ArrowRight className="w-4 h-4 3xl:w-5 3xl:h-5" />
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 3xl:gap-12 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 items-stretch">
 
-          {/* Latest Outreach Card (7 Cols) */}
-          <div className="lg:col-span-7 bg-white rounded-3xl 3xl:rounded-4xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:border-[#cfc7b9] transition-all flex flex-col justify-between">
-            <div className="relative h-60 sm:h-72 overflow-hidden bg-gray-100">
-              <img
-                src={latestOutreach.image || '/images/IMG_0294.webp'}
-                alt={latestOutreach.title}
-                className="w-full h-full object-cover object-center"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/images/hero-digital-literacy-computer-lab.webp';
-                }}
-              />
-              <div className="absolute top-4 left-4 flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-forest-tint text-forest font-semibold text-xs border border-forest/20 shadow-sm">
-                  Report published
-                </span>
-                <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[#1c1c1a] font-medium text-xs shadow-sm">
-                  {latestOutreach.month || 'Latest Report'}
-                </span>
-              </div>
-            </div>
+          {/* Last 3 Field Reports — Ordered so the most current month is Card 3 (adjacent to Next Outreach) */}
+          {lastThreeReports.map((report, idx) => {
+            const ben = extractBeneficiaries(report);
+            const states = extractStatesCount(report);
+            const isLatest = idx === lastThreeReports.length - 1;
 
-            <div className="p-6 sm:p-8 flex flex-col justify-between flex-1">
-              <div>
-                <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#1c1c1a] mb-2">
-                  {latestOutreach.title}
-                </h3>
-                <p className="text-sm text-[#4a4a46] leading-relaxed mb-6">
-                  {latestOutreach.summary || latestOutreach.description}
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-[#e5e0d8] flex items-center justify-between flex-wrap gap-4">
-                <div className="flex items-center gap-5 text-sm text-[#4a4a46]">
-                  <div>
-                    <span className="font-heading font-bold text-[#1c1c1a] text-lg block leading-none">
-                      {latestBen.count}
+            return (
+              <div
+                key={report.id || idx}
+                className={`bg-white rounded-2xl sm:rounded-3xl border overflow-hidden shadow-sm hover:border-[#cfc7b9] hover:shadow-md transition-all flex flex-col justify-between ${
+                  isLatest ? 'border-[#cfc7b9] ring-1 ring-forest/20' : 'border-[#e5e0d8]'
+                }`}
+              >
+                <div className="relative h-44 sm:h-48 overflow-hidden bg-gray-100 shrink-0">
+                  <img
+                    src={report.image || '/images/hero-orphanage-food-educational-support.webp'}
+                    alt={report.title}
+                    className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/images/hero-digital-literacy-computer-lab.webp';
+                    }}
+                  />
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                    <span
+                      className={`px-2.5 py-0.5 rounded-full font-semibold text-[11px] shadow-xs ${
+                        isLatest
+                          ? 'bg-forest-tint text-forest border border-forest/20'
+                          : 'bg-white/95 text-[#1c1c1a]'
+                      }`}
+                    >
+                      {isLatest ? 'Latest report' : 'Report published'}
                     </span>
-                    <span className="text-xs text-[#706e68] capitalize">
-                      {latestBen.label}
-                    </span>
-                  </div>
-                  <div className="h-6 w-px bg-[#e5e0d8]" />
-                  <div>
-                    <span className="font-heading font-bold text-[#1c1c1a] text-lg block leading-none">
-                      {latestStates}
-                    </span>
-                    <span className="text-xs text-[#706e68]">
-                      {latestStates === 1 ? 'state reached' : 'states reached'}
+                    <span className="px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-sm text-[#1c1c1a] font-medium text-[11px] shadow-xs">
+                      {report.month || 'Field Report'}
                     </span>
                   </div>
                 </div>
 
+                <div className="p-5 flex flex-col justify-between flex-1">
+                  <div>
+                    <h3 className="font-heading font-bold text-base text-[#1c1c1a] mb-2 line-clamp-2 leading-snug">
+                      {report.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed line-clamp-3 mb-4">
+                      {report.summary || report.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-[#e5e0d8] flex items-center justify-between flex-wrap gap-2.5 mt-auto">
+                    <div className="flex items-center gap-3 text-xs text-[#4a4a46]">
+                      <div>
+                        <span className="font-heading font-bold text-[#1c1c1a] text-sm block leading-none">
+                          {ben.count}
+                        </span>
+                        <span className="text-[10px] text-[#706e68] capitalize">
+                          {ben.label}
+                        </span>
+                      </div>
+                      <div className="h-5 w-px bg-[#e5e0d8]" />
+                      <div>
+                        <span className="font-heading font-bold text-[#1c1c1a] text-sm block leading-none">
+                          {states}
+                        </span>
+                        <span className="text-[10px] text-[#706e68]">
+                          {states === 1 ? 'state' : 'states'}
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => handleNav('outreaches', `outreaches/${report.id}`)}
+                      className="font-semibold text-xs text-maroon hover:text-maroon-dark transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Read report</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Next Outreach Card (Card 4: Next Outreach) */}
+          <div className="bg-[#faf6f0] rounded-2xl sm:rounded-3xl border-2 border-maroon/20 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div className="relative h-44 sm:h-48 overflow-hidden bg-gray-100 shrink-0">
+              <img
+                src={nextOutreach.image || '/images/IMG_0995.JPG'}
+                alt={nextOutreach.title}
+                className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/images/hero-maternal-health-malaria-prevention.webp';
+                }}
+              />
+              <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-maroon text-white font-semibold text-[11px] uppercase tracking-wider shadow-xs">
+                  Next outreach
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-sm text-[#1c1c1a] font-medium text-[11px] shadow-xs">
+                  {nextOutreach.month || 'Upcoming'}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-5 flex flex-col justify-between flex-1">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-maroon block mb-1">
+                  UPCOMING OUTREACH
+                </span>
+                <h3 className="font-heading font-bold text-base text-[#1c1c1a] mb-2 leading-snug">
+                  {nextOutreach.title?.includes(nextOutreach.month || '')
+                    ? nextOutreach.title
+                    : `${nextOutreach.month || 'Upcoming'} Outreach — ${nextOutreach.title}`}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed line-clamp-3 mb-4">
+                  {nextOutreach.description}
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-[#e5e0d8] flex flex-col gap-2 mt-auto">
                 <button
-                  onClick={() => handleNav('outreaches', `outreaches/${latestOutreach.id}`)}
-                  className="font-semibold text-sm text-maroon hover:text-maroon-dark transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                  onClick={() => handleNav('get-involved', 'get-involved/volunteer')}
+                  className="w-full py-2.5 px-4 rounded-full bg-maroon hover:bg-maroon-dark text-white font-semibold text-xs sm:text-sm transition-all cursor-pointer text-center shadow-xs"
                 >
-                  <span>Read the report</span>
-                  <ArrowRight className="w-4 h-4" />
+                  Volunteer on this outreach
+                </button>
+                <button
+                  onClick={() => onOpenDonate()}
+                  className="w-full py-2 px-4 rounded-full border border-maroon text-maroon hover:bg-maroon hover:text-white font-semibold text-xs sm:text-sm transition-all cursor-pointer text-center"
+                >
+                  Fund this outreach
                 </button>
               </div>
-            </div>
-          </div>
-
-          {/* Next Outreach Dark Card (5 Cols) */}
-          <div className="lg:col-span-5 bg-[#1c1c1a] text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-lg">
-            <div>
-              <div className="inline-block px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold uppercase tracking-wider mb-4">
-                NEXT OUTREACH
-              </div>
-              <h3 className="font-heading font-bold text-2xl text-white mb-3 leading-snug">
-                {nextOutreach.title?.includes(nextOutreach.month || '')
-                  ? nextOutreach.title
-                  : `${nextOutreach.month || 'Upcoming'} Outreach — ${nextOutreach.title}`}
-              </h3>
-              <p className="text-sm text-white/70 leading-relaxed">
-                {nextOutreach.description}
-              </p>
-            </div>
-
-            <div className="pt-8 flex flex-col gap-3">
-              <button
-                onClick={() => handleNav('get-involved', 'get-involved/volunteer')}
-                className="w-full py-3.5 px-6 rounded-full bg-white hover:bg-[#f5f1e8] text-[#1c1c1a] font-semibold text-sm transition-all cursor-pointer text-center"
-              >
-                Volunteer on this outreach
-              </button>
-              <button
-                onClick={() => onOpenDonate()}
-                className="w-full py-3 px-6 rounded-full border border-white/30 hover:border-white text-white font-medium text-sm transition-all cursor-pointer text-center hover:bg-white/5"
-              >
-                Fund this outreach
-              </button>
             </div>
           </div>
 
@@ -412,21 +526,21 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 4. OUR WORK: Children who learn. Mothers who stay healthy. Families who earn. */}
-      <section className="py-14 sm:py-20 3xl:py-24 4xl:py-32 bg-[#f5f1e8] border-y border-[#e5e0d8]">
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#f5f1e8] border-y border-[#e5e0d8]">
         <div className="max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16">
-          <div className="mb-10 sm:mb-12 3xl:mb-16">
-            <div className="text-xs 3xl:text-sm uppercase font-bold tracking-widest text-maroon mb-1.5">
+          <div className="mb-8 sm:mb-10">
+            <div className="text-xs uppercase font-bold tracking-widest text-maroon mb-1">
               OUR WORK
             </div>
-            <h2 className="font-heading font-bold text-2xl sm:text-4xl 3xl:text-5xl 4xl:text-6xl text-[#1c1c1a]">
+            <h2 className="font-heading font-bold text-xl sm:text-2xl lg:text-3xl text-[#1c1c1a]">
               Children who learn. Mothers who stay healthy. Families who earn.
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:gap-10 4xl:gap-14 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
             {/* Education Card */}
-            <div className="bg-white rounded-3xl 3xl:rounded-4xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
-              <div className="h-52 3xl:h-64 4xl:h-76 overflow-hidden bg-gray-100">
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+              <div className="h-44 sm:h-48 lg:h-52 overflow-hidden bg-gray-100">
                 <img
                   src="/images/pillar1-education-scholarship.webp"
                   alt="Education and Scholarships"
@@ -437,21 +551,21 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                   }}
                 />
               </div>
-              <div className="p-6 3xl:p-8 flex flex-col justify-between flex-1">
+              <div className="p-5 sm:p-6 flex flex-col justify-between flex-1">
                 <div>
-                  <span className="text-xs 3xl:text-sm font-bold uppercase tracking-wider text-maroon block mb-1">
+                  <span className="text-xs font-bold uppercase tracking-wider text-maroon block mb-1">
                     Education
                   </span>
-                  <h3 className="font-heading font-bold text-lg 3xl:text-xl 4xl:text-2xl text-[#1c1c1a] mb-2">
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-[#1c1c1a] mb-1.5">
                     Scholarships, school supplies &amp; computer labs
                   </h3>
-                  <p className="text-xs 3xl:text-sm 4xl:text-base text-[#4a4a46] leading-relaxed mb-4">
+                  <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4">
                     School fees, uniforms, stationery kits, and digital literacy labs to ensure children stay in school.
                   </p>
                 </div>
                 <button
-                  onClick={() => handleNav('programs')}
-                  className="text-xs 3xl:text-sm font-semibold text-maroon hover:text-maroon-dark inline-flex items-center gap-1 cursor-pointer"
+                  onClick={() => handleNav('programs', 'our-work#education')}
+                  className="text-xs sm:text-sm font-semibold text-maroon hover:text-maroon-dark inline-flex items-center gap-1 cursor-pointer"
                 >
                   <span>Explore programmes →</span>
                 </button>
@@ -459,8 +573,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             </div>
 
             {/* Health Card */}
-            <div className="bg-white rounded-3xl 3xl:rounded-4xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
-              <div className="h-52 3xl:h-64 4xl:h-76 overflow-hidden bg-gray-100">
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+              <div className="h-44 sm:h-48 lg:h-52 overflow-hidden bg-gray-100">
                 <img
                   src="/images/pillar2-health-outreach.webp"
                   alt="Medical outreaches and malaria prevention"
@@ -471,21 +585,21 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                   }}
                 />
               </div>
-              <div className="p-6 3xl:p-8 flex flex-col justify-between flex-1">
+              <div className="p-5 sm:p-6 flex flex-col justify-between flex-1">
                 <div>
-                  <span className="text-xs 3xl:text-sm font-bold uppercase tracking-wider text-forest block mb-1">
+                  <span className="text-xs font-bold uppercase tracking-wider text-forest block mb-1">
                     Health
                   </span>
-                  <h3 className="font-heading font-bold text-lg 3xl:text-xl 4xl:text-2xl text-[#1c1c1a] mb-2">
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-[#1c1c1a] mb-1.5">
                     Medical outreaches &amp; malaria prevention
                   </h3>
-                  <p className="text-xs 3xl:text-sm 4xl:text-base text-[#4a4a46] leading-relaxed mb-4">
+                  <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4">
                     Treated mosquito nets, rapid tests, maternal health packs, and health education in rural areas.
                   </p>
                 </div>
                 <button
-                  onClick={() => handleNav('programs')}
-                  className="text-xs 3xl:text-sm font-semibold text-forest hover:text-forest-dark inline-flex items-center gap-1 cursor-pointer"
+                  onClick={() => handleNav('programs', 'our-work#health')}
+                  className="text-xs sm:text-sm font-semibold text-forest hover:text-forest-dark inline-flex items-center gap-1 cursor-pointer"
                 >
                   <span>Explore programmes →</span>
                 </button>
@@ -493,8 +607,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             </div>
 
             {/* Livelihoods Card */}
-            <div className="bg-white rounded-3xl 3xl:rounded-4xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
-              <div className="h-52 3xl:h-64 4xl:h-76 overflow-hidden bg-gray-100">
+            <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+              <div className="h-44 sm:h-48 lg:h-52 overflow-hidden bg-gray-100">
                 <img
                   src="/images/hero-widows-clean-cooking-stoves.webp"
                   alt="Support for widows and young people"
@@ -505,21 +619,21 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                   }}
                 />
               </div>
-              <div className="p-6 3xl:p-8 flex flex-col justify-between flex-1">
+              <div className="p-5 sm:p-6 flex flex-col justify-between flex-1">
                 <div>
-                  <span className="text-xs 3xl:text-sm font-bold uppercase tracking-wider text-ochre block mb-1">
+                  <span className="text-xs font-bold uppercase tracking-wider text-ochre block mb-1">
                     Livelihoods
                   </span>
-                  <h3 className="font-heading font-bold text-lg 3xl:text-xl 4xl:text-2xl text-[#1c1c1a] mb-2">
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-[#1c1c1a] mb-1.5">
                     Support for widows, women &amp; young people
                   </h3>
-                  <p className="text-xs 3xl:text-sm 4xl:text-base text-[#4a4a46] leading-relaxed mb-4">
+                  <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4">
                     Eco-efficient cooking pots, micro-grants for widows, and vocational trade toolkits for youth.
                   </p>
                 </div>
                 <button
-                  onClick={() => handleNav('programs')}
-                  className="text-xs 3xl:text-sm font-semibold text-ochre hover:text-[#915610] inline-flex items-center gap-1 cursor-pointer"
+                  onClick={() => handleNav('programs', 'our-work#livelihoods')}
+                  className="text-xs sm:text-sm font-semibold text-ochre hover:text-[#915610] inline-flex items-center gap-1 cursor-pointer"
                 >
                   <span>Explore programmes →</span>
                 </button>
@@ -538,17 +652,17 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
 
         {/* 6. Maroon Banner: Give monthly. Plan outreaches with us. */}
-        <section className="relative z-10 bg-maroon text-white py-12 sm:py-16 3xl:py-20 4xl:py-24 mt-10 sm:mt-12">
-          <div className="max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6 sm:gap-8 3xl:gap-12">
+        <section className="relative z-10 bg-maroon text-white py-11 sm:py-14 lg:py-16 mt-8 sm:mt-12 lg:mt-14">
+          <div className="max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-5 sm:gap-6">
             <div className="max-w-xl 3xl:max-w-3xl 4xl:max-w-4xl">
-              <h2 className="font-heading font-bold text-2xl sm:text-3xl 3xl:text-4xl 4xl:text-5xl text-white">
+              <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-white">
                 Give monthly. Plan outreaches with us.
               </h2>
             </div>
 
             <button
               onClick={() => onOpenDonate()}
-              className="w-full md:w-auto px-8 3xl:px-10 py-4 3xl:py-5 rounded-full bg-white text-maroon font-heading font-bold text-sm sm:text-base 3xl:text-lg hover:bg-[#f5f1e8] transition-colors shadow-md cursor-pointer shrink-0 text-center"
+              className="w-full md:w-auto px-6 sm:px-8 py-3.5 rounded-full bg-white text-maroon font-heading font-bold text-sm sm:text-base hover:bg-[#f5f1e8] transition-colors shadow-md cursor-pointer shrink-0 text-center"
             >
               Start a monthly gift
             </button>

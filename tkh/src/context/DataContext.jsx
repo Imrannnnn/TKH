@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const STORAGE_KEY = 'tkh_platform_data_v4';
+const STORAGE_KEY = 'tkh_platform_data_v5';
 
 const initialNewsArticles = [
   {
@@ -36,6 +36,56 @@ const initialNewsArticles = [
 ];
 
 const initialOutreaches = [
+  {
+    id: 'outreach-sep-2026-pad-bank',
+    month: 'September 2026',
+    date: 'September 20, 2026',
+    status: 'completed',
+    title: 'Pad A Girl Child Outreach & Pad Bank Launch',
+    pillar: 'Health & Hygiene',
+    theme: 'Menstrual Hygiene Education • Pad Bank Dispensary • Girl Child Dignity',
+    location: 'GGSS Dutse Alhaji, Abuja',
+    beneficiariesTarget: '456 Sanitary Pads (384 Reached + 72 in  Pad Bank)',
+    description: 'The FCT team successfully carried out the pad a girl child outreach and mounting the “PAD BANK” in the school clinic which will be well managed and controlled by the Health mistress to avoid abuse of the pad bank. We took few minutes to educate the students on their Menstrual hygiene which majority of them are ignorant of, questions were asked by the students which were all answered, it was indeed an interactive section and we all enjoyed the moment. At the end of the outreach, we were able to reach out to students with 384 sanitary pads and 72 pieces were reserved in the pad bank.',
+    image: '/images/pad-a-girl-child-outreach-abuja.jpg',
+    focusAreas: ['Menstrual Hygiene Education', 'Pad Bank School Dispensary', '384 Sanitary Pads Distributed', 'Health Mistress Stewardship'],
+    deployments: [
+      {
+        state: 'FCT Abuja',
+        location: 'GGSS Dutse Alhaji, Abuja',
+        date: 'September 20, 2026',
+        beneficiaries: '384 Students Reached + 72 Pads Reserved',
+        activity: 'Educated female students on menstrual hygiene management, answered questions during interactive Q&A, distributed 384 sanitary pads directly, and mounted a 72-pad permanent emergency Pad Bank in the school clinic managed by the Health mistress.'
+      }
+    ],
+    feedback: '"Mounting the Pad Bank in our school clinic ensures no girl has to miss school or feel embarrassed during her period."',
+    partners: 'GGSS Dutse Alhaji School Clinic, Health Mistress & FCT Volunteer Team'
+  },
+  {
+    id: 'outreach-sep-2026-orphanage',
+    month: 'September 2026',
+    date: 'September 15, 2026',
+    status: 'completed',
+    title: 'Abba Father Rich Orphanage Home Outreach',
+    pillar: 'Child Welfare & Education',
+    theme: 'Orphan Care • Welfare Support • Educational Materials',
+    location: 'Plateau State',
+    beneficiariesTarget: '100+ Children & Orphans',
+    description: 'On the 15th of September, 2026, our team embarked on an outreach visit to Abba Father Rich Orphanage Home located in Plateau State. The purpose of the outreach was to show love, encourage the children, and provide support with essential materials for their welfare and education.',
+    image: '/images/abba-father-orphanage-sep-2026.jpg',
+    focusAreas: ['Orphan Care & Encouragement', 'Scholastic & Educational Supplies', 'Nutritional Provisions', 'Essential Welfare Materials'],
+    deployments: [
+      {
+        state: 'Plateau State',
+        location: 'Abba Father Rich Orphanage Home, Plateau State',
+        date: 'September 15, 2026',
+        beneficiaries: '100+ Resident Children',
+        activity: 'Delivered food relief provisions, educational supplies, stationery kits, and clothing essentials, alongside interactive fellowship and encouragement for the children.'
+      }
+    ],
+    feedback: '"Ten Kind Hands visit to Abba Father Rich Orphanage was a wonderfully spent moment with gifts, foodstuffs, and educational materials at a time they are needed most."',
+    partners: 'Abba Father Rich Orphanage Home, Caregivers & Plateau Volunteers'
+  },
   {
     id: 'outreach-aug-2026',
     month: 'August 2026',
@@ -405,8 +455,8 @@ const initialInquiries = [
 ];
 
 const initialHomeContent = {
-  heroHeadline: 'Empowering children, women, and communities through education, healthcare, and livelihoods.',
-  heroSubtitle: 'We provide scholarships, learning materials, community medical outreaches, and sustainable livelihood support for vulnerable children, youth, women, and widows across Nigeria — and publish a field report after every one.',
+  heroHeadline: 'Helping Nigerian families learn, heal and thrive.',
+  heroSubtitle: 'Scholarships, learning materials, medical outreaches and livelihood support for vulnerable children, youth, women and widows across Nigeria — with a public field report after every outreach.',
   registeredBadge: '',
   featuredLatestOutreachId: 'auto',
   featuredNextOutreachId: 'auto',
@@ -753,8 +803,8 @@ const sanitizeData = (raw) => {
   if (cleaned.homeContent) {
     if (
       !cleaned.homeContent.heroHeadline ||
-      cleaned.homeContent.heroHeadline === 'Keeping Nigerian children in school and families healthy.' ||
-      cleaned.homeContent.heroHeadline.includes('Keeping Nigerian children in school')
+      cleaned.homeContent.heroHeadline.includes('Keeping Nigerian children') ||
+      cleaned.homeContent.heroHeadline.includes('Empowering children')
     ) {
       cleaned.homeContent = {
         ...cleaned.homeContent,
@@ -763,7 +813,8 @@ const sanitizeData = (raw) => {
     }
     if (
       !cleaned.homeContent.heroSubtitle ||
-      cleaned.homeContent.heroSubtitle.includes('We fund scholarships, school supplies and community health')
+      cleaned.homeContent.heroSubtitle.includes('We fund scholarships') ||
+      cleaned.homeContent.heroSubtitle.includes('We provide scholarships')
     ) {
       cleaned.homeContent = {
         ...cleaned.homeContent,
@@ -788,6 +839,27 @@ const sanitizeData = (raw) => {
       };
     }
   }
+  if (Array.isArray(cleaned.outreaches)) {
+    if (!cleaned.outreaches.some((o) => o.id === 'outreach-sep-2026-pad-bank')) {
+      const padOutreach = initialOutreaches.find((o) => o.id === 'outreach-sep-2026-pad-bank');
+      if (padOutreach) {
+        cleaned.outreaches = [padOutreach, ...cleaned.outreaches];
+      }
+    }
+    if (!cleaned.outreaches.some((o) => o.id === 'outreach-sep-2026-orphanage')) {
+      const orphanageOutreach = initialOutreaches.find((o) => o.id === 'outreach-sep-2026-orphanage');
+      if (orphanageOutreach) {
+        const padIdx = cleaned.outreaches.findIndex((o) => o.id === 'outreach-sep-2026-pad-bank');
+        if (padIdx >= 0) {
+          cleaned.outreaches.splice(padIdx + 1, 0, orphanageOutreach);
+        } else {
+          cleaned.outreaches = [orphanageOutreach, ...cleaned.outreaches];
+        }
+      }
+    }
+  } else {
+    cleaned.outreaches = initialOutreaches;
+  }
   if (Array.isArray(cleaned.documents)) {
     cleaned.documents = cleaned.documents.map((d) => ({
       ...d,
@@ -803,8 +875,8 @@ const sanitizeData = (raw) => {
     }
   }
   if (cleaned.homeContent) {
-    if (!cleaned.homeContent.heroHeadline || cleaned.homeContent.heroHeadline === 'Empowering children, women, and communities through education, healthcare, and sustainable livelihoods.') {
-      cleaned.homeContent.heroHeadline = 'Empowering children, women, and communities through education, healthcare, and livelihoods.';
+    if (!cleaned.homeContent.heroHeadline || cleaned.homeContent.heroHeadline.includes('Empowering children')) {
+      cleaned.homeContent.heroHeadline = initialHomeContent.heroHeadline;
     }
   }
   if (Array.isArray(cleaned.testimonialsList)) {

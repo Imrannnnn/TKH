@@ -37,7 +37,7 @@ export const PARTNERS_DATA = [
     logo: '/images/partners/home-of-gods-grace.webp',
     logoPng: '/images/partners/home-of-gods-grace.png',
     impact: 'Food support',
-    quote: 'we are grateful for the food donations, including rice, semovita, spaghetti, seasoning, and noodles. the support as a source of hope and joy for the children in our care.',
+    quote: 'We are grateful for the food donations, including rice, semovita, spaghetti, seasoning, and noodles. The support serves as a source of hope and joy for the children in our care.',
     quoteAuthor: 'Care Coordinator, Home of God’s Grace',
     outreachPhoto: '/images/hero-orphanage-food-educational-support.webp'
   },
@@ -51,7 +51,7 @@ export const PARTNERS_DATA = [
     logo: '/images/partners/phaozaan-private-school.webp',
     logoPng: '/images/partners/phaozaan-private-school.png',
     impact: 'Provision of snacks and drinks',
-    quote: 'We thank TKH for its generous donations. the support brought smiles to the children and made a meaningful difference to the scholars and the school community.',
+    quote: 'We thank TKH for its generous donations. The support brought smiles to the children and made a meaningful difference to the scholars and the school community.',
     quoteAuthor: 'School Management, Phaozaan Private Schools',
     outreachPhoto: '/images/IMG_0294.webp'
   },
