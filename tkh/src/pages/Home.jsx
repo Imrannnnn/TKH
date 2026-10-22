@@ -394,9 +394,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             return (
               <div
                 key={report.id || idx}
-                className={`bg-white rounded-2xl sm:rounded-3xl border overflow-hidden shadow-sm hover:border-[#cfc7b9] hover:shadow-md transition-all flex flex-col justify-between ${
-                  isLatest ? 'border-[#cfc7b9] ring-1 ring-forest/20' : 'border-[#e5e0d8]'
-                }`}
+                className={`bg-white rounded-2xl sm:rounded-3xl border overflow-hidden shadow-sm hover:border-[#cfc7b9] hover:shadow-md transition-all flex flex-col justify-between ${isLatest ? 'border-[#cfc7b9] ring-1 ring-forest/20' : 'border-[#e5e0d8]'
+                  }`}
               >
                 <div className="relative h-44 sm:h-48 overflow-hidden bg-gray-100 shrink-0">
                   <img
@@ -410,11 +409,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
                   />
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                     <span
-                      className={`px-2.5 py-0.5 rounded-full font-semibold text-[11px] shadow-xs ${
-                        isLatest
+                      className={`px-2.5 py-0.5 rounded-full font-semibold text-[11px] shadow-xs ${isLatest
                           ? 'bg-forest-tint text-forest border border-forest/20'
                           : 'bg-white/95 text-[#1c1c1a]'
-                      }`}
+                        }`}
                     >
                       {isLatest ? 'Latest report' : 'Report published'}
                     </span>
@@ -468,57 +466,44 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             );
           })}
 
-          {/* Next Outreach Card (Card 4: Next Outreach) */}
-          <div className="bg-[#faf6f0] rounded-2xl sm:rounded-3xl border-2 border-maroon/20 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-            <div className="relative h-44 sm:h-48 overflow-hidden bg-gray-100 shrink-0">
-              <img
-                src={nextOutreach.image || '/images/IMG_0995.JPG'}
-                alt={nextOutreach.title}
-                className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/images/hero-maternal-health-malaria-prevention.webp';
-                }}
-              />
-              <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                <span className="px-2.5 py-0.5 rounded-full bg-maroon text-white font-semibold text-[11px] uppercase tracking-wider shadow-xs">
+          {/* Next Outreach Card (Card 4: Next Outreach - Card only, no image) */}
+          <div className="bg-[#faf6f0] rounded-2xl sm:rounded-3xl border-2 border-maroon/20 overflow-hidden shadow-sm hover:shadow-md hover:border-maroon/40 transition-all flex flex-col justify-between p-5 sm:p-6">
+            <div>
+              <div className="flex items-center gap-2 mb-3.5">
+                <span className="px-2.5 py-1 rounded-full bg-maroon text-white font-semibold text-[11px] uppercase tracking-wider shadow-xs">
                   Next outreach
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-sm text-[#1c1c1a] font-medium text-[11px] shadow-xs">
+                <span className="px-2.5 py-1 rounded-full bg-white text-[#1c1c1a] border border-[#e5e0d8] font-medium text-[11px] shadow-xs">
                   {nextOutreach.month || 'Upcoming'}
                 </span>
               </div>
+
+              <span className="text-[10px] font-bold uppercase tracking-widest text-maroon block mb-1">
+                UPCOMING OUTREACH
+              </span>
+              <h3 className="font-heading font-bold text-base sm:text-lg text-[#1c1c1a] mb-2 leading-snug">
+                {nextOutreach.title?.includes(nextOutreach.month || '')
+                  ? nextOutreach.title
+                  : `${nextOutreach.month || 'Upcoming'} Outreach — ${nextOutreach.title}`}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4">
+                {nextOutreach.description}
+              </p>
             </div>
 
-            <div className="p-5 flex flex-col justify-between flex-1">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-maroon block mb-1">
-                  UPCOMING OUTREACH
-                </span>
-                <h3 className="font-heading font-bold text-base text-[#1c1c1a] mb-2 leading-snug">
-                  {nextOutreach.title?.includes(nextOutreach.month || '')
-                    ? nextOutreach.title
-                    : `${nextOutreach.month || 'Upcoming'} Outreach — ${nextOutreach.title}`}
-                </h3>
-                <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed line-clamp-3 mb-4">
-                  {nextOutreach.description}
-                </p>
-              </div>
-
-              <div className="pt-3 border-t border-[#e5e0d8] flex flex-col gap-2 mt-auto">
-                <button
-                  onClick={() => handleNav('get-involved', 'get-involved/volunteer')}
-                  className="w-full py-2.5 px-4 rounded-full bg-maroon hover:bg-maroon-dark text-white font-semibold text-xs sm:text-sm transition-all cursor-pointer text-center shadow-xs"
-                >
-                  Volunteer on this outreach
-                </button>
-                <button
-                  onClick={() => onOpenDonate()}
-                  className="w-full py-2 px-4 rounded-full border border-maroon text-maroon hover:bg-maroon hover:text-white font-semibold text-xs sm:text-sm transition-all cursor-pointer text-center"
-                >
-                  Fund this outreach
-                </button>
-              </div>
+            <div className="pt-4 border-t border-maroon/15 flex flex-col gap-2.5 mt-auto">
+              <button
+                onClick={() => handleNav('get-involved', 'get-involved/volunteer')}
+                className="w-full py-2.5 px-4 rounded-full bg-maroon hover:bg-maroon-dark text-white font-semibold text-xs sm:text-sm transition-all cursor-pointer text-center shadow-xs"
+              >
+                Volunteer on this outreach
+              </button>
+              <button
+                onClick={() => onOpenDonate()}
+                className="w-full py-2 px-4 rounded-full border border-maroon text-maroon hover:bg-maroon hover:text-white font-semibold text-xs sm:text-sm transition-all cursor-pointer text-center"
+              >
+                Fund this outreach
+              </button>
             </div>
           </div>
 
