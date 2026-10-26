@@ -226,33 +226,40 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
     <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] overflow-x-hidden">
 
       {/* 1. Hero Section */}
-      <section className="relative pt-5 sm:pt-7 lg:pt-9 pb-8 sm:pb-10 lg:pb-12 max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+      <section className="relative pt-12 sm:pt-16 lg:pt-20 xl:pt-24 pb-16 sm:pb-20 lg:pb-24 xl:pb-28 lg:min-h-[75vh] xl:min-h-[78vh] flex flex-col justify-center max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
 
           {/* Left Column: Copy & Actions */}
-          <div className="lg:col-span-7 flex flex-col items-start gap-3 sm:gap-4">
+          <div className="lg:col-span-6 xl:col-span-6 flex flex-col items-start gap-5 sm:gap-6 max-w-2xl">
             {/* Main Headline */}
-            <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-[40px] 2xl:text-[44px] leading-[1.18] tracking-tight text-[#1c1c1a]">
-              {heroHeadline}
+            <h1 className="font-heading font-bold text-3xl xs:text-[34px] sm:text-4xl lg:text-[38px] xl:text-[42px] 2xl:text-[46px] leading-[1.16] tracking-tight text-[#1c1c1a]">
+              {heroHeadline === 'Helping Nigerian families learn, heal and thrive.' ? (
+                <>
+                  <span className="block sm:whitespace-nowrap">Helping Nigerian families</span>
+                  <span className="block">learn, heal and thrive.</span>
+                </>
+              ) : (
+                heroHeadline
+              )}
             </h1>
 
             {/* Subtext */}
-            <p className="text-sm sm:text-base text-[#4a4a46] leading-relaxed max-w-xl">
+            <p className="text-base sm:text-lg lg:text-[17px] xl:text-lg text-[#4a4a46] leading-relaxed max-w-lg xl:max-w-xl">
               {heroSubtitle}
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1.5 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2 sm:pt-3 w-full sm:w-auto">
               <button
                 onClick={() => onOpenDonate()}
-                className="btn-primary w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                className="btn-primary w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base font-semibold shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Donate now</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleNav('outreaches')}
-                className="btn-secondary w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base text-center cursor-pointer"
+                className="btn-secondary w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base font-semibold text-center cursor-pointer"
               >
                 See our field reports
               </button>
@@ -260,10 +267,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
           </div>
 
           {/* Right Column: Real Outreach Photo Showcase with Slide Controls */}
-          <div className="lg:col-span-5 w-full">
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-sm bg-white group">
-              {/* Photo Display */}
-              <div className="relative w-full h-[210px] xs:h-[240px] sm:h-[270px] lg:h-[300px] xl:h-[320px] overflow-hidden bg-sand">
+          <div className="lg:col-span-6 xl:col-span-6 w-full">
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md bg-white group">
+              {/* Photo Display - Restored taller proportions */}
+              <div className="relative w-full h-[280px] xs:h-[320px] sm:h-[380px] lg:h-[420px] xl:h-[460px] 2xl:h-[490px] overflow-hidden bg-sand">
                 {heroSlides.map((slide, idx) => (
                   <img
                     key={idx}
@@ -280,25 +287,25 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               </div>
 
               {/* Bottom Caption Pill & Location */}
-              <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col gap-1.5">
+              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 bg-gradient-to-t from-black/85 via-black/45 to-transparent flex flex-col gap-2">
                 <div className="flex items-center justify-between gap-2">
-                  <div className="px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm border border-white/40 text-xs font-semibold text-[#1c1c1a] shadow-sm truncate">
+                  <div className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-sm border border-white/40 text-xs sm:text-sm font-semibold text-[#1c1c1a] shadow-sm truncate">
                     {heroSlides[heroSlideIdx]?.caption || 'Ten Kind Hands Field Outreach'}
                   </div>
-                  <span className="shrink-0 px-2.5 py-0.5 rounded-full bg-black/60 text-white/90 text-[11px] font-medium border border-white/20 backdrop-blur-sm flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-[#f7c899]" />
+                  <span className="shrink-0 px-2.5 py-1 rounded-full bg-black/60 text-white/90 text-[11px] sm:text-xs font-medium border border-white/20 backdrop-blur-sm flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-[#f7c899]" />
                     {heroSlides[heroSlideIdx]?.state || 'Field Mission'}
                   </span>
                 </div>
 
                 {/* Slide Indicator Dots */}
-                <div className="flex items-center gap-1.5 pt-0.5">
+                <div className="flex items-center gap-1.5 pt-1">
                   {heroSlides.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setHeroSlideIdx(i)}
                       aria-label={`Go to photo ${i + 1}`}
-                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${i === heroSlideIdx ? 'w-5 bg-white shadow-xs' : 'w-2 bg-white/40 hover:bg-white/70'
+                      className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 cursor-pointer ${i === heroSlideIdx ? 'w-6 bg-white shadow-xs' : 'w-2 bg-white/40 hover:bg-white/70'
                         }`}
                     />
                   ))}
@@ -311,14 +318,14 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       </section>
 
       {/* 2. Full-Width Deep Forest Stats Banner */}
-      <section className="bg-forest !text-white py-6 sm:py-7 lg:py-8 border-y border-forest-dark" style={{ color: '#ffffff' }}>
+      <section className="bg-forest !text-white py-8 sm:py-10 lg:py-11 border-y border-forest-dark" style={{ color: '#ffffff' }}>
         <div className="max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 !text-white" style={{ color: '#ffffff' }}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 !text-white" style={{ color: '#ffffff' }}>
             <div>
               <div className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
                 {metrics?.totalBeneficiaries && metrics.totalBeneficiaries > 3500 ? `${metrics.totalBeneficiaries.toLocaleString()}+` : '3,500+'}
               </div>
-              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-0.5 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
                 children &amp; young people reached
               </div>
             </div>
@@ -327,7 +334,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               <div className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
                 200+
               </div>
-              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-0.5 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
                 Scholarships awarded
               </div>
             </div>
@@ -336,7 +343,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               <div className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
                 2,500+
               </div>
-              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-0.5 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
                 Women &amp; girls supported
               </div>
             </div>
@@ -345,8 +352,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               <div className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl !text-white tracking-tight" style={{ color: '#ffffff' }}>
                 7 States
               </div>
-              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-0.5 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
-                (FCT, Benue, Katsina, Plateau, Lagos, Oyo, Enugu)
+              <div className="text-xs sm:text-sm !text-white/90 font-normal mt-1 leading-snug" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>
+                states reached
               </div>
             </div>
           </div>

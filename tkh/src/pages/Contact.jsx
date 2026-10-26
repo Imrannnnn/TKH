@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { MessageCircle, Mail, MapPin, ArrowRight, Check, Instagram, Facebook, Youtube, TikTok } from '../components/Icons';
+import { MessageCircle, Mail, ArrowRight, Check, Instagram, Facebook, Youtube, TikTok } from '../components/Icons';
 
 export default function Contact() {
   const { addInquiry } = useData();
@@ -34,176 +34,173 @@ export default function Contact() {
   };
 
   return (
-    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16 3xl:py-20 4xl:py-24">
-      <div className="max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 uw:px-20">
+    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
-        <div className="max-w-3xl 3xl:max-w-4xl 4xl:max-w-5xl mb-8 sm:mb-12 3xl:mb-16">
-          <span className="text-xs 3xl:text-sm uppercase font-bold tracking-widest text-maroon block mb-2">
+        {/* 1. Header */}
+        <div className="max-w-3xl mb-8 sm:mb-12">
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#7a1b1b] block mb-2">
             CONTACT
           </span>
-          <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl text-[#1c1c1a] mb-3 leading-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold text-stone-900 mb-3 tracking-tight leading-tight">
             Talk to a real person.
           </h1>
-          <p className="text-sm sm:text-base lg:text-lg 3xl:text-xl text-[#4a4a46] leading-relaxed">
-            WhatsApp first, our official email, our national office in Abuja, and one short form below.
+          <p className="text-base sm:text-lg text-stone-600 leading-relaxed">
+            WhatsApp first for immediate responses, our official email, and a direct message form below. No automated call menus.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 3xl:gap-16 4xl:gap-20 items-start">
+        {/* 2. One Screen Layout: Channels on Left, Message Form on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* Left Column: Direct Channels */}
-          <div className="lg:col-span-5 flex flex-col gap-6 3xl:gap-8">
+          <div className="lg:col-span-5 flex flex-col gap-6">
             
-            {/* WhatsApp Featured Box */}
-            <div className="bg-forest text-white rounded-3xl p-5 sm:p-8 3xl:p-10 shadow-sm">
-              <div className="flex items-center gap-3 3xl:gap-4 mb-3 3xl:mb-4">
-                <div className="w-10 h-10 3xl:w-12 3xl:h-12 rounded-full bg-white/10 flex items-center justify-center text-white">
-                  <MessageCircle className="w-5 h-5 3xl:w-6 3xl:h-6 fill-current" />
+            {/* WhatsApp Featured Box (Main Option) */}
+            <div className="bg-[#1b4d3e] text-white rounded-3xl p-6 sm:p-8 shadow-sm">
+              <div className="flex items-center gap-3.5 mb-4">
+                <div className="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center text-white shrink-0">
+                  <MessageCircle className="w-6 h-6 fill-current" />
                 </div>
                 <div>
-                  <span className="text-xs 3xl:text-sm uppercase font-bold tracking-widest text-[#a8d5c4] block">
+                  <span className="text-xs font-bold uppercase tracking-widest text-[#a8d5c4] block">
                     FASTEST RESPONSE
                   </span>
-                  <h3 className="font-heading font-bold text-base sm:text-lg 3xl:text-xl text-white">
+                  <h3 className="text-xl font-bold text-white tracking-tight">
                     WhatsApp Desk
                   </h3>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm 3xl:text-base text-white/80 leading-relaxed mb-6 3xl:mb-8">
-                Our operations team answers messages directly. Ideal for quick questions, donor receipts, or volunteering queries.
+              <p className="text-xs sm:text-sm text-white/85 leading-relaxed mb-6">
+                Our operations coordinators answer messages directly. Ideal for quick questions, donor receipts, or volunteering queries.
               </p>
 
               <a
                 href="https://wa.me/2348180994301"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3.5 3xl:py-4 px-5 sm:px-6 3xl:px-8 rounded-full bg-white text-forest font-heading font-bold text-xs sm:text-sm 3xl:text-base hover:bg-[#f5f1e8] transition-colors flex items-center justify-center gap-2 text-center min-h-[44px]"
+                className="w-full py-3.5 px-6 rounded-full bg-white text-[#1b4d3e] font-bold text-xs sm:text-sm hover:bg-stone-100 transition-colors flex items-center justify-center gap-2 text-center min-h-[44px] shadow-sm cursor-pointer"
               >
                 <span>Chat on WhatsApp (+234 818 099 4301)</span>
                 <ArrowRight className="w-4 h-4 shrink-0" />
               </a>
             </div>
 
-            {/* Email Channels Card */}
-            <div className="bg-white rounded-3xl p-5 sm:p-8 3xl:p-10 border border-[#e5e0d8] shadow-sm flex flex-col gap-4 3xl:gap-5">
-              <h3 className="font-heading font-bold text-base 3xl:text-lg text-[#1c1c1a]">
-                Official Email
-              </h3>
-
-              <div className="flex items-start gap-3 3xl:gap-4">
-                <div className="w-8 h-8 3xl:w-10 3xl:h-10 rounded-full bg-maroon-tint text-maroon flex items-center justify-center shrink-0 mt-0.5">
-                  <Mail className="w-4 h-4 3xl:w-5 3xl:h-5" />
+            {/* Email Channel Card */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200/80 shadow-sm flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-[#7a1b1b]/10 text-[#7a1b1b] flex items-center justify-center shrink-0">
+                  <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs 3xl:text-sm text-[#706e68]">General Inquiries, Partnerships &amp; Support</div>
-                  <a
-                    href="mailto:info@tenkindhands.org"
-                    className="font-heading font-semibold text-xs sm:text-sm 3xl:text-base text-[#1c1c1a] hover:text-maroon transition-colors break-all"
-                  >
-                    info@tenkindhands.org
-                  </a>
+                  <span className="text-xs uppercase font-bold tracking-wider text-stone-400 block">
+                    OFFICIAL EMAIL
+                  </span>
+                  <h3 className="font-bold text-base sm:text-lg text-stone-900">
+                    General Inquiries &amp; Partnerships
+                  </h3>
                 </div>
               </div>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed mt-1">
+                For detailed institutional proposals, audit questions, or general correspondence:
+              </p>
+              <a
+                href="mailto:info@tenkindhands.org"
+                className="text-sm sm:text-base font-bold text-[#7a1b1b] hover:underline break-all mt-1"
+              >
+                info@tenkindhands.org
+              </a>
             </div>
 
-            {/* Social Media Channels Card */}
-            <div className="bg-white rounded-3xl p-5 sm:p-8 3xl:p-10 border border-[#e5e0d8] shadow-sm flex flex-col gap-4 3xl:gap-5">
-              <h3 className="font-heading font-bold text-base 3xl:text-lg text-[#1c1c1a]">
-                Connect on Social Media
-              </h3>
-              <p className="text-xs 3xl:text-sm text-[#706e68]">
-                Follow our official accounts for regular field dispatches and stories:
+            {/* Social Media Channels */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200/80 shadow-sm flex flex-col gap-4">
+              <div>
+                <span className="text-xs uppercase font-bold tracking-wider text-stone-400 block mb-1">
+                  COMMUNITY UPDATES
+                </span>
+                <h3 className="font-bold text-base sm:text-lg text-stone-900">
+                  Follow on Social Media
+                </h3>
+              </div>
+              <p className="text-xs sm:text-sm text-stone-600">
+                Live field dispatches, photo stories, and milestone announcements:
               </p>
-              <div className="flex items-center gap-3 3xl:gap-4 pt-1 text-[#4a4a46]">
+              <div className="flex items-center gap-3 pt-1">
                 <a
                   href="https://www.instagram.com/tenkindhands"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 3xl:w-12 3xl:h-12 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors min-h-[40px] min-w-[40px]"
+                  className="w-11 h-11 rounded-full border border-stone-200 bg-[#fdfbf7] flex items-center justify-center hover:text-[#7a1b1b] hover:border-[#7a1b1b] transition-colors"
                   aria-label="Instagram"
                 >
-                  <Instagram className="w-4 h-4 3xl:w-5 3xl:h-5" />
+                  <Instagram className="w-4 h-4" />
                 </a>
                 <a
                   href="https://web.facebook.com/tenkindhandss/"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 3xl:w-12 3xl:h-12 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors min-h-[40px] min-w-[40px]"
+                  className="w-11 h-11 rounded-full border border-stone-200 bg-[#fdfbf7] flex items-center justify-center hover:text-[#7a1b1b] hover:border-[#7a1b1b] transition-colors"
                   aria-label="Facebook"
                 >
-                  <Facebook className="w-4 h-4 3xl:w-5 3xl:h-5" />
+                  <Facebook className="w-4 h-4" />
                 </a>
                 <a
                   href="https://www.youtube.com/@TenkindhandsFoundation"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 3xl:w-12 3xl:h-12 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors min-h-[40px] min-w-[40px]"
+                  className="w-11 h-11 rounded-full border border-stone-200 bg-[#fdfbf7] flex items-center justify-center hover:text-[#7a1b1b] hover:border-[#7a1b1b] transition-colors"
                   aria-label="YouTube"
                 >
-                  <Youtube className="w-4 h-4 3xl:w-5 3xl:h-5" />
+                  <Youtube className="w-4 h-4" />
                 </a>
                 <a
                   href="https://www.tiktok.com/@tenkindhandsfoundation"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 3xl:w-12 3xl:h-12 rounded-full border border-[#e5e0d8] bg-[#fdfbf7] flex items-center justify-center hover:text-maroon hover:border-maroon transition-colors min-h-[40px] min-w-[40px]"
+                  className="w-11 h-11 rounded-full border border-stone-200 bg-[#fdfbf7] flex items-center justify-center hover:text-[#7a1b1b] hover:border-[#7a1b1b] transition-colors"
                   aria-label="TikTok"
                 >
-                  <TikTok className="w-4 h-4 3xl:w-5 3xl:h-5" />
+                  <TikTok className="w-4 h-4" />
                 </a>
-              </div>
-            </div>
-
-            {/* National Secretariat Office Card */}
-            <div className="bg-white rounded-3xl p-5 sm:p-8 3xl:p-10 border border-[#e5e0d8] shadow-sm">
-              <div className="flex items-start gap-3 3xl:gap-4">
-                <div className="w-8 h-8 3xl:w-10 3xl:h-10 rounded-full bg-sand text-[#1c1c1a] flex items-center justify-center shrink-0 mt-0.5">
-                  <MapPin className="w-4 h-4 3xl:w-5 3xl:h-5" />
-                </div>
-                <div>
-                  <div className="text-xs 3xl:text-sm uppercase font-bold tracking-wider text-[#706e68] mb-1">
-                    National Secretariat
-                  </div>
-                  <p className="text-xs sm:text-sm 3xl:text-base font-heading font-semibold text-[#1c1c1a] leading-snug">
-                    Danglo Plaza 204, 6th Avenue, Gwarinpa, Abuja, Nigeria
-                  </p>
-                  <p className="text-xs 3xl:text-sm text-[#706e68] mt-2">
-                    Hours: Monday – Friday, 9:00 AM – 5:00 PM (WAT)
-                  </p>
-                </div>
               </div>
             </div>
 
           </div>
 
-          {/* Right Column: One Short Form */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-8 lg:p-10 3xl:p-14 border border-[#e5e0d8] shadow-sm">
-            <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2">
+          {/* Right Column: One Message Form Beside Direct Channels */}
+          <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 border border-stone-200/80 shadow-sm">
+            <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-2 tracking-tight">
               Send us a direct message
             </h2>
-            <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-6 3xl:mb-8">
-              Fill in your details below and a team coordinator will respond within 24 hours.
+            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed mb-6 sm:mb-8">
+              Fill in your details and a coordinator from our team will respond within 24 hours.
             </p>
 
             {submitted ? (
-              <div className="p-8 3xl:p-12 rounded-2xl bg-forest-tint text-forest text-center">
-                <div className="w-12 h-12 3xl:w-16 3xl:h-16 rounded-full bg-white text-forest flex items-center justify-center mx-auto mb-3 shadow-xs">
-                  <Check className="w-6 h-6 3xl:w-8 3xl:h-8 stroke-[2.5]" />
+              <div className="p-8 sm:p-12 rounded-2xl bg-emerald-50 text-emerald-900 text-center space-y-3">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-xl">
+                  ✓
                 </div>
-                <h3 className="font-heading font-bold text-lg sm:text-xl 3xl:text-2xl mb-1">
-                  Message Sent!
-                </h3>
-                <p className="text-xs sm:text-sm 3xl:text-base">
-                  Thank you, {form.name}. We have received your message and will reply to {form.email} promptly.
+                <h3 className="text-xl font-bold">Message Dispatched!</h3>
+                <p className="text-sm text-stone-600 max-w-md mx-auto">
+                  Thank you, {form.name}. We have received your note and will reply directly to {form.email} promptly.
                 </p>
+                <button
+                  onClick={() => {
+                    setSubmitted(false);
+                    setForm({ name: '', email: '', topic: 'General Question', message: '' });
+                  }}
+                  className="mt-4 px-6 py-2.5 rounded-full bg-stone-900 text-white text-xs font-semibold cursor-pointer"
+                >
+                  Send another message
+                </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 3xl:space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 <div>
-                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                    Your Name
+                  <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                    Your Name *
                   </label>
                   <input
                     type="text"
@@ -211,13 +208,13 @@ export default function Contact() {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="e.g. Maryam Bello"
-                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon min-h-[44px]"
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-stone-200 text-sm text-stone-900 focus:outline-none focus:border-[#7a1b1b] min-h-[44px]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                    Your Email
+                  <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                    Your Email *
                   </label>
                   <input
                     type="email"
@@ -225,18 +222,18 @@ export default function Contact() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="yourname@domain.com"
-                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon min-h-[44px]"
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-stone-200 text-sm text-stone-900 focus:outline-none focus:border-[#7a1b1b] min-h-[44px]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
                     Topic
                   </label>
                   <select
                     value={form.topic}
                     onChange={(e) => setForm({ ...form, topic: e.target.value })}
-                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon min-h-[44px]"
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-stone-200 text-sm text-stone-800 focus:outline-none focus:border-[#7a1b1b] min-h-[44px]"
                   >
                     <option value="General Question">General Question</option>
                     <option value="Donation or Receipt Inquiry">Donation or Receipt Inquiry</option>
@@ -247,8 +244,8 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                    Message
+                  <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                    Message *
                   </label>
                   <textarea
                     rows={4}
@@ -256,14 +253,14 @@ export default function Contact() {
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     placeholder="Write your message here..."
-                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
+                    className="w-full px-4 py-3 bg-[#fdfbf7] rounded-2xl border border-stone-200 text-sm text-stone-900 focus:outline-none focus:border-[#7a1b1b]"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary w-full py-4 3xl:py-5 text-sm sm:text-base 3xl:text-lg font-semibold shadow-md mt-2 flex items-center justify-center gap-2 min-h-[48px]"
+                  className="w-full py-4 rounded-full bg-[#7a1b1b] hover:bg-[#621616] text-white font-bold text-sm sm:text-base transition-colors shadow-sm cursor-pointer min-h-[48px] flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <span>Sending message...</span>

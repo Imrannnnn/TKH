@@ -135,7 +135,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
   const faqs = [
     {
       q: 'Will I get a receipt?',
-      a: 'Yes. As soon as your contribution is confirmed, an official email receipt is issued with our CAC registration details (RC 7015705).'
+      a: 'Yes. As soon as your contribution is confirmed, an official email receipt is issued with full transaction references.'
     },
     {
       q: 'Can I give from outside Nigeria?',
@@ -302,6 +302,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                     <option value="Where it's needed most">Where it's needed most</option>
                     <option value="Scholarships">Scholarships</option>
                     <option value="School supplies & learning kits">School supplies &amp; learning kits</option>
+                    <option value="Orphanage outreaches">Orphanage outreaches</option>
                     <option value="Medical outreaches & malaria prevention">Medical outreaches &amp; malaria prevention</option>
                     <option value="Widows & women empowerment">Widows &amp; women empowerment</option>
                     <option value="Youth skills & apprenticeships">Youth skills &amp; apprenticeships</option>

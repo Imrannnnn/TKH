@@ -1,13 +1,22 @@
 import { useState, useEffect } from 'react';
-import { School, Stethoscope, BookOpen, Users, Laptop, Heart, ArrowRight, ArrowLeft, Check, Quote } from '../components/Icons';
+import { 
+  GraduationCap, 
+  HeartPulse, 
+  Wrench, 
+  ArrowRight, 
+  ArrowLeft, 
+  Check, 
+  X, 
+  Quote 
+} from '../components/Icons';
+import { useData } from '../context/DataContext';
 
-const PROGRAMMES = [
+export const PROGRAMMES = [
   {
     id: 'scholarships',
     pillar: 'education',
     title: 'Scholarships',
     shortDesc: 'School fees, exam registration and uniforms for primary and secondary pupils at risk of dropping out.',
-    latestOutreach: 'Aug 2026 · Speech-day scholarships, Jos',
     image: '/images/hero-debate-competition-makurdi.webp',
     unitCost: '₦45,000',
     unitCostLabel: 'One term costs',
@@ -19,7 +28,7 @@ const PROGRAMMES = [
     termSuggested: 45000,
     fundedCount: 48,
     targetCount: 60,
-    whoItsFor: 'Primary and secondary pupils at serious risk of dropping out because of money — often after a parent dies or loses their income. Active in 7 states (FCT, Benue, Katsina, Plateau, Lagos, Oyo, Enugu).',
+    whoItsFor: 'Primary and secondary pupils at serious risk of dropping out because of money — often after a parent dies or loses their income. Active across 7 states in Nigeria.',
     covers: [
       'Tuition, paid straight to the school',
       'Official exam registration',
@@ -43,7 +52,6 @@ const PROGRAMMES = [
     pillar: 'education',
     title: 'School supplies & learning kits',
     shortDesc: 'Exercise books, writing packs and stationery so no child starts the term empty-handed.',
-    latestOutreach: 'May 2026 · 300 pupils across 4 states',
     image: '/images/hero-jambells-school-outreach.webp',
     unitCost: '₦5,000',
     unitCostLabel: 'One kit costs',
@@ -79,14 +87,13 @@ const PROGRAMMES = [
     pillar: 'education',
     title: 'Orphanage outreaches',
     shortDesc: 'Food relief, nutritional staples and learning materials for registered children\'s homes.',
-    latestOutreach: 'June 2026 · Oyiza Orphanage',
     image: '/images/hero-orphanage-food-educational-support.webp',
     unitCost: '₦25,000',
     unitCostLabel: 'Monthly food basket',
     statBeneficiaries: '4 homes',
     statBeneficiariesLabel: 'Homes supported',
     statesActive: '3 states',
-    statesList: 'FCT Abuja, Benue and Lagos',
+    statesList: 'FCT Abuja, Benue and Plateau',
     monthlySuggested: 25000,
     termSuggested: 75000,
     fundedCount: 32,
@@ -107,7 +114,7 @@ const PROGRAMMES = [
     story: {
       quote: 'Ten Kind Hands has been a dependable rock for our home. The children look forward to every visit with immense gratitude.',
       name: 'Matron Comfort',
-      location: 'Oyiza Orphanage'
+      location: 'Abba Father Rich Orphanage Home'
     }
   },
   {
@@ -115,7 +122,6 @@ const PROGRAMMES = [
     pillar: 'health',
     title: 'Medical outreaches & malaria prevention',
     shortDesc: 'Treated mosquito nets, rapid tests and supplements for pregnant and nursing mothers, with health education in English and Hausa.',
-    latestOutreach: 'Apr 2026 · 130 high-risk mothers, 3 states',
     image: '/images/hero-maternal-health-malaria-prevention.webp',
     unitCost: '₦7,500',
     unitCostLabel: 'Per mother pack',
@@ -151,7 +157,6 @@ const PROGRAMMES = [
     pillar: 'livelihoods',
     title: 'Widows & women empowerment',
     shortDesc: 'Fuel-efficient cooking pots, small cash grants and welfare support for widows.',
-    latestOutreach: 'Jun 2026 · 80 widows, 20 in each of 4 states',
     image: '/images/hero-widows-clean-cooking-stoves.webp',
     unitCost: '₦20,000',
     unitCostLabel: 'Pot & seed grant',
@@ -186,8 +191,7 @@ const PROGRAMMES = [
     id: 'youth-skills',
     pillar: 'livelihoods',
     title: 'Youth skills & empowerment',
-    shortDesc: 'Digital literacy bootcamps and apprenticeships that end in a toolkit — and a shop of their own.',
-    latestOutreach: 'Jul 2026 · 2 trained barbers set up with their own shops',
+    shortDesc: 'Digital literacy bootcamps and apprenticeships that end in a toolkit, and a shop of their own.',
     image: '/images/hero-youth-vocational-shoemaking.webp',
     unitCost: '₦60,000',
     unitCostLabel: 'Training & tool set',
@@ -220,55 +224,140 @@ const PROGRAMMES = [
   }
 ];
 
+export function getProgramLatestOutreach(progId, outreaches = []) {
+  const completed = (outreaches || []).filter((o) => o.status === 'completed');
+
+  if (progId === 'orphanage-outreaches') {
+    const match = completed.find(
+      (o) =>
+        o.id.includes('orphanage') ||
+        o.title?.toLowerCase().includes('orphanage') ||
+        o.theme?.toLowerCase().includes('orphan')
+    );
+    if (match) {
+      return {
+        dateLabel: 'SEP 2026',
+        summary: 'Abba Father Rich Orphanage Home, Plateau State'
+      };
+    }
+  }
+
+  if (progId === 'scholarships') {
+    const match = completed.find(
+      (o) =>
+        o.title?.toLowerCase().includes('scholarship') ||
+        o.deployments?.some((d) => d.activity?.toLowerCase().includes('scholarship'))
+    );
+    if (match) {
+      return {
+        dateLabel: 'AUG 2026',
+        summary: 'Speech-day scholarships, Jos'
+      };
+    }
+  }
+
+  if (progId === 'school-supplies') {
+    const match = completed.find(
+      (o) =>
+        o.title?.toLowerCase().includes('academic materials') ||
+        o.theme?.toLowerCase().includes('learning resource') ||
+        o.deployments?.some((d) => d.activity?.toLowerCase().includes('exercise books'))
+    );
+    if (match) {
+      return {
+        dateLabel: 'MAY 2026',
+        summary: '300 pupils across 4 states'
+      };
+    }
+  }
+
+  if (progId === 'medical-outreaches') {
+    const match = completed.find(
+      (o) =>
+        o.title?.toLowerCase().includes('malaria') ||
+        o.theme?.toLowerCase().includes('malaria') ||
+        o.pillar?.toLowerCase().includes('health')
+    );
+    if (match) {
+      return {
+        dateLabel: 'APR 2026',
+        summary: '130 high-risk mothers, 3 states'
+      };
+    }
+  }
+
+  if (progId === 'widows-empowerment') {
+    const match = completed.find(
+      (o) =>
+        o.title?.toLowerCase().includes('widow') ||
+        o.pillar?.toLowerCase().includes('women')
+    );
+    if (match) {
+      return {
+        dateLabel: 'JUN 2026',
+        summary: '80 widows, 20 in each of 4 states'
+      };
+    }
+  }
+
+  if (progId === 'youth-skills') {
+    const match = completed.find(
+      (o) =>
+        o.title?.toLowerCase().includes('entrepreneurship') ||
+        o.theme?.toLowerCase().includes('barbershop') ||
+        o.title?.toLowerCase().includes('youth skills')
+    );
+    if (match) {
+      return {
+        dateLabel: 'JUL 2026',
+        summary: '2 trained barbers set up with their own shops'
+      };
+    }
+  }
+
+  return {
+    dateLabel: 'RECENT',
+    summary: 'Direct field delivery'
+  };
+}
+
 export default function Programs({ selectedProgramId, onSelectProgram, onOpenDonate, setCurrentPage }) {
-  const [activeTab, setActiveTab] = useState('all');
-  const [currentProgId, setCurrentProgId] = useState(selectedProgramId || null);
+  const { outreaches } = useData();
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [activeModalProgram, setActiveModalProgram] = useState(null);
 
   useEffect(() => {
     if (selectedProgramId) {
-      setCurrentProgId(selectedProgramId);
+      const match = PROGRAMMES.find((p) => p.id === selectedProgramId);
+      if (match) {
+        setActiveModalProgram(match);
+      }
     }
   }, [selectedProgramId]);
 
-  useEffect(() => {
-    const handleAnchor = () => {
-      const fullHash = window.location.hash || '';
-      const match = fullHash.match(/(?:education|health|livelihoods)/i);
-      if (match) {
-        const targetId = match[0].toLowerCase();
-        setActiveTab('all');
-        setTimeout(() => {
-          const el = document.getElementById(targetId);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 150);
+  const handleFilterSelect = (filterKey) => {
+    setActiveFilter(filterKey);
+    setTimeout(() => {
+      const el = document.getElementById('programmes-grid');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    };
-    handleAnchor();
-    window.addEventListener('hashchange', handleAnchor);
-    return () => window.removeEventListener('hashchange', handleAnchor);
-  }, []);
-
-  const selectedProgram = PROGRAMMES.find((p) => p.id === currentProgId);
-
-  const filteredProgrammes = PROGRAMMES.filter((p) => {
-    if (activeTab === 'all') return true;
-    return p.pillar === activeTab;
-  });
-
-  const handleOpenDetail = (id) => {
-    setCurrentProgId(id);
-    if (onSelectProgram) onSelectProgram(id);
-    window.location.hash = `programs/${id}`;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
   };
 
-  const handleBackToHub = () => {
-    setCurrentProgId(null);
+  const handleOpenDetail = (progId) => {
+    const prog = PROGRAMMES.find((p) => p.id === progId);
+    if (prog) {
+      setActiveModalProgram(prog);
+      if (onSelectProgram) onSelectProgram(progId);
+      window.location.hash = `programs/${progId}`;
+    }
+  };
+
+  const handleCloseDetail = () => {
+    setActiveModalProgram(null);
     if (onSelectProgram) onSelectProgram(null);
     window.location.hash = 'programs';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNav = (pageId) => {
@@ -277,490 +366,533 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // DETAIL VIEW (Artboard 03a Programme Template)
-  if (selectedProgram) {
-    const fundedPct = Math.min(100, Math.round((selectedProgram.fundedCount / selectedProgram.targetCount) * 100));
+  const filteredProgrammes = PROGRAMMES.filter((p) => {
+    if (activeFilter === 'all') return true;
+    return p.pillar === activeFilter;
+  });
 
-    return (
-      <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-12 3xl:py-16 4xl:py-20 overflow-hidden">
-        <div className="relative z-10 max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 uw:px-20">
+  return (
+    <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] overflow-hidden">
+      
+      {/* 1. HERO SECTION */}
+      <section className="pt-10 sm:pt-16 pb-12 sm:pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
-          {/* Breadcrumb */}
-          <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm 3xl:text-base text-[#706e68] mb-6 3xl:mb-8">
-            <button
-              onClick={handleBackToHub}
-              className="hover:text-maroon transition-colors cursor-pointer flex items-center gap-1 min-h-[44px] sm:min-h-0"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 3xl:w-4 3xl:h-4" />
-              <span>Our work</span>
-            </button>
-            <span>/</span>
-            <span className="text-[#1c1c1a] font-medium truncate max-w-[200px] sm:max-w-none">{selectedProgram.title}</span>
-          </div>
+          {/* Left Column: Text, CTAs, Stats */}
+          <div className="lg:col-span-7 flex flex-col items-start">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#7a1b1b] mb-3 sm:mb-4">
+              OUR WORK
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-bold text-stone-900 tracking-tight leading-[1.1] mb-5">
+              Where your gift goes to work.
+            </h1>
+            <p className="text-base sm:text-lg text-stone-600 leading-relaxed mb-8 max-w-xl">
+              Six programmes across education, health and livelihoods. Each one is delivered in person by our state coordinators and reported publicly after every outreach.
+            </p>
 
-          {/* Hero Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 3xl:gap-16 4xl:gap-24 items-center mb-12 sm:mb-16 3xl:mb-20">
-            <div className="lg:col-span-7 flex flex-col items-start gap-3 sm:gap-4 3xl:gap-6">
-              <span className="text-xs 3xl:text-sm uppercase font-bold tracking-widest text-maroon">
-                {selectedProgram.pillar.toUpperCase()} PROGRAMME
-              </span>
-              <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 2xl:text-[54px] 3xl:text-6xl 4xl:text-7xl text-[#1c1c1a] leading-tight">
-                {selectedProgram.title}
-              </h1>
-              <p className="text-sm sm:text-base lg:text-lg 3xl:text-xl text-[#4a4a46] leading-relaxed max-w-xl 3xl:max-w-2xl 4xl:max-w-3xl">
-                {selectedProgram.shortDesc}
-              </p>
-
-              {/* Stats Bar */}
-              <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 sm:gap-4 3xl:gap-6 w-full max-w-md 3xl:max-w-xl pt-2 pb-2">
-                <div className="bg-white rounded-2xl p-3.5 sm:p-4 3xl:p-6 border border-[#e5e0d8] shadow-sm">
-                  <div className="font-heading font-bold text-lg xs:text-xl sm:text-2xl 3xl:text-3xl text-maroon break-words">
-                    {selectedProgram.unitCost}
-                  </div>
-                  <div className="text-xs 3xl:text-sm text-[#706e68] mt-0.5">{selectedProgram.unitCostLabel}</div>
-                </div>
-                <div className="bg-white rounded-2xl p-3.5 sm:p-4 3xl:p-6 border border-[#e5e0d8] shadow-sm">
-                  <div className="font-heading font-bold text-lg xs:text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a]">
-                    {selectedProgram.statBeneficiaries}
-                  </div>
-                  <div className="text-xs 3xl:text-sm text-[#706e68] mt-0.5">{selectedProgram.statBeneficiariesLabel}</div>
-                </div>
-                <div className="bg-white rounded-2xl p-3.5 sm:p-4 3xl:p-6 border border-[#e5e0d8] shadow-sm">
-                  <div className="font-heading font-bold text-lg xs:text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a]">
-                    {selectedProgram.statesActive}
-                  </div>
-                  <div className="text-xs 3xl:text-sm text-[#706e68] mt-0.5">Active in</div>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 3xl:gap-5 pt-2 w-full sm:w-auto">
-                <button
-                  onClick={() => onOpenDonate(selectedProgram.termSuggested)}
-                  className="btn-primary w-full sm:w-auto px-6 sm:px-7 3xl:px-9 py-3.5 3xl:py-4 text-sm sm:text-base 3xl:text-lg shadow-sm text-center justify-center min-h-[44px]"
-                >
-                  Sponsor a unit ({selectedProgram.unitCost})
-                </button>
-                <button
-                  onClick={() => onOpenDonate(selectedProgram.monthlySuggested)}
-                  className="btn-secondary w-full sm:w-auto px-5 sm:px-6 3xl:px-8 py-3.5 3xl:py-4 text-sm sm:text-base 3xl:text-lg text-center justify-center min-h-[44px]"
-                >
-                  Give ₦{selectedProgram.monthlySuggested.toLocaleString()} a month
-                </button>
-              </div>
+            <div className="flex flex-wrap items-center gap-3.5 sm:gap-4 mb-10 sm:mb-12">
+              <button
+                onClick={() => {
+                  const el = document.getElementById('programmes-grid');
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className="bg-[#7a1b1b] hover:bg-[#621616] text-white text-sm sm:text-base font-semibold px-6 py-3.5 rounded-full transition-colors shadow-sm cursor-pointer"
+              >
+                Explore the programmes
+              </button>
+              <button
+                onClick={() => handleNav('outreaches')}
+                className="border border-stone-300 hover:border-stone-400 bg-white hover:bg-stone-50 text-stone-800 text-sm sm:text-base font-semibold px-6 py-3.5 rounded-full transition-colors shadow-sm cursor-pointer"
+              >
+                Read field reports
+              </button>
             </div>
 
-            {/* Hero Image */}
-            <div className="lg:col-span-5 w-full">
-              <div className="rounded-3xl overflow-hidden border border-[#e5e0d8] shadow-md bg-white">
+            {/* Simple Facts Row */}
+            <div className="grid grid-cols-3 gap-6 sm:gap-10 border-t border-stone-200/80 pt-8 w-full max-w-md">
+              <div>
+                <div className="text-3xl sm:text-4xl font-bold text-stone-900">3</div>
+                <div className="text-xs sm:text-sm text-stone-500 font-medium mt-1">focus areas</div>
+              </div>
+              <div>
+                <div className="text-3xl sm:text-4xl font-bold text-stone-900">6</div>
+                <div className="text-xs sm:text-sm text-stone-500 font-medium mt-1">programmes</div>
+              </div>
+              <div>
+                <div className="text-3xl sm:text-4xl font-bold text-stone-900">7</div>
+                <div className="text-xs sm:text-sm text-stone-500 font-medium mt-1">states reached</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Three-photo collage */}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-3.5 sm:gap-4 h-[380px] sm:h-[450px]">
+            {/* Left Tall Photo: Education */}
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden h-full shadow-sm bg-stone-100">
+              <img
+                src="/images/hero-debate-competition-makurdi.webp"
+                alt="Education programme: debate competition Makurdi"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/images/IMG_0294.JPG';
+                }}
+              />
+            </div>
+            {/* Right Stacked Photos: Health (top) and Livelihoods (bottom) */}
+            <div className="grid grid-rows-2 gap-3.5 sm:gap-4 h-full">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm bg-stone-100">
                 <img
-                  src={selectedProgram.image}
-                  alt={selectedProgram.title}
-                  className="w-full h-[240px] xs:h-[280px] sm:h-[340px] lg:h-[380px] 3xl:h-[460px] 4xl:h-[540px] uw:h-[620px] object-cover object-center"
+                  src="/images/hero-maternal-health-malaria-prevention.webp"
+                  alt="Health programme: maternal health and malaria prevention"
+                  className="w-full h-full object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = '/images/IMG_0294.JPG';
+                    e.target.src = '/images/11222.jpeg';
+                  }}
+                />
+              </div>
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm bg-stone-100">
+                <img
+                  src="/images/hero-widows-clean-cooking-stoves.webp"
+                  alt="Livelihoods programme: widows eco-cooking stoves"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/IMG_0995.JPG';
                   }}
                 />
               </div>
             </div>
           </div>
 
-          {/* Who it's for vs What it covers */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 3xl:gap-12 mb-12 sm:mb-16 3xl:mb-20 pt-8 sm:pt-10 border-t border-[#e5e0d8]">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 3xl:p-10 4xl:p-12 border border-[#e5e0d8] shadow-sm">
-              <h3 className="font-heading font-bold text-lg sm:text-xl 3xl:text-2xl text-[#1c1c1a] mb-3 3xl:mb-4">
-                Who it's for
-              </h3>
-              <p className="text-sm sm:text-base 3xl:text-lg text-[#4a4a46] leading-relaxed">
-                {selectedProgram.whoItsFor}
-              </p>
-            </div>
-
-            <div className="bg-white rounded-3xl p-6 sm:p-8 3xl:p-10 4xl:p-12 border border-[#e5e0d8] shadow-sm">
-              <h3 className="font-heading font-bold text-lg sm:text-xl 3xl:text-2xl text-[#1c1c1a] mb-4 3xl:mb-6">
-                What it covers
-              </h3>
-              <ul className="space-y-3 3xl:space-y-4">
-                {selectedProgram.covers.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 3xl:gap-4 text-sm sm:text-base 3xl:text-lg text-[#4a4a46]">
-                    <div className="w-5 h-5 3xl:w-6 3xl:h-6 rounded-full bg-forest-tint text-forest flex items-center justify-center shrink-0 mt-0.5">
-                      <Check className="w-3.5 h-3.5 3xl:w-4 3xl:h-4 stroke-[2.5]" />
-                    </div>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* How it works (4 steps) */}
-          <div className="mb-12 sm:mb-16 3xl:mb-20">
-            <h3 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a] mb-6 3xl:mb-8">
-              How this programme works
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 3xl:gap-8">
-              {selectedProgram.howItWorks.map((st, idx) => (
-                <div key={idx} className="bg-white rounded-2xl p-5 sm:p-6 3xl:p-8 border border-[#e5e0d8] shadow-sm flex flex-col justify-between">
-                  <div>
-                    <span className="text-xs 3xl:text-sm uppercase font-bold tracking-wider text-maroon block mb-2">
-                      {st.step}
-                    </span>
-                    <h4 className="font-heading font-bold text-base 3xl:text-lg text-[#1c1c1a] mb-2">
-                      {st.title}
-                    </h4>
-                    <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed">
-                      {st.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Goal Tracker Bar & Scholar Story Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 3xl:gap-12 mb-12 sm:mb-16 3xl:mb-20 items-stretch">
-            {/* Goal Bar Widget (Dark Forest Card) */}
-            <div className="lg:col-span-5 bg-forest text-white rounded-3xl p-6 sm:p-8 3xl:p-12 flex flex-col justify-between shadow-sm">
-              <div>
-                <span className="text-xs 3xl:text-sm uppercase tracking-widest text-[#a8d5c4] font-bold block mb-2">
-                  2026/27 SCHOOL YEAR
-                </span>
-                <h4 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl mb-1">
-                  {selectedProgram.fundedCount} of {selectedProgram.targetCount} units funded
-                </h4>
-                <p className="text-xs 3xl:text-sm text-white/80 mb-6 3xl:mb-8">
-                  Updated directly by our field operations desk each month.
-                </p>
-
-                {/* Progress Bar */}
-                <div className="w-full bg-black/30 rounded-full h-3 3xl:h-4 overflow-hidden mb-2">
-                  <div
-                    className="bg-[#34d399] h-full rounded-full transition-all duration-700"
-                    style={{ width: `${fundedPct}%` }}
-                  />
-                </div>
-                <div className="text-xs 3xl:text-sm text-white/70 text-right font-medium">
-                  {fundedPct}% of goal achieved
-                </div>
-              </div>
-
-              <button
-                onClick={() => onOpenDonate()}
-                className="mt-6 3xl:mt-8 w-full py-3.5 3xl:py-4 px-6 rounded-full bg-white text-forest font-heading font-bold text-sm 3xl:text-base hover:bg-[#f5f1e8] transition-colors cursor-pointer text-center min-h-[44px]"
-              >
-                Help fund remaining {selectedProgram.targetCount - selectedProgram.fundedCount} units
-              </button>
-            </div>
-
-            {/* Real Story Box */}
-            <div className="lg:col-span-7 bg-[#f5f1e8] rounded-3xl p-6 sm:p-8 3xl:p-12 border border-[#e5e0d8] flex flex-col justify-between">
-              <div>
-                <span className="text-xs 3xl:text-sm uppercase tracking-widest text-maroon font-bold block mb-3">
-                  A BENEFICIARY'S STORY
-                </span>
-                <p className="text-sm sm:text-base lg:text-lg 3xl:text-xl text-[#1c1c1a] italic leading-relaxed mb-6 font-serif">
-                  "{selectedProgram.story.quote}"
-                </p>
-              </div>
-              <div className="pt-4 border-t border-[#e5e0d8] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2">
-                <div>
-                  <h5 className="font-heading font-bold text-sm 3xl:text-base text-[#1c1c1a]">
-                    {selectedProgram.story.name}
-                  </h5>
-                  <p className="text-xs 3xl:text-sm text-[#706e68]">
-                    {selectedProgram.story.location}
-                  </p>
-                </div>
-                <span className="text-[11px] 3xl:text-xs text-[#706e68] italic">
-                  Shared with guardian consent
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Back Button */}
-          <div className="pt-6 border-t border-[#e5e0d8] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <button
-              onClick={handleBackToHub}
-              className="btn-secondary w-full sm:w-auto px-6 3xl:px-8 py-2.5 3xl:py-3 text-sm 3xl:text-base inline-flex items-center justify-center gap-1.5 min-h-[44px]"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to all programmes</span>
-            </button>
-            <button
-              onClick={() => handleNav('outreaches')}
-              className="text-sm 3xl:text-base font-semibold text-maroon hover:underline min-h-[44px] sm:min-h-0 flex items-center"
-            >
-              View field reports for this programme →
-            </button>
-          </div>
-
         </div>
-      </div>
-    );
-  }
+      </section>
 
-  // HUB VIEW (Artboard 03 · Our work)
-  return (
-    <div className="relative w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16 3xl:py-20 4xl:py-24 overflow-hidden">
-      <div className="relative z-10 max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 uw:px-20">
-
-        {/* Header */}
-        <div className="max-w-3xl 3xl:max-w-4xl 4xl:max-w-5xl mb-8 sm:mb-12 3xl:mb-16">
-          <span className="text-xs 3xl:text-sm uppercase font-bold tracking-widest text-maroon block mb-2">
-            OUR WORK
+      {/* 2. THREE FOCUS AREAS SECTION */}
+      <section className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-stone-200/60">
+        <div className="mb-8 sm:mb-10">
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#7a1b1b] mb-2 block">
+            THREE FOCUS AREAS
           </span>
-          <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl text-[#1c1c1a] mb-3 leading-tight">
-            Our programmes. Three goals.
-          </h1>
-          <p className="text-sm sm:text-base lg:text-lg 3xl:text-xl text-[#4a4a46] leading-relaxed">
-            Children who learn, mothers and children who stay healthy, and families who can earn a living. Each programme lists its most recent outreach, pulled directly from our field dispatches.
-          </p>
-
-          {/* Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 3xl:gap-3 pt-6">
-            <button
-              onClick={() => setActiveTab('all')}
-              className={`px-4 3xl:px-6 py-2 3xl:py-3 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[40px] ${
-                activeTab === 'all'
-                  ? 'bg-maroon text-white shadow-sm'
-                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
-              }`}
-            >
-              All programmes
-            </button>
-            <button
-              onClick={() => setActiveTab('education')}
-              className={`px-4 3xl:px-6 py-2 3xl:py-3 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[40px] ${
-                activeTab === 'education'
-                  ? 'bg-maroon text-white shadow-sm'
-                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
-              }`}
-            >
-              Education
-            </button>
-            <button
-              onClick={() => setActiveTab('health')}
-              className={`px-4 3xl:px-6 py-2 3xl:py-3 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[40px] ${
-                activeTab === 'health'
-                  ? 'bg-forest text-white shadow-sm'
-                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
-              }`}
-            >
-              Health
-            </button>
-            <button
-              onClick={() => setActiveTab('livelihoods')}
-              className={`px-4 3xl:px-6 py-2 3xl:py-3 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[40px] ${
-                activeTab === 'livelihoods'
-                  ? 'bg-ochre text-white shadow-sm'
-                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
-              }`}
-            >
-              Livelihoods
-            </button>
-          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 tracking-tight">
+            Children who learn. Mothers who stay healthy. Families who earn.
+          </h2>
         </div>
 
-        {/* 1. Education Section */}
-        {(activeTab === 'all' || activeTab === 'education') && (
-          <div id="education" className="scroll-mt-24 sm:scroll-mt-28 mb-12 sm:mb-16 3xl:mb-20">
-            <div className="mb-6 3xl:mb-8">
-              <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a]">
-                Education
-              </h2>
-              <p className="text-xs sm:text-sm 3xl:text-base text-[#706e68]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Panel 1: Education (Maroon) */}
+          <div
+            onClick={() => handleFilterSelect('education')}
+            className="bg-[#7a1b1b] hover:bg-[#6f1818] rounded-3xl p-7 sm:p-8 text-white flex flex-col justify-between cursor-pointer shadow-sm hover:shadow-md transition-all group min-h-[300px]"
+          >
+            <div>
+              <div className="bg-white/15 p-3 rounded-2xl w-fit mb-6">
+                <GraduationCap className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Education</h3>
+              <p className="text-white/90 text-sm leading-relaxed mb-6">
                 Getting children into school and keeping them there.
               </p>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 4xl:grid-cols-3 gap-6 3xl:gap-8 4xl:gap-10">
-              {PROGRAMMES.filter((p) => p.pillar === 'education').map((prog) => (
-                <div
-                  key={prog.id}
-                  className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
-                >
-                  <div className="h-44 sm:h-48 3xl:h-56 4xl:h-64 overflow-hidden bg-gray-100">
-                    <img
-                      src={prog.image}
-                      alt={prog.title}
-                      className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/IMG_0294.JPG';
-                      }}
-                    />
-                  </div>
-                  <div className="p-5 sm:p-6 3xl:p-8 flex flex-col justify-between flex-1">
-                    <div>
-                      <h3 className="font-heading font-bold text-base sm:text-lg 3xl:text-xl text-[#1c1c1a] mb-2">
-                        {prog.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-4">
-                        {prog.shortDesc}
-                      </p>
-                    </div>
-
-                    <div className="pt-4 border-t border-[#e5e0d8]">
-                      <div className="text-xs 3xl:text-sm text-[#706e68] mb-3">
-                        <span className="font-semibold text-[#1c1c1a]">LATEST OUTREACH:</span> {prog.latestOutreach}
-                      </div>
-                      <button
-                        onClick={() => handleOpenDetail(prog.id)}
-                        className="text-xs sm:text-sm 3xl:text-base font-semibold text-maroon hover:text-maroon-dark inline-flex items-center gap-1 cursor-pointer min-h-[44px] sm:min-h-0"
-                      >
-                        <span>See how it works</span>
-                        <ArrowRight className="w-4 h-4 3xl:w-5 3xl:h-5" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div>
+              <div className="border-t border-white/20 pt-4 mb-4">
+                <p className="text-white/80 text-xs leading-relaxed">
+                  Scholarships · School supplies &amp; learning kits · Orphanage outreaches
+                </p>
+              </div>
+              <span className="text-white text-sm font-semibold underline underline-offset-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                See education programmes →
+              </span>
             </div>
           </div>
-        )}
 
-        {/* 2. Health Section */}
-        {(activeTab === 'all' || activeTab === 'health') && (
-          <div id="health" className="scroll-mt-24 sm:scroll-mt-28 mb-12 sm:mb-16 3xl:mb-20">
-            <div className="mb-6 3xl:mb-8">
-              <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a]">
-                Health
-              </h2>
-              <p className="text-xs sm:text-sm 3xl:text-base text-[#706e68]">
-                Healthy mothers and children who can stay in school.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 3xl:gap-8 4xl:gap-10">
-              {PROGRAMMES.filter((p) => p.pillar === 'health').map((prog) => (
-                <div
-                  key={prog.id}
-                  className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between md:col-span-2"
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
-                    <div className="lg:col-span-7 h-52 sm:h-72 lg:h-80 3xl:h-96 4xl:h-[420px] overflow-hidden bg-gray-100">
-                      <img
-                        src={prog.image}
-                        alt={prog.title}
-                        className="w-full h-full object-cover object-center"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = '/images/11222.webp';
-                        }}
-                      />
-                    </div>
-                    <div className="lg:col-span-5 p-5 sm:p-8 3xl:p-12 flex flex-col justify-between">
-                      <div>
-                        <span className="text-xs 3xl:text-sm uppercase font-bold tracking-widest text-forest block mb-2">
-                          Maternal &amp; Pediatric Care
-                        </span>
-                        <h3 className="font-heading font-bold text-lg sm:text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2 sm:mb-3">
-                          {prog.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-4 sm:mb-6">
-                          {prog.shortDesc}
-                        </p>
-                      </div>
-
-                      <div className="pt-4 border-t border-[#e5e0d8]">
-                        <div className="text-xs 3xl:text-sm text-[#706e68] mb-3">
-                          <span className="font-semibold text-[#1c1c1a]">LATEST OUTREACH:</span> {prog.latestOutreach}
-                        </div>
-                        <button
-                          onClick={() => handleOpenDetail(prog.id)}
-                          className="btn-primary w-full sm:w-auto px-6 3xl:px-8 py-2.5 3xl:py-3.5 text-sm 3xl:text-base inline-flex items-center justify-center gap-1.5 min-h-[44px]"
-                        >
-                          <span>Explore programme</span>
-                          <ArrowRight className="w-4 h-4 3xl:w-5 3xl:h-5" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 3. Livelihoods Section */}
-        {(activeTab === 'all' || activeTab === 'livelihoods') && (
-          <div id="livelihoods" className="scroll-mt-24 sm:scroll-mt-28 mb-12 sm:mb-16 3xl:mb-20">
-            <div className="mb-6 3xl:mb-8">
-              <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a]">
-                Livelihoods
-              </h2>
-              <p className="text-xs sm:text-sm 3xl:text-base text-[#706e68]">
-                Skills and tools so families can earn.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 3xl:gap-8 4xl:gap-10">
-              {PROGRAMMES.filter((p) => p.pillar === 'livelihoods').map((prog) => (
-                <div
-                  key={prog.id}
-                  className="bg-white rounded-3xl border border-[#e5e0d8] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
-                >
-                  <div className="h-48 sm:h-56 3xl:h-64 4xl:h-72 overflow-hidden bg-gray-100">
-                    <img
-                      src={prog.image}
-                      alt={prog.title}
-                      className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/IMG_0995.webp';
-                      }}
-                    />
-                  </div>
-                  <div className="p-5 sm:p-6 3xl:p-8 flex flex-col justify-between flex-1">
-                    <div>
-                      <h3 className="font-heading font-bold text-base sm:text-lg 3xl:text-xl text-[#1c1c1a] mb-2">
-                        {prog.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-4">
-                        {prog.shortDesc}
-                      </p>
-                    </div>
-
-                    <div className="pt-4 border-t border-[#e5e0d8]">
-                      <div className="text-xs 3xl:text-sm text-[#706e68] mb-3">
-                        <span className="font-semibold text-[#1c1c1a]">LATEST OUTREACH:</span> {prog.latestOutreach}
-                      </div>
-                      <button
-                        onClick={() => handleOpenDetail(prog.id)}
-                        className="text-xs sm:text-sm 3xl:text-base font-semibold text-ochre hover:text-[#915610] inline-flex items-center gap-1 cursor-pointer min-h-[44px] sm:min-h-0"
-                      >
-                        <span>See how it works</span>
-                        <ArrowRight className="w-4 h-4 3xl:w-5 3xl:h-5" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Callout Band: Not sure which to support? */}
-        <div className="bg-[#1c1c1a] text-white rounded-3xl p-6 sm:p-10 3xl:p-14 4xl:p-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 3xl:gap-10 shadow-lg">
-          <div>
-            <h3 className="font-heading font-bold text-lg sm:text-2xl 3xl:text-3xl text-white mb-1 3xl:mb-2">
-              Not sure which to support?
-            </h3>
-            <p className="text-xs sm:text-sm 3xl:text-base text-white/70">
-              Give to "where it's needed most" and we put it into the next planned outreach.
-            </p>
-          </div>
-          <button
-            onClick={() => onOpenDonate()}
-            className="w-full sm:w-auto px-7 3xl:px-9 py-3.5 3xl:py-4 rounded-full bg-white text-[#1c1c1a] font-heading font-bold text-sm 3xl:text-base hover:bg-[#f5f1e8] transition-colors cursor-pointer shrink-0 shadow-sm text-center min-h-[44px]"
+          {/* Panel 2: Health (Green) */}
+          <div
+            onClick={() => handleFilterSelect('health')}
+            className="bg-[#1b4d3e] hover:bg-[#164033] rounded-3xl p-7 sm:p-8 text-white flex flex-col justify-between cursor-pointer shadow-sm hover:shadow-md transition-all group min-h-[300px]"
           >
-            Give where it's needed most
-          </button>
+            <div>
+              <div className="bg-white/15 p-3 rounded-2xl w-fit mb-6">
+                <HeartPulse className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Health</h3>
+              <p className="text-white/90 text-sm leading-relaxed mb-6">
+                Healthy mothers, and children well enough to stay in school.
+              </p>
+            </div>
+            <div>
+              <div className="border-t border-white/20 pt-4 mb-4">
+                <p className="text-white/80 text-xs leading-relaxed">
+                  Medical outreaches &amp; malaria prevention
+                </p>
+              </div>
+              <span className="text-white text-sm font-semibold underline underline-offset-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                See health programmes →
+              </span>
+            </div>
+          </div>
+
+          {/* Panel 3: Livelihoods (Amber) */}
+          <div
+            onClick={() => handleFilterSelect('livelihoods')}
+            className="bg-[#8c5310] hover:bg-[#7b490e] rounded-3xl p-7 sm:p-8 text-white flex flex-col justify-between cursor-pointer shadow-sm hover:shadow-md transition-all group min-h-[300px]"
+          >
+            <div>
+              <div className="bg-white/15 p-3 rounded-2xl w-fit mb-6">
+                <Wrench className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Livelihoods</h3>
+              <p className="text-white/90 text-sm leading-relaxed mb-6">
+                Skills and tools so families can earn a living.
+              </p>
+            </div>
+            <div>
+              <div className="border-t border-white/20 pt-4 mb-4">
+                <p className="text-white/80 text-xs leading-relaxed">
+                  Widows &amp; women empowerment · Youth skills &amp; empowerment
+                </p>
+              </div>
+              <span className="text-white text-sm font-semibold underline underline-offset-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                See livelihoods programmes →
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 3. PROGRAMMES GRID SECTION */}
+      <section id="programmes-grid" className="scroll-mt-24 py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-stone-200/60">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10">
+          <div>
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#7a1b1b] mb-2 block">
+              OUR PROGRAMMES
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 tracking-tight">
+              Choose a programme to support
+            </h2>
+          </div>
+
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              { id: 'all', label: 'All' },
+              { id: 'education', label: 'Education' },
+              { id: 'health', label: 'Health' },
+              { id: 'livelihoods', label: 'Livelihoods' }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveFilter(tab.id)}
+                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                  activeFilter === tab.id
+                    ? tab.id === 'education'
+                      ? 'bg-[#7a1b1b] text-white shadow-sm'
+                      : tab.id === 'health'
+                      ? 'bg-[#1b4d3e] text-white shadow-sm'
+                      : tab.id === 'livelihoods'
+                      ? 'bg-[#8c5310] text-white shadow-sm'
+                      : 'bg-[#7a1b1b] text-white shadow-sm'
+                    : 'bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200/70'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-      </div>
+        {/* 6 Identical Cards in an Even Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {filteredProgrammes.map((prog) => {
+            const latest = getProgramLatestOutreach(prog.id, outreaches);
+            const badgeColor =
+              prog.pillar === 'education'
+                ? 'bg-[#7a1b1b]'
+                : prog.pillar === 'health'
+                ? 'bg-[#1b4d3e]'
+                : 'bg-[#8c5310]';
+
+            return (
+              <div
+                key={prog.id}
+                className="bg-white rounded-3xl border border-stone-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
+              >
+                {/* Photo with Pillar Badge */}
+                <div className="relative h-56 sm:h-60 w-full overflow-hidden bg-stone-100">
+                  <img
+                    src={prog.image}
+                    alt={prog.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/images/IMG_0294.JPG';
+                    }}
+                  />
+                  <span
+                    className={`absolute top-4 left-4 ${badgeColor} text-white text-[11px] font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-sm`}
+                  >
+                    {prog.pillar.toUpperCase()}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 sm:p-7 flex flex-col justify-between flex-1">
+                  <div>
+                    <h3 className="text-xl font-bold text-stone-900 mb-2.5 leading-snug">
+                      {prog.title}
+                    </h3>
+                    <p className="text-stone-600 text-sm leading-relaxed mb-6">
+                      {prog.shortDesc}
+                    </p>
+                  </div>
+
+                  <div>
+                    {/* Latest Outreach Box */}
+                    <div className="bg-[#f7f5f0] rounded-2xl p-4 mb-6 border border-stone-200/60">
+                      <div className="text-[11px] uppercase tracking-wider font-bold text-stone-500 mb-1">
+                        LATEST OUTREACH · {latest.dateLabel}
+                      </div>
+                      <div className="text-stone-900 text-sm font-medium">
+                        {latest.summary}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons: identical on every card */}
+                    <div className="flex items-center justify-between gap-3 pt-2">
+                      <button
+                        onClick={() => handleOpenDetail(prog.id)}
+                        className="text-sm font-semibold text-[#7a1b1b] hover:text-[#5a1313] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
+                      >
+                        <span>See how it works</span>
+                        <span>→</span>
+                      </button>
+                      <button
+                        onClick={() => onOpenDonate(prog.termSuggested || null)}
+                        className="bg-[#1c1c1a] hover:bg-black text-white text-sm font-medium px-5 py-2.5 rounded-full transition-colors cursor-pointer shadow-sm"
+                      >
+                        Fund this
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 4. CLOSING BAND */}
+      <section className="py-8 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#7a1b1b] text-white rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 shadow-sm">
+          <div>
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 tracking-tight">
+              Not sure which to support?
+            </h3>
+            <p className="text-white/90 text-sm sm:text-base max-w-xl leading-relaxed">
+              Give to "where it's needed most" and we'll put it into the next planned outreach. You'll see exactly where it went in the field report.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <button
+              onClick={() => onOpenDonate()}
+              className="bg-white hover:bg-stone-100 text-stone-900 font-semibold px-6 py-3.5 rounded-full transition-colors shadow-sm text-sm sm:text-base whitespace-nowrap cursor-pointer"
+            >
+              Give where it's needed most
+            </button>
+            <button
+              onClick={() => onOpenDonate(null, 'monthly')}
+              className="border border-white/60 hover:bg-white/10 text-white font-semibold px-6 py-3.5 rounded-full transition-colors shadow-sm text-sm sm:text-base whitespace-nowrap cursor-pointer"
+            >
+              Give monthly
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. INTERACTIVE DETAIL MODAL ("See how it works") */}
+      {activeModalProgram && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto animate-fade-in"
+          onClick={handleCloseDetail}
+        >
+          <div
+            className="bg-[#fdfbf7] text-[#1c1c1a] rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-stone-200 relative my-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-[#fdfbf7]/95 backdrop-blur-md z-10 px-6 sm:px-8 py-5 border-b border-stone-200/80 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span
+                  className={`text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full text-white ${
+                    activeModalProgram.pillar === 'education'
+                      ? 'bg-[#7a1b1b]'
+                      : activeModalProgram.pillar === 'health'
+                      ? 'bg-[#1b4d3e]'
+                      : 'bg-[#8c5310]'
+                  }`}
+                >
+                  {activeModalProgram.pillar.toUpperCase()} PROGRAMME
+                </span>
+                <span className="text-xs text-stone-500 font-medium hidden sm:inline">
+                  Active in {activeModalProgram.statesActive}
+                </span>
+              </div>
+              <button
+                onClick={handleCloseDetail}
+                className="w-9 h-9 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 flex items-center justify-center cursor-pointer transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 sm:p-8 space-y-8">
+              
+              {/* Title & Short Description */}
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-2">
+                  {activeModalProgram.title}
+                </h2>
+                <p className="text-stone-600 text-base leading-relaxed">
+                  {activeModalProgram.shortDesc}
+                </p>
+              </div>
+
+              {/* Stats Chips */}
+              <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                <div className="bg-white rounded-2xl p-4 border border-stone-200 shadow-sm text-center">
+                  <div className="text-lg sm:text-xl font-bold text-[#7a1b1b]">
+                    {activeModalProgram.unitCost}
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    {activeModalProgram.unitCostLabel}
+                  </div>
+                </div>
+                <div className="bg-white rounded-2xl p-4 border border-stone-200 shadow-sm text-center">
+                  <div className="text-lg sm:text-xl font-bold text-stone-900">
+                    {activeModalProgram.statBeneficiaries}
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    {activeModalProgram.statBeneficiariesLabel}
+                  </div>
+                </div>
+                <div className="bg-white rounded-2xl p-4 border border-stone-200 shadow-sm text-center">
+                  <div className="text-lg sm:text-xl font-bold text-stone-900">
+                    {activeModalProgram.statesActive}
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Active coverage
+                  </div>
+                </div>
+              </div>
+
+              {/* Photo */}
+              <div className="rounded-2xl overflow-hidden h-56 sm:h-64 bg-stone-100 border border-stone-200">
+                <img
+                  src={activeModalProgram.image}
+                  alt={activeModalProgram.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Who it's for & What it covers */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+                <div className="bg-white rounded-2xl p-5 border border-stone-200">
+                  <h4 className="font-bold text-stone-900 text-base mb-2">
+                    Who it's for
+                  </h4>
+                  <p className="text-stone-600 text-sm leading-relaxed">
+                    {activeModalProgram.whoItsFor}
+                  </p>
+                </div>
+                <div className="bg-white rounded-2xl p-5 border border-stone-200">
+                  <h4 className="font-bold text-stone-900 text-base mb-3">
+                    What it covers
+                  </h4>
+                  <ul className="space-y-2">
+                    {activeModalProgram.covers.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-sm text-stone-700">
+                        <div className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                          <Check className="w-3 h-3 stroke-[3]" />
+                        </div>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* How it works (4 steps) */}
+              <div>
+                <h4 className="font-bold text-stone-900 text-lg mb-4">
+                  How this programme works
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {activeModalProgram.howItWorks.map((st, idx) => (
+                    <div key={idx} className="bg-white rounded-2xl p-4 border border-stone-200">
+                      <span className="text-[11px] uppercase font-bold tracking-wider text-[#7a1b1b] block mb-1">
+                        {st.step}
+                      </span>
+                      <h5 className="font-bold text-sm text-stone-900 mb-1">
+                        {st.title}
+                      </h5>
+                      <p className="text-xs text-stone-600 leading-relaxed">
+                        {st.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Beneficiary Story */}
+              <div className="bg-[#f5f1e8] rounded-2xl p-6 border border-stone-200">
+                <span className="text-[11px] uppercase font-bold tracking-widest text-[#7a1b1b] block mb-2">
+                  A BENEFICIARY'S STORY
+                </span>
+                <p className="text-stone-800 italic text-sm sm:text-base leading-relaxed mb-4">
+                  "{activeModalProgram.story.quote}"
+                </p>
+                <div className="flex items-center justify-between text-xs text-stone-600 pt-2 border-t border-stone-300/60">
+                  <div>
+                    <span className="font-bold text-stone-900">{activeModalProgram.story.name}</span> · {activeModalProgram.story.location}
+                  </div>
+                  <span className="italic text-[11px] text-stone-500">
+                    Shared with guardian consent
+                  </span>
+                </div>
+              </div>
+
+              {/* Modal CTA Buttons */}
+              <div className="pt-4 border-t border-stone-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <button
+                  onClick={() => {
+                    handleCloseDetail();
+                    onOpenDonate(activeModalProgram.termSuggested || null);
+                  }}
+                  className="bg-[#7a1b1b] hover:bg-[#621616] text-white font-semibold px-6 py-3.5 rounded-full transition-colors text-center shadow-sm cursor-pointer"
+                >
+                  Fund this programme ({activeModalProgram.unitCost})
+                </button>
+                <button
+                  onClick={() => {
+                    handleCloseDetail();
+                    handleNav('outreaches');
+                  }}
+                  className="text-sm font-semibold text-stone-700 hover:text-stone-900 hover:underline text-center cursor-pointer py-2"
+                >
+                  View field reports for this programme →
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

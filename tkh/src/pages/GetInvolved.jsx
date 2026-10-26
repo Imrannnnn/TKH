@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { Heart, Check, Copy, ArrowRight, MessageCircle, ShieldCheck, Lock } from '../components/Icons';
 
-export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
+export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCurrentPage }) {
   const { addInquiry } = useData();
   const [activeTab, setActiveTab] = useState(initialTab || 'donate');
 
@@ -12,7 +12,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
     }
   }, [initialTab]);
 
-  // Donate Tab State (Artboard 05 Donate)
+  // Donate Form State
   const [frequency, setFrequency] = useState('once');
   const [selectedAmount, setSelectedAmount] = useState(15000);
   const [customAmount, setCustomAmount] = useState('');
@@ -23,11 +23,11 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
   const [email, setEmail] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [copiedBank, setCopiedBank] = useState(false);
-  const [faqOpen, setFaqOpen] = useState(null);
+  const [openFaq, setOpenFaq] = useState(null);
   const [donateSuccess, setDonateSuccess] = useState(false);
   const [isDonating, setIsDonating] = useState(false);
 
-  // Volunteer Tab State (Artboard 06 Get Involved)
+  // Volunteer Form State
   const [volForm, setVolForm] = useState({
     name: '',
     email: '',
@@ -39,7 +39,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
   const [volSuccess, setVolSuccess] = useState(false);
   const [isVolSubmitting, setIsVolSubmitting] = useState(false);
 
-  // Partner Tab State
+  // Partner Form State
   const [partForm, setPartForm] = useState({
     orgName: '',
     contactName: '',
@@ -51,7 +51,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
   const [partSuccess, setPartSuccess] = useState(false);
   const [isPartSubmitting, setIsPartSubmitting] = useState(false);
 
-  const currentAmount = isCustom ? (Number(customAmount.replace(/[^0-9]/g, '')) || 0) : selectedAmount;
+  const currentAmount = isCustom ? Number(customAmount.replace(/[^0-9]/g, '')) || 0 : selectedAmount;
 
   const getImpactText = (amt) => {
     if (amt >= 150000) return '✓ Fully funds three scholars with uniforms, books and fees for a full term';
@@ -118,8 +118,13 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
     setIsVolSubmitting(true);
     if (addInquiry) {
       await addInquiry({
-        ...volForm,
+        name: volForm.name,
+        email: volForm.email,
+        phone: volForm.phone,
         type: 'volunteer-application',
+        role: volForm.role,
+        state: volForm.state,
+        skills: volForm.skills,
         date: new Date().toISOString()
       });
     }
@@ -134,8 +139,13 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
     setIsPartSubmitting(true);
     if (addInquiry) {
       await addInquiry({
-        ...partForm,
+        name: partForm.contactName,
+        email: partForm.email,
+        phone: partForm.phone,
         type: 'partner-inquiry',
+        orgName: partForm.orgName,
+        partnershipType: partForm.type,
+        notes: partForm.notes,
         date: new Date().toISOString()
       });
     }
@@ -147,673 +157,615 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate' }) {
 
   const faqs = [
     {
-      q: 'Will I get a receipt?',
-      a: 'Yes. As soon as your contribution is confirmed, an official email receipt is issued with our CAC registration details (RC 7015705).'
-    },
-    {
-      q: 'Can I give from outside Nigeria?',
-      a: 'Yes. Paystack accepts Visa, Mastercard, American Express and international bank cards in USD, GBP, and EUR.'
+      q: 'How does the 100% model work in practice?',
+      a: 'Every single naira donated by the public goes directly to children, mothers and families in our frontline programmes. Our trustees and founders cover all organizational overhead, office administration, travel, card processing fees, and staff logistics through a private endowment.'
     },
     {
       q: 'Can I stop a monthly gift?',
-      a: 'Yes. You can pause or cancel your recurring pledge at any time with a single click from your receipt or by contacting us on WhatsApp.'
+      a: 'Yes, anytime with one click. When you set up a monthly gift, you receive a personal donor link by email where you can pause, adjust, or cancel your recurring contribution at any moment. You can also send a quick WhatsApp message to our desk at +234 818 099 4301 and we will pause or cancel it immediately for you.'
     },
     {
-      q: 'Can my company give or match gifts?',
-      a: 'Yes. We issue corporate CSR verification letters and itemized field deliverable audits for organizational partnerships.'
+      q: 'Where will my donation receipt be sent?',
+      a: 'You will receive an automated official donor confirmation immediately by email, accompanied by your transaction reference. As soon as the field mission you supported is executed, you will also receive the published field report showing exactly how and where the funds were delivered.'
+    },
+    {
+      q: 'Can I designate my gift to a specific focus area or child?',
+      a: 'Yes. You can select your preferred programme from the dropdown menu (Scholarships, School Supplies, Orphanage Outreaches, Medical Outreaches, Widows Empowerment, or Youth Skills). For individual student scholarship tracking, our team provides student report cards each academic term.'
+    },
+    {
+      q: 'How do I volunteer in my state?',
+      a: 'Select the "Volunteer" tab on this page, enter your contact information, state, and skills. Our state coordinator in your area will connect with you via WhatsApp or phone ahead of the next planned community deployment.'
     }
   ];
 
   return (
-    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16 3xl:py-20 4xl:py-24">
-      <div className="max-w-7xl 2xl:max-w-[1500px] 3xl:max-w-[1800px] 4xl:max-w-[2280px] uw:max-w-[2880px] suw:max-w-[3800px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-12 4xl:px-16 uw:px-20">
+    <div className="w-full bg-[#fdfbf7] text-[#1c1c1a] py-8 sm:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Page Tag & Main Tabs */}
-        <div className="max-w-3xl 3xl:max-w-4xl 4xl:max-w-5xl mb-8 sm:mb-10 3xl:mb-14">
-          <span className="text-xs 3xl:text-sm uppercase font-bold tracking-widest text-maroon block mb-2">
+        {/* 1. Header */}
+        <div className="max-w-3xl mb-8 sm:mb-10">
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#7a1b1b] block mb-2">
             GET INVOLVED
           </span>
-          <h1 className="font-heading font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl text-[#1c1c1a] mb-3 leading-tight">
-            Give time, skills or goods — not just money.
+          <h1 className="text-3xl sm:text-5xl font-bold text-stone-900 mb-3 tracking-tight leading-tight">
+            Three ways to make a difference.
           </h1>
-          <p className="text-sm sm:text-base lg:text-lg 3xl:text-xl text-[#4a4a46] leading-relaxed">
-            Our outreaches are powered by community members, volunteer teachers, medical staff and partner schools working together.
+          <p className="text-base sm:text-lg text-stone-600 leading-relaxed">
+            Fund a child's school term, volunteer your skills on the ground, or partner with us through institutional CSR.
           </p>
-
-          {/* Navigation Tabs */}
-          <div className="flex flex-wrap items-center gap-2 3xl:gap-3 pt-6">
-            <button
-              onClick={() => setActiveTab('donate')}
-              className={`px-4 sm:px-5 3xl:px-7 py-2.5 3xl:py-3.5 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
-                activeTab === 'donate'
-                  ? 'bg-maroon text-white shadow-sm'
-                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
-              }`}
-            >
-              Donate &amp; Pledge
-            </button>
-            <button
-              onClick={() => setActiveTab('volunteer')}
-              className={`px-4 sm:px-5 3xl:px-7 py-2.5 3xl:py-3.5 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
-                activeTab === 'volunteer'
-                  ? 'bg-maroon text-white shadow-sm'
-                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
-              }`}
-            >
-              Volunteer with us
-            </button>
-            <button
-              onClick={() => setActiveTab('partner')}
-              className={`px-4 sm:px-5 3xl:px-7 py-2.5 3xl:py-3.5 rounded-full text-xs sm:text-sm 3xl:text-base font-semibold transition-all cursor-pointer min-h-[44px] flex items-center justify-center ${
-                activeTab === 'partner'
-                  ? 'bg-maroon text-white shadow-sm'
-                  : 'bg-white border border-[#e5e0d8] text-[#4a4a46] hover:bg-[#f5f1e8]'
-              }`}
-            >
-              Corporate &amp; CSR Partner
-            </button>
-          </div>
         </div>
 
-        {/* 1. DONATE TAB (Artboard 05 Donate) */}
-        {activeTab === 'donate' && (
-          <div className="pt-4">
-            {donateSuccess ? (
-              <div className="bg-white rounded-3xl p-10 sm:p-14 3xl:p-16 border border-[#e5e0d8] shadow-sm text-center max-w-xl 3xl:max-w-2xl mx-auto">
-                <div className="w-16 h-16 3xl:w-20 3xl:h-20 rounded-full bg-forest-tint text-forest flex items-center justify-center mx-auto mb-4">
-                  <Check className="w-8 h-8 3xl:w-10 3xl:h-10 stroke-[2.5]" />
-                </div>
-                <h3 className="font-heading font-bold text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2">
-                  Thank you for your generous gift!
-                </h3>
-                <p className="text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-6">
-                  Your gift of <strong>₦{currentAmount.toLocaleString()}</strong> has been recorded. An official receipt has been emailed to <strong>{email}</strong>. 100% goes directly to frontline beneficiaries.
+        {/* 2. Navigation Tabs */}
+        <div className="flex flex-wrap items-center gap-2 mb-10 sm:mb-12 border-b border-stone-200/80 pb-4">
+          {[
+            { id: 'donate', label: 'Donate' },
+            { id: 'volunteer', label: 'Volunteer' },
+            { id: 'partner', label: 'Partner with us' }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === tab.id
+                  ? 'bg-[#7a1b1b] text-white shadow-sm'
+                  : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* 3. Main Form Panel & Side Info */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start mb-16 sm:mb-24">
+          
+          {/* Left Column: Form Panel */}
+          <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 border border-stone-200/80 shadow-sm">
+            
+            {/* TAB 1: DONATE */}
+            {activeTab === 'donate' && (
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-2 tracking-tight">
+                  Support a programme
+                </h2>
+                <p className="text-stone-600 text-sm mb-6 leading-relaxed">
+                  100% of your gift delivers school kits, tuition, medicines, or enterprise tools directly to beneficiaries.
                 </p>
-                <button
-                  onClick={() => setDonateSuccess(false)}
-                  className="btn-secondary px-6 3xl:px-8 py-2.5 3xl:py-3 text-sm 3xl:text-base"
-                >
-                  Make another contribution
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 3xl:gap-16 4xl:gap-20 items-start">
-                
-                {/* Left Column: Form Widget */}
-                <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 3xl:p-12 border border-[#e5e0d8] shadow-sm flex flex-col gap-5 3xl:gap-7">
-                  <div>
-                    <h2 className="font-heading font-bold text-2xl sm:text-3xl 3xl:text-4xl text-[#1c1c1a] mb-1 leading-snug">
-                      Give a child the tools to stay in school.
-                    </h2>
-                    <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed">
-                      100% of public donations go to programmes. You get an email receipt, and a field report shows what your gift bought.
+
+                {donateSuccess ? (
+                  <div className="p-8 rounded-2xl bg-emerald-50 text-emerald-900 text-center space-y-3">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-xl">
+                      ✓
+                    </div>
+                    <h3 className="text-xl font-bold">Thank you for your generosity!</h3>
+                    <p className="text-sm text-stone-600 max-w-md mx-auto">
+                      Your gift of ₦{currentAmount.toLocaleString()} will be deployed directly to {designation}. An official receipt has been dispatched to your email.
                     </p>
-                  </div>
-
-                  {/* Frequency Toggle */}
-                  <div className="flex bg-[#f5f1e8] p-1 rounded-full border border-[#e5e0d8] max-w-xs">
                     <button
-                      type="button"
-                      onClick={() => setFrequency('once')}
-                      className={`flex-1 py-2 3xl:py-2.5 text-xs sm:text-sm 3xl:text-base font-semibold rounded-full transition-all cursor-pointer ${
-                        frequency === 'once'
-                          ? 'bg-white text-[#1c1c1a] shadow-sm'
-                          : 'text-[#706e68] hover:text-[#1c1c1a]'
-                      }`}
+                      onClick={() => setDonateSuccess(false)}
+                      className="mt-4 px-6 py-2.5 rounded-full bg-stone-900 text-white text-xs font-semibold cursor-pointer"
                     >
-                      Give once
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setFrequency('monthly')}
-                      className={`flex-1 py-2 3xl:py-2.5 text-xs sm:text-sm 3xl:text-base font-semibold rounded-full transition-all cursor-pointer ${
-                        frequency === 'monthly'
-                          ? 'bg-white text-[#1c1c1a] shadow-sm'
-                          : 'text-[#706e68] hover:text-[#1c1c1a]'
-                      }`}
-                    >
-                      Give monthly
+                      Make another contribution
                     </button>
                   </div>
+                ) : (
+                  <form onSubmit={handleDonateSubmit} className="space-y-6">
+                    {/* Frequency Toggle */}
+                    <div className="flex p-1 bg-stone-100 rounded-full max-w-xs">
+                      <button
+                        type="button"
+                        onClick={() => setFrequency('once')}
+                        className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                          frequency === 'once' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
+                        }`}
+                      >
+                        Give once
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setFrequency('monthly')}
+                        className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                          frequency === 'monthly' ? 'bg-[#7a1b1b] text-white shadow-sm' : 'text-stone-600 hover:text-stone-900'
+                        }`}
+                      >
+                        Give monthly
+                      </button>
+                    </div>
 
-                  {/* Amount Selection */}
-                  <div>
-                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-2">
-                      Choose an amount
-                    </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 3xl:gap-3 mb-3">
-                      {[5000, 15000, 50000, 150000].map((amt) => {
-                        const active = !isCustom && selectedAmount === amt;
-                        return (
+                    {/* Amount Presets */}
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">
+                        Select Amount (NGN)
+                      </label>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        {[5000, 15000, 45000, 150000].map((amt) => (
                           <button
                             key={amt}
                             type="button"
                             onClick={() => {
                               setSelectedAmount(amt);
                               setIsCustom(false);
-                              setCustomAmount('');
                             }}
-                            className={`py-3 3xl:py-4 px-2 rounded-2xl font-heading font-bold text-sm 3xl:text-base text-center transition-all cursor-pointer border ${
-                              active
-                                ? 'bg-maroon text-white border-maroon shadow-sm'
-                                : 'bg-[#fdfbf7] text-[#1c1c1a] border-[#e5e0d8] hover:bg-[#f5f1e8]'
+                            className={`py-3 px-3 rounded-2xl text-sm font-bold border transition-all cursor-pointer ${
+                              !isCustom && selectedAmount === amt
+                                ? 'bg-[#7a1b1b] text-white border-[#7a1b1b] shadow-sm'
+                                : 'bg-stone-50 text-stone-800 border-stone-200 hover:bg-stone-100'
                             }`}
                           >
                             ₦{amt.toLocaleString()}
                           </button>
-                        );
-                      })}
+                        ))}
+                      </div>
+
+                      {/* Custom Amount Field */}
+                      <div className="mt-3">
+                        <input
+                          type="text"
+                          value={customAmount}
+                          onChange={(e) => {
+                            setCustomAmount(e.target.value);
+                            setIsCustom(true);
+                          }}
+                          placeholder="Or enter custom amount in ₦"
+                          className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                        />
+                      </div>
+
+                      {/* Impact Tagline */}
+                      <div className="mt-3 text-xs text-[#1b4d3e] font-semibold bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-100">
+                        {getImpactText(currentAmount)}
+                      </div>
                     </div>
 
-                    {/* Custom Amount */}
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm 3xl:text-base font-bold text-[#706e68]">
-                        ₦
-                      </span>
-                      <input
-                        type="text"
-                        placeholder="Other amount"
-                        value={customAmount}
-                        onChange={(e) => {
-                          const val = e.target.value.replace(/[^0-9]/g, '');
-                          setCustomAmount(val);
-                          setIsCustom(true);
-                        }}
-                        className={`w-full pl-8 pr-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border text-sm 3xl:text-base font-medium focus:outline-none focus:border-maroon focus:ring-1 focus:ring-maroon ${
-                          isCustom ? 'border-maroon ring-1 ring-maroon' : 'border-[#e5e0d8]'
-                        }`}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Impact Line */}
-                  <div className="px-4 py-3 3xl:py-3.5 rounded-2xl bg-forest-tint text-forest border border-forest/20 text-xs sm:text-sm 3xl:text-base font-medium flex items-center gap-2">
-                    <span>{getImpactText(currentAmount)}</span>
-                  </div>
-
-                  {/* Where should it go? */}
-                  <div>
-                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1.5">
-                      Where should it go?
-                    </label>
-                    <select
-                      value={designation}
-                      onChange={(e) => setDesignation(e.target.value)}
-                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                    >
-                      <option value="Where it's needed most">Where it's needed most</option>
-                      <option value="Scholarships">Scholarships</option>
-                      <option value="School supplies & learning kits">School supplies &amp; learning kits</option>
-                      <option value="Medical outreaches & malaria prevention">Medical outreaches &amp; malaria prevention</option>
-                      <option value="Widows & women empowerment">Widows &amp; women empowerment</option>
-                      <option value="Youth skills & apprenticeships">Youth skills &amp; apprenticeships</option>
-                    </select>
-                  </div>
-
-                  {/* Payment Method Toggle */}
-                  <div>
-                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1.5">
-                      How would you like to pay?
-                    </label>
-                    <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 3xl:gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setPaymentMethod('card')}
-                        className={`py-3 3xl:py-4 px-3 rounded-2xl text-xs sm:text-sm 3xl:text-base font-semibold border transition-all cursor-pointer min-h-[44px] flex items-center justify-center text-center ${
-                          paymentMethod === 'card'
-                            ? 'bg-[#fdfbf7] text-maroon border-maroon shadow-sm'
-                            : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
-                        }`}
+                    {/* Where Should It Go? (With Orphanage outreaches included) */}
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1.5">
+                        Where should it go?
+                      </label>
+                      <select
+                        value={designation}
+                        onChange={(e) => setDesignation(e.target.value)}
+                        className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm text-stone-800 focus:outline-none focus:border-[#7a1b1b]"
                       >
-                        Card, USSD or bank app
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setPaymentMethod('transfer')}
-                        className={`py-3 3xl:py-4 px-3 rounded-2xl text-xs sm:text-sm 3xl:text-base font-semibold border transition-all cursor-pointer min-h-[44px] flex items-center justify-center text-center ${
-                          paymentMethod === 'transfer'
-                            ? 'bg-[#fdfbf7] text-maroon border-maroon shadow-sm'
-                            : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
-                        }`}
-                      >
-                        Direct bank transfer
-                      </button>
+                        <option value="Where it's needed most">Where it's needed most</option>
+                        <option value="Scholarships (School fees & uniforms)">Scholarships (School fees &amp; uniforms)</option>
+                        <option value="School supplies & learning kits">School supplies &amp; learning kits</option>
+                        <option value="Orphanage outreaches (Food & learning relief)">Orphanage outreaches (Food &amp; learning relief)</option>
+                        <option value="Medical outreaches & malaria prevention">Medical outreaches &amp; malaria prevention</option>
+                        <option value="Widows & women empowerment">Widows &amp; women empowerment</option>
+                        <option value="Youth skills & trade apprenticeships">Youth skills &amp; trade apprenticeships</option>
+                      </select>
                     </div>
-                  </div>
 
-                  {paymentMethod === 'transfer' && (
-                    <div className="p-4 3xl:p-6 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-xs 3xl:text-sm space-y-2">
-                      <div className="font-heading font-bold text-sm 3xl:text-base text-[#1c1c1a]">
-                        Official Donation Bank Account:
+                    {/* Payment Method Toggle */}
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">
+                        Payment Method
+                      </label>
+                      <div className="grid grid-cols-2 gap-2.5 mb-3">
+                        <button
+                          type="button"
+                          onClick={() => setPaymentMethod('card')}
+                          className={`py-3 px-4 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${
+                            paymentMethod === 'card'
+                              ? 'bg-stone-900 text-white border-stone-900 shadow-sm'
+                              : 'bg-stone-50 text-stone-700 border-stone-200 hover:bg-stone-100'
+                          }`}
+                        >
+                          Debit / Credit Card (Paystack)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setPaymentMethod('transfer')}
+                          className={`py-3 px-4 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${
+                            paymentMethod === 'transfer'
+                              ? 'bg-stone-900 text-white border-stone-900 shadow-sm'
+                              : 'bg-stone-50 text-stone-700 border-stone-200 hover:bg-stone-100'
+                          }`}
+                        >
+                          Direct Bank Transfer
+                        </button>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[#706e68]">Bank:</span>
-                        <span className="font-semibold text-[#1c1c1a]">Guaranty Trust Bank (GTBank)</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[#706e68]">Account Name:</span>
-                        <span className="font-semibold text-[#1c1c1a]">Ten Kind Hands Initiative</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[#706e68]">Account Number:</span>
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-mono font-bold text-sm 3xl:text-base text-maroon">1309157309</span>
-                          <button
-                            type="button"
-                            onClick={handleCopyAccount}
-                            className="p-1 text-[#706e68] hover:text-maroon transition-colors cursor-pointer"
-                            title="Copy account number"
-                          >
-                            {copiedBank ? <Check className="w-3.5 h-3.5 text-forest" /> : <Copy className="w-3.5 h-3.5" />}
-                          </button>
+
+                      {paymentMethod === 'transfer' && (
+                        <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 text-xs text-stone-700 space-y-2">
+                          <div className="font-semibold text-stone-900">Direct Bank Transfer Details:</div>
+                          <div className="flex items-center justify-between bg-white p-3 rounded-xl border border-stone-200">
+                            <div>
+                              <div className="text-[11px] text-stone-500">Bank &amp; Account Number</div>
+                              <div className="font-bold text-sm text-stone-900">Zenith Bank · 1309157309</div>
+                              <div className="text-[11px] text-stone-500">Ten Kind Hands Initiative</div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={handleCopyAccount}
+                              className="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-semibold cursor-pointer transition-colors"
+                            >
+                              {copiedBank ? 'Copied!' : 'Copy'}
+                            </button>
+                          </div>
+                          <p className="text-[11px] text-stone-500 leading-normal">
+                            Please use your name as payment description, or send a transfer screenshot to our WhatsApp desk (+234 818 099 4301) for instant confirmation.
+                          </p>
                         </div>
+                      )}
+                    </div>
+
+                    {/* Donor Info */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                          Full Name
+                        </label>
+                        <input
+                          type="text"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          placeholder="e.g. Ibrahim Danjuma"
+                          className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="For receipt delivery"
+                          className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                        />
                       </div>
                     </div>
-                  )}
 
-                  {/* Donor Details */}
-                  <form onSubmit={handleDonateSubmit} className="flex flex-col gap-3 3xl:gap-4">
-                    <div>
-                      <input
-                        type="text"
-                        placeholder="Full name"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="email"
-                        required
-                        placeholder="Email (for your receipt)"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                      />
-                    </div>
-
-                    <label className="flex items-center gap-2 text-xs 3xl:text-sm text-[#706e68] cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={isAnonymous}
-                        onChange={(e) => setIsAnonymous(e.target.checked)}
-                        className="rounded border-[#e5e0d8] text-maroon focus:ring-maroon"
-                      />
-                      <span>Keep my name off the public donor list</span>
-                    </label>
-
+                    {/* One Clear Give Button */}
                     <button
                       type="submit"
                       disabled={isDonating}
-                      className="btn-primary w-full py-4 3xl:py-5 text-base 3xl:text-lg font-semibold shadow-md mt-2 flex items-center justify-center gap-2"
+                      className="w-full py-4 rounded-full bg-[#7a1b1b] hover:bg-[#621616] text-white font-bold text-base sm:text-lg transition-colors shadow-sm cursor-pointer min-h-[48px]"
                     >
-                      {isDonating ? (
-                        <span>Processing...</span>
-                      ) : (
-                        <>
-                          <span>Give ₦{currentAmount.toLocaleString()} {frequency === 'monthly' ? '/ month' : 'now'}</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </>
-                      )}
+                      {isDonating ? 'Processing...' : `Give ₦${currentAmount.toLocaleString()} ${frequency === 'monthly' ? 'monthly' : 'now'}`}
                     </button>
-
-                    <div className="flex items-center justify-center gap-1.5 text-center text-[11px] 3xl:text-xs text-[#706e68] mt-1">
-                      <Lock className="w-3.5 h-3.5 text-[#706e68] shrink-0" />
-                      <span>Secure payment by Paystack · NGN, USD or GBP cards</span>
-                    </div>
                   </form>
-                </div>
+                )}
+              </div>
+            )}
 
-                {/* Right Column: Reassurance & FAQ */}
-                <div className="lg:col-span-5 flex flex-col gap-6 3xl:gap-8">
-                  <div className="rounded-2xl overflow-hidden border border-[#e5e0d8] shadow-sm bg-white">
-                    <img
-                      src="/images/hero-debate-competition-makurdi.webp"
-                      alt="Children in school uniform"
-                      className="w-full h-44 3xl:h-56 4xl:h-64 object-cover object-center"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/images/IMG_0294.JPG';
-                      }}
-                    />
+            {/* TAB 2: VOLUNTEER */}
+            {activeTab === 'volunteer' && (
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-2 tracking-tight">
+                  Volunteer on the ground
+                </h2>
+                <p className="text-stone-600 text-sm mb-6 leading-relaxed">
+                  Join our state coordinators for upcoming field missions in education, maternal triage, or skills mentorship.
+                </p>
+
+                {volSuccess ? (
+                  <div className="p-8 rounded-2xl bg-emerald-50 text-emerald-900 text-center space-y-3">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-xl">
+                      ✓
+                    </div>
+                    <h3 className="text-xl font-bold">Application Received!</h3>
+                    <p className="text-sm text-stone-600 max-w-md mx-auto">
+                      Thank you, {volForm.name}. Our state coordinator for {volForm.state} will reach out via WhatsApp or phone ahead of the next planned mission.
+                    </p>
                   </div>
-
-                  <div className="bg-white rounded-3xl p-6 3xl:p-8 border border-[#e5e0d8] shadow-sm">
-                    <h4 className="font-heading font-bold text-sm 3xl:text-base text-[#1c1c1a] mb-3">
-                      Why give through Ten Kind Hands
-                    </h4>
-                    <ul className="space-y-3 3xl:space-y-4 text-xs 3xl:text-sm text-[#4a4a46]">
-                      <li className="flex items-start gap-2.5">
-                        <span className="text-forest text-sm font-bold mt-0.5">⬡</span>
-                        <span><strong>Registered with CAC (RC 7015705).</strong> TEN KIND HANDS FOUNDATION.</span>
-                      </li>
-                      <li className="flex items-start gap-2.5">
-                        <span className="text-forest text-sm font-bold mt-0.5">⬡</span>
-                        <span><strong>100% to programmes.</strong> Trustees privately fund administrative and office costs.</span>
-                      </li>
-                      <li className="flex items-start gap-2.5">
-                        <span className="text-forest text-sm font-bold mt-0.5">⬡</span>
-                        <span><strong>A field report every month.</strong> Itemized budgets and photos published after each mission.</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-white rounded-3xl p-6 3xl:p-8 border border-[#e5e0d8] shadow-sm">
-                    <h4 className="font-heading font-bold text-sm 3xl:text-base text-[#1c1c1a] mb-3">
-                      Questions
-                    </h4>
-                    <div className="divide-y divide-[#e5e0d8]">
-                      {faqs.map((faq, idx) => (
-                        <div key={idx} className="py-2.5 3xl:py-3.5">
-                          <button
-                            type="button"
-                            onClick={() => setFaqOpen(faqOpen === idx ? null : idx)}
-                            className="w-full flex items-center justify-between text-left text-xs 3xl:text-sm font-semibold text-[#1c1c1a] hover:text-maroon transition-colors cursor-pointer"
-                          >
-                            <span>{faq.q}</span>
-                            <span className="text-xs 3xl:text-sm text-[#706e68] ml-2">{faqOpen === idx ? '−' : '+'}</span>
-                          </button>
-                          {faqOpen === idx && (
-                            <p className="text-xs 3xl:text-sm text-[#4a4a46] mt-2 leading-relaxed animate-fade-in">
-                              {faq.a}
-                            </p>
-                          )}
-                        </div>
-                      ))}
+                ) : (
+                  <form onSubmit={handleVolSubmit} className="space-y-4 sm:space-y-5">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                        Your Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={volForm.name}
+                        onChange={(e) => setVolForm({ ...volForm, name: e.target.value })}
+                        placeholder="e.g. Grace Adebayo"
+                        className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                      />
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-[#e5e0d8] text-xs 3xl:text-sm text-[#4a4a46] flex items-center gap-2">
-                      <MessageCircle className="w-4 h-4 text-forest shrink-0" />
-                      <span>
-                        Prefer to talk first?{' '}
-                        <a
-                          href="https://wa.me/2348180994301"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="font-semibold text-forest hover:underline"
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={volForm.email}
+                          onChange={(e) => setVolForm({ ...volForm, email: e.target.value })}
+                          placeholder="yourname@domain.com"
+                          className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                          Phone / WhatsApp *
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={volForm.phone}
+                          onChange={(e) => setVolForm({ ...volForm, phone: e.target.value })}
+                          placeholder="e.g. 08012345678"
+                          className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                          Preferred Role
+                        </label>
+                        <select
+                          value={volForm.role}
+                          onChange={(e) => setVolForm({ ...volForm, role: e.target.value })}
+                          className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm text-stone-800 focus:outline-none focus:border-[#7a1b1b]"
                         >
-                          WhatsApp +234 818 099 4301
-                        </a>
-                      </span>
+                          <option value="Education tutor & mentor">Education tutor &amp; mentor</option>
+                          <option value="Medical outreach volunteer (Nurse / Doctor)">Medical outreach volunteer (Nurse / Doctor)</option>
+                          <option value="Packing & field logistics">Packing &amp; field logistics</option>
+                          <option value="Photography & field reporting">Photography &amp; field reporting</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                          Active State
+                        </label>
+                        <select
+                          value={volForm.state}
+                          onChange={(e) => setVolForm({ ...volForm, state: e.target.value })}
+                          className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm text-stone-800 focus:outline-none focus:border-[#7a1b1b]"
+                        >
+                          <option value="FCT Abuja">FCT Abuja</option>
+                          <option value="Plateau State">Plateau State</option>
+                          <option value="Benue State">Benue State</option>
+                          <option value="Lagos State">Lagos State</option>
+                          <option value="Oyo State">Oyo State</option>
+                          <option value="Katsina State">Katsina State</option>
+                          <option value="Enugu State">Enugu State</option>
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                        Relevant Skills &amp; Availability
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={volForm.skills}
+                        onChange={(e) => setVolForm({ ...volForm, skills: e.target.value })}
+                        placeholder="Tell us briefly about your professional background or days available..."
+                        className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isVolSubmitting}
+                      className="w-full py-4 rounded-full bg-stone-900 hover:bg-black text-white font-bold text-sm sm:text-base transition-colors shadow-sm cursor-pointer"
+                    >
+                      {isVolSubmitting ? 'Submitting...' : 'Sign up as a volunteer'}
+                    </button>
+                  </form>
+                )}
               </div>
             )}
-          </div>
-        )}
 
-        {/* 2. VOLUNTEER TAB (Artboard 06 Get involved) */}
-        {activeTab === 'volunteer' && (
-          <div className="pt-4 grid grid-cols-1 lg:grid-cols-12 gap-10 3xl:gap-16 4xl:gap-20 items-start">
-            {/* Left: Volunteer Roles & Application Form */}
-            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 3xl:p-12 border border-[#e5e0d8] shadow-sm">
-              <h2 className="font-heading font-bold text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2">
-                Join our nationwide volunteer team
-              </h2>
-              <p className="text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-6">
-                We organize on-the-ground outreaches in schools, clinics, and villages across 7 States (FCT Abuja, Benue, Katsina, Plateau, Lagos, Oyo, and Enugu).
-              </p>
-
-              {volSuccess ? (
-                <div className="p-6 rounded-2xl bg-forest-tint text-forest">
-                  <h4 className="font-heading font-bold text-base mb-1">
-                    ✓ Application Received!
-                  </h4>
-                  <p className="text-xs sm:text-sm">
-                    Thank you, {volForm.name}. A state coordinator from your region will reach out on WhatsApp within 48 hours.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleVolSubmit} className="space-y-4 3xl:space-y-6">
-                  <div>
-                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={volForm.name}
-                      onChange={(e) => setVolForm({ ...volForm, name: e.target.value })}
-                      placeholder="e.g. Samuel Adekunle"
-                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 3xl:gap-6">
-                    <div>
-                      <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={volForm.email}
-                        onChange={(e) => setVolForm({ ...volForm, email: e.target.value })}
-                        placeholder="yourname@domain.com"
-                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                        Phone / WhatsApp
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        value={volForm.phone}
-                        onChange={(e) => setVolForm({ ...volForm, phone: e.target.value })}
-                        placeholder="+234 800 000 0000"
-                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 3xl:gap-6">
-                    <div>
-                      <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                        Volunteer Role
-                      </label>
-                      <select
-                        value={volForm.role}
-                        onChange={(e) => setVolForm({ ...volForm, role: e.target.value })}
-                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                      >
-                        <option value="Education tutor & mentor">Education tutor &amp; mentor</option>
-                        <option value="Healthcare team / Nurse / Doctor">Healthcare team / Nurse / Doctor</option>
-                        <option value="Media, photography & video">Media, photography &amp; video</option>
-                        <option value="Logistics & packing assistant">Logistics &amp; packing assistant</option>
-                        <option value="State coordinator desk">State coordinator desk</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                        Primary Location
-                      </label>
-                      <select
-                        value={volForm.state}
-                        onChange={(e) => setVolForm({ ...volForm, state: e.target.value })}
-                        className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                      >
-                        <option value="FCT Abuja">FCT Abuja</option>
-                        <option value="Benue State">Benue State</option>
-                        <option value="Katsina State">Katsina State</option>
-                        <option value="Plateau State">Plateau State</option>
-                        <option value="Lagos State">Lagos State</option>
-                        <option value="Oyo State">Oyo State</option>
-                        <option value="Enugu State">Enugu State</option>
-                        <option value="Other State">Other State</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                      Skills &amp; Experience (Optional)
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={volForm.skills}
-                      onChange={(e) => setVolForm({ ...volForm, skills: e.target.value })}
-                      placeholder="Tell us briefly about your background or why you'd like to volunteer..."
-                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isVolSubmitting}
-                    className="btn-primary w-full py-4 3xl:py-5 text-base 3xl:text-lg font-semibold shadow-md mt-2"
-                  >
-                    {isVolSubmitting ? 'Submitting application...' : 'Submit volunteer application'}
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Right: In-kind Wishlist */}
-            <div className="lg:col-span-5 flex flex-col gap-6 3xl:gap-8">
-              <div className="bg-[#f5f1e8] rounded-3xl p-6 sm:p-8 3xl:p-12 border border-[#e5e0d8]">
-                <h3 className="font-heading font-bold text-xl 3xl:text-2xl text-[#1c1c1a] mb-2">
-                  In-kind supplies wishlist
-                </h3>
-                <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-4">
-                  We accept new and gently-used items directly from individuals, schools, and corporate sponsors:
+            {/* TAB 3: PARTNER */}
+            {activeTab === 'partner' && (
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-2 tracking-tight">
+                  Institutional &amp; CSR Partnerships
+                </h2>
+                <p className="text-stone-600 text-sm mb-6 leading-relaxed">
+                  Collaborate on community healthcare drives, solar computer labs, or targeted educational sponsorship.
                 </p>
 
-                <ul className="space-y-3 3xl:space-y-4 text-xs sm:text-sm 3xl:text-base text-[#4a4a46]">
-                  <li className="flex items-start gap-2.5">
-                    <span className="text-forest font-bold">✓</span>
-                    <span><strong>School stationery:</strong> Exercise books, biros, pencils, math sets.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="text-forest font-bold">✓</span>
-                    <span><strong>Tech equipment:</strong> Working laptops, tablets, computer lab peripherals.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="text-forest font-bold">✓</span>
-                    <span><strong>Medical provisions:</strong> First-aid supplies, treated mosquito nets, vitamins.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="text-forest font-bold">✓</span>
-                    <span><strong>Food provisions:</strong> Rice, beans, garri sacks for orphanage partners.</span>
-                  </li>
-                </ul>
+                {partSuccess ? (
+                  <div className="p-8 rounded-2xl bg-emerald-50 text-emerald-900 text-center space-y-3">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-xl">
+                      ✓
+                    </div>
+                    <h3 className="text-xl font-bold">Partnership Inquiry Received</h3>
+                    <p className="text-sm text-stone-600 max-w-md mx-auto">
+                      Thank you. Our partnership director will review your proposal and respond within 24 hours.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handlePartSubmit} className="space-y-4 sm:space-y-5">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                        Organization / Company Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={partForm.orgName}
+                        onChange={(e) => setPartForm({ ...partForm, orgName: e.target.value })}
+                        placeholder="e.g. Zenith Tech Ltd"
+                        className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                      />
+                    </div>
 
-                <div className="mt-6 pt-4 border-t border-[#e5e0d8] text-xs 3xl:text-sm text-[#706e68]">
-                  Delivery to National Secretariat: Danglo Plaza 204, Gwarinpa, Abuja.
-                </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                          Contact Person *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={partForm.contactName}
+                          onChange={(e) => setPartForm({ ...partForm, contactName: e.target.value })}
+                          placeholder="Your full name"
+                          className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                          Work Email *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={partForm.email}
+                          onChange={(e) => setPartForm({ ...partForm, email: e.target.value })}
+                          placeholder="contact@company.com"
+                          className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                        Partnership Type
+                      </label>
+                      <select
+                        value={partForm.type}
+                        onChange={(e) => setPartForm({ ...partForm, type: e.target.value })}
+                        className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm text-stone-800 focus:outline-none focus:border-[#7a1b1b]"
+                      >
+                        <option value="Corporate CSR Sponsorship">Corporate CSR Sponsorship</option>
+                        <option value="In-kind Equipment or Supplies Grant">In-kind Equipment or Supplies Grant</option>
+                        <option value="Community Healthcare Collaboration">Community Healthcare Collaboration</option>
+                        <option value="School Rehabilitation">School Rehabilitation</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-1">
+                        Partnership Proposal Summary
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={partForm.notes}
+                        onChange={(e) => setPartForm({ ...partForm, notes: e.target.value })}
+                        placeholder="Briefly describe your objectives or regions of interest..."
+                        className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isPartSubmitting}
+                      className="w-full py-4 rounded-full bg-stone-900 hover:bg-black text-white font-bold text-sm sm:text-base transition-colors shadow-sm cursor-pointer"
+                    >
+                      {isPartSubmitting ? 'Submitting...' : 'Send partnership inquiry'}
+                    </button>
+                  </form>
+                )}
               </div>
-            </div>
-          </div>
-        )}
+            )}
 
-        {/* 3. PARTNER TAB */}
-        {activeTab === 'partner' && (
-          <div className="pt-4 max-w-3xl 3xl:max-w-4xl 4xl:max-w-5xl bg-white rounded-3xl p-6 sm:p-10 3xl:p-14 border border-[#e5e0d8] shadow-sm">
-            <h2 className="font-heading font-bold text-xl sm:text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2">
-              Partner with Ten Kind Hands
+          </div>
+
+          {/* Right Column: "Why give through us" and Photo */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            
+            {/* Why give through us card */}
+            <div className="bg-[#1b4d3e] text-white rounded-3xl p-6 sm:p-8 shadow-sm">
+              <span className="text-xs uppercase font-bold tracking-wider text-[#a8d5c4] block mb-2">
+                RADICAL INTEGRITY
+              </span>
+              <h3 className="text-2xl font-bold mb-4 tracking-tight">
+                Why give through us
+              </h3>
+              <ul className="space-y-4 text-xs sm:text-sm text-white/90">
+                <li className="flex items-start gap-3">
+                  <span className="w-5 h-5 rounded-full bg-white/20 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                    ✓
+                  </span>
+                  <div>
+                    <strong className="text-white block">100% to Frontline Programmes:</strong>
+                    Every kobo you contribute pays tuition, kits, or supplies. We never deduct administration cuts.
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-5 h-5 rounded-full bg-white/20 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                    ✓
+                  </span>
+                  <div>
+                    <strong className="text-white block">Public Field Reports Within Two Weeks:</strong>
+                    Detailed receipts, vendor invoices, and photo dispatches are published after every single mission.
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-5 h-5 rounded-full bg-white/20 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                    ✓
+                  </span>
+                  <div>
+                    <strong className="text-white block">Direct In-Person Delivery Across 7 States:</strong>
+                    Delivered straight into children's and mothers' hands by trusted local coordinators.
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Photo Beside It */}
+            <div className="rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm h-64 sm:h-72 bg-stone-100">
+              <img
+                src="/images/hero-debate-competition-makurdi.webp"
+                alt="Ten Kind Hands scholars and educators"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/images/IMG_0300.JPG';
+                }}
+              />
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* 4. Questions in a Simple Expandable List */}
+        <div className="max-w-3xl mx-auto pt-6 border-t border-stone-200/80">
+          <div className="text-center mb-8">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#7a1b1b] block mb-1">
+              QUESTIONS &amp; ANSWERS
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight">
+              Frequently asked questions
             </h2>
-            <p className="text-xs sm:text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-6">
-              Corporate CSR programs, faith-based institutions, and diaspora associations partner with us for 100% direct-delivery humanitarian missions with audited photo dispatches.
-            </p>
-
-            {partSuccess ? (
-              <div className="p-6 rounded-2xl bg-forest-tint text-forest">
-                <h4 className="font-heading font-bold text-base mb-1">
-                  ✓ Partnership Inquiry Received!
-                </h4>
-                <p className="text-xs sm:text-sm">
-                  Thank you, {partForm.contactName}. Our partnerships team will review and respond with tailored outreach proposals within 2 business days.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handlePartSubmit} className="space-y-4 3xl:space-y-6">
-                <div>
-                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                    Organization / Company Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={partForm.orgName}
-                    onChange={(e) => setPartForm({ ...partForm, orgName: e.target.value })}
-                    placeholder="e.g. Apex Energy Ltd"
-                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 3xl:gap-6">
-                  <div>
-                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                      Contact Person
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={partForm.contactName}
-                      onChange={(e) => setPartForm({ ...partForm, contactName: e.target.value })}
-                      placeholder="e.g. Dr. Ngozi Okafor"
-                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                      Official Email
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={partForm.email}
-                      onChange={(e) => setPartForm({ ...partForm, email: e.target.value })}
-                      placeholder="official@company.com"
-                      className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                    Partnership Focus
-                  </label>
-                  <select
-                    value={partForm.type}
-                    onChange={(e) => setPartForm({ ...partForm, type: e.target.value })}
-                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                  >
-                    <option value="Corporate CSR Sponsorship">Corporate CSR Sponsorship</option>
-                    <option value="School Computer Lab Commissioning">School Computer Lab Commissioning</option>
-                    <option value="Maternal Healthcare & Net Campaign">Maternal Healthcare &amp; Net Campaign</option>
-                    <option value="Diaspora Giving & Endowment">Diaspora Giving &amp; Endowment</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs 3xl:text-sm font-bold uppercase tracking-wider text-[#706e68] mb-1">
-                    Notes or Scope
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={partForm.notes}
-                    onChange={(e) => setPartForm({ ...partForm, notes: e.target.value })}
-                    placeholder="Briefly state intended states, budget scope, or specific goals..."
-                    className="w-full px-4 py-3 3xl:py-4 bg-[#fdfbf7] rounded-2xl border border-[#e5e0d8] text-sm 3xl:text-base text-[#1c1c1a] focus:outline-none focus:border-maroon"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isPartSubmitting}
-                  className="btn-primary w-full py-4 3xl:py-5 text-base 3xl:text-lg font-semibold shadow-md mt-2"
-                >
-                  {isPartSubmitting ? 'Submitting proposal...' : 'Submit partnership inquiry'}
-                </button>
-              </form>
-            )}
           </div>
-        )}
+
+          <div className="space-y-3">
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white rounded-2xl border border-stone-200/80 overflow-hidden shadow-xs transition-colors"
+                >
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : idx)}
+                    className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer"
+                  >
+                    <span className="font-bold text-base sm:text-lg text-stone-900">
+                      {faq.q}
+                    </span>
+                    <span className="w-7 h-7 rounded-full bg-stone-100 text-stone-700 flex items-center justify-center font-bold text-base shrink-0">
+                      {isOpen ? '−' : '+'}
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-stone-600 leading-relaxed border-t border-stone-100">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
       </div>
     </div>
