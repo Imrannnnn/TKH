@@ -120,36 +120,36 @@ export const PROGRAMMES = [
   {
     id: 'medical-outreaches',
     pillar: 'health',
-    title: 'Medical outreaches & malaria prevention',
-    shortDesc: 'Treated mosquito nets, rapid tests and supplements for pregnant and nursing mothers, with health education in English and Hausa.',
-    image: '/images/hero-maternal-health-malaria-prevention.webp',
+    title: 'Medical outreaches & community health',
+    shortDesc: 'Frontline clinic aid, maternal malaria prevention, and Pad A Girl Child menstrual hygiene kits with school clinic pad banks.',
+    image: '/images/pad-a-girl-child-outreach-abuja.jpg',
     unitCost: '₦7,500',
-    unitCostLabel: 'Per mother pack',
-    statBeneficiaries: '1,200+',
-    statBeneficiariesLabel: 'Mothers & infants',
+    unitCostLabel: 'Per patient or student',
+    statBeneficiaries: '1,500+',
+    statBeneficiariesLabel: 'Mothers & students',
     statesActive: '4 states',
     statesList: 'Abuja, Benue, Lagos, and Plateau',
     monthlySuggested: 7500,
     termSuggested: 22500,
     fundedCount: 110,
     targetCount: 130,
-    whoItsFor: 'Expectant mothers, infants, and vulnerable elders in rural settlements without functional primary healthcare centers.',
+    whoItsFor: 'Expectant mothers, infants, and young secondary schoolgirls facing period poverty and limited frontline primary healthcare access.',
     covers: [
-      'Long-lasting insecticide-treated mosquito nets (LLINs)',
-      'Rapid malaria diagnostic testing (RDT) and treatment therapies (ACT)',
-      'Prenatal vitamins, iron, and folic acid courses',
-      'Health & sanitation workshops in local languages'
+      'Long-lasting insecticide-treated mosquito nets (LLINs) and rapid malaria testing',
+      'Pad A Girl Child sanitary pads & permanent school clinic emergency Pad Banks',
+      'Prenatal vitamins, iron, and maternal supplement courses',
+      'Menstrual hygiene & reproductive health education workshops'
     ],
     howItWorks: [
-      { step: 'Step 1', title: 'Community mobilization', desc: 'Village criers and nurses invite mothers to the community dispensary.' },
-      { step: 'Step 2', title: 'Clinical screening', desc: 'Volunteer nurses run vitals, malaria tests, and health assessments.' },
-      { step: 'Step 3', title: 'Prescription & nets', desc: 'Free medication regimens and treated nets distributed on the spot.' },
-      { step: 'Step 4', title: 'Follow-up checks', desc: 'Community health workers check back after 30 days.' }
+      { step: 'Step 1', title: 'Community & school outreach', desc: 'Mobilizing rural settlements, primary dispensaries, and secondary schools in underserved districts.' },
+      { step: 'Step 2', title: 'Clinical screening & workshops', desc: 'Volunteer nurses run vitals and malaria tests, alongside open menstrual hygiene workshops.' },
+      { step: 'Step 3', title: 'Prescriptions, nets & pad banks', desc: 'Distributing medications, treated nets, and mounting emergency pad bank dispensaries.' },
+      { step: 'Step 4', title: 'Follow-up checks', desc: 'Community health workers and school health mistresses monitor supplies and student retention.' }
     ],
     story: {
-      quote: 'Learning how to properly hang the mosquito net and getting tested on the spot saved my 2-year-old from recurring malaria bouts.',
-      name: 'Amina',
-      location: 'Nursing Mother, Abata'
+      quote: 'Mounting the permanent Pad Bank in our clinic and educating our girls took away the fear and shame of missing school during their periods.',
+      name: 'Mrs. Victoria',
+      location: 'School Health Mistress, GGSS Dutse Alhaji, Abuja'
     }
   },
   {
@@ -272,18 +272,22 @@ export function getProgramLatestOutreach(progId, outreaches = []) {
   }
 
   if (progId === 'medical-outreaches') {
-    const match = completed.find(
+    const padMatch = completed.find(
       (o) =>
-        o.title?.toLowerCase().includes('malaria') ||
-        o.theme?.toLowerCase().includes('malaria') ||
-        o.pillar?.toLowerCase().includes('health')
+        o.id.includes('pad') ||
+        o.title?.toLowerCase().includes('pad') ||
+        o.theme?.toLowerCase().includes('pad')
     );
-    if (match) {
+    if (padMatch || true) {
       return {
-        dateLabel: 'APR 2026',
-        summary: '130 high-risk mothers, 3 states'
+        dateLabel: 'SEP 2026',
+        summary: 'Pad A Girl Child & Pad Bank, Abuja (384 students)'
       };
     }
+    return {
+      dateLabel: 'APR 2026',
+      summary: '130 high-risk mothers, 3 states'
+    };
   }
 
   if (progId === 'widows-empowerment') {
@@ -525,7 +529,7 @@ export default function Programs({ selectedProgramId, onSelectProgram, onOpenDon
             <div>
               <div className="border-t border-white/20 pt-4 mb-4">
                 <p className="text-white/80 text-xs leading-relaxed">
-                  Medical outreaches &amp; malaria prevention
+                  Medical outreaches &amp; healthcare · Pad A Girl Child
                 </p>
               </div>
               <span className="text-white text-sm font-semibold underline underline-offset-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">

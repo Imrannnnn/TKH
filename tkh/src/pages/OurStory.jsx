@@ -73,6 +73,18 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       name: 'Oluwadiya Tobi Elijah',
       state: 'PLATEAU',
       image: '/images/Oluwadiya Tobi Elijah Plateau State Coordinator.jpeg'
+    },
+    {
+      initials: 'KC',
+      name: 'Katsina Coordinator',
+      state: 'KATSINA',
+      image: '/images/coordinator-katsina.jpg'
+    },
+    {
+      initials: 'EC',
+      name: 'Enugu Coordinator',
+      state: 'ENUGU',
+      image: '/images/coordinator-enugu.jpg'
     }
   ];
 
@@ -82,7 +94,7 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       : defaultLeadership;
 
   const stateCoordinators =
-    storyContent?.stateCoordinators && storyContent.stateCoordinators.length > 0
+    storyContent?.stateCoordinators && storyContent.stateCoordinators.length >= 7
       ? storyContent.stateCoordinators
       : defaultStateCoordinators;
 
@@ -184,7 +196,7 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       {/* 2. Our Story & Single-Row Timeline */}
       <section className="py-14 sm:py-20 lg:py-24 bg-[#f5f1e8] border-y border-[#e5e0d8]">
         <div className="max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Two Short Paragraphs + One Photo */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center mb-12 sm:mb-16">
             <div className="lg:col-span-6 flex flex-col justify-center">
@@ -243,14 +255,14 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       <section className="bg-forest !text-white py-12 sm:py-16 lg:py-20 border-y border-forest-dark" style={{ color: '#ffffff' }}>
         <div className="max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
-            
+
             {/* Mission */}
             <div>
               <span className="text-xs uppercase tracking-widest text-[#a8d5c4] font-bold block mb-3">
                 OUR MISSION
               </span>
               <p className="font-heading font-semibold text-lg sm:text-xl lg:text-2xl leading-snug !text-white" style={{ color: '#ffffff' }}>
-                To improve the lives of women and children through education and healthcare that lead to better health and a brighter future.
+                To improve the lives of women and children through education, healthcare and livelihoods that lead to better health and a brighter future.
               </p>
             </div>
 
@@ -325,7 +337,7 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       {/* 5. Team: Leadership & Operations (5) + State Coordinators (5) */}
       <section className="py-14 sm:py-20 lg:py-24 bg-[#f5f1e8] border-t border-[#e5e0d8]">
         <div className="max-w-7xl 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8 sm:mb-10">
             <div>
               <span className="text-xs uppercase font-bold tracking-widest text-maroon mb-1.5 block">
@@ -386,12 +398,12 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
             </div>
           </div>
 
-          {/* Group 2: State Coordinators (5 Even Columns) */}
+          {/* Group 2: State Coordinators (7 Columns on Desktop) */}
           <div>
             <h3 className="font-heading font-bold text-lg sm:text-xl text-[#1c1c1a] mb-4 sm:mb-5">
               State coordinators
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
               {stateCoordinators.map((m, idx) => (
                 <div
                   key={idx}

@@ -596,6 +596,22 @@ const initialStoryContent = {
       initials: 'OE',
       image: '/images/Oluwadiya Tobi Elijah Plateau State Coordinator.jpeg',
       description: 'Coordinates grassroots educational initiatives, youth engagement, and community welfare projects throughout Plateau State.'
+    },
+    {
+      name: 'Katsina Coordinator',
+      role: 'Katsina State Coordinator',
+      badge: 'Katsina State',
+      initials: 'KC',
+      image: '/images/coordinator-katsina.jpg',
+      description: 'Coordinates community engagement, education scholarships, and frontline healthcare mission delivery across Katsina State.'
+    },
+    {
+      name: 'Enugu Coordinator',
+      role: 'Enugu State Coordinator',
+      badge: 'Enugu State',
+      initials: 'EC',
+      image: '/images/coordinator-enugu.jpg',
+      description: 'Leads mobile clinical aid, community outreach, and educational support across rural settlements in Enugu State.'
     }
   ]
 };
@@ -836,6 +852,14 @@ const sanitizeData = (raw) => {
       cleaned.homeContent = {
         ...cleaned.homeContent,
         heroSlides: initialHomeContent.heroSlides
+      };
+    }
+  }
+  if (cleaned.storyContent) {
+    if (!Array.isArray(cleaned.storyContent.stateCoordinators) || cleaned.storyContent.stateCoordinators.length < 7) {
+      cleaned.storyContent = {
+        ...cleaned.storyContent,
+        stateCoordinators: initialStoryContent.stateCoordinators
       };
     }
   }

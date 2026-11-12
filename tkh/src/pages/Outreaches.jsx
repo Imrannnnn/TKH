@@ -288,8 +288,8 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
     return r.pillar === activeFilter;
   });
 
-  // Limit initially to 4 earlier reports unless "Show older reports" is clicked
-  const displayedReports = showOlderReports ? filteredReports : filteredReports.slice(0, 4);
+  // Limit initially to 6 earlier reports (2 rows of 3) unless "Show older reports" is clicked
+  const displayedReports = showOlderReports ? filteredReports : filteredReports.slice(0, 6);
 
   const handleOpenReport = (id) => {
     setSelectedReportId(id);
@@ -505,18 +505,18 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             <div>
               <div className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                1,690+
+                4,270+
               </div>
               <div className="text-xs sm:text-sm text-white/80 font-normal mt-1">
-                people reached, Jan–Sep 2026
+                People reached, Jan - Nov 2026
               </div>
             </div>
             <div>
               <div className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                10
+                11
               </div>
               <div className="text-xs sm:text-sm text-white/80 font-normal mt-1">
-                outreaches reported
+                Outreaches reported
               </div>
             </div>
             <div>
@@ -529,7 +529,7 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
             </div>
             <div>
               <div className="text-3xl sm:text-4xl font-bold text-[#f7c899] tracking-tight">
-                ₦16,971,575
+                ₦18,784,575
               </div>
               <div className="text-xs sm:text-sm text-white/80 font-normal mt-1">
                 delivered directly (100%)
@@ -655,8 +655,8 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
             </div>
           </div>
 
-          {/* Even Grid of Identical Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
+          {/* Even Grid of Identical Cards - 3 columns on desktop, 2 on tablet, 1 on mobile */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8">
             {displayedReports.map((report) => {
               const badgeBg =
                 report.pillar === 'education'
@@ -725,13 +725,13 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
           </div>
 
           {/* Show Older Reports Button */}
-          {filteredReports.length > 4 && (
+          {filteredReports.length > 6 && (
             <div className="text-center pt-2">
               <button
                 onClick={() => setShowOlderReports(!showOlderReports)}
                 className="px-6 py-3 rounded-full border border-stone-300 hover:bg-stone-50 text-stone-800 text-sm font-semibold transition-colors cursor-pointer shadow-sm"
               >
-                {showOlderReports ? 'Show fewer reports' : `Show all ${filteredReports.length} reports`}
+                {showOlderReports ? 'Show fewer reports' : `Show all ${filteredReports.length} earlier reports`}
               </button>
             </div>
           )}

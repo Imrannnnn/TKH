@@ -53,13 +53,6 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
 
   const currentAmount = isCustom ? Number(customAmount.replace(/[^0-9]/g, '')) || 0 : selectedAmount;
 
-  const getImpactText = (amt) => {
-    if (amt >= 150000) return '✓ Fully funds three scholars with uniforms, books and fees for a full term';
-    if (amt >= 45000) return '✓ Covers full tuition, exams and school uniform for one scholar for a whole term';
-    if (amt >= 15000) return '✓ Buys complete learning kits for three pupils';
-    return '✓ Buys a complete learning kit for one pupil';
-  };
-
   const handleCopyAccount = () => {
     navigator.clipboard.writeText('1309157309');
     setCopiedBank(true);
@@ -162,7 +155,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
     },
     {
       q: 'Can I stop a monthly gift?',
-      a: 'Yes, anytime with one click. When you set up a monthly gift, you receive a personal donor link by email where you can pause, adjust, or cancel your recurring contribution at any moment. You can also send a quick WhatsApp message to our desk at +234 818 099 4301 and we will pause or cancel it immediately for you.'
+      a: 'Yes, anytime. You can pause or cancel your recurring contribution at any moment by sending a quick WhatsApp message to our desk at +234 818 099 4301 or emailing us at info@tenkindhands.org, and our team will pause or cancel it immediately for you.'
     },
     {
       q: 'Where will my donation receipt be sent?',
@@ -309,11 +302,6 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
                           placeholder="Or enter custom amount in ₦"
                           className="w-full px-4 py-3 rounded-2xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:border-[#7a1b1b]"
                         />
-                      </div>
-
-                      {/* Impact Tagline */}
-                      <div className="mt-3 text-xs text-[#1b4d3e] font-semibold bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-100">
-                        {getImpactText(currentAmount)}
                       </div>
                     </div>
 

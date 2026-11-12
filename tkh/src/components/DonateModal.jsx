@@ -50,13 +50,6 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
 
   const currentAmount = isCustom ? (Number(customAmount.replace(/[^0-9]/g, '')) || 0) : selectedAmount;
 
-  const getImpactText = (amt) => {
-    if (amt >= 150000) return '✓ Fully funds three scholars with uniforms, books and fees for a full term';
-    if (amt >= 45000) return '✓ Covers full tuition, exams and school uniform for one scholar for a whole term';
-    if (amt >= 15000) return '✓ Buys complete learning kits for three pupils';
-    return '✓ Buys a complete learning kit for one pupil';
-  };
-
   const handleCopyAccount = () => {
     navigator.clipboard.writeText('1309157309');
     setCopiedBank(true);
@@ -143,7 +136,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
     },
     {
       q: 'Can I stop a monthly gift?',
-      a: 'Yes. You can pause or cancel your recurring pledge at any time with a single click from your receipt or by contacting us on WhatsApp.'
+      a: 'Yes. You can pause or cancel your recurring pledge at any time by contacting us on WhatsApp or emailing info@tenkindhands.org.'
     },
     {
       q: 'Can my company give or match gifts?',
@@ -282,11 +275,6 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                       }`}
                     />
                   </div>
-                </div>
-
-                {/* Live Impact Line */}
-                <div className="px-4 py-3 rounded-2xl bg-forest-tint text-forest border border-forest/20 text-xs sm:text-sm font-medium flex items-center gap-2">
-                  <span>{getImpactText(currentAmount)}</span>
                 </div>
 
                 {/* Where should it go? */}

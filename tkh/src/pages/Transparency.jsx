@@ -17,8 +17,8 @@ export const OUTREACHES_SPENT = [
     pillar: 'education',
     location: 'Abuja, Jos, Makurdi & Ibadan',
     beneficiaries: '37 student prize-winners',
-    amount: 1061000,
-    spent: '₦1,061,000'
+    amount: 905000,
+    spent: '₦905,000'
   },
   {
     month: 'March 2026',
@@ -35,8 +35,8 @@ export const OUTREACHES_SPENT = [
     pillar: 'health',
     location: 'Lagos, Plateau & FCT Abuja',
     beneficiaries: '130 high-risk mothers',
-    amount: 2380000,
-    spent: '₦2,380,000'
+    amount: 1558600,
+    spent: '₦1,558,600'
   },
   {
     month: 'May 2026',
@@ -44,8 +44,8 @@ export const OUTREACHES_SPENT = [
     pillar: 'education',
     location: 'Benue, Lagos, Plateau & Oyo',
     beneficiaries: '300 primary & secondary pupils',
-    amount: 2450000,
-    spent: '₦2,450,000'
+    amount: 1070475,
+    spent: '₦1,070,475'
   },
   {
     month: 'June 2026',
@@ -53,8 +53,8 @@ export const OUTREACHES_SPENT = [
     pillar: 'livelihoods',
     location: 'Abuja, Benue, Oyo & Lagos',
     beneficiaries: '80 widows (20 per state)',
-    amount: 3850000,
-    spent: '₦3,850,000'
+    amount: 2639900,
+    spent: '₦2,639,900'
   },
   {
     month: 'July 2026',
@@ -62,8 +62,8 @@ export const OUTREACHES_SPENT = [
     pillar: 'livelihoods',
     location: 'Jos & Makurdi (Plateau & Benue)',
     beneficiaries: '2 young entrepreneurs in business',
-    amount: 1920000,
-    spent: '₦1,920,000'
+    amount: 2692100,
+    spent: '₦2,692,100'
   },
   {
     month: 'August 2026',
@@ -71,26 +71,36 @@ export const OUTREACHES_SPENT = [
     pillar: 'education',
     location: 'Lagos, Plateau, Benue & FCT Abuja',
     beneficiaries: '345 youths & students',
-    amount: 4850000,
-    spent: '₦4,850,000'
+    amount: 2566900,
+    spent: '₦2,566,900'
   },
   {
     month: 'September 2026',
-    title: 'Abba Father Rich Orphanage Home Outreach',
+    title: 'Orphanage Outreach',
     pillar: 'education',
-    location: 'Plateau State',
+    location: ' Abuja | Oyo | Plateau | Lagos',
     beneficiaries: '100+ resident children & orphans',
-    amount: 2100000,
-    spent: '₦2,100,000'
+    amount: 688000,
+    spent: '₦688,000'
   },
   {
-    month: 'September 2026',
+    month: 'October 2026',
     title: 'Pad A Girl Child Outreach & Pad Bank Launch',
     pillar: 'health',
     location: 'GGSS Dutse Alhaji, Abuja',
     beneficiaries: '384 students reached · 72 pads in pad bank',
-    amount: 1274000,
-    spent: '₦1,274,000'
+    amount: 858000,
+    spent: '₦858,000'
+  },
+
+  {
+    month: 'November 2026',
+    title: 'Medical/Maternal Outreach ',
+    pillar: 'health',
+    location: 'Plateau | Oyo | Katsina | Benue | Enugu',
+    beneficiaries: '375',
+    amount: 2778700,
+    spent: '₦2,778,700'
   }
 ];
 
@@ -176,13 +186,13 @@ export default function Transparency({ onOpenDonate, setCurrentPage }) {
           <div className="bg-white rounded-3xl p-7 sm:p-8 border border-stone-200/80 shadow-sm flex flex-col justify-between">
             <div>
               <div className="font-bold text-3xl sm:text-4xl text-[#7a1b1b] mb-3 tracking-tight">
-                ₦16,971,575
+                ₦18,784,575
               </div>
               <h3 className="font-bold text-lg sm:text-xl text-stone-900 mb-2">
                 Total delivered in 2026
               </h3>
               <p className="text-stone-600 text-sm leading-relaxed">
-                1,690 direct beneficiaries equipped across 10 completed field missions in 7 Nigerian states with public receipts.
+                4,270+ direct beneficiaries equipped across 11 completed field missions in 7 Nigerian states with public receipts.
               </p>
             </div>
           </div>
@@ -196,7 +206,7 @@ export default function Transparency({ onOpenDonate, setCurrentPage }) {
                 Frontline spending split by focus area
               </h3>
               <p className="text-xs sm:text-sm text-stone-500 mt-0.5">
-                Distribution of ₦16,971,575 across 10 completed field missions in 2026
+                Distribution of ₦18,784,575 across 11 completed field missions in 2026
               </p>
             </div>
             <div className="text-xs sm:text-sm font-semibold text-stone-700 bg-stone-100 px-3.5 py-1.5 rounded-full self-start sm:self-auto">
@@ -302,8 +312,8 @@ export default function Transparency({ onOpenDonate, setCurrentPage }) {
                       o.pillar === 'education'
                         ? 'bg-[#7a1b1b]'
                         : o.pillar === 'health'
-                        ? 'bg-[#1b4d3e]'
-                        : 'bg-[#8c5310]';
+                          ? 'bg-[#1b4d3e]'
+                          : 'bg-[#8c5310]';
 
                     const relativeWidth = Math.round((o.amount / maxAmount) * 100);
 
@@ -343,13 +353,13 @@ export default function Transparency({ onOpenDonate, setCurrentPage }) {
                   })}
                   <tr className="bg-stone-50/90 font-bold text-stone-900 border-t-2 border-stone-300">
                     <td colSpan="2" className="py-4 px-5 sm:px-6 text-sm sm:text-base">
-                      Total Delivered (Jan–Sep 2026)
+                      Total Delivered (Jan–Nov 2026)
                     </td>
                     <td colSpan="2" className="py-4 px-4 sm:px-6 text-xs sm:text-sm text-stone-500">
-                      1,690 direct beneficiaries · 7 states
+                      4,270+ direct beneficiaries · 7 states
                     </td>
                     <td className="py-4 px-5 sm:px-6 text-right text-base sm:text-lg text-[#7a1b1b] whitespace-nowrap">
-                      ₦16,971,575
+                      ₦18,784,575
                     </td>
                   </tr>
                 </tbody>
@@ -360,7 +370,7 @@ export default function Transparency({ onOpenDonate, setCurrentPage }) {
 
         {/* 5. Financial Controls & Safeguarding (Side by Side) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-14 sm:mb-20">
-          
+
           {/* Controls */}
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200/80 shadow-sm">
             <h3 className="font-bold text-xl text-stone-900 mb-5">

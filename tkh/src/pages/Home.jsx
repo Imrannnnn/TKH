@@ -235,8 +235,8 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
             <h1 className="font-heading font-bold text-3xl xs:text-[34px] sm:text-4xl lg:text-[38px] xl:text-[42px] 2xl:text-[46px] leading-[1.16] tracking-tight text-[#1c1c1a]">
               {heroHeadline === 'Helping Nigerian families learn, heal and thrive.' ? (
                 <>
-                  <span className="block sm:whitespace-nowrap">Helping Nigerian families</span>
-                  <span className="block">learn, heal and thrive.</span>
+                  <span className="lg:block lg:whitespace-nowrap">Helping Nigerian families</span>{' '}
+                  <span className="lg:block">learn, heal and thrive.</span>
                 </>
               ) : (
                 heroHeadline
