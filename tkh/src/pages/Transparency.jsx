@@ -89,8 +89,8 @@ export const OUTREACHES_SPENT = [
     pillar: 'health',
     location: 'GGSS Dutse Alhaji, Abuja',
     beneficiaries: '384 students reached · 72 pads in pad bank',
-    amount: 858000,
-    spent: '₦858,000'
+    amount: 1613000,
+    spent: '₦1,613,000'
   },
 
   {
@@ -99,34 +99,45 @@ export const OUTREACHES_SPENT = [
     pillar: 'health',
     location: 'Plateau | Oyo | Katsina | Benue | Enugu',
     beneficiaries: '375',
-    amount: 2778700,
-    spent: '₦2,778,700'
+    amount: 2428800,
+    spent: '₦2,428,800'
   }
 ];
 
 export default function Transparency({ onOpenDonate, setCurrentPage }) {
   const [downloadMsg, setDownloadMsg] = useState(false);
 
-  const totalDelivered = 16971575;
   const maxAmount = Math.max(...OUTREACHES_SPENT.map((o) => o.amount));
 
   // Compute breakdown by pillar
-  const educationTotal = OUTREACHES_SPENT.filter((o) => o.pillar === 'education').reduce(
-    (sum, o) => sum + o.amount,
-    0
-  );
-  const healthTotal = OUTREACHES_SPENT.filter((o) => o.pillar === 'health').reduce(
-    (sum, o) => sum + o.amount,
-    0
-  );
-  const livelihoodsTotal = OUTREACHES_SPENT.filter((o) => o.pillar === 'livelihoods').reduce(
-    (sum, o) => sum + o.amount,
-    0
-  );
+  const educationTotal = OUTREACHES_SPENT
+    .filter((o) => o.pillar === 'education')
+    .reduce((sum, o) => sum + o.amount, 0);
 
-  const educationPct = ((educationTotal / totalDelivered) * 100).toFixed(1);
-  const healthPct = ((healthTotal / totalDelivered) * 100).toFixed(1);
-  const livelihoodsPct = ((livelihoodsTotal / totalDelivered) * 100).toFixed(1);
+  const healthTotal = OUTREACHES_SPENT
+    .filter((o) => o.pillar === 'health')
+    .reduce((sum, o) => sum + o.amount, 0);
+
+  const livelihoodsTotal = OUTREACHES_SPENT
+    .filter((o) => o.pillar === 'livelihoods')
+    .reduce((sum, o) => sum + o.amount, 0);
+
+  // Calculate total delivered dynamically
+  const totalDelivered =
+    educationTotal + healthTotal + livelihoodsTotal;
+
+  // Calculate percentages
+  const educationPct = totalDelivered > 0
+    ? ((educationTotal / totalDelivered) * 100).toFixed(1)
+    : '0.0';
+
+  const healthPct = totalDelivered > 0
+    ? ((healthTotal / totalDelivered) * 100).toFixed(1)
+    : '0.0';
+
+  const livelihoodsPct = totalDelivered > 0
+    ? ((livelihoodsTotal / totalDelivered) * 100).toFixed(1)
+    : '0.0';
 
   const handleDownloadPdf = () => {
     setDownloadMsg(true);
@@ -192,7 +203,7 @@ export default function Transparency({ onOpenDonate, setCurrentPage }) {
                 Total delivered in 2026
               </h3>
               <p className="text-stone-600 text-sm leading-relaxed">
-                4,270+ direct beneficiaries equipped across 11 completed field missions in 7 Nigerian states with public receipts.
+                1,965+ direct beneficiaries equipped across 11 completed field missions in 7 Nigerian states with public receipts.
               </p>
             </div>
           </div>
@@ -356,10 +367,10 @@ export default function Transparency({ onOpenDonate, setCurrentPage }) {
                       Total Delivered (Jan–Nov 2026)
                     </td>
                     <td colSpan="2" className="py-4 px-4 sm:px-6 text-xs sm:text-sm text-stone-500">
-                      4,270+ direct beneficiaries · 7 states
+                      1,965+ direct beneficiaries · 7 states
                     </td>
                     <td className="py-4 px-5 sm:px-6 text-right text-base sm:text-lg text-[#7a1b1b] whitespace-nowrap">
-                      ₦18,784,575
+                      ₦18,434,675
                     </td>
                   </tr>
                 </tbody>

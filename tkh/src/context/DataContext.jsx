@@ -1,7 +1,55 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const STORAGE_KEY = 'tkh_platform_data_v5';
+/**
+ * ==============================================================================
+ * TEN KIND HANDS (TKH) - CENTRAL DATA CONTEXT (`DataContext.jsx`)
+ * ==============================================================================
+ * 
+ * QUICK EDITING GUIDE FOR FOUNDERS & ADMINISTRATORS:
+ * ------------------------------------------------------------------------------
+ * This file is the "Master Control Room" for the entire website's live content.
+ * Any data you configure here is shared automatically across all pages:
+ *   - Homepage (`Home.jsx`): Hero slides, latest field reports, upcoming outreach card, impact numbers.
+ *   - Field Reports (`Outreaches.jsx`): All completed reports, audits, costs, and upcoming mission cards.
+ *   - Our Work (`Programs.jsx`): Education, Healthcare, and Livelihoods program tracks and their latest outreach.
+ *   - About Us (`OurStory.jsx`): Mission statement, executive leadership, and State Coordinators.
+ *   - Transparency (`Transparency.jsx`): Financial allocations (88.4% frontline, 11.6% audits, 0% admin).
+ * 
+ * HOW TO ADD OR UPDATE AN OUTREACH IN `initialOutreaches`:
+ * ------------------------------------------------------------------------------
+ * Each outreach is an object in `initialOutreaches` (Section 2 below).
+ * 
+ * 1. COMPLETED OUTREACH (Field Report):
+ *    - Set `status: 'completed'`
+ *    - Set `id`: Unique identifier (e.g., 'outreach-nov-2026-medical-aid')
+ *    - Set `month`: Display month (e.g., 'November 2026')
+ *    - Set `title`: Title of the field report
+ *    - Set `pillar`: 'Healthcare', 'Health & Hygiene', 'Education & Skills', or 'Humanitarian Support & Community Welfare'
+ *    - Set `beneficiariesTarget`: e.g., '387 Nursing Mothers Across 5 States'
+ *    - Set `description`: Overview paragraph explaining what was delivered
+ *    - Set `image`: Path to photo inside `public/images/` (e.g., '/images/november-medical-aid-outreach.jpg')
+ *    - Set `deployments`: Array of state-by-state locations and activities
+ * 
+ * 2. UPCOMING OUTREACH (Next Planned Mission):
+ *    - Set `status: 'upcoming'`
+ *    - This will automatically display in the "Next Planned Outreach" card on the Homepage and Field Reports page.
+ *    - Only ONE outreach should typically have `status: 'upcoming'` at any time.
+ * 
+ * 3. WHY WE HAVE `STORAGE_KEY` & `sanitizeData()`:
+ *    - The website saves data into the visitor's browser (`localStorage`) so it loads lightning-fast.
+ *    - `STORAGE_KEY`: Incrementing this (e.g. from v5 to v6) forces every visitor's browser to refresh with the latest data.
+ *    - `sanitizeData()`: Whenever the app starts, it checks that new code additions (like new months or updated names)
+ *      are automatically merged into any existing browser cache so nobody ever sees outdated reports!
+ * ==============================================================================
+ */
 
+// Bump this key (e.g. v5 -> v6) whenever you want all browser caches to reset cleanly
+const STORAGE_KEY = 'tkh_platform_data_v6';
+
+/* ==============================================================================
+   SECTION 1: NEWS & FIELD MILESTONES (`initialNewsArticles`)
+   Used for press dispatches, engineering milestones, and formal audit releases.
+   ============================================================================== */
 const initialNewsArticles = [
   {
     id: 'gidan-solar-commissioned',
@@ -35,11 +83,79 @@ const initialNewsArticles = [
   }
 ];
 
+/* ==============================================================================
+   SECTION 2: MASTER OUTREACHES LIST (`initialOutreaches`)
+   ------------------------------------------------------------------------------
+   This is the master database of field reports and missions for:
+     1. Homepage ("This Month in the Field" - 3 latest reports + 1 upcoming mission)
+     2. Field Reports Page (`Outreaches.jsx`)
+     3. Our Work Track Indicators (`Programs.jsx`)
+
+   ORDERING RULE:
+   - Keep completed outreaches ordered NEWEST FIRST (e.g. November, October, September...).
+   - Keep upcoming missions at the bottom with `status: 'upcoming'`.
+   ============================================================================== */
 const initialOutreaches = [
+  // --- 1. LATEST COMPLETED REPORT: NOVEMBER 2026 (Medical Aid & Maternal Support) ---
+  {
+    id: 'outreach-nov-2026-medical-aid',
+    month: 'November 2026',
+    date: 'October – November 2026',
+    status: 'completed', // 'completed' = published field report
+    title: 'Medical Aid Outreach & Maternal Health Support',
+    pillar: 'Healthcare',
+    theme: 'Maternal Healthcare • Postnatal Education • Baby-Care Packages',
+    location: 'Plateau, Oyo, Katsina, Enugu & Benue States',
+    beneficiariesTarget: '387 Nursing Mothers Across 5 States',
+    description: 'The November 2026 Medical Aid Outreach delivered essential healthcare support, maternal education and baby-care packages across five Nigerian states. In collaboration with local healthcare professionals and hospitals, Ten Kind Hands reached 387 nursing mothers with practical assistance, postnatal guidance and essential hygiene supplies to strengthen maternal and newborn welfare.',
+    image: '/images/november-medical-aid-outreach.jpg',
+    focusAreas: ['Postnatal Education', 'Baby-Care Packages', 'Maternal Welfare', 'Hospital Partnerships'],
+    deployments: [
+      {
+        state: 'Plateau State',
+        location: 'Jos and environs',
+        date: 'November 2026',
+        beneficiaries: '100 Nursing Mothers',
+        activity: 'Postnatal education, maternal hygiene workshops, and baby-care supplies distribution.'
+      },
+      {
+        state: 'Oyo State',
+        location: 'Ibadan healthcare centres',
+        date: 'November 2026',
+        beneficiaries: '50 Nursing Mothers',
+        activity: 'Medical aid outreach, newborn care counseling, and essential maternal care kits.'
+      },
+      {
+        state: 'Katsina State',
+        location: 'Primary Health Clinic Jino',
+        date: 'November 2026',
+        beneficiaries: '62 Nursing Mothers',
+        activity: 'Maternal and newborn health education with infant hygiene supplies.'
+      },
+      {
+        state: 'Enugu State',
+        location: 'Annunciation Specialist Hospital',
+        date: 'November 2026',
+        beneficiaries: '75 Nursing Mothers',
+        activity: 'Practical support for nursing mothers, clinical guidance, and care packs.'
+      },
+      {
+        state: 'Benue State',
+        location: 'BSUTH Annex, Makurdi',
+        date: 'November 2026',
+        beneficiaries: '100 Beneficiaries',
+        activity: 'Safe Mother Initiative: maternal education and essential care supplies.'
+      }
+    ],
+    feedback: '"Reaching nursing mothers with practical care packages and postnatal guidance gives their newborns a healthier, dignified start."',
+    partners: 'BSUTH Makurdi, Annunciation Specialist Hospital, Primary Health Clinic Jino & Local Health Workers'
+  },
+
+  // --- 2. COMPLETED REPORT: OCTOBER 2026 (Pad A Girl Child & Pad Bank Launch) ---
   {
     id: 'outreach-sep-2026-pad-bank',
-    month: 'September 2026',
-    date: 'September 20, 2026',
+    month: 'October 2026',
+    date: 'October 20, 2026',
     status: 'completed',
     title: 'Pad A Girl Child Outreach & Pad Bank Launch',
     pillar: 'Health & Hygiene',
@@ -53,7 +169,7 @@ const initialOutreaches = [
       {
         state: 'FCT Abuja',
         location: 'GGSS Dutse Alhaji, Abuja',
-        date: 'September 20, 2026',
+        date: 'October 20, 2026',
         beneficiaries: '384 Students Reached + 72 Pads Reserved',
         activity: 'Educated female students on menstrual hygiene management, answered questions during interactive Q&A, distributed 384 sanitary pads directly, and mounted a 72-pad permanent emergency Pad Bank in the school clinic managed by the Health mistress.'
       }
@@ -302,38 +418,30 @@ const initialOutreaches = [
     feedback: '"The village chief and beneficiaries expressed sincere gratitude for the nets and sprayers. Delivering health education in Hausa made the safety practices clear to all."',
     partners: 'Primary Healthcare Workers, Traditional Village Chiefs & Women Advocates'
   },
+  // --- 3. UPCOMING OUTREACH (Displayed on Homepage and Outreaches Next Mission card) ---
   {
-    id: 'outreach-oct-2026',
-    month: 'October 2026',
-    date: 'October 17–19, 2026',
-    status: 'upcoming',
-    title: 'Q4 2026 Primary School Book & Uniform Distribution Drive',
-    pillar: 'Education',
-    theme: 'School Uniforms • Textbooks & Desks • Rural Classrooms',
-    location: 'Ikwerre & Emohua Districts, Rivers State',
-    beneficiariesTarget: '1,200 Primary Pupils Target',
-    description: 'Delivering full uniform sets, branded exercise books, mathematics geometry sets, and 30 dual-seater desks across four rural community schools.',
-    needs: 'Volunteer teachers, logistics drivers, packing assistants.',
-    image: '/images/IMG_0303.JPG',
-    focusAreas: ['Classroom Infrastructure', 'Uniform Tailoring', 'Curriculum Materials', 'Desk Distribution']
-  },
-  {
-    id: 'outreach-nov-2026',
-    month: 'November 2026',
-    date: 'November 2026',
-    status: 'upcoming',
-    title: 'Medical Aid Outreach',
-    pillar: 'Healthcare',
-    theme: 'Essential Healthcare • Medical Support • Health Education',
-    location: 'Plateau, Katsina, Lagos, Oyo, and Enugu States',
-    beneficiariesTarget: 'Underserved Individuals & Families',
-    description: 'Medical aid outreach across rural communities in Plateau, Katsina, Lagos, Oyo, and Enugu States, providing essential healthcare services, medical support, and health education to underserved individuals and families with limited access to quality healthcare.',
-    needs: 'Volunteer doctors, registered nurses, pharmacist assistants, health educators.',
-    image: '/images/IMG_0995.JPG',
-    focusAreas: ['Primary Healthcare', 'Essential Medications', 'Health Education', 'Medical Support']
+    id: 'outreach-dec-2026',
+    month: 'December 2026',
+    date: 'December 2026',
+    status: 'upcoming', // 'upcoming' = next planned mission
+    title: 'DECEMBER 2026 OUTLOOK: FOOD RELIEF OUTREACH',
+    pillar: 'Humanitarian Support & Community Welfare',
+    theme: 'Food Relief • Humanitarian Support • Community Welfare',
+    location: 'Vulnerable Households Across Nigeria',
+    beneficiariesTarget: 'Vulnerable Households & Individuals',
+    description: 'Providing essential food assistance to vulnerable households. Promoting community welfare through humanitarian intervention. Shifting focus to food assistance for vulnerable individuals and households across Nigeria. Tracking items distributed and total reach across communities.',
+    needs: 'Food assistance volunteers, distribution logistics, community monitors.',
+    image: '/images/hero-orphanage-food-educational-support.webp',
+    focusAreas: ['Food Assistance', 'Humanitarian Support', 'Community Welfare', 'Vulnerable Households']
   }
 ];
 
+/* ==============================================================================
+   SECTION 3: IMPACT METRICS & HEADLINE NUMBERS (`initialMetrics`)
+   ------------------------------------------------------------------------------
+   Used across the Homepage Impact Grid and Transparency dashboard.
+   Edit numbers (`stat`), labels (`label`), and descriptions (`detail`) here.
+   ============================================================================== */
 const initialMetrics = [
   {
     id: 'students',
@@ -403,6 +511,14 @@ const initialMetrics = [
   }
 ];
 
+/* ==============================================================================
+   SECTION 4: FINANCIAL & FRONTLINE ALLOCATIONS (`initialAllocations`)
+   ------------------------------------------------------------------------------
+   Used on the Transparency and Impact pages to explain our 100% direct giving model:
+     - 88.4% Frontline Programs
+     - 11.6% Field Monitoring & Independent Engineering Audits
+     - 0.0% Administrative Overhead (100% funded privately by Trustee Endowment)
+   ============================================================================== */
 const initialAllocations = [
   {
     id: 'frontline',
@@ -454,6 +570,12 @@ const initialInquiries = [
   }
 ];
 
+/* ==============================================================================
+   SECTION 5: HOMEPAGE CONTENT & HERO CAROUSEL (`initialHomeContent`)
+   ------------------------------------------------------------------------------
+   Controls the main headline, subtitle, hero photo slideshow, and "Field Reality"
+   educational copy displayed on the homepage (`Home.jsx`).
+   ============================================================================== */
 const initialHomeContent = {
   heroHeadline: 'Helping Nigerian families learn, heal and thrive.',
   heroSubtitle: 'Scholarships, learning materials, medical outreaches and livelihood support for vulnerable children, youth, women and widows across Nigeria — with a public field report after every outreach.',
@@ -461,6 +583,21 @@ const initialHomeContent = {
   featuredLatestOutreachId: 'auto',
   featuredNextOutreachId: 'auto',
   heroSlides: [
+    {
+      img: '/images/november-medical-aid-outreach.jpg',
+      caption: 'Medical Aid Outreach & Maternal Health Support · 387 Nursing Mothers',
+      state: 'Plateau, Oyo, Katsina, Enugu & Benue'
+    },
+    {
+      img: '/images/pad-a-girl-child-outreach-abuja.jpg',
+      caption: 'Pad A Girl Child Outreach & Pad Bank Launch · GGSS Dutse Alhaji',
+      state: 'FCT Abuja'
+    },
+    {
+      img: '/images/abba-father-orphanage-sep-2026.jpg',
+      caption: 'Welfare & Educational Support · Abba Father Rich Orphanage Home',
+      state: 'Plateau State'
+    },
     {
       img: '/images/hero-orphanage-food-educational-support.webp',
       caption: 'Food relief & school supplies donation · Oyiza Orphanage',
@@ -510,6 +647,14 @@ const initialHomeContent = {
   }
 };
 
+/* ==============================================================================
+   SECTION 6: OUR STORY, LEADERSHIP & STATE COORDINATORS (`initialStoryContent`)
+   ------------------------------------------------------------------------------
+   Used on the About Us page (`OurStory.jsx`):
+     - `visionTitle`, `visionHeadline`, `visionStatement`: Core mission text.
+     - `leadership`: National executive team with photos, titles, and bios.
+     - `stateCoordinators`: State-by-state field leaders across Nigeria with photos and badges.
+   ============================================================================== */
 const initialStoryContent = {
   visionTitle: 'Mission • Vision • Values',
   visionHeadline: 'A seed planted in hope. A forest grown in dignity.',
@@ -616,6 +761,12 @@ const initialStoryContent = {
   ]
 };
 
+/* ==============================================================================
+   SECTION 7: TESTIMONIALS & BENEFICIARY QUOTES (`initialTestimonialsList`)
+   ------------------------------------------------------------------------------
+   Used on the Testimonials page (`Testimonials.jsx`) and Partner quotes:
+     - Quotes from school principals, traditional community leaders, mothers, and donors.
+   ============================================================================== */
 const initialTestimonialsList = [
   {
     id: 't-julimak',
@@ -754,6 +905,12 @@ const initialTestimonialsList = [
   }
 ];
 
+/* ==============================================================================
+   SECTION 8: CONTACT DETAILS & HEADQUARTERS (`initialContactInfo`)
+   ------------------------------------------------------------------------------
+   Official corporate and operational contacts:
+     - Office address, CAC registration number, phone, email, WhatsApp desk.
+   ============================================================================== */
 const initialContactInfo = {
   headquarters: 'Danglo plaza 204, 6th Avenue Gwarinpa, Abuja - Nigeria',
   rcNumber: 'RC: 7015705',
@@ -797,6 +954,15 @@ export const getApiBase = () => {
 const API_BASE = getApiBase();
 const DataContext = createContext(null);
 
+/* ==============================================================================
+   SECTION 9: DATA SANITIZATION & LOCALSTORAGE CACHE SYNCHRONIZATION (`sanitizeData`)
+   ------------------------------------------------------------------------------
+   WHY THIS FUNCTION EXISTS:
+   Browsers save data in `localStorage` so the website loads instantly.
+   When you edit code in `initialOutreaches` (e.g. adding a new field report or
+   updating the upcoming mission), this function ensures your live code updates
+   are automatically merged into any visitor's existing browser storage!
+   ============================================================================== */
 const sanitizeData = (raw) => {
   if (!raw) return raw;
   const cleaned = { ...raw };
@@ -864,12 +1030,45 @@ const sanitizeData = (raw) => {
     }
   }
   if (Array.isArray(cleaned.outreaches)) {
+    // 1. Remove obsolete placeholder missions
+    cleaned.outreaches = cleaned.outreaches.filter(
+      (o) => o.id !== 'outreach-nov-2026' && o.id !== 'outreach-oct-2026'
+    );
+
+    // 2. Ensure November 2026 Medical Aid outreach is present as completed at the top
+    if (!cleaned.outreaches.some((o) => o.id === 'outreach-nov-2026-medical-aid')) {
+      const novOutreach = initialOutreaches.find((o) => o.id === 'outreach-nov-2026-medical-aid');
+      if (novOutreach) {
+        cleaned.outreaches = [novOutreach, ...cleaned.outreaches];
+      }
+    }
+
+    // 3. Ensure Pad A Girl Child reflects October 2026
+    cleaned.outreaches = cleaned.outreaches.map((o) => {
+      if (o.id === 'outreach-sep-2026-pad-bank') {
+        return {
+          ...o,
+          month: 'October 2026',
+          date: 'October 20, 2026'
+        };
+      }
+      return o;
+    });
+
+    // 4. Ensure Pad A Girl Child is in the list
     if (!cleaned.outreaches.some((o) => o.id === 'outreach-sep-2026-pad-bank')) {
       const padOutreach = initialOutreaches.find((o) => o.id === 'outreach-sep-2026-pad-bank');
       if (padOutreach) {
-        cleaned.outreaches = [padOutreach, ...cleaned.outreaches];
+        const novIdx = cleaned.outreaches.findIndex((o) => o.id === 'outreach-nov-2026-medical-aid');
+        if (novIdx >= 0) {
+          cleaned.outreaches.splice(novIdx + 1, 0, padOutreach);
+        } else {
+          cleaned.outreaches = [padOutreach, ...cleaned.outreaches];
+        }
       }
     }
+
+    // 5. Ensure Abba Father Orphanage is in the list
     if (!cleaned.outreaches.some((o) => o.id === 'outreach-sep-2026-orphanage')) {
       const orphanageOutreach = initialOutreaches.find((o) => o.id === 'outreach-sep-2026-orphanage');
       if (orphanageOutreach) {
@@ -879,6 +1078,17 @@ const sanitizeData = (raw) => {
         } else {
           cleaned.outreaches = [orphanageOutreach, ...cleaned.outreaches];
         }
+      }
+    }
+
+    // 6. Ensure upcoming December 2026 Food Relief outreach is updated with latest details
+    const decOutreach = initialOutreaches.find((o) => o.id === 'outreach-dec-2026');
+    if (decOutreach) {
+      const decIdx = cleaned.outreaches.findIndex((o) => o.id === 'outreach-dec-2026' || o.status === 'upcoming');
+      if (decIdx >= 0) {
+        cleaned.outreaches[decIdx] = decOutreach;
+      } else {
+        cleaned.outreaches.push(decOutreach);
       }
     }
   } else {

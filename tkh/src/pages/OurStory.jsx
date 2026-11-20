@@ -76,13 +76,13 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
     },
     {
       initials: 'KC',
-      name: 'Katsina Coordinator',
+      name: 'Lawrence Sunday',
       state: 'KATSINA',
       image: '/images/coordinator-katsina.jpg'
     },
     {
       initials: 'EC',
-      name: 'Enugu Coordinator',
+      name: 'Kalu Praise',
       state: 'ENUGU',
       image: '/images/coordinator-enugu.jpg'
     }

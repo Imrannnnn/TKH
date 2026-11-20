@@ -272,15 +272,28 @@ export function getProgramLatestOutreach(progId, outreaches = []) {
   }
 
   if (progId === 'medical-outreaches') {
+    const novMatch = completed.find(
+      (o) =>
+        o.id === 'outreach-nov-2026-medical-aid' ||
+        o.id === 'outreach-nov-2026' ||
+        o.title?.toLowerCase().includes('maternal') ||
+        o.title?.toLowerCase().includes('medical aid')
+    );
+    if (novMatch || true) {
+      return {
+        dateLabel: 'NOV 2026',
+        summary: 'Medical Aid & Maternal Support, 5 states (387 nursing mothers)'
+      };
+    }
     const padMatch = completed.find(
       (o) =>
         o.id.includes('pad') ||
         o.title?.toLowerCase().includes('pad') ||
         o.theme?.toLowerCase().includes('pad')
     );
-    if (padMatch || true) {
+    if (padMatch) {
       return {
-        dateLabel: 'SEP 2026',
+        dateLabel: 'OCT 2026',
         summary: 'Pad A Girl Child & Pad Bank, Abuja (384 students)'
       };
     }

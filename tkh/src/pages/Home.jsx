@@ -10,6 +10,11 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
 
   const defaultHeroSlides = [
     {
+      img: '/images/november-medical-aid-outreach.jpg',
+      caption: 'Medical Aid Outreach & Maternal Health Support · 387 Nursing Mothers',
+      state: 'Plateau, Oyo, Katsina, Enugu & Benue'
+    },
+    {
       img: '/images/pad-a-girl-child-outreach-abuja.jpg',
       caption: 'Pad A Girl Child Outreach & Pad Bank Launch · GGSS Dutse Alhaji',
       state: 'FCT Abuja'
@@ -74,9 +79,29 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
       ? homeContent.heroSubtitle
       : 'Scholarships, learning materials, medical outreaches and livelihood support for vulnerable children, youth, women and widows across Nigeria — with a public field report after every outreach.';
 
+  const defaultMedicalAidNovOutreach = {
+    id: 'outreach-nov-2026-medical-aid',
+    month: 'November 2026',
+    title: 'Medical Aid Outreach & Maternal Health Support',
+    summary:
+      'The November 2026 Medical Aid Outreach delivered essential healthcare support, maternal education and baby-care packages across five Nigerian states, reaching 387 nursing mothers.',
+    description:
+      'The November 2026 Medical Aid Outreach delivered essential healthcare support, maternal education and baby-care packages across five Nigerian states. In collaboration with local healthcare professionals and hospitals, Ten Kind Hands reached 387 nursing mothers with practical assistance, postnatal guidance and essential hygiene supplies to strengthen maternal and newborn welfare.',
+    beneficiariesTarget: '387 nursing mothers',
+    image: '/images/november-medical-aid-outreach.jpg',
+    location: 'Plateau, Oyo, Katsina, Enugu & Benue States',
+    deployments: [
+      { state: 'Plateau State' },
+      { state: 'Oyo State' },
+      { state: 'Katsina State' },
+      { state: 'Enugu State' },
+      { state: 'Benue State' }
+    ]
+  };
+
   const defaultPadGirlOutreach = {
     id: 'outreach-sep-2026-pad-bank',
-    month: 'September 2026',
+    month: 'October 2026',
     title: 'Pad A Girl Child Outreach & Pad Bank Launch',
     summary:
       'The FCT team carried out the Pad A Girl Child outreach and mounted the “PAD BANK” in the GGSS Dutse Alhaji clinic. We educated students on menstrual hygiene, reached 384 students with pads, and reserved 72 pieces in the pad bank.',
@@ -107,17 +132,19 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
   };
 
   const defaultNextOutreach = {
-    id: 'outreach-nov-2026',
-    month: 'November 2026',
-    title: 'Medical Aid Outreach',
+    id: 'outreach-dec-2026',
+    month: 'December 2026',
+    title: 'DECEMBER 2026 OUTLOOK: FOOD RELIEF OUTREACH',
+    pillar: 'Humanitarian Support & Community Welfare',
     description:
-      'Medical aid outreach across rural communities in Plateau, Katsina, Lagos, Oyo, and Enugu States, providing essential healthcare services, medical support, and health education to underserved individuals and families with limited access to quality healthcare.'
+      'Providing essential food assistance to vulnerable households. Promoting community welfare through humanitarian intervention. Shifting focus to food assistance for vulnerable individuals and households across Nigeria. Tracking items distributed and total reach across communities.'
   };
 
   const completedOutreaches = (outreaches || []).filter((o) => o.status === 'completed');
   const upcomingOutreaches = (outreaches || []).filter((o) => o.status === 'upcoming');
 
   const fallbackPastReports = [
+    defaultMedicalAidNovOutreach,
     defaultPadGirlOutreach,
     defaultAbbaFatherOutreach,
     {
@@ -182,9 +209,9 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
   const reportPool = completedOutreaches.length > 0 ? completedOutreaches : fallbackPastReports;
 
   // Top 3 reports with the latest month placed last (closest to the next outreach card)
-  // reportPool is ordered newest first: [PadBank (Sep 20), AbbaFather (Sep 15), August, July]
+  // reportPool is ordered newest first: [MedicalAid (Nov), PadBank (Sep 20), AbbaFather (Sep 15), August, July]
   // Taking top 3 and reversing so chronological flow leads right into Next Outreach:
-  // [August 2026, September 2026 (Abba Father), September 2026 (Pad Bank - Latest)] -> [Next Outreach (Nov)]
+  // [September 2026 (Abba Father), September 2026 (Pad Bank), November 2026 (Medical Aid - Latest)] -> [Next Outreach (Dec)]
   const top3 = (featuredLatest
     ? [featuredLatest, ...reportPool.filter((r) => r.id !== featuredLatest.id)]
     : reportPool
@@ -195,7 +222,7 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
     (homeContent?.featuredNextOutreachId &&
       homeContent.featuredNextOutreachId !== 'auto' &&
       (outreaches || []).find((o) => o.id === homeContent.featuredNextOutreachId)) ||
-    (upcomingOutreaches.find((o) => o.id === 'outreach-nov-2026') || upcomingOutreaches[0]) ||
+    (upcomingOutreaches.find((o) => o.id === 'outreach-dec-2026') || upcomingOutreaches[0]) ||
     defaultNextOutreach;
 
   // Auto-cycle through real field photos every 5 seconds
@@ -486,12 +513,10 @@ export default function Home({ onOpenDonate, setCurrentPage }) {
               </div>
 
               <span className="text-[10px] font-bold uppercase tracking-widest text-maroon block mb-1">
-                UPCOMING OUTREACH
+                {nextOutreach.pillar ? nextOutreach.pillar.toUpperCase() : 'HUMANITARIAN SUPPORT & COMMUNITY WELFARE'}
               </span>
               <h3 className="font-heading font-bold text-base sm:text-lg text-[#1c1c1a] mb-2 leading-snug">
-                {nextOutreach.title?.includes(nextOutreach.month || '')
-                  ? nextOutreach.title
-                  : `${nextOutreach.month || 'Upcoming'} Outreach — ${nextOutreach.title}`}
+                {nextOutreach.title}
               </h3>
               <p className="text-xs sm:text-sm text-[#4a4a46] leading-relaxed mb-4">
                 {nextOutreach.description}
