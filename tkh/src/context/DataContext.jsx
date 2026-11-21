@@ -43,8 +43,8 @@ import { createContext, useContext, useState, useEffect } from 'react';
  * ==============================================================================
  */
 
-// Bump this key (e.g. v5 -> v6) whenever you want all browser caches to reset cleanly
-const STORAGE_KEY = 'tkh_platform_data_v6';
+// Bump this key (e.g. v6 -> v7) whenever you want all browser caches to reset cleanly
+const STORAGE_KEY = 'tkh_platform_data_v7';
 
 /* ==============================================================================
    SECTION 1: NEWS & FIELD MILESTONES (`initialNewsArticles`)
@@ -743,18 +743,18 @@ const initialStoryContent = {
       description: 'Coordinates grassroots educational initiatives, youth engagement, and community welfare projects throughout Plateau State.'
     },
     {
-      name: 'Katsina Coordinator',
+      name: 'Lawrence Sunday',
       role: 'Katsina State Coordinator',
       badge: 'Katsina State',
-      initials: 'KC',
+      initials: 'LS',
       image: '/images/coordinator-katsina.jpg',
       description: 'Coordinates community engagement, education scholarships, and frontline healthcare mission delivery across Katsina State.'
     },
     {
-      name: 'Enugu Coordinator',
+      name: 'Kalu Praise',
       role: 'Enugu State Coordinator',
       badge: 'Enugu State',
-      initials: 'EC',
+      initials: 'KP',
       image: '/images/coordinator-enugu.jpg',
       description: 'Leads mobile clinical aid, community outreach, and educational support across rural settlements in Enugu State.'
     }
@@ -1027,6 +1027,45 @@ const sanitizeData = (raw) => {
         ...cleaned.storyContent,
         stateCoordinators: initialStoryContent.stateCoordinators
       };
+    } else {
+      // Ensure coordinator names, photos, and roles are synchronized with latest updates
+      cleaned.storyContent.stateCoordinators = cleaned.storyContent.stateCoordinators.map((c) => {
+        if (
+          c.name === 'Katsina Coordinator' ||
+          c.badge?.includes('Katsina') ||
+          c.role?.includes('Katsina') ||
+          c.state === 'KATSINA'
+        ) {
+          return {
+            ...c,
+            name: 'Lawrence Sunday',
+            role: 'Katsina State Coordinator',
+            badge: 'Katsina State',
+            initials: 'LS',
+            image: '/images/coordinator-katsina.jpg',
+            description:
+              'Coordinates community engagement, education scholarships, and frontline healthcare mission delivery across Katsina State.'
+          };
+        }
+        if (
+          c.name === 'Enugu Coordinator' ||
+          c.badge?.includes('Enugu') ||
+          c.role?.includes('Enugu') ||
+          c.state === 'ENUGU'
+        ) {
+          return {
+            ...c,
+            name: 'Kalu Praise',
+            role: 'Enugu State Coordinator',
+            badge: 'Enugu State',
+            initials: 'KP',
+            image: '/images/coordinator-enugu.jpg',
+            description:
+              'Leads mobile clinical aid, community outreach, and educational support across rural settlements in Enugu State.'
+          };
+        }
+        return c;
+      });
     }
   }
   if (Array.isArray(cleaned.outreaches)) {

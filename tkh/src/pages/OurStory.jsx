@@ -75,13 +75,13 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       image: '/images/Oluwadiya Tobi Elijah Plateau State Coordinator.jpeg'
     },
     {
-      initials: 'KC',
+      initials: 'LS',
       name: 'Lawrence Sunday',
       state: 'KATSINA',
       image: '/images/coordinator-katsina.jpg'
     },
     {
-      initials: 'EC',
+      initials: 'KP',
       name: 'Kalu Praise',
       state: 'ENUGU',
       image: '/images/coordinator-enugu.jpg'
@@ -93,10 +93,42 @@ export default function OurStory({ onOpenDonate, setCurrentPage }) {
       ? storyContent.leadership
       : defaultLeadership;
 
-  const stateCoordinators =
+  const rawStateCoordinators =
     storyContent?.stateCoordinators && storyContent.stateCoordinators.length >= 7
       ? storyContent.stateCoordinators
       : defaultStateCoordinators;
+
+  const stateCoordinators = rawStateCoordinators.map((c) => {
+    if (
+      c.name === 'Katsina Coordinator' ||
+      c.badge?.includes('Katsina') ||
+      c.role?.includes('Katsina') ||
+      c.state === 'KATSINA'
+    ) {
+      return {
+        ...c,
+        name: 'Lawrence Sunday',
+        initials: 'LS',
+        state: 'KATSINA',
+        image: c.image || '/images/coordinator-katsina.jpg'
+      };
+    }
+    if (
+      c.name === 'Enugu Coordinator' ||
+      c.badge?.includes('Enugu') ||
+      c.role?.includes('Enugu') ||
+      c.state === 'ENUGU'
+    ) {
+      return {
+        ...c,
+        name: 'Kalu Praise',
+        initials: 'KP',
+        state: 'ENUGU',
+        image: c.image || '/images/coordinator-enugu.jpg'
+      };
+    }
+    return c;
+  });
 
   const timelineMilestones = [
     {
