@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { MessageCircle, Mail, ArrowRight, Check, Instagram, Facebook, Youtube, TikTok } from '../components/Icons';
-import { sendContactInquiry, createWhatsAppUrl, createMailtoLink } from '../services/mailService';
+import {
+  sendContactInquiry,
+  createWhatsAppUrl,
+  createMailtoLink,
+  openFormSubmitActivationWindow
+} from '../services/mailService';
 
 export default function Contact() {
   const { addInquiry } = useData();
@@ -297,7 +302,14 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-amber-200/80 flex items-center justify-between">
+                  <div className="pt-2 border-t border-amber-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                    <button
+                      type="button"
+                      onClick={() => openFormSubmitActivationWindow({ testSubject: `FormSubmit Activation Ping - ${form.name || 'Admin'}` })}
+                      className="text-xs font-semibold text-[#7a1b1b] hover:underline flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Trigger FormSubmit activation page in new tab ↗</span>
+                    </button>
                     <button
                       onClick={() => setSubmitStatus(null)}
                       className="text-xs font-semibold text-stone-600 hover:text-stone-900 underline cursor-pointer"
