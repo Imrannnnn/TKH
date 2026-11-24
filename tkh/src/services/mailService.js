@@ -1,24 +1,28 @@
 /**
  * Ten Kind Hands - Centralized Form Email Dispatch Service
  * Delivers all website inquiries, volunteer applications, and donation notifications
- * directly to info@tenkindhands.org with dedicated subject titles for each form.
+ * directly to tenkindhands@gmail.com with dedicated subject titles for each form.
  */
 
 export const RECIPIENT_EMAIL = 'tenkindhands@gmail.com';
 export const OFFICIAL_ORG_EMAIL = 'info@tenkindhands.org';
+export const WHATSAPP_PHONE = '2348180994301';
 
 /**
- * Dispatches form data to tenkindhands@gmail.com (with CC to info@tenkindhands.org) via FormSubmit.
- * Includes graceful timeout and error resilience so user interaction is never interrupted.
+ * Accurately dispatches form data to tenkindhands@gmail.com via FormSubmit.
+ * Checks whether delivery was ACTUALLY confirmed by FormSubmit.
+ * Note: We do NOT pass `_cc` in the FormSubmit payload because FormSubmit
+ * requires CC recipients to also be verified, which would block delivery.
  */
-async function dispatchFormEmail({ subject, replyTo, fields }) {
+export async function dispatchFormEmail({ subject, replyTo, fields }) {
   const payload = {
     _subject: subject,
     _replyto: replyTo || OFFICIAL_ORG_EMAIL,
-    _cc: OFFICIAL_ORG_EMAIL,
     _template: 'table',
     _captcha: 'false',
     ...fields,
+    'Recipient Mailbox': RECIPIENT_EMAIL,
+    'Official Organization Email': OFFICIAL_ORG_EMAIL,
     'Submission Time (WAT)': new Date().toLocaleString('en-GB', {
       timeZone: 'Africa/Lagos',
       dateStyle: 'medium',
@@ -28,7 +32,7 @@ async function dispatchFormEmail({ subject, replyTo, fields }) {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
 
     const response = await fetch(`https://formsubmit.co/ajax/${RECIPIENT_EMAIL}`, {
       method: 'POST',
@@ -43,20 +47,53 @@ async function dispatchFormEmail({ subject, replyTo, fields }) {
     clearTimeout(timeoutId);
 
     const data = await response.json().catch(() => ({}));
+
+    // FormSubmit returns { success: "true", message: "..." } on verified delivery
+    // Or { success: "false", message: "This form needs activation..." } if activation is pending
+    const isSuccess = response.ok && (data.success === 'true' || data.success === true) && !data.error;
+    const isNeedsActivation = Boolean(
+      (data.message && /activat/i.test(data.message)) ||
+      (data.error && /activat/i.test(data.error)) ||
+      (!isSuccess && response.status === 403)
+    );
+
     return {
-      success: true,
-      delivered: response.ok,
+      success: isSuccess,
+      delivered: isSuccess,
+      status: response.status,
+      needsActivation: isNeedsActivation,
+      message: data.message || (isSuccess ? 'Message submitted and delivered successfully.' : 'Delivery unconfirmed.'),
+      error: !isSuccess ? (data.message || data.error || `HTTP ${response.status}`) : null,
       data
     };
   } catch (err) {
-    console.warn('Form email dispatch notice:', err.message);
-    // Return success: true so frontend user experience remains graceful
+    console.warn('Form email dispatch network error:', err.message);
     return {
-      success: true,
+      success: false,
       delivered: false,
+      status: 0,
+      needsActivation: false,
+      message: 'Network connection error. Unable to reach the email gateway.',
       error: err.message
     };
   }
+}
+
+/**
+ * Generate a pre-filled WhatsApp link as an immediate fallback
+ */
+export function createWhatsAppUrl({ name, email, phone, topic, message, formType }) {
+  const parts = [
+    `*Ten Kind Hands - ${formType || 'Direct Inquiry'}*`,
+    name ? `• *From:* ${name}` : null,
+    email ? `• *Email:* ${email}` : null,
+    phone ? `• *Phone:* ${phone}` : null,
+    topic ? `• *Topic:* ${topic}` : null,
+    message ? `• *Message:*\n${message}` : null
+  ].filter(Boolean);
+
+  const text = parts.join('\n');
+  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`;
 }
 
 /**
@@ -66,7 +103,7 @@ export function createMailtoLink(subject, fields) {
   const body = Object.entries(fields)
     .map(([key, val]) => `${key}: ${val}`)
     .join('\n');
-  return `mailto:${RECIPIENT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return `mailto:${RECIPIENT_EMAIL}?cc=${OFFICIAL_ORG_EMAIL}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 /**

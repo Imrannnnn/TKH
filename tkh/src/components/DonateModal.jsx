@@ -18,7 +18,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
   const [copiedBank, setCopiedBank] = useState(false);
   const [faqOpen, setFaqOpen] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submittedSuccess, setSubmittedSuccess] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   useEffect(() => {
     if (initialAmount) {
@@ -95,7 +95,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
           ]
         },
         callback: async function (response) {
-          await sendDonationNotification({
+          const res = await sendDonationNotification({
             name: fullName,
             email,
             amount: currentAmount,
@@ -105,7 +105,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
             isAnonymous
           });
           setIsSubmitting(false);
-          setSubmittedSuccess(true);
+          setSubmitStatus(res);
         },
         onClose: function () {
           setIsSubmitting(false);
@@ -118,8 +118,8 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
     // Direct bank transfer notification
     setIsSubmitting(true);
 
-    // 1. Dispatch bank transfer notification to info@tenkindhands.org
-    await sendDonationNotification({
+    // 1. Dispatch bank transfer notification to tenkindhands@gmail.com
+    const result = await sendDonationNotification({
       name: fullName,
       email,
       amount: currentAmount,
@@ -146,7 +146,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
     }
 
     setIsSubmitting(false);
-    setSubmittedSuccess(true);
+    setSubmitStatus(result);
   };
 
   const faqs = [
@@ -201,13 +201,16 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
 
         {/* Modal Body */}
         <div className="p-4 sm:p-6 lg:p-8 3xl:p-10 overflow-y-auto">
-          {submittedSuccess ? (
+          {submitStatus ? (
             <div className="py-10 3xl:py-14 text-center max-w-md 3xl:max-w-lg mx-auto space-y-4">
               <div className="w-16 h-16 3xl:w-20 3xl:h-20 rounded-full bg-forest-tint text-forest flex items-center justify-center mx-auto">
                 <Check className="w-8 h-8 3xl:w-10 3xl:h-10 stroke-[2.5]" />
               </div>
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-forest bg-forest-tint px-3 py-1 rounded-full inline-block">
+                {submitStatus.delivered ? 'Direct Transfer Logged & Verified' : 'Direct Transfer Details'}
+              </span>
               <h3 className="font-heading font-bold text-2xl 3xl:text-3xl text-[#1c1c1a]">
-                Transfer Notification Received!
+                Transfer Notification Logged!
               </h3>
               <p className="text-sm 3xl:text-base text-[#4a4a46] leading-relaxed">
                 Thank you, <strong>{fullName || 'generous donor'}</strong>. We have logged your intended bank transfer of <strong>₦{currentAmount.toLocaleString()}</strong> for {designation}.
@@ -220,7 +223,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <a
-                  href="https://wa.me/2348180994301?text=Hello%20Ten%20Kind%20Hands,%20I%20have%20made%20a%20donation%20transfer."
+                  href={`https://wa.me/2348180994301?text=${encodeURIComponent(`Hello Ten Kind Hands, I have made a transfer donation of ₦${currentAmount.toLocaleString()} for ${designation}. From: ${fullName || 'A Donor'} (${email})`)}`}
                   target="_blank"
                   rel="noreferrer"
                   className="px-5 py-2.5 rounded-full bg-[#1b4d3e] hover:bg-[#153e32] text-white text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-sm"
@@ -229,7 +232,10 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                   <span>Send proof on WhatsApp (+234 818 099 4301)</span>
                 </a>
                 <button
-                  onClick={onClose}
+                  onClick={() => {
+                    setSubmitStatus(null);
+                    onClose();
+                  }}
                   className="btn-primary px-6 py-2.5 text-xs font-semibold cursor-pointer"
                 >
                   Close

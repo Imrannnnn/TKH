@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
-import { Heart, Check, Copy, ArrowRight, MessageCircle, ShieldCheck, Lock } from '../components/Icons';
-import { sendDonationNotification, sendVolunteerApplication, sendPartnerInquiry } from '../services/mailService';
+import { Heart, Check, Copy, ArrowRight, MessageCircle, ShieldCheck, Lock, Mail } from '../components/Icons';
+import {
+  sendDonationNotification,
+  sendVolunteerApplication,
+  sendPartnerInquiry,
+  createWhatsAppUrl,
+  createMailtoLink
+} from '../services/mailService';
 
 export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCurrentPage }) {
   const { addInquiry } = useData();
@@ -25,7 +31,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [copiedBank, setCopiedBank] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
-  const [donateSuccess, setDonateSuccess] = useState(false);
+  const [donateStatus, setDonateStatus] = useState(null);
   const [isDonating, setIsDonating] = useState(false);
 
   // Volunteer Form State
@@ -37,7 +43,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
     state: 'FCT Abuja',
     skills: ''
   });
-  const [volSuccess, setVolSuccess] = useState(false);
+  const [volStatus, setVolStatus] = useState(null);
   const [isVolSubmitting, setIsVolSubmitting] = useState(false);
 
   // Partner Form State
@@ -49,7 +55,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
     type: 'Corporate CSR Sponsorship',
     notes: ''
   });
-  const [partSuccess, setPartSuccess] = useState(false);
+  const [partStatus, setPartStatus] = useState(null);
   const [isPartSubmitting, setIsPartSubmitting] = useState(false);
 
   const currentAmount = isCustom ? Number(customAmount.replace(/[^0-9]/g, '')) || 0 : selectedAmount;
@@ -79,7 +85,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
         amount: currentAmount * 100,
         currency: 'NGN',
         callback: async function () {
-          await sendDonationNotification({
+          const res = await sendDonationNotification({
             name: fullName,
             email,
             amount: currentAmount,
@@ -89,7 +95,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
             isAnonymous
           });
           setIsDonating(false);
-          setDonateSuccess(true);
+          setDonateStatus(res);
         },
         onClose: function () {
           setIsDonating(false);
@@ -102,8 +108,8 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
     // Direct bank transfer notification
     setIsDonating(true);
 
-    // 1. Dispatch bank transfer notification to info@tenkindhands.org
-    await sendDonationNotification({
+    // 1. Dispatch bank transfer notification to tenkindhands@gmail.com
+    const result = await sendDonationNotification({
       name: fullName,
       email,
       amount: currentAmount,
@@ -129,15 +135,15 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
     }
 
     setIsDonating(false);
-    setDonateSuccess(true);
+    setDonateStatus(result);
   };
 
   const handleVolSubmit = async (e) => {
     e.preventDefault();
     setIsVolSubmitting(true);
 
-    // 1. Dispatch volunteer application to info@tenkindhands.org
-    await sendVolunteerApplication({
+    // 1. Dispatch volunteer application to tenkindhands@gmail.com
+    const result = await sendVolunteerApplication({
       name: volForm.name,
       email: volForm.email,
       phone: volForm.phone,
@@ -159,15 +165,15 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
       });
     }
     setIsVolSubmitting(false);
-    setVolSuccess(true);
+    setVolStatus(result);
   };
 
   const handlePartSubmit = async (e) => {
     e.preventDefault();
     setIsPartSubmitting(true);
 
-    // 1. Dispatch partnership inquiry to info@tenkindhands.org
-    await sendPartnerInquiry({
+    // 1. Dispatch partnership inquiry to tenkindhands@gmail.com
+    const result = await sendPartnerInquiry({
       orgName: partForm.orgName,
       contactName: partForm.contactName,
       email: partForm.email,
@@ -189,7 +195,7 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
       });
     }
     setIsPartSubmitting(false);
-    setPartSuccess(true);
+    setPartStatus(result);
   };
 
   const faqs = [
@@ -269,33 +275,39 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
                   100% of your gift delivers school kits, tuition, medicines, or enterprise tools directly to beneficiaries.
                 </p>
 
-                {donateSuccess ? (
-                  <div className="p-8 rounded-2xl bg-emerald-50 text-emerald-900 text-center space-y-3">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-xl">
+                {donateStatus ? (
+                  <div className="p-8 rounded-3xl bg-emerald-50 text-emerald-950 text-center space-y-4 border border-emerald-200">
+                    <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-2xl">
                       ✓
                     </div>
-                    <h3 className="text-xl font-bold">Transfer Notification Received!</h3>
+                    <div>
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/80 px-3 py-1 rounded-full inline-block mb-1.5">
+                        {donateStatus.delivered ? 'Direct Transfer Notification Dispatched' : 'Direct Bank Transfer Instructions'}
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-bold tracking-tight">Transfer Notification Received!</h3>
+                    </div>
                     <p className="text-sm text-stone-700 max-w-md mx-auto leading-relaxed">
-                      Thank you, {fullName || 'generous donor'}. We have recorded your intended bank transfer of <strong>₦{currentAmount.toLocaleString()}</strong> for {designation}.
+                      Thank you, <strong>{fullName || 'generous donor'}</strong>. We have recorded your intended bank transfer of <strong>₦{currentAmount.toLocaleString()}</strong> for {designation}.
                     </p>
-                    <div className="bg-white p-4 rounded-2xl border border-emerald-200 text-xs text-stone-700 max-w-md mx-auto text-left space-y-1.5">
+                    <div className="bg-white p-5 rounded-2xl border border-emerald-200 text-xs text-stone-700 max-w-md mx-auto text-left space-y-2 shadow-xs">
                       <div><strong className="text-stone-900">Bank:</strong> Zenith Bank</div>
                       <div><strong className="text-stone-900">Account Number:</strong> 1309157309</div>
                       <div><strong className="text-stone-900">Account Name:</strong> Ten Kind Hands Initiative</div>
-                      <div><strong className="text-stone-900">Receipt Dispatch:</strong> An official tax receipt will be issued to {email} as soon as credit reflects.</div>
+                      <div><strong className="text-stone-900">Official Receipt:</strong> Issued to {email} as soon as credit reflects.</div>
                     </div>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                       <a
-                        href="https://wa.me/2348180994301?text=Hello%20Ten%20Kind%20Hands,%20I%20have%20made%20a%20donation%20transfer."
+                        href={`https://wa.me/2348180994301?text=${encodeURIComponent(`Hello Ten Kind Hands, I have initiated a donation transfer of ₦${currentAmount.toLocaleString()} for ${designation}. From: ${fullName || 'A Donor'} (${email})`)}`}
                         target="_blank"
                         rel="noreferrer"
                         className="px-5 py-2.5 rounded-full bg-[#1b4d3e] hover:bg-[#153e32] text-white text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-sm"
                       >
+                        <MessageCircle className="w-4 h-4" />
                         <span>Send proof on WhatsApp (+234 818 099 4301)</span>
                       </a>
                       <button
-                        onClick={() => setDonateSuccess(false)}
-                        className="px-5 py-2.5 rounded-full bg-stone-900 text-white text-xs font-semibold cursor-pointer"
+                        onClick={() => setDonateStatus(null)}
+                        className="px-5 py-2.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold cursor-pointer"
                       >
                         Make another donation
                       </button>
@@ -541,16 +553,77 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
                   Join our state coordinators for upcoming field missions in education, maternal triage, or skills mentorship.
                 </p>
 
-                {volSuccess ? (
-                  <div className="p-8 rounded-2xl bg-emerald-50 text-emerald-900 text-center space-y-3">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-xl">
-                      ✓
+                {volStatus ? (
+                  volStatus.delivered ? (
+                    <div className="p-8 rounded-3xl bg-emerald-50 text-emerald-950 text-center space-y-4 border border-emerald-200">
+                      <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-2xl">
+                        ✓
+                      </div>
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/80 px-3 py-1 rounded-full inline-block">
+                        Verified Delivery
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-bold tracking-tight">Application Delivered!</h3>
+                      <p className="text-sm text-stone-700 max-w-md mx-auto leading-relaxed">
+                        Thank you, <strong>{volForm.name}</strong>. Your volunteer profile has arrived at <strong>tenkindhands@gmail.com</strong>. Our state coordinator for {volForm.state} will reach out via WhatsApp or phone ahead of the next planned mission.
+                      </p>
+                      <button
+                        onClick={() => {
+                          setVolStatus(null);
+                          setVolForm({ name: '', email: '', phone: '', role: 'Education tutor & mentor', state: 'FCT Abuja', skills: '' });
+                        }}
+                        className="px-5 py-2.5 rounded-full bg-stone-900 text-white text-xs font-semibold cursor-pointer"
+                      >
+                        Submit another application
+                      </button>
                     </div>
-                    <h3 className="text-xl font-bold">Application Received!</h3>
-                    <p className="text-sm text-stone-600 max-w-md mx-auto">
-                      Thank you, {volForm.name}. Our state coordinator for {volForm.state} will reach out via WhatsApp or phone ahead of the next planned mission.
-                    </p>
-                  </div>
+                  ) : (
+                    <div className="p-6 sm:p-8 rounded-3xl bg-amber-50 text-stone-900 space-y-4 border border-amber-300">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 font-bold">
+                          ⚠️
+                        </div>
+                        <div>
+                          <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-900 bg-amber-200/70 px-2.5 py-0.5 rounded-md inline-block mb-1">
+                            {volStatus.needsActivation ? 'FormSubmit Activation Pending' : 'Automated Delivery Unconfirmed'}
+                          </span>
+                          <h3 className="text-lg font-bold">
+                            {volStatus.needsActivation
+                              ? 'One-Time Form Activation Required'
+                              : 'Automated email delivery not confirmed'}
+                          </h3>
+                        </div>
+                      </div>
+                      <p className="text-xs sm:text-sm text-stone-700">
+                        {volStatus.needsActivation
+                          ? 'FormSubmit has sent an activation link to tenkindhands@gmail.com. Please click the activation button in that inbox (check Spam/Junk) to enable automatic delivery.'
+                          : `Gateway reported: ${volStatus.message || 'Delivery unconfirmed.'}`}
+                      </p>
+                      <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-1">
+                        <a
+                          href={createWhatsAppUrl({
+                            name: volForm.name,
+                            email: volForm.email,
+                            phone: volForm.phone,
+                            topic: `Volunteer Application (${volForm.role} - ${volForm.state})`,
+                            message: `Skills: ${volForm.skills || 'None listed'}`,
+                            formType: 'Volunteer Application'
+                          })}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#1b4d3e] text-white text-xs font-bold flex items-center justify-center gap-2"
+                        >
+                          <MessageCircle className="w-4 h-4" />
+                          <span>Submit via WhatsApp Desk (+234 818 099 4301)</span>
+                        </a>
+                        <button
+                          onClick={() => setVolStatus(null)}
+                          className="text-xs font-semibold text-stone-600 underline cursor-pointer"
+                        >
+                          Back to form
+                        </button>
+                      </div>
+                    </div>
+                  )
                 ) : (
                   <form onSubmit={handleVolSubmit} className="space-y-4 sm:space-y-5">
                     <div>
@@ -667,16 +740,77 @@ export default function GetInvolved({ onOpenDonate, initialTab = 'donate', setCu
                   Collaborate on community healthcare drives, solar computer labs, or targeted educational sponsorship.
                 </p>
 
-                {partSuccess ? (
-                  <div className="p-8 rounded-2xl bg-emerald-50 text-emerald-900 text-center space-y-3">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-xl">
-                      ✓
+                {partStatus ? (
+                  partStatus.delivered ? (
+                    <div className="p-8 rounded-3xl bg-emerald-50 text-emerald-950 text-center space-y-4 border border-emerald-200">
+                      <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-2xl">
+                        ✓
+                      </div>
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/80 px-3 py-1 rounded-full inline-block">
+                        Verified Delivery
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-bold tracking-tight">Partnership Inquiry Delivered!</h3>
+                      <p className="text-sm text-stone-700 max-w-md mx-auto leading-relaxed">
+                        Thank you, <strong>{partForm.contactName || partForm.orgName}</strong>. Your proposal has been delivered directly to <strong>tenkindhands@gmail.com</strong>. Our partnership director will review it and respond within 24 hours.
+                      </p>
+                      <button
+                        onClick={() => {
+                          setPartStatus(null);
+                          setPartForm({ orgName: '', contactName: '', email: '', phone: '', type: 'Corporate CSR Sponsorship', notes: '' });
+                        }}
+                        className="px-5 py-2.5 rounded-full bg-stone-900 text-white text-xs font-semibold cursor-pointer"
+                      >
+                        Submit another proposal
+                      </button>
                     </div>
-                    <h3 className="text-xl font-bold">Partnership Inquiry Received</h3>
-                    <p className="text-sm text-stone-600 max-w-md mx-auto">
-                      Thank you. Our partnership director will review your proposal and respond within 24 hours.
-                    </p>
-                  </div>
+                  ) : (
+                    <div className="p-6 sm:p-8 rounded-3xl bg-amber-50 text-stone-900 space-y-4 border border-amber-300">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 font-bold">
+                          ⚠️
+                        </div>
+                        <div>
+                          <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-900 bg-amber-200/70 px-2.5 py-0.5 rounded-md inline-block mb-1">
+                            {partStatus.needsActivation ? 'FormSubmit Activation Pending' : 'Automated Delivery Unconfirmed'}
+                          </span>
+                          <h3 className="text-lg font-bold">
+                            {partStatus.needsActivation
+                              ? 'One-Time Form Activation Required'
+                              : 'Automated email delivery not confirmed'}
+                          </h3>
+                        </div>
+                      </div>
+                      <p className="text-xs sm:text-sm text-stone-700">
+                        {partStatus.needsActivation
+                          ? 'FormSubmit has sent an activation link to tenkindhands@gmail.com. Please confirm the link in that inbox (check Spam/Junk) to enable automatic delivery.'
+                          : `Gateway reported: ${partStatus.message || 'Delivery unconfirmed.'}`}
+                      </p>
+                      <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-1">
+                        <a
+                          href={createWhatsAppUrl({
+                            name: partForm.contactName || partForm.orgName,
+                            email: partForm.email,
+                            phone: partForm.phone,
+                            topic: `CSR Partnership (${partForm.type} - ${partForm.orgName})`,
+                            message: partForm.notes,
+                            formType: 'Partnership Proposal'
+                          })}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#1b4d3e] text-white text-xs font-bold flex items-center justify-center gap-2"
+                        >
+                          <MessageCircle className="w-4 h-4" />
+                          <span>Send via WhatsApp Desk (+234 818 099 4301)</span>
+                        </a>
+                        <button
+                          onClick={() => setPartStatus(null)}
+                          className="text-xs font-semibold text-stone-600 underline cursor-pointer"
+                        >
+                          Back to form
+                        </button>
+                      </div>
+                    </div>
+                  )
                 ) : (
                   <form onSubmit={handlePartSubmit} className="space-y-4 sm:space-y-5">
                     <div>

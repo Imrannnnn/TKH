@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { MessageCircle, Mail, ArrowRight, Check, Instagram, Facebook, Youtube, TikTok } from '../components/Icons';
-import { sendContactInquiry } from '../services/mailService';
+import { sendContactInquiry, createWhatsAppUrl, createMailtoLink } from '../services/mailService';
 
 export default function Contact() {
   const { addInquiry } = useData();
@@ -12,14 +12,14 @@ export default function Contact() {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // 1. Dispatch email directly to info@tenkindhands.org with dedicated subject
-    await sendContactInquiry({
+    // 1. Dispatch email directly to tenkindhands@gmail.com with dedicated subject
+    const result = await sendContactInquiry({
       name: form.name,
       email: form.email,
       topic: form.topic,
@@ -40,7 +40,7 @@ export default function Contact() {
     }
 
     setIsSubmitting(false);
-    setSubmitted(true);
+    setSubmitStatus(result);
   };
 
   return (
@@ -195,25 +195,118 @@ export default function Contact() {
               Fill in your details and a coordinator from our team will respond within 24 hours.
             </p>
 
-            {submitted ? (
-              <div className="p-8 sm:p-12 rounded-2xl bg-emerald-50 text-emerald-900 text-center space-y-3">
-                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-xl">
-                  ✓
+            {submitStatus ? (
+              submitStatus.delivered ? (
+                <div className="p-8 sm:p-12 rounded-3xl bg-emerald-50 text-emerald-950 text-center space-y-4 border border-emerald-200">
+                  <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto font-bold text-2xl shadow-xs">
+                    ✓
+                  </div>
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full inline-block">
+                    Verified Delivery
+                  </span>
+                  <h3 className="text-2xl font-bold tracking-tight">Message Delivered!</h3>
+                  <p className="text-sm text-stone-700 max-w-md mx-auto leading-relaxed">
+                    Thank you, <strong>{form.name}</strong>. Your inquiry has been delivered directly to <strong>tenkindhands@gmail.com</strong>. A coordinator will reply to <strong>{form.email}</strong> promptly.
+                  </p>
+                  <div className="pt-2">
+                    <button
+                      onClick={() => {
+                        setSubmitStatus(null);
+                        setForm({ name: '', email: '', topic: 'General Question', message: '' });
+                      }}
+                      className="px-6 py-2.5 rounded-full bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800 transition-colors cursor-pointer"
+                    >
+                      Send another message
+                    </button>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold">Message Dispatched!</h3>
-                <p className="text-sm text-stone-600 max-w-md mx-auto">
-                  Thank you, {form.name}. We have received your note and will reply directly to {form.email} promptly.
-                </p>
-                <button
-                  onClick={() => {
-                    setSubmitted(false);
-                    setForm({ name: '', email: '', topic: 'General Question', message: '' });
-                  }}
-                  className="mt-4 px-6 py-2.5 rounded-full bg-stone-900 text-white text-xs font-semibold cursor-pointer"
-                >
-                  Send another message
-                </button>
-              </div>
+              ) : (
+                <div className="p-6 sm:p-8 rounded-3xl bg-amber-50 text-stone-900 space-y-5 border border-amber-300 shadow-sm animate-fade-in">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-11 h-11 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 text-xl font-bold">
+                      ⚠️
+                    </div>
+                    <div>
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-900 bg-amber-200/70 px-2.5 py-0.5 rounded-md inline-block mb-1">
+                        {submitStatus.needsActivation ? 'FormSubmit Activation Pending' : 'Automated Delivery Unconfirmed'}
+                      </span>
+                      <h3 className="text-lg sm:text-xl font-bold tracking-tight text-stone-900">
+                        {submitStatus.needsActivation
+                          ? 'One-Time Form Activation Required'
+                          : 'Automated email delivery not confirmed'}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="text-xs sm:text-sm text-stone-700 space-y-2 leading-relaxed bg-white/80 p-4 rounded-2xl border border-amber-200">
+                    {submitStatus.needsActivation ? (
+                      <>
+                        <p>
+                          FormSubmit has dispatched a <strong>one-time activation email</strong> to <strong>tenkindhands@gmail.com</strong>.
+                        </p>
+                        <p className="text-amber-950 font-medium">
+                          👉 Please open <strong>tenkindhands@gmail.com</strong> (check both <strong>Inbox</strong> and <strong>Spam / Junk</strong> folder) and click the <strong>&quot;Activate Form&quot;</strong> button once.
+                        </p>
+                        <p className="text-stone-500 text-xs">
+                          Until activated by clicking that link once, FormSubmit holds incoming automated messages. After activation, every test and visitor form submission lands straight in your inbox.
+                        </p>
+                      </>
+                    ) : (
+                      <p>
+                        The automated email gateway returned: <em>&quot;{submitStatus.message || submitStatus.error || 'Connection unconfirmed'}&quot;</em>.
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="pt-1">
+                    <p className="text-xs font-bold uppercase tracking-wider text-stone-600 mb-2">
+                      Reach our team immediately without waiting:
+                    </p>
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                      <a
+                        href={createWhatsAppUrl({
+                          name: form.name,
+                          email: form.email,
+                          topic: form.topic,
+                          message: form.message,
+                          formType: 'Website Inquiry'
+                        })}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-5 py-3 rounded-full bg-[#1b4d3e] hover:bg-[#153e32] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-colors shadow-xs"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        <span>Send via WhatsApp (+234 818 099 4301)</span>
+                      </a>
+
+                      <a
+                        href={createMailtoLink(
+                          `Contact Inquiry: ${form.topic} - ${form.name}`,
+                          {
+                            'Name': form.name,
+                            'Email': form.email,
+                            'Topic': form.topic,
+                            'Message': form.message
+                          }
+                        )}
+                        className="px-5 py-3 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
+                      >
+                        <Mail className="w-4 h-4 text-[#7a1b1b]" />
+                        <span>Send via Email Client</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-amber-200/80 flex items-center justify-between">
+                    <button
+                      onClick={() => setSubmitStatus(null)}
+                      className="text-xs font-semibold text-stone-600 hover:text-stone-900 underline cursor-pointer"
+                    >
+                      ← Back to edit &amp; retry
+                    </button>
+                  </div>
+                </div>
+              )
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 <div>
