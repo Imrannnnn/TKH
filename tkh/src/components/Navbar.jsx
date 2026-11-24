@@ -28,17 +28,22 @@ export default function Navbar({
 
   const navItems = [
     { label: 'Home', pageId: 'home', matchPages: ['home'] },
-    { label: 'About', pageId: 'our-story', matchPages: ['our-story'] },
-    { label: 'Our work', pageId: 'programs', matchPages: ['programs'] },
-    { label: 'Field reports', pageId: 'outreaches', matchPages: ['outreaches', 'news', 'videos'] },
+    { label: 'About', pageId: 'about', matchPages: ['about', 'our-story'] },
+    { label: 'Our work', pageId: 'programs', matchPages: ['programs', 'our-work', 'programmes'] },
+    { label: 'Field reports', pageId: 'field-reports', matchPages: ['field-reports', 'outreaches', 'reports', 'news', 'videos'] },
     { label: 'Transparency', pageId: 'transparency', matchPages: ['transparency', 'impact'] },
-    { label: 'Get involved', pageId: 'get-involved', matchPages: ['get-involved'] },
+    { label: 'Get involved', pageId: 'get-involved', matchPages: ['get-involved', 'donate', 'volunteer'] },
     { label: 'Contact', pageId: 'contact', matchPages: ['contact'] },
   ];
 
   const handleNavClick = (pageId) => {
     setCurrentPage(pageId);
-    window.location.hash = pageId === 'home' ? '' : pageId;
+    const targetPath = pageId === 'home' ? '/' : `/${pageId}`;
+    if (window.history && window.history.pushState) {
+      window.history.pushState(null, '', targetPath);
+    } else {
+      window.location.hash = pageId === 'home' ? '' : pageId;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setMobileMenuOpen(false);
   };
@@ -99,7 +104,12 @@ export default function Navbar({
         {/* Right Action & Mobile Toggle */}
         <div className="flex items-center gap-1.5 sm:gap-3 3xl:gap-4 shrink-0">
           <button
-            onClick={() => onOpenDonate()}
+            onClick={() => {
+              if (window.history && window.history.pushState) {
+                window.history.pushState(null, '', '/donate');
+              }
+              onOpenDonate();
+            }}
             className="btn-primary px-3.5 sm:px-6 3xl:px-7 4xl:px-8 py-2 sm:py-2.5 3xl:py-3 4xl:py-3.5 text-xs sm:text-[15px] 3xl:text-base 4xl:text-lg shadow-sm flex items-center gap-1.5 sm:gap-2 3xl:gap-2.5 shrink-0 cursor-pointer"
           >
             <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 3xl:w-5 3xl:h-5 fill-white" />

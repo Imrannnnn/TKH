@@ -1,0 +1,9 @@
+# Robots.txt for Ten Kind Hands Foundation
+# Website: https://tenkindhands.org
+# Registered CAC Non-Profit: RC 7015705
+
+User-agent: *
+Allow: /
+
+# Sitemap Index
+Sitemap: https://tenkindhands.org/sitemap.xml

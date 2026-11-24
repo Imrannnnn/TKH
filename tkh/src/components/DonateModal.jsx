@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, Copy, Check, Heart, ShieldCheck, ArrowRight, MessageCircle, Lock } from './Icons';
 import { useData } from '../context/DataContext';
+import { sendDonationNotification } from '../services/mailService';
 
 export default function DonateModal({ isOpen, onClose, initialAmount }) {
   const { addInquiry } = useData();
@@ -10,7 +11,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
   const [customAmount, setCustomAmount] = useState('');
   const [isCustom, setIsCustom] = useState(false);
   const [designation, setDesignation] = useState('Where it\'s needed most');
-  const [paymentMethod, setPaymentMethod] = useState('card'); // 'card' | 'transfer'
+  const [paymentMethod, setPaymentMethod] = useState('transfer'); // 'transfer' | 'card'
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -72,57 +73,80 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
     e.preventDefault();
     if (!email) return;
 
+    // Guard: Prevent fake card success if Paystack is not configured
+    if (paymentMethod === 'card') {
+      const paystackKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_PAYSTACK_PUBLIC_KEY) || '';
+      if (!paystackKey || !window.PaystackPop) {
+        setPaymentMethod('transfer');
+        return;
+      }
+
+      setIsSubmitting(true);
+      const handler = window.PaystackPop.setup({
+        key: paystackKey,
+        email: email,
+        amount: currentAmount * 100,
+        currency: 'NGN',
+        metadata: {
+          custom_fields: [
+            { display_name: 'Donor Name', variable_name: 'donor_name', value: fullName || 'Anonymous' },
+            { display_name: 'Designation', variable_name: 'designation', value: designation },
+            { display_name: 'Frequency', variable_name: 'frequency', value: frequency }
+          ]
+        },
+        callback: async function (response) {
+          await sendDonationNotification({
+            name: fullName,
+            email,
+            amount: currentAmount,
+            frequency,
+            designation,
+            paymentMethod: 'card',
+            isAnonymous
+          });
+          setIsSubmitting(false);
+          setSubmittedSuccess(true);
+        },
+        onClose: function () {
+          setIsSubmitting(false);
+        }
+      });
+      handler.openIframe();
+      return;
+    }
+
+    // Direct bank transfer notification
     setIsSubmitting(true);
 
-    // Save intent or notification in CMS
+    // 1. Dispatch bank transfer notification to info@tenkindhands.org
+    await sendDonationNotification({
+      name: fullName,
+      email,
+      amount: currentAmount,
+      frequency,
+      designation,
+      paymentMethod: 'transfer',
+      isAnonymous
+    });
+
+    // 2. Save intent or notification in CMS
     if (addInquiry) {
       await addInquiry({
         name: fullName || 'Anonymous Donor',
         email,
         phone: '',
-        type: 'donation-intent',
+        type: 'donation-bank-transfer-notification',
         amount: currentAmount,
         frequency,
         designation,
-        method: paymentMethod,
+        method: 'transfer',
         isAnonymous,
         date: new Date().toISOString()
       });
     }
 
-    if (paymentMethod === 'card') {
-      const paystackKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_PAYSTACK_PUBLIC_KEY) || '';
-      if (window.PaystackPop && paystackKey) {
-        const handler = window.PaystackPop.setup({
-          key: paystackKey,
-          email: email,
-          amount: currentAmount * 100,
-          currency: 'NGN',
-          metadata: {
-            custom_fields: [
-              { display_name: 'Donor Name', variable_name: 'donor_name', value: fullName || 'Anonymous' },
-              { display_name: 'Designation', variable_name: 'designation', value: designation },
-              { display_name: 'Frequency', variable_name: 'frequency', value: frequency }
-            ]
-          },
-          callback: function (response) {
-            setIsSubmitting(false);
-            setSubmittedSuccess(true);
-          },
-          onClose: function () {
-            setIsSubmitting(false);
-          }
-        });
-        handler.openIframe();
-        return;
-      }
-    }
-
-    // Direct bank transfer confirmation or simulated flow
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmittedSuccess(true);
-    }, 600);
+    setIsSubmitting(false);
+    setSubmittedSuccess(true);
   };
 
   const faqs = [
@@ -132,7 +156,7 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
     },
     {
       q: 'Can I give from outside Nigeria?',
-      a: 'Yes. Paystack accepts Visa, Mastercard, American Express and international bank cards in USD, GBP, and EUR.'
+      a: 'Yes. International supporters can transfer directly to our account or contact our desk at info@tenkindhands.org or via WhatsApp (+234 818 099 4301) for foreign wire details while card gateway processing is being set up.'
     },
     {
       q: 'Can I stop a monthly gift?',
@@ -178,22 +202,39 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
         {/* Modal Body */}
         <div className="p-4 sm:p-6 lg:p-8 3xl:p-10 overflow-y-auto">
           {submittedSuccess ? (
-            <div className="py-12 3xl:py-16 text-center max-w-md 3xl:max-w-lg mx-auto">
-              <div className="w-16 h-16 3xl:w-20 3xl:h-20 rounded-full bg-forest-tint text-forest flex items-center justify-center mx-auto mb-4">
+            <div className="py-10 3xl:py-14 text-center max-w-md 3xl:max-w-lg mx-auto space-y-4">
+              <div className="w-16 h-16 3xl:w-20 3xl:h-20 rounded-full bg-forest-tint text-forest flex items-center justify-center mx-auto">
                 <Check className="w-8 h-8 3xl:w-10 3xl:h-10 stroke-[2.5]" />
               </div>
-              <h3 className="font-heading font-bold text-2xl 3xl:text-3xl text-[#1c1c1a] mb-2">
-                Thank you for your generous heart!
+              <h3 className="font-heading font-bold text-2xl 3xl:text-3xl text-[#1c1c1a]">
+                Transfer Notification Received!
               </h3>
-              <p className="text-sm 3xl:text-base text-[#4a4a46] leading-relaxed mb-6">
-                Your contribution of <strong>₦{currentAmount.toLocaleString()}</strong> has been recorded. An official receipt has been sent to <strong>{email}</strong>. 100% of your gift will fund frontline deliverables.
+              <p className="text-sm 3xl:text-base text-[#4a4a46] leading-relaxed">
+                Thank you, <strong>{fullName || 'generous donor'}</strong>. We have logged your intended bank transfer of <strong>₦{currentAmount.toLocaleString()}</strong> for {designation}.
               </p>
-              <button
-                onClick={onClose}
-                className="btn-primary px-8 3xl:px-10 py-3 3xl:py-3.5 text-sm 3xl:text-base"
-              >
-                Return to website
-              </button>
+              <div className="bg-[#f5f1e8] p-4 rounded-2xl border border-[#e5e0d8] text-xs sm:text-sm text-[#1c1c1a] text-left space-y-2">
+                <div><strong className="text-stone-900">Bank:</strong> Zenith Bank</div>
+                <div><strong className="text-stone-900">Account Number:</strong> 1309157309</div>
+                <div><strong className="text-stone-900">Account Name:</strong> Ten Kind Hands Initiative</div>
+                <div><strong className="text-stone-900">Receipt Dispatch:</strong> An official tax receipt will be emailed to <strong>{email}</strong> once credit is confirmed.</div>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                <a
+                  href="https://wa.me/2348180994301?text=Hello%20Ten%20Kind%20Hands,%20I%20have%20made%20a%20donation%20transfer."
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-5 py-2.5 rounded-full bg-[#1b4d3e] hover:bg-[#153e32] text-white text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-sm"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Send proof on WhatsApp (+234 818 099 4301)</span>
+                </a>
+                <button
+                  onClick={onClose}
+                  className="btn-primary px-6 py-2.5 text-xs font-semibold cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 3xl:gap-12 items-start">
@@ -305,57 +346,90 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                   <div className="grid grid-cols-1 xs:grid-cols-2 gap-2">
                     <button
                       type="button"
-                      onClick={() => setPaymentMethod('card')}
-                      className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer text-center ${
-                        paymentMethod === 'card'
-                          ? 'bg-white text-maroon border-maroon shadow-sm'
-                          : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
-                      }`}
-                    >
-                      Card, USSD or bank app
-                    </button>
-                    <button
-                      type="button"
                       onClick={() => setPaymentMethod('transfer')}
-                      className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer text-center ${
+                      className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer flex items-center justify-between ${
                         paymentMethod === 'transfer'
                           ? 'bg-white text-maroon border-maroon shadow-sm'
                           : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
                       }`}
                     >
-                      Direct bank transfer
+                      <span>Direct bank transfer</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-forest-tint text-forest">
+                        Active
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('card')}
+                      className={`py-2.5 px-3 rounded-2xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer flex items-center justify-between ${
+                        paymentMethod === 'card'
+                          ? 'bg-white text-maroon border-maroon shadow-sm'
+                          : 'bg-[#f5f1e8] text-[#706e68] border-[#e5e0d8]'
+                      }`}
+                    >
+                      <span>Card / USSD</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
+                        Coming Soon
+                      </span>
                     </button>
                   </div>
                 </div>
 
+                {/* Card Payments Notice (Under Gateway Setup) */}
+                {paymentMethod === 'card' && (
+                  <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm space-y-2">
+                    <div className="flex items-center gap-2 font-bold text-amber-950">
+                      <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                      <span>Online Card Payments Coming Soon</span>
+                    </div>
+                    <p className="text-amber-800 text-xs leading-relaxed">
+                      Our direct online card processing is undergoing gateway merchant setup. 
+                      Please donate via <strong>Direct Bank Transfer</strong> directly to our official foundation account.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('transfer')}
+                      className="px-4 py-1.5 bg-[#1c1c1a] hover:bg-black text-white text-xs font-semibold rounded-xl cursor-pointer transition-colors shadow-sm"
+                    >
+                      Use Direct Bank Transfer
+                    </button>
+                  </div>
+                )}
+
                 {/* Direct Bank Details if selected */}
                 {paymentMethod === 'transfer' && (
-                  <div className="p-4 bg-white rounded-2xl border border-[#e5e0d8] text-xs space-y-2">
-                    <div className="font-heading font-bold text-sm text-[#1c1c1a]">
-                      Official Donation Bank Account:
-                    </div>
+                  <div className="p-4 bg-white rounded-2xl border border-[#e5e0d8] text-xs space-y-2.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-[#706e68]">Bank:</span>
-                      <span className="font-semibold text-[#1c1c1a]">Guaranty Trust Bank (GTBank)</span>
+                      <span className="font-heading font-bold text-sm text-[#1c1c1a]">Official Donation Account</span>
+                      <span className="text-[10px] text-[#706e68] font-medium">CAC RC: 7015705</span>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[#706e68]">Account Name:</span>
-                      <span className="font-semibold text-[#1c1c1a]">Ten Kind Hands Initiative</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[#706e68]">Account Number:</span>
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono font-bold text-sm text-maroon">1309157309</span>
-                        <button
-                          type="button"
-                          onClick={handleCopyAccount}
-                          className="p-1 text-[#706e68] hover:text-maroon transition-colors cursor-pointer"
-                          title="Copy account number"
-                        >
-                          {copiedBank ? <Check className="w-3.5 h-3.5 text-forest" /> : <Copy className="w-3.5 h-3.5" />}
-                        </button>
+                    <div className="space-y-1.5 pt-1 border-t border-[#f5f1e8]">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[#706e68]">Bank:</span>
+                        <span className="font-semibold text-[#1c1c1a]">Zenith Bank</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[#706e68]">Account Name:</span>
+                        <span className="font-semibold text-[#1c1c1a]">Ten Kind Hands Initiative</span>
+                      </div>
+                      <div className="flex items-center justify-between pt-1 border-t border-[#f5f1e8]">
+                        <span className="text-[#706e68]">Account Number:</span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-mono font-bold text-sm text-maroon">1309157309</span>
+                          <button
+                            type="button"
+                            onClick={handleCopyAccount}
+                            className="p-1 text-[#706e68] hover:text-maroon transition-colors cursor-pointer"
+                            title="Copy account number"
+                          >
+                            {copiedBank ? <Check className="w-3.5 h-3.5 text-forest" /> : <Copy className="w-3.5 h-3.5" />}
+                          </button>
+                        </div>
                       </div>
                     </div>
+                    <p className="text-[11px] text-[#706e68] leading-tight pt-1">
+                      Transfer via your banking app, then submit below so we can issue your tax receipt.
+                    </p>
                   </div>
                 )}
 
@@ -391,24 +465,34 @@ export default function DonateModal({ isOpen, onClose, initialAmount }) {
                     <span>Keep my name off the public donor list</span>
                   </label>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="btn-primary w-full py-4 text-base font-semibold shadow-md mt-2 flex items-center justify-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      <span>Processing...</span>
-                    ) : (
-                      <>
-                        <span>Give ₦{currentAmount.toLocaleString()} {frequency === 'monthly' ? '/ month' : 'now'}</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
+                  {paymentMethod === 'card' ? (
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('transfer')}
+                      className="w-full py-4 rounded-2xl bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold text-sm transition-colors cursor-pointer mt-2"
+                    >
+                      Card payments coming soon — Donate via Bank Transfer
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="btn-primary w-full py-4 text-base font-semibold shadow-md mt-2 flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? (
+                        <span>Recording notification...</span>
+                      ) : (
+                        <>
+                          <span>Notify of ₦{currentAmount.toLocaleString()} Bank Transfer</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </>
+                      )}
+                    </button>
+                  )}
 
                   <div className="flex items-center justify-center gap-1.5 text-center text-[11px] text-[#706e68] mt-1">
-                    <Lock className="w-3.5 h-3.5 text-[#706e68] shrink-0" />
-                    <span>Secure payment by Paystack · NGN, USD or GBP cards</span>
+                    <ShieldCheck className="w-3.5 h-3.5 text-forest shrink-0" />
+                    <span>Official CAC Registered Foundation (RC 7015705) · 100% Direct Giving</span>
                   </div>
                 </form>
               </div>

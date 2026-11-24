@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Heart, Instagram, Facebook, Youtube, TikTok } from './Icons';
+import { sendNewsletterSubscription } from '../services/mailService';
 
 export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgram, onSelectGetInvolvedTab }) {
   const [email, setEmail] = useState('');
@@ -17,13 +18,19 @@ export default function Footer({ setCurrentPage, onSelectLegalTab, onSelectProgr
       onSelectGetInvolvedTab(subId);
     }
     setCurrentPage(pageId);
-    window.location.hash = subId ? `${pageId}/${subId}` : (pageId === 'home' ? '' : pageId);
+    const targetPath = subId ? `/${pageId}/${subId}` : (pageId === 'home' ? '/' : `/${pageId}`);
+    if (window.history && window.history.pushState) {
+      window.history.pushState(null, '', targetPath);
+    } else {
+      window.location.hash = subId ? `${pageId}/${subId}` : (pageId === 'home' ? '' : pageId);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (email) {
+      sendNewsletterSubscription({ email, source: 'Website Footer' });
       setSubscribed(true);
       setTimeout(() => {
         setEmail('');

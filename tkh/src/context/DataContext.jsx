@@ -1267,41 +1267,7 @@ export function DataProvider({ children }) {
     return defaultData;
   });
 
-  // Fetch initial data from backend server on mount
-  useEffect(() => {
-    let isMounted = true;
-    fetch(`${API_BASE}/data`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP status ${res.status}`);
-        return res.json();
-      })
-      .then((rawRemoteData) => {
-        const remoteData = sanitizeData(rawRemoteData);
-        if (isMounted && remoteData && Array.isArray(remoteData.news)) {
-          let remoteMetrics = remoteData.metrics;
-          const exactOrder = ['students', 'schools', 'patients', 'giving-model', 'clinics', 'metric-1790695260926'];
-          if (
-            !remoteMetrics ||
-            remoteMetrics.length !== 6 ||
-            !remoteMetrics.every((m, idx) => m.id === exactOrder[idx])
-          ) {
-            remoteMetrics = initialMetrics;
-          }
-          const mergedRemote = { ...remoteData, metrics: remoteMetrics };
-          setData(mergedRemote);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedRemote));
-        }
-      })
-      .catch((err) => {
-        console.info('Backend API connection deferred (using local cache):', err.message);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  // Save to localStorage whenever data changes
+  // Data persistence in browser localStorage
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -1482,7 +1448,7 @@ export function DataProvider({ children }) {
     }).catch((err) => console.warn('Sync announcement to backend:', err.message));
   };
 
-  // Inquiries / Leads from forms
+  // Inquiries / Leads from forms (persisted to local state and localStorage)
   const addInquiry = async (inquiry) => {
     const newInquiry = {
       ...inquiry,
@@ -1493,35 +1459,9 @@ export function DataProvider({ children }) {
     // Always persist to local state and localStorage immediately
     setData((prev) => ({ ...prev, inquiries: [newInquiry, ...(prev.inquiries || [])] }));
 
-    let serverSynced = false;
-    let syncError = null;
-
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 6000);
-      const res = await fetch(`${getApiBase()}/inquiries`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newInquiry),
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-
-      if (res.ok) {
-        serverSynced = true;
-      } else {
-        syncError = `Server responded with ${res.status}`;
-      }
-    } catch (err) {
-      syncError = err.message || 'Network request failed';
-      console.warn('Sync inquiry to backend:', syncError);
-    }
-
     return {
       success: true,
-      serverSynced,
-      inquiry: newInquiry,
-      error: syncError
+      inquiry: newInquiry
     };
   };
 

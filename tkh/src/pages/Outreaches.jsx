@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { ArrowRight, ArrowLeft, Check, Calendar, MapPin, Users, Heart, Mail } from '../components/Icons';
+import { sendNewsletterSubscription } from '../services/mailService';
 
 export const ALL_FIELD_REPORTS = [
   {
@@ -374,9 +375,10 @@ export default function Outreaches({ onOpenDonate, setCurrentPage, selectedOutre
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (subscriberEmail) {
+      sendNewsletterSubscription({ email: subscriberEmail, source: 'Field Reports Page' });
       setEmailSubscribed(true);
     }
   };

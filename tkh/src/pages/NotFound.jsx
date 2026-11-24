@@ -4,7 +4,11 @@ export default function NotFound({ setCurrentPage }) {
   const handleGoHome = (e) => {
     if (e) e.preventDefault();
     if (setCurrentPage) setCurrentPage('home');
-    window.location.hash = '';
+    if (window.history && window.history.pushState) {
+      window.history.pushState(null, '', '/');
+    } else {
+      window.location.hash = '';
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -35,9 +39,15 @@ export default function NotFound({ setCurrentPage }) {
           </a>
 
           <a
-            href="#transparency"
+            href="/transparency"
             onClick={(e) => {
+              if (e) e.preventDefault();
               if (setCurrentPage) setCurrentPage('transparency');
+              if (window.history && window.history.pushState) {
+                window.history.pushState(null, '', '/transparency');
+              } else {
+                window.location.hash = 'transparency';
+              }
             }}
             className="btn-secondary w-full sm:w-auto text-xs sm:text-sm px-6 py-3 flex items-center justify-center gap-2 font-heading font-semibold shadow-xs cursor-pointer min-h-[44px]"
           >

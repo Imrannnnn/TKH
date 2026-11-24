@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { MessageCircle, Mail, ArrowRight, Check, Instagram, Facebook, Youtube, TikTok } from '../components/Icons';
+import { sendContactInquiry } from '../services/mailService';
 
 export default function Contact() {
   const { addInquiry } = useData();
@@ -16,6 +17,16 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // 1. Dispatch email directly to info@tenkindhands.org with dedicated subject
+    await sendContactInquiry({
+      name: form.name,
+      email: form.email,
+      topic: form.topic,
+      message: form.message
+    });
+
+    // 2. Also save to local records
     if (addInquiry) {
       await addInquiry({
         name: form.name,
@@ -27,10 +38,9 @@ export default function Contact() {
         date: new Date().toISOString()
       });
     }
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-    }, 500);
+
+    setIsSubmitting(false);
+    setSubmitted(true);
   };
 
   return (
@@ -105,12 +115,20 @@ export default function Contact() {
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed mt-1">
                 For detailed institutional proposals, audit questions, or general correspondence:
               </p>
-              <a
-                href="mailto:info@tenkindhands.org"
-                className="text-sm sm:text-base font-bold text-[#7a1b1b] hover:underline break-all mt-1"
-              >
-                info@tenkindhands.org
-              </a>
+              <div className="flex flex-col gap-1 mt-1">
+                <a
+                  href="mailto:info@tenkindhands.org"
+                  className="text-sm sm:text-base font-bold text-[#7a1b1b] hover:underline break-all"
+                >
+                  info@tenkindhands.org
+                </a>
+                <a
+                  href="mailto:tenkindhands@gmail.com"
+                  className="text-xs sm:text-sm text-stone-600 hover:text-[#7a1b1b] hover:underline break-all"
+                >
+                  tenkindhands@gmail.com
+                </a>
+              </div>
             </div>
 
             {/* Social Media Channels */}

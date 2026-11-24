@@ -16,7 +16,6 @@ import Testimonials from './pages/Testimonials';
 import Transparency from './pages/Transparency';
 import Contact from './pages/Contact';
 import Legal from './pages/Legal';
-import Admin from './pages/Admin';
 import NotFound from './pages/NotFound';
 
 const PAGE_METADATA = {
@@ -68,36 +67,52 @@ const PAGE_METADATA = {
     title: 'Legal, Privacy Policy & Terms | Ten Kind Hands',
     description: 'Privacy policy, terms of service, safeguarding commitments, and non-profit governance charter of Ten Kind Hands Initiative.'
   },
-  admin: {
-    title: 'Super Admin Command Console | Ten Kind Hands',
-    description: 'Secure operational content and field dispatch administration console.'
-  },
   'not-found': {
     title: '404 - Page Not Found | Ten Kind Hands',
     description: 'The requested page could not be found on Ten Kind Hands Foundation.'
   }
 };
 
+// Aliases for clean URL paths
+PAGE_METADATA['about'] = PAGE_METADATA['our-story'];
+PAGE_METADATA['about-us'] = PAGE_METADATA['our-story'];
+PAGE_METADATA['donate'] = PAGE_METADATA['get-involved'];
+PAGE_METADATA['volunteer'] = PAGE_METADATA['get-involved'];
+PAGE_METADATA['field-reports'] = PAGE_METADATA['outreaches'];
+PAGE_METADATA['our-work'] = PAGE_METADATA['programs'];
+PAGE_METADATA['programmes'] = PAGE_METADATA['programs'];
+
 const VALID_PAGES = new Set([
   'home',
+  'about',
+  'about-us',
   'our-story',
+  'story',
   'programs',
   'programmes',
   'our-work',
   'impact',
+  'metrics',
+  'audits',
   'get-involved',
+  'donate',
+  'give',
+  'volunteer',
+  'volunteering',
+  'partner',
+  'partners',
   'news',
   'videos',
+  'dispatches',
   'outreaches',
-  'testimonials',
-  'transparency',
-  'contact',
-  'legal',
-  'admin',
   'reports',
   'report',
   'field-reports',
-  'field-report'
+  'field-report',
+  'testimonials',
+  'transparency',
+  'contact',
+  'legal'
 ]);
 
 export default function App() {
@@ -114,20 +129,25 @@ export default function App() {
     setIsDonateOpen(true);
   };
 
-  // Sync hash routing and address bar
+  // Sync pathname and hash routing so /about, /donate, /field-reports etc. work seamlessly
   useEffect(() => {
-    const handleHashChange = () => {
-      const rawHash = window.location.hash.replace('#', '').trim();
-      const hash = rawHash.replace(/^\/+/, '');
-      if (!hash) {
-        setCurrentPage('home');
-        return;
+    const handleRouteChange = () => {
+      // 1. Check hash first (e.g. #/about, #about, #donate)
+      const rawHash = (window.location.hash || '').replace(/^#\/?/, '').replace(/\/+$/, '').trim().toLowerCase();
+      
+      // 2. Check pathname (e.g. /about, /donate, /field-reports)
+      let rawPath = (window.location.pathname || '').replace(/^\/+|\/+$/g, '').trim().toLowerCase();
+      if (rawPath === 'index.html' || rawPath === 'index') {
+        rawPath = '';
       }
 
-      // Check for anchor target in the hash (e.g., our-work#education, programs#health, #livelihoods)
-      const rawFullHash = window.location.hash || '';
-      const anchorMatch = rawFullHash.match(/(?:education|health|livelihoods)/i);
-      const targetAnchor = anchorMatch ? anchorMatch[0].toLowerCase() : null;
+      // Hash takes priority if present, otherwise path
+      const route = rawHash || rawPath || 'home';
+
+      // Check for anchor scroll target (e.g. education, health, livelihoods)
+      const fullUrl = (window.location.href || '').toLowerCase();
+      const anchorMatch = fullUrl.match(/#(?:education|health|livelihoods)/i);
+      const targetAnchor = anchorMatch ? anchorMatch[0].replace('#', '').toLowerCase() : null;
 
       if (targetAnchor) {
         setCurrentPage('programs');
@@ -141,78 +161,98 @@ export default function App() {
         return;
       }
 
-      if (hash === 'our-work' || hash === 'programmes') {
+      if (!route || route === 'home') {
+        setCurrentPage('home');
+        setSelectedProgramId(null);
+        setSelectedOutreachId(null);
+      } else if (route === 'about' || route === 'about-us' || route === 'our-story' || route === 'story') {
+        setCurrentPage('our-story');
+      } else if (
+        route === 'our-work' ||
+        route === 'programs' ||
+        route === 'programmes'
+      ) {
         setCurrentPage('programs');
         setSelectedProgramId(null);
-        window.scrollTo({ top: 0, behavior: 'instant' });
-        return;
-      }
-
-      if (hash.startsWith('programs/')) {
-        const progId = hash.replace('programs/', '');
-        setCurrentPage('programs');
-        setSelectedProgramId(progId);
-      } else if (hash.startsWith('our-work/')) {
-        const progId = hash.replace('our-work/', '');
-        setCurrentPage('programs');
-        setSelectedProgramId(progId);
-      } else if (hash.startsWith('outreaches/')) {
-        const outreachId = hash.replace('outreaches/', '');
-        setCurrentPage('outreaches');
-        setSelectedOutreachId(outreachId);
       } else if (
-        hash.startsWith('reports/') ||
-        hash.startsWith('report/') ||
-        hash.startsWith('field-reports/') ||
-        hash.startsWith('field-report/')
+        route.startsWith('programs/') ||
+        route.startsWith('our-work/') ||
+        route.startsWith('programmes/')
       ) {
-        const parts = hash.split('/');
-        const outreachId = parts[1] || null;
-        setCurrentPage('outreaches');
-        setSelectedOutreachId(outreachId);
+        const parts = route.split('/');
+        setCurrentPage('programs');
+        setSelectedProgramId(parts[1] || null);
       } else if (
-        hash === 'reports' ||
-        hash === 'report' ||
-        hash === 'field-reports' ||
-        hash === 'field-report'
+        route === 'field-reports' ||
+        route === 'field-report' ||
+        route === 'outreaches' ||
+        route === 'reports' ||
+        route === 'report'
       ) {
         setCurrentPage('outreaches');
         setSelectedOutreachId(null);
-      } else if (hash === 'about' || hash === 'about-us' || hash === 'story') {
-        setCurrentPage('our-story');
-      } else if (hash.startsWith('get-involved/')) {
-        const tab = hash.replace('get-involved/', '');
-        setCurrentPage('get-involved');
-        setSelectedGetInvolvedTab(tab);
-      } else if (hash === 'donate') {
+      } else if (
+        route.startsWith('field-reports/') ||
+        route.startsWith('field-report/') ||
+        route.startsWith('outreaches/') ||
+        route.startsWith('reports/') ||
+        route.startsWith('report/')
+      ) {
+        const parts = route.split('/');
+        setCurrentPage('outreaches');
+        setSelectedOutreachId(parts[1] || null);
+      } else if (route === 'donate' || route === 'give') {
         setCurrentPage('get-involved');
         setSelectedGetInvolvedTab('donate');
         setIsDonateOpen(true);
-      } else if (hash === 'volunteer') {
+      } else if (route === 'volunteer' || route === 'volunteering') {
         setCurrentPage('get-involved');
         setSelectedGetInvolvedTab('volunteer');
-      } else if (hash.startsWith('legal/')) {
-        const tab = hash.replace('legal/', '');
+      } else if (route === 'partner' || route === 'partners' || route === 'partnership') {
+        setCurrentPage('get-involved');
+        setSelectedGetInvolvedTab('partner');
+      } else if (route.startsWith('get-involved/')) {
+        const parts = route.split('/');
+        setCurrentPage('get-involved');
+        setSelectedGetInvolvedTab(parts[1] || 'donate');
+      } else if (route === 'get-involved') {
+        setCurrentPage('get-involved');
+        setSelectedGetInvolvedTab('donate');
+      } else if (route === 'impact' || route === 'metrics' || route === 'audits') {
+        setCurrentPage('impact');
+      } else if (route === 'transparency' || route === 'financials') {
+        setCurrentPage('transparency');
+      } else if (route === 'news' || route === 'videos' || route === 'dispatches') {
+        setCurrentPage('news');
+      } else if (route === 'testimonials' || route === 'letters' || route === 'stories') {
+        setCurrentPage('testimonials');
+      } else if (route === 'contact' || route === 'contact-us') {
+        setCurrentPage('contact');
+      } else if (route.startsWith('legal/')) {
+        const parts = route.split('/');
         setCurrentPage('legal');
-        setSelectedLegalTab(tab);
-      } else if (VALID_PAGES.has(hash)) {
-        if (hash === 'programs') {
-          setSelectedProgramId(null);
-        }
-        if (hash === 'outreaches') {
-          setSelectedOutreachId(null);
-        }
-        setCurrentPage(hash);
+        setSelectedLegalTab(parts[1] || 'privacy');
+      } else if (route === 'legal' || route === 'privacy' || route === 'terms') {
+        setCurrentPage('legal');
+        setSelectedLegalTab(route === 'terms' ? 'terms' : 'privacy');
+      } else if (VALID_PAGES.has(route)) {
+        setCurrentPage(route);
       } else {
-        // Unknown address -> show 404 page
+        // Unknown route -> 404
         setCurrentPage('not-found');
       }
+
       window.scrollTo({ top: 0, behavior: 'instant' });
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    handleRouteChange();
+    window.addEventListener('hashchange', handleRouteChange);
+    window.addEventListener('popstate', handleRouteChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleRouteChange);
+      window.removeEventListener('popstate', handleRouteChange);
+    };
   }, []);
 
   // Update document title & metadata dynamically
@@ -285,8 +325,6 @@ export default function App() {
         return <Contact />;
       case 'legal':
         return <Legal initialTab={selectedLegalTab} />;
-      case 'admin':
-        return <Admin setCurrentPage={setCurrentPage} />;
       case 'not-found':
       default:
         return <NotFound setCurrentPage={setCurrentPage} />;
@@ -296,29 +334,25 @@ export default function App() {
   return (
     <DataProvider>
       <div className="min-h-screen flex flex-col bg-[#fdfbf7] text-[#1c1c1a] antialiased">
-        {/* Global Navbar (Hidden on Admin page for dedicated enterprise app shell) */}
-        {currentPage !== 'admin' && (
-          <Navbar
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            onOpenDonate={() => handleOpenDonate(null)}
-            onSelectProgram={(progId) => setSelectedProgramId(progId)}
-            onSelectGetInvolvedTab={(tab) => setSelectedGetInvolvedTab(tab)}
-          />
-        )}
+        {/* Global Navbar */}
+        <Navbar
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          onOpenDonate={() => handleOpenDonate(null)}
+          onSelectProgram={(progId) => setSelectedProgramId(progId)}
+          onSelectGetInvolvedTab={(tab) => setSelectedGetInvolvedTab(tab)}
+        />
 
         {/* Main Active Page Component */}
         <main className="flex-grow bg-[#fdfbf7]">
           {renderCurrentPage()}
         </main>
 
-        {/* Persistent WhatsApp Floating Widget (Hidden on Admin page) */}
-        {currentPage !== 'admin' && (
-          <WhatsAppWidget
-            currentPage={currentPage}
-            selectedProgram={selectedProgramId}
-          />
-        )}
+        {/* Persistent WhatsApp Floating Widget */}
+        <WhatsAppWidget
+          currentPage={currentPage}
+          selectedProgram={selectedProgramId}
+        />
 
         {/* Global Modal for Multi-Currency Impact Donation */}
         <DonateModal
@@ -330,16 +364,14 @@ export default function App() {
           }}
         />
 
-        {/* Global Footer (Hidden on Admin page for a focused dashboard experience) */}
-        {currentPage !== 'admin' && (
-          <Footer
-            setCurrentPage={setCurrentPage}
-            onOpenDonate={() => handleOpenDonate(null)}
-            onSelectLegalTab={(tab) => setSelectedLegalTab(tab)}
-            onSelectProgram={(progId) => setSelectedProgramId(progId)}
-            onSelectGetInvolvedTab={(tab) => setSelectedGetInvolvedTab(tab)}
-          />
-        )}
+        {/* Global Footer */}
+        <Footer
+          setCurrentPage={setCurrentPage}
+          onOpenDonate={() => handleOpenDonate(null)}
+          onSelectLegalTab={(tab) => setSelectedLegalTab(tab)}
+          onSelectProgram={(progId) => setSelectedProgramId(progId)}
+          onSelectGetInvolvedTab={(tab) => setSelectedGetInvolvedTab(tab)}
+        />
       </div>
     </DataProvider>
   );
