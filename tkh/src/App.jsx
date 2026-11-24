@@ -285,8 +285,13 @@ export default function App() {
       case 'home':
         return <Home onOpenDonate={handleOpenDonate} setCurrentPage={setCurrentPage} />;
       case 'our-story':
+      case 'about':
+      case 'about-us':
+      case 'story':
         return <OurStory onOpenDonate={handleOpenDonate} setCurrentPage={setCurrentPage} />;
       case 'programs':
+      case 'programmes':
+      case 'our-work':
         return (
           <Programs
             onOpenDonate={handleOpenDonate}
@@ -296,8 +301,16 @@ export default function App() {
           />
         );
       case 'impact':
+      case 'metrics':
+      case 'audits':
         return <Impact onOpenDonate={handleOpenDonate} />;
       case 'get-involved':
+      case 'donate':
+      case 'volunteer':
+      case 'volunteering':
+      case 'partner':
+      case 'partners':
+      case 'partnership':
         return (
           <GetInvolved
             onOpenDonate={handleOpenDonate}
@@ -307,8 +320,13 @@ export default function App() {
         );
       case 'news':
       case 'videos':
+      case 'dispatches':
         return <News setCurrentPage={setCurrentPage} onOpenDonate={handleOpenDonate} />;
       case 'outreaches':
+      case 'field-reports':
+      case 'field-report':
+      case 'reports':
+      case 'report':
         return (
           <Outreaches
             setCurrentPage={setCurrentPage}
@@ -318,12 +336,18 @@ export default function App() {
           />
         );
       case 'testimonials':
+      case 'letters':
+      case 'stories':
         return <Testimonials onOpenDonate={handleOpenDonate} />;
       case 'transparency':
+      case 'financials':
         return <Transparency onOpenDonate={handleOpenDonate} setCurrentPage={setCurrentPage} />;
       case 'contact':
+      case 'contact-us':
         return <Contact />;
       case 'legal':
+      case 'privacy':
+      case 'terms':
         return <Legal initialTab={selectedLegalTab} />;
       case 'not-found':
       default:
